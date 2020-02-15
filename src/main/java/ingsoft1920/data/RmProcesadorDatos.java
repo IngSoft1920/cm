@@ -1,3 +1,4 @@
+package ingsoft1920.data;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,7 +10,7 @@ public class RmProcesadorDatos {
 
 	public static void main (String []args) {
 
-		//TODO recibir qué precio queremos calcular?
+		//TODO recibir quï¿½ precio queremos calcular?
 		
 		int precioBase = 100;
 		int modCompetencia = 1;
