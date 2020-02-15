@@ -5,15 +5,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class Hotel {
 	
-	String name;
+	int hotel_id;
+	String nombre;
 	String ubicacion;
 		
+	public int getHotel_id() {
+		return hotel_id;
+	}
+
+	public void setHotel_id(int hotel_id) {
+		this.hotel_id = hotel_id;
+	}
+
 	public String getNombre() {
-		return name;
+		return nombre;
 	}
 
 	public void setNombre(String nombre) {
-		this.name = nombre;
+		this.nombre = nombre;
 	}
 
 	public String getUbicacion() {
@@ -26,7 +35,7 @@ public class Hotel {
 	
 	@Override
 	public String toString() {
-		return "Hotel [nombre=" + name + ", ubicacion=" + ubicacion + "]";
+		return "Hotel [hotel_id=" + hotel_id + ", nombre=" + nombre + ", ubicacion=" + ubicacion + "]";
 	}
 	
 
