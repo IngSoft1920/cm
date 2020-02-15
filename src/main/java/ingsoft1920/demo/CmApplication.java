@@ -1,4 +1,4 @@
-package ingsoft1920.cm;
+package ingsoft1920.demo;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
