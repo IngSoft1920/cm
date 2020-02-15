@@ -6,8 +6,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 // Lo de scanBasePackages es necesario para indicarle a Spring 
-// que busque los controladores en nuestro paquete controller
-@SpringBootApplication(scanBasePackages = {"ingsoft1920.controller"})
+// qué paquetes tiene que explorar para encontrar los beans,
+// controladores, etc
+
+@SpringBootApplication(scanBasePackages
+		= {"ingsoft1920.controller","ingsoft1920.bean"})
 public class CmApplication {
 	final static Logger logger = LogManager.getLogger(CmApplication.class.getName());
 
