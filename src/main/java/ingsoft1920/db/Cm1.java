@@ -65,7 +65,7 @@ public class Cm1 {
 		while((st=br.readLine()) != null){
 				st=st.replace("\"", "");
 				columnas=st.split(";");
-				stmt = conn.prepareStatement("INSERT INTO "+ table+" ("+nombreParametros+") "+"values("+numParam(columnas)+")");
+				stmt = conn.prepareStatement("INSERT INTO "+ table+" ("+nombreParametros+") "+"values()");
 				for(int i=1; i<=columnas.length;i++) {
 					System.out.println(columnas[i-1]);
 					if(columnas[i-1].equalsIgnoreCase("NULL"))
