@@ -36,7 +36,7 @@ public class Habitacion {
 
 	public Habitacion(String localizacion) {
 		// TODO Auto-generated constructor stub
-		localizacion = null;
+		this.localizacion = localizacion;
 	}
 
 	public double precioFinal1() {
@@ -97,9 +97,5 @@ public class Habitacion {
 		precio = precio*(1-nota/10);
 	}
 
-	public String toString() {
-		return "Precio Habitación: " + precioFinal1();
-	}
-	
 }
 

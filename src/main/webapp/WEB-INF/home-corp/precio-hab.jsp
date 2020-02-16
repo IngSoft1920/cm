@@ -4,13 +4,13 @@
 	<body>
 		<style>
 			a { text-decoration: none; }
-		</style
+		</style>
 	</body>
 	
 	<h1>Precio Habitación</h1>
 
     <form method="POST">
-        Ubicación Hotel: <input type="text" name="ubicacion" autocomplete="off">
+        Ubicación Hotel: <input type="text" name="localizacion" autocomplete="off">
         <br><br>
         
         <input type="submit" onclick="alert('Solicitud enviada')">
