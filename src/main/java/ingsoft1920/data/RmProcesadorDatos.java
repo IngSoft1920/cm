@@ -6,24 +6,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class RmProcesadorDatos {
-
-	public static void main (String []args) {
-
-		//TODO recibir qu� precio queremos calcular?
-		
-		int precioBase = 100;
-		int modCompetencia = 1;
-		int modOcupacionActual = 1;
-		int precioFinal = 0;
+	
+	public static double procesar(/*parametros*/) {
+		//TODO recibir qué precio queremos calcular?
 		
 		String[] docs = {"EUNVerano1", "EUNVerano2" /*.....*/};
-		
+
 		ArrayList<Integer> precios = new ArrayList<Integer>();
 		ArrayList<Double> ratings = new ArrayList<Double>();
-		
+
 		for (String doc : docs) {
-			
+
 			String path = "C:\\Users\\User\\Documents\\UiPath\\Prueba1\\" + doc + ".csv"; //Cambiar por ruta del repositorio?
 			BufferedReader br = null;
 
@@ -35,7 +30,7 @@ public class RmProcesadorDatos {
 			}
 
 			String linea = "";
-			
+
 			try {
 				linea = br.readLine(); //saltar la primera linea
 				while ( (linea = br.readLine()) != null) {
@@ -44,24 +39,27 @@ public class RmProcesadorDatos {
 
 					String data[] = linea.split(",");
 					if (data.length <= 3) continue; // si faltan datos, ignoro la linea
-					
+
 					ratings.add(Integer.parseInt(data[1]) + (double) Integer.parseInt(data[2])/10);
 					precios.add(Integer.parseInt((data[3])));
-					
+
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
+
+		//Media ponderada segun ratings
+		int media = 0;
+		int suma = 0;
 		for (int i = 0; i < precios.size(); i++) {
-			modCompetencia = 1; //TODO hacer el calculo con precio y valoraciones
+			media += precios.get(i) * ratings.get(i);
+			suma += ratings.get(i);
 		}
+		media = media / suma;
 		
-		modOcupacionActual = 1 ; //TODO llamar a la API de CM para conseguirlo!
-				
-		precioFinal = precioBase * modCompetencia * modOcupacionActual; 
-		//TODO enviarlo a CM
+		return media;
 	}
+
 }
