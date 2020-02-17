@@ -15,6 +15,7 @@ CREATE TABLE habitacion(
 	precio DECIMAL(4,2), /*Máximo valor posible: 9999.99*/
 	tipo ENUM('normal','premium'),
 	hotel_id INT,
+	ocupada BOOLEAN DEFAULT false,
 	
 	PRIMARY KEY(id),
 	FOREIGN KEY (hotel_id) REFERENCES hotel(id) 
