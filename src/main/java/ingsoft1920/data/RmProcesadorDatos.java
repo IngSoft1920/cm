@@ -9,17 +9,40 @@ import java.util.ArrayList;
 
 public class RmProcesadorDatos {
 	
-	public static double procesar(/*parametros*/) {
+	public static double procesar(String localizacion) //EUN {
 		//TODO recibir qué precio queremos calcular?
+		Calendar calendar = Calendar.getInstance();
+		int month = calendar.get(Calendar.MONTH);
+		int estacion=0;//P=0 V=1 O=2 I=3
+		String ruta= "";
+		switch(localizacion)
+			case "EUN":
+			case "EUS":
+			case "ASN":
+			case "ASS":
+			case "AMNN":
+			case "AMNS":
+				if (month > 5 && month <= 8)
+					estacion=1;
+				else if (month > 2 && month <= 5)
+					
+				else if (month > 8)
+					estacion=2;
+				else if (month <= 2)
+					estacion=3;
+				break;
+			case "AFN":
+			case "EUNPrimavera":
+			case "EUNOtoño":
+			case "EUNInvierno":
+			case "EUSVerano"
 		
-		String[] docs = {"EUNVerano1", "EUNVerano2" /*.....*/};
+		//String[] docs = {"EUNVerano1", "EUNVerano2" /*.....*/};
 
 		ArrayList<Integer> precios = new ArrayList<Integer>();
 		ArrayList<Double> ratings = new ArrayList<Double>();
 
-		for (String doc : docs) {
-
-			String path = "C:\\Users\\User\\Documents\\UiPath\\Prueba1\\" + doc + ".csv"; //Cambiar por ruta del repositorio?
+			String path = "C:\\Users\\User\\Documents\\UiPath\\Prueba1\\" + localizacion + estacion + ".csv"; //Cambiar por ruta del repositorio?
 			BufferedReader br = null;
 
 			try {
@@ -41,14 +64,14 @@ public class RmProcesadorDatos {
 					if (data.length <= 3) continue; // si faltan datos, ignoro la linea
 
 					ratings.add(Integer.parseInt(data[1]) + (double) Integer.parseInt(data[2])/10);
-					precios.add(Integer.parseInt((data[3])));
+					precios.add(Integer.parseInt((data[0].replaceAll("[^\\d.]", ""))));
 
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		
 
 		//Media ponderada segun ratings
 		int media = 0;
