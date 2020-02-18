@@ -11,5 +11,6 @@
 	<h1>Zona corporativa</h1>
 
 	<a href="/home-corp/anadir-hotel"> Añadir hotel </a>
+	<a href="/home-corp/anadir-empleado"> Añadir empleado </a>
 
 </html>
