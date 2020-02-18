@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ingsoft1920.bean.Hotel;
 import ingsoft1920.bean.Empleado;
 import ingsoft1920.dao.HotelDao;
-//import ingsoft1920.dao.EpleadoDao;
+//import ingsoft1920.dao.EmpleadoDao;
 
 @Controller
 public class ControladorCorporativo {
@@ -44,7 +44,7 @@ public class ControladorCorporativo {
 	
 	@PostMapping("/home-corp/anadir-empleado")
 	public String anadirEmpleadoTratamientoSolicitud(Empleado e) {
-		//clienteDao.anadirEmpleado(e);
+		//empleadoDao.anadirEmpleado(e);
 
 		System.out.println("Añadido "+e+" a la base de datos correctamente.");
 
