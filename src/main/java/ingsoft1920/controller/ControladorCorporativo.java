@@ -8,12 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ingsoft1920.bean.Hotel;
 import ingsoft1920.bean.Empleado;
 import ingsoft1920.dao.HotelDao;
-<<<<<<< HEAD
 import ingsoft1920.bean.Proveedor;;
-//import ingsoft1920.dao.EpleadoDao;
-=======
 //import ingsoft1920.dao.EmpleadoDao;
->>>>>>> develop
+//import ingsoft1920.dao.ProveedorDao;
 
 @Controller
 public class ControladorCorporativo {
