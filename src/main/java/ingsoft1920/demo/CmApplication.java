@@ -9,11 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // qué paquetes tiene que explorar para encontrar los beans,
 // controladores, etc
 
-@SpringBootApplication(scanBasePackages
-		= {"ingsoft1920.controller",
-		   "ingsoft1920.bean",
-		   "ingsoft1920.dao",
-		   "ingsoft1920.config"})
+@SpringBootApplication(scanBasePackages =
+	{"ingsoft1920.controller","ingsoft1920.bean"})
 public class CmApplication {
 	final static Logger logger = LogManager.getLogger(CmApplication.class.getName());
 
