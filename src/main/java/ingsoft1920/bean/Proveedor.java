@@ -1,8 +1,15 @@
 package ingsoft1920.bean;
 
 public class Proveedor {
+	private int id;
 	private String empresa;
 	private String producto;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getEmpresa() {
 		return empresa;
 	}
@@ -15,7 +22,8 @@ public class Proveedor {
 	public void setProducto(String producto) {
 		this.producto = producto;
 	}
+	@Override
 	public String toString() {
-		return "Proveedor [empresa=" + empresa + ", producto=" + producto + "]";
+		return "Proveedor [id=" + id + ", empresa=" + empresa + ", producto=" + producto + "]";
 	}
 }
