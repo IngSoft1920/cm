@@ -13,9 +13,9 @@
     <h1>Añadir Proveedor:</h1>
 
     <form method="POST">
-        Empleado: <input type="text" name="empresa" autocomplete="off">
+        Empresa: <input type="text" name="empresa" autocomplete="off">
         <br><br>
-        blabla: <input type="text" name="producto" autocomplete="off">
+        Producto: <input type="text" name="producto" autocomplete="off">
         <br><br>
         <input type="submit" onclick="alert('Solicitud enviada')">
     </form>

@@ -10,7 +10,8 @@
 	
 	<h1>Zona corporativa</h1>
 
-	<a href="/home-corp/anadir-hotel"> Añadir hotel </a>
-	<a href="/home-corp/anadir-empleado"> Añadir empleado </a>
+	<h2><a href="/home-corp/anadir-hotel"> Hoteles </a></h2><br>
+	<h2><a href="/home-corp/home-empleado-hotel"> Empleados </a></h2><br>
+	<h2><a href="/home-corp/anadir-proveedor"> Proveedores </a></h2><br>
 
 </html>

@@ -8,8 +8,8 @@
 		</style
 	</body>
 	
-	<h1>Bienvenido</h1>
+	<h1>¡Bienvenido a los mejores hoteles del mundo!</h1>
 
-	<a href="/home-client/realizar-reserva"> Realizar reserva </a>
+	<h2><a href="/home-client/realizar-reserva"> Realizar reserva </a></h2>
 
 </html>

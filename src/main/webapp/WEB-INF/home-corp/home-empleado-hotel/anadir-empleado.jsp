@@ -10,12 +10,16 @@
 		</style>
 	</body>
 
-    <h1>Añadir Proveedor:</h1>
+    <h1>Añadir Empleado:</h1>
 
     <form method="POST">
-        Empleado: <input type="text" name="empresa" autocomplete="off">
+        Nombre: <input type="text" name="nombre" autocomplete="off">
         <br><br>
-        blabla: <input type="text" name="producto" autocomplete="off">
+        Apellidos: <input type="text" name="apellidos" autocomplete="off">
+        <br><br>
+        E-mail: <input type="email" name="email" autocomplete="off">
+        <br><br>
+        Teléfono: <input type="tel" name="telefono" autocomplete="off">
         <br><br>
         <input type="submit" onclick="alert('Solicitud enviada')">
     </form>

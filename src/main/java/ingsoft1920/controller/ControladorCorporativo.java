@@ -32,15 +32,25 @@ public class ControladorCorporativo {
 		return "home-corp/anadir-hotel.jsp";
 	}
 
-	@GetMapping("/home-corp/anadir-empleado")
+	@GetMapping("/home-corp/home-empleado-hotel")
+	public String hotelEmpleadoForm() {
+		return "home-corp/home-empleado-hotel.jsp";
+	}
+	@PostMapping("/home-corp/home-empleado-hotel")
+	public String hotelEmpleadoTratamientoSolicitud(Hotel h) {
+		System.out.println("Datos guardados correctamente.");
+		return "home-corp/home-empleado-hotel/anadir-empleado.jsp";
+	}
+	
+	@GetMapping("/home-corp/home-empleado-hotel/anadir-empleado")
 	public String anadirEmpleadoForm() {
-		return "home-corp/anadir-empleado.jsp";
+		return "home-corp/home-empleado-hotel.jsp";
 	}
 
-	@PostMapping("/home-corp/anadir-empleado")
+	@PostMapping("/home-corp/home-empleado-hotel/anadir-empleado")
 	public String anadirEmpleadoTratamientoSolicitud(Empleado e) {
 		System.out.println("Añadido "+e+" a la base de datos correctamente.");
-		return "home-corp/anadir-empleado.jsp";
+		return "home-corp/home-empleado-hotel/anadir-empleado.jsp";
 	}
 
 	@GetMapping("/home-corp/anadir-proveedor")
