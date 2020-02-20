@@ -1,114 +1,125 @@
 package ingsoft1920.data;
 
-import java.util.Calendar;
-
-import org.springframework.stereotype.Component;
-
-import ingsoft1920.data.RmProcesadorDatos;
+import java.util.ArrayList;
 
 
-
-public class Habitacion {
+public class PrecioHabitacion {
 	
-	private double precio = 100;
-	private Calendar calendar;
-	private String localizacion; //precio medio en funcion de continente y estacion
-	//private String pais; para precisar la localizacion mas adelante
+	private double precio = 100; // Precio base
+	private String ciudad;
 	//private String direccion;
-	private int tipo; // normal = 0 suite = 1
-	private int ocupacion; //hallar porcentaje ocupacion hotel
-	private int numHabs;
+	private int tipoHabitacion; // normal = 0 suite = 1
+	private int ocupacion; // % ocupacion
+	//private int numHabs;
 	private int regimenComidas;
-	private int evento; //con recogida de datos de eventos con uipath mas adelante
-	private double puntuacion; //si recogemos feedback del hotel mas adelante
-	
-	
-	public Habitacion(Calendar calendar, String localizacion, int tipo, int ocupacion, int numHabs, int regimenComidas,
-			int evento, double puntuacion) {
-		this.calendar = calendar;
-		this.localizacion = localizacion;
-		this.tipo = tipo;
+	private int evento; // con recogida de datos de eventos con uipath mas adelante
+	private double puntuacion; //1-10
+	private int politica; // % max subidas/bajadas
+	private ArrayList<DatosPrecios> dtPrecios; // datos de la competencia
+
+	public PrecioHabitacion(double precio, String ciudad, int tipoHabitacion, int ocupacion, int regimenComidas, /*int evento, */
+			double puntuacion, int politica, ArrayList<DatosPrecios> dtPrecios) {
+		this.precio = precio;
+		this.ciudad = ciudad;
+		this.tipoHabitacion = tipoHabitacion;
 		this.ocupacion = ocupacion;
-		this.numHabs = numHabs;
 		this.regimenComidas = regimenComidas;
-		this.evento = evento;
+		//this.evento = evento;
 		this.puntuacion = puntuacion;
+		this.politica = politica;
+		this.dtPrecios = dtPrecios;
 	}
 
-	public Habitacion(Calendar calendar, String localizacion, int tipo) {
-		this.calendar = calendar;
-		this.localizacion = localizacion;
-		this.tipo = tipo;
-		this.ocupacion = -1;
-		this.numHabs = -1;
-		this.regimenComidas = -1;
-		this.evento = -1;
-		this.puntuacion = -1;
-	}
-
-	
 	public double precioFinal() {
-		precioLocalizacion();
-		precioTipo();	
+		precioCiudad();
+		precioTipoHabitacion();	
 		precioOcupacion();
 		precioRegimenComidas();
-		precioEvento();
+		//precioEvento();
 		precioPuntuacion();  
 		return precio;
 	}
 
-
-	public void precioLocalizacion() { 
+	public void precioCiudad() { 
 		//Devuelve una subida o bajada de hasta 50% segun la diferencia entre el precio base y el precio de la competencia
-		double precioCompetencia = RmProcesadorDatos.procesar(this.calendar, this.localizacion);
-		double mod = Math.atan((precioCompetencia - precio) / 50) / Math.PI; 
-		precio = precio * (1+mod);
+		double precioCompetencia = procesar(this.dtPrecios);
+		double variacion = 0.5 * this.politica * (1/100);
+		double mod = Math.atan((precioCompetencia - precio) / 50) * (2 / Math.PI) * variacion; 
+		precio = precio * (1 + mod);
 	}
 
-	public void precioOcupacion() {
+	public void precioOcupacion() { //sube o baja un % maximo que depende de la politica
 		if (this.ocupacion == -1) return;
-		double porcentajeOcupacion = this.ocupacion / this.numHabs; //aproximado porque hay habitaciones ind dobles
-		double ocu  = 0.5 - porcentajeOcupacion;
-		precio = precio*(1-ocu);
+		double variacion = 0.4 * this.politica * (1/100);
+		precio = precio * (1 + ((this.ocupacion - 0.5) / 0.5) * variacion);
 	}
 	
 	public void precioRegimenComidas() {
-		if (evento == -1) return;
-		//TODO precio = precio * this.regimenComidas
+		if (this.regimenComidas == -1) return;
+		precio = precio * this.regimenComidas; //TODO
 	}
 	
-	public void precioEvento() {
+	/*public void precioEvento() {
 		if (this.evento == -1) return;
 		if (this.evento > 10) precio = precio*1.5;
-	}
+	}*/
 	
-	public void precioTipo() {
-		if (this.tipo == 1) precio *= 1.3;
+	public void precioTipoHabitacion() {
+		if (this.tipoHabitacion == 1) precio *= 1.5;
 	}
 
-	public void precioPuntuacion() { //si las notas del hotel son buenas?
+	public void precioPuntuacion() { //sube o baja un % maximo que depende de la politica
 		if (this.puntuacion == -1) return;
-		double nota = 5 - this.puntuacion;
-		precio = precio*(1-nota/10);
+		double variacion = 0.1 * this.politica * (1/100);
+		precio = precio * (1 + ((this.puntuacion-5) / 5) * variacion); 
 	}
 
 	public String toString() {
 		return "Precio Habitación: " + precioFinal();
 	}
 	
-	public static void main(String[]args) {
-		Calendar calendar = Calendar.getInstance();
-		
-		Hotel listaHoteles = BaseDatos.getUbicacionHoteles(); //Devuelve id - ubicacion de los hoteles
-		for (Hotel hot : listaHoteles) {
-			for (String tipoHab : BaseDatos.getTipoHabitaciones(hot.id))
-				Habitacion habitacion = new Habitacion(calendar, hot.ubicacion, tipoHab);
-				BaseDatos.setPrecio(hot.id, tipo, habitacion.precioFinal(), /*calendar.getFecha()*/)
+	public double procesar(ArrayList<DatosPrecios> dtPrecios) { 
+		ArrayList<Double> precios = new ArrayList<Double>();
+		ArrayList<Double> puntuaciones = new ArrayList<Double>();
+
+		for (DatoPrecios dt : dtPrecios) {
+			precios.add(dt.getPrecio());
+			puntuaciones.add(dt.getPuntuacion);	
 		}
+		
+		//Media ponderada segun puntuaciones
+		int media = 0;
+		int suma = 0;
+		for (int i = 0; i < precios.size(); i++) {
+			media += precios.get(i) * puntuaciones.get(i);
+			suma += puntuaciones.get(i);
+		}
+		media = media / suma;
+		
+		return media;
+	}
 	
-		//Ejemplo de prueba:
-		//Habitacion habitacion = new Habitacion(calendar, "AMNN", 0);
-		//System.out.println(habitacion.precioFinal());
+	
+	public static void main(String[]args) {
+		
+		for (DatosHotel dt : BBDD.getDatosHotel()) {
+			// for (Fecha fecha : Fechas) { ...
+			idPeticion = Peticion.add(dt.ciudad, fecha, dt.tipo_habitacion, 0);
+			
+			//En este momento el equipo de uipath estara actualizando la tabla DatosPrecios
+			do { 
+				datosPrecios = DatosPrecios.get(idPeticion);
+			} while (datosPrecios == null); //Hasta que consiga la linea
+				
+			if (datosPrecios.estado != 1) {
+				Habitacion hab = new Habitacion(dt.ciudad, dt.tipo_habitacion, dt.ocupacion, 
+						dt.regimenComidas, /*evento, */ dt.nota_feedback, dt.politica_hotel, datosPrecios);
+				DatosPrecios.cambiarEstado();
+			}	
+			
+			TablaPrecios.setPrecio(dt.idHotel, dt.tipo_habitacion, fecha, hab.precioFinal());
+			// }
+		}
 	}
 	
 }
