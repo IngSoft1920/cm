@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <%@page import="java.util.List"%> 
-<%@page import="ingsoft1920.bean.Hotel"%>
+<%@page import="ingsoft1920.cm.bean.Hotel"%>
 
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 

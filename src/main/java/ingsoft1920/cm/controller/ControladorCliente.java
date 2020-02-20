@@ -1,4 +1,4 @@
-package ingsoft1920.controller;
+package ingsoft1920.cm.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

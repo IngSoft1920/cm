@@ -1,12 +1,12 @@
-package ingsoft1920.controller;
+package ingsoft1920.cm.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import ingsoft1920.bean.Empleado;
-import ingsoft1920.bean.Hotel;
-import ingsoft1920.bean.Proveedor;;
+import ingsoft1920.cm.bean.Empleado;
+import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.Proveedor;;
 //import ingsoft1920.dao.EmpleadoDao;
 //import ingsoft1920.dao.ProveedorDao;
 

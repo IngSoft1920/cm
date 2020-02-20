@@ -1,4 +1,4 @@
-package ingsoft1920.data;
+package ingsoft1920.cm.data;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
