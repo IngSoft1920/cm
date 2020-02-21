@@ -95,7 +95,7 @@ public class ReservaDAO {
     public HashSet<Hotel> getHotelesPorUbicacion(String ubicacion){
 
         String getHoteles = (ubicacion.compareTo("") == 0) ? "SELECT * FROM hotel WHERE hotel.ubicacion = " + ubicacion : "SELECT * FROM hotel";
-       
+
         if (conector.getConn() == null)
             conector.conectar();
 
