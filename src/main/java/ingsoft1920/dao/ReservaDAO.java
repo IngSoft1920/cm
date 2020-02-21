@@ -13,6 +13,8 @@ import java.util.HashSet;
 
 import ingsoft1920.bean.Hotel;
 import ingsoft1920.conector.conectorBBDD;
+import ingsoft1920.model.Reserva;
+import ingsoft1920.model.Tipo;
 
 public class ReservaDAO {
 
@@ -43,9 +45,56 @@ public class ReservaDAO {
         return dateFormat.format(nextDay);
     }
 
+    public HashSet<String> getCiudades(){
+        String getCiudades = "SELECT hotel.ubicacion FROM hotel GROUP BY hotel.ubicacion";
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        HashSet<String> ciudades = new HashSet<String>();
+
+        try {
+            stmt = conector.getConn().prepareStatement(getCiudades);
+            rs = stmt.executeQuery();
+
+            while (rs.next()){
+                ciudades.add(rs.getString("ubicacion"));
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ciudades;
+    }
+
+    private Hotel getHotel(int id) {
+
+        String getHotel = "SELECT * FROM hotel WHERE hotel.id = " + id;
+        Hotel hotel = new Hotel();
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = conector.getConn().prepareStatement(getHotel);
+            rs = stmt.executeQuery();
+            rs.next();
+
+            hotel.setNombre(rs.getString("nombre")); hotel.setUbicacion(rs.getString("ubicacion")); hotel.setId(Integer.parseInt(rs.getString("id")));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return hotel;
+
+    }
+
     public HashSet<Hotel> getHotelesPorUbicacion(String ubicacion){
 
-        String getHoteles = (ubicacion.compareTo("") == 0) ? "SELECT * FROM hotel WHERE hotel.ubicacion = ?" : "SELECT * FROM hotel";
+        String getHoteles = (ubicacion.compareTo("") == 0) ? "SELECT * FROM hotel WHERE hotel.ubicacion = " + ubicacion : "SELECT * FROM hotel";
        
         if (conector.getConn() == null)
             conector.conectar();
@@ -57,7 +106,6 @@ public class ReservaDAO {
 
         try {
             stmt = conector.getConn().prepareStatement(getHoteles);
-            stmt.setString(1,  String.valueOf(ubicacion));
 
             while(rs.next()){
                 Hotel hotel = new Hotel();
@@ -75,8 +123,7 @@ public class ReservaDAO {
         return res;
     }
 
-    public HashMap<String, int[]> getNumeroHabitacionesDisponibles(int hotel_id, String fecha_inicio, String fecha_fin) {
-
+    public HashSet<Tipo> getNumeroHabitacionesDisponibles(int hotel_id, String fecha_inicio, String fecha_fin) {
 
         //Por cada dia hay que ver cuantas habitaciones hay reservadas (por cada tipo)
         String getReservasPorDias =
@@ -113,16 +160,16 @@ public class ReservaDAO {
         ResultSet rsGetNumHabitaciones = null;
         ResultSet rsGetPrecio = null;
 
-        HashMap<String, int[]> disponibles = new HashMap<String, int[]>();
+        HashMap<String, Tipo> disponibles = new HashMap<String, Tipo>();
 
         //Vemos cuantas habitaciones hay por cada tipo y las almacenamos en disponibles
         try {
             stmtGetNumHabitaciones = conector.getConn().prepareStatement(getNumeroDeHabitaciones);
             stmtGetNumHabitaciones.setString(1,  String.valueOf(hotel_id));
+            rsGetNumHabitaciones = stmtGetNumHabitaciones.executeQuery();
 
             while(rsGetNumHabitaciones.next()){
-                disponibles.put(rsGetNumHabitaciones.getString("tipo"), new int[2]);
-                disponibles.get(rsGetNumHabitaciones.getString("tipo"))[0] = Integer.parseInt(rsGetNumHabitaciones.getString("n_disponibles"));
+                disponibles.put(rsGetNumHabitaciones.getString("tipo"), new Tipo(rsGetNumHabitaciones.getString("tipo"), 0, Integer.parseInt(rsGetNumHabitaciones.getString("n_disponibles"))));
             };
 
         } catch (SQLException e) {
@@ -154,19 +201,20 @@ public class ReservaDAO {
                 while (rs.next()) {
 
                     //No esta el tipo en disponibles...
-                    if (!disponibles.containsKey(rs.getString("tipo"))) {
-                    //No se hace nada
+                    if (disponibles.containsKey(rs.getString("tipo"))) {
+
+                        if (disponibles.get(rs.getString("tipo")).getDisponibles() > Integer.parseInt(rs.getString("num_reservas"))) {
+                            stmtGetPrecio.setString(3, rs.getString("tipo"));
+                            rsGetPrecio = stmtGetPrecio.executeQuery();
+                            disponibles.get(rs.getString("tipo")).addPrecio(Integer.parseInt(rsGetPrecio.getString("precio")));
+                        }
+                        //Si no hay habitaciones disponibles se borra la entrada de disponibles
+                        else {
+                            disponibles.remove(rs.getString("tipo"));
+                        }
                     }
                     //Si hay mas habitaciones en el hotel de un tipo que de reservas...
-                    else if (disponibles.get(rs.getString("tipo"))[0] > Integer.parseInt(rs.getString("num_reservas"))) {
-                        stmtGetPrecio.setString(3, rs.getString("tipo"));
-                        rsGetPrecio = stmtGetPrecio.executeQuery();
-                        disponibles.get(rs.getString("tipo"))[1] += Integer.parseInt(rsGetPrecio.getString("precio"));
-                    }
-                    //Si no hay habitaciones disponibles se borra la entrada de disponibles
-                    else {
-                        disponibles.remove(rs.getString("tipo"));
-                    }
+                    //No se hace nada
                 }
 
                 day = nextDay;
@@ -177,7 +225,35 @@ public class ReservaDAO {
             e.printStackTrace();
         }
 
-        return disponibles;
+        HashSet<Tipo> res = new HashSet<Tipo>();
+
+        for (String tipoStr: disponibles.keySet()) {
+            res.add(disponibles.get(tipoStr));
+        }
+
+        return res;
     }
+
+
+    public HashSet<Reserva> getPrecios(int hotel_id, String ubicacion, String fechaInicio, String fechaFin){
+
+        HashSet<Reserva> res = new HashSet<Reserva>();
+
+        if (hotel_id == -1){
+            for (Hotel hotel: getHotelesPorUbicacion(ubicacion)) {
+                for (Tipo tipo: getNumeroHabitacionesDisponibles(hotel.getId(), fechaInicio, fechaFin)) {
+                    res.add(new Reserva(hotel, tipo));
+                }
+            }
+        }
+        else {
+            for (Tipo tipo: getNumeroHabitacionesDisponibles(hotel_id, fechaInicio, fechaFin)) {
+                res.add(new Reserva(getHotel(hotel_id), tipo));
+            }
+        }
+
+        return res;
+    }
+
 
 }
