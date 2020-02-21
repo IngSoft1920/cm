@@ -18,15 +18,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-//Mas info sobre JSON y Spring aqui:
-//https://www.baeldung.com/spring-request-response-body
 @Controller
 public class APIReserva {
-    //OPCION MAS SIMPLE: TENEMOS QUE HACER MAS TRABAJO PERO TENEMOS MAS CONTROL SOBRE
-    //LO QUE OCURRE
 
-    //Con la etiqueta responseBody estamos especificando que el string que devolvamos
-    //sera el cuerpo de la respuesta HTTP que daremos a la peticion
     @ResponseBody
     @GetMapping("/datoUsuario1")
     public LinkedList<String> getgetNumeroHabitacionesReservadas(@RequestBody String req) {
@@ -130,7 +124,7 @@ public class APIReserva {
 
     @ResponseBody
     @GetMapping("/datoUsuario1")
-    public LinkedList<String> getCiudades(@RequestBody String req) {
+    public LinkedList<String> getHoteles(@RequestBody String req) {
         /*
          * {
          * 	"ubicacion":"Benitatxell",
@@ -178,7 +172,6 @@ public class APIReserva {
          * 	"ubicacion":"Benitaxell"
          *  "id":"2020"
          * }
-         *
          * ]
          */
     }
