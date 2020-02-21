@@ -9,7 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 
+import ingsoft1920.bean.Hotel;
 import ingsoft1920.conector.conectorBBDD;
 
 public class ReservaDAO {
@@ -41,10 +43,39 @@ public class ReservaDAO {
         return dateFormat.format(nextDay);
     }
 
-    public HashMap<String, int[]> getNumeroHabitacionesReservadas(String hotel, String fecha_inicio, String fecha_fin) {
+    public HashSet<Hotel> getHotelesPorUbicacion(String ubicacion){
 
-        //hay que encontrar el id del hodel
-        String getHotelId = "SELECT id FROM hotel WHERE nombre = ?";
+        String getHoteles = (ubicacion.compareTo("") == 0) ? "SELECT * FROM hotel WHERE hotel.ubicacion = ?" : "SELECT * FROM hotel";
+       
+        if (conector.getConn() == null)
+            conector.conectar();
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        HashSet<Hotel> res = new HashSet<Hotel>();
+
+        try {
+            stmt = conector.getConn().prepareStatement(getHoteles);
+            stmt.setString(1,  String.valueOf(ubicacion));
+
+            while(rs.next()){
+                Hotel hotel = new Hotel();
+
+                hotel.setId(Integer.parseInt(rs.getString("id")));
+                hotel.setNombre(rs.getString("nombre"));
+                hotel.setUbicacion(rs.getString("ubicacion"));
+                res.add(hotel);
+            };
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
+    public HashMap<String, int[]> getNumeroHabitacionesDisponibles(int hotel_id, String fecha_inicio, String fecha_fin) {
 
 
         //Por cada dia hay que ver cuantas habitaciones hay reservadas (por cada tipo)
@@ -82,19 +113,7 @@ public class ReservaDAO {
         ResultSet rsGetNumHabitaciones = null;
         ResultSet rsGetPrecio = null;
 
-        int hotel_id = 0;
         HashMap<String, int[]> disponibles = new HashMap<String, int[]>();
-
-        //Obtenemos el id del hotel que buscamos..
-        try {
-            stmt = conector.getConn().prepareStatement(getHotelId);
-            stmt.setString(1, hotel);
-            rs = stmt.executeQuery();
-            rs.next();
-            hotel_id = rs.getInt("id");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         //Vemos cuantas habitaciones hay por cada tipo y las almacenamos en disponibles
         try {
@@ -136,9 +155,9 @@ public class ReservaDAO {
 
                     //No esta el tipo en disponibles...
                     if (!disponibles.containsKey(rs.getString("tipo"))) {
-
+                    //No se hace nada
                     }
-                    //Si has mas habitaciones en el hotel de un tipo que de reservas...
+                    //Si hay mas habitaciones en el hotel de un tipo que de reservas...
                     else if (disponibles.get(rs.getString("tipo"))[0] > Integer.parseInt(rs.getString("num_reservas"))) {
                         stmtGetPrecio.setString(3, rs.getString("tipo"));
                         rsGetPrecio = stmtGetPrecio.executeQuery();
