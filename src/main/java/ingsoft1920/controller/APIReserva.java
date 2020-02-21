@@ -28,7 +28,7 @@ public class APIReserva {
         //Suponiendo que me llega algo como
         /*
          * {
-         * 	"hotel":"jorge",
+         * 	"hotel_id":"12",
          *  "fecha_inicio":"yyyy-MM-dd"
          *  "fecha_fin":"yyyy-MM-dd"
          * }
@@ -38,13 +38,13 @@ public class APIReserva {
         JsonObject obj = (JsonObject) JsonParser.parseString(req);
 
         //Vamos accediendo a sus propiedades, y las guardamos
-        String hotel = obj.get("hotel").getAsString();
+        int hotel_id = obj.get("hotel_id").getAsInt();
         String fechaInicio = obj.get("fecha_inicio").getAsString();
         String fechaFin = obj.get("fecha_fin").getAsString();
 
         ReservaDAO reserva = new ReservaDAO();
 
-        HashMap<String, int[]> disponibles = reserva.getNumeroHabitacionesReservadas(hotel, fechaInicio, fechaFin);
+        HashMap<String, int[]> disponibles = reserva.getNumeroHabitacionesDisponibles(hotel_id, fechaInicio, fechaFin);
 
         //Instanciamos un nuevo objeto Json
         JsonObject res = new JsonObject();
