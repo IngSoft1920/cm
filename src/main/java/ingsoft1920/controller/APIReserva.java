@@ -13,17 +13,15 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import ingsoft1920.dao.ReservaDAO;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 
 @Controller
 public class APIReserva {
 
     @ResponseBody
     @GetMapping("/datoUsuario1")
-    public LinkedList<String> getgetNumeroHabitacionesReservadas(@RequestBody String req) {
+    public LinkedList<String> getPrecioDisponibles(@RequestBody String req) {
         //Suponiendo que me llega algo como
         /*
          * {
