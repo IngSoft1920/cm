@@ -15,7 +15,7 @@ public class APIRRHH {
 
 
     @ResponseBody
-    @GetMapping("/datoUsuario1")
+    @GetMapping("/cojoBaja")
     public String puedeCogerBaja(@RequestBody String req) {
         /*
          * {

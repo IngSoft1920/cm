@@ -21,7 +21,7 @@ import java.util.LinkedList;
 public class APIReserva {
 
     @ResponseBody
-    @GetMapping("/datoUsuario1")
+    @GetMapping("/precioDisponible")
     public LinkedList<String> getPrecioDisponibles(@RequestBody String req) {
         //Suponiendo que me llega algo como
         /*
@@ -89,7 +89,7 @@ public class APIReserva {
 
 
     @ResponseBody
-    @GetMapping("/datoUsuario1")
+    @GetMapping("/ciudades")
     public String getCiudades() {
 
         ReservaDAO reserva = new ReservaDAO();
@@ -122,7 +122,7 @@ public class APIReserva {
     }
 
     @ResponseBody
-    @GetMapping("/datoUsuario1")
+    @GetMapping("/hoteles")
     public LinkedList<String> getHoteles(@RequestBody String req) {
         /*
          * {
