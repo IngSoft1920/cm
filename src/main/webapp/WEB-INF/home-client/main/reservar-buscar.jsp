@@ -29,7 +29,7 @@
             <input type="date" name="fecha_salida" autocomplete="off">
             <br><br>
 
-            <input type="submit" onclick="alert('Solicitud enviada')" value="Buscar">
+            <input type="submit" value="Buscar">
         </form>
     </body> 
 	

@@ -11,7 +11,7 @@
 	</body>
 
 	<c:forEach var="hotel" items="${hoteles}">
-        <form method="POST" action=/home-client/main/feedback/${hotel.id}>
+        <form method="GET" action=/home-client/main/feedback-escribir/${hotel.id}>
             <button type="submit">
                 <b>Nombre:</b> ${hotel.nombre} <br>
                 <b>Ubicación:</b> ${hotel.direccion}. ${hotel.ciudad},${hotel.pais} <br>
