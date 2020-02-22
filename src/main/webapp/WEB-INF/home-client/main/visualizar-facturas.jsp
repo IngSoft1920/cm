@@ -8,7 +8,7 @@
 	</head>
 		
 	<body>
-		<h1> Visualizar Reservas </h1>
+		<h1> Visualizar Facturas </h1>
 
 
 		<ul>
@@ -26,4 +26,3 @@
 	</body>
 
 </html>
-

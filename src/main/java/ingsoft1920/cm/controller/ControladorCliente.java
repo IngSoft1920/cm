@@ -1,21 +1,28 @@
 package ingsoft1920.cm.controller;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ingsoft1920.cm.bean.Cliente;
+import ingsoft1920.cm.bean.Factura;
 
 @Controller
+@SessionAttributes(names = {"cliente"})
 public class ControladorCliente {
 
 	final static Logger logger = LogManager.getLogger(ControladorCliente.class.getName());
 
+	@Autowired
+	FakeDB fake;
 
 	@GetMapping("/home-client")
 	public String homeCliente(Model m) {
@@ -33,9 +40,16 @@ public class ControladorCliente {
 	}
 
 	@PostMapping("/home-client/registro")
-	public String registroForm(Cliente c) {
-		logger.info("Recibido: "+c);
-		return "/home-client/main.jsp";
+	public String registroForm(Cliente c,Model m) {
+		
+		int id = fake.anadirCliente(c.getNombre(),
+						   			c.getDNI(),
+						   			c.getEmail(),
+						   			c.getPassword());
+		c.setId(id);
+		m.addAttribute("cliente", c);
+		
+		return "redirect:/home-client/main";
 	}
 
 	@GetMapping("/home-client/login")
@@ -44,8 +58,16 @@ public class ControladorCliente {
 	}
 
 	@PostMapping("/home-client/login")
-	public String iniciarSesionForm(String email,String password) {
-		logger.info("Recibido: email-"+email+", passwd-"+password);
+	public String iniciarSesionForm(String email,String password,Model m) throws Exception {
+		//TODO llamar dao
+		
+		Cliente c = fake.login(email, password);
+		
+		if(c==null)
+			throw new Exception("Estoy hay que mejorarlo: usuario no existe");
+		
+		m.addAttribute("cliente", c);
+		
 		return "home-client/main.jsp";
 	}
 
@@ -87,11 +109,21 @@ public class ControladorCliente {
 		return "/home-client/main/visualizar-reservas.jsp";
 	}
 
+	@GetMapping("/home-client/main/visualizar-facturas")
+	public String visualizarFacturas(Model m) {
+
+		// TODO llamar al método facturasCliente(int id_cliente); de FacturaDAO
+		Cliente clienteSesion = (Cliente) m.getAttribute("cliente");
+		List<Factura> facturasCliente = fake.facturasCliente( clienteSesion.getId() );
+		m.addAttribute("facturas", facturasCliente);
+		
+		return "/home-client/main/visualizar-facturas.jsp";
+	}
+
 	@GetMapping("/home-client/main/feedback")
 	public String realizarValoracion() {
 		return "/home-client/main/feedback.jsp";
 	}
-
 
 
 

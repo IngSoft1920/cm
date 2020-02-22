@@ -2,25 +2,26 @@
 
 <html>
 	<!--Esto es para evitar que se subrayen los enlaces-->
-	<body>
-		<style>
-			a { text-decoration: none; }
-		</style
-	</body>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/css/main.css">
+	</head>
 	
-	<h1> Iniciar sesión </h1>
 
-	<form method="POST">
-		<label>Correo</label>
-        <input type="text" name="email" autocomplete="off">
-        <br><br>
+	<body>
+		<h1> Iniciar sesión </h1>
 
-		<label>Contraseña</label>
-        <input type="password" name="password" autocomplete="off">
-        <br><br>
+		<form method="POST">
+			<label>Correo</label>
+			<input type="text" name="email" autocomplete="off">
+			<br><br>
 
-        <input type="submit" onclick="alert('Solicitud enviada')" value="Registrarme">
-    </form>
+			<label>Contraseña</label>
+			<input type="password" name="password" autocomplete="off">
+			<br><br>
+
+			<input type="submit" value="Iniciar sesión">
+		</form>
+	</body>
 
 	
 </html>

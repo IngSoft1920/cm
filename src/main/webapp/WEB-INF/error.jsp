@@ -4,10 +4,9 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
 	</head>
-	
-	<body>
-		<h1> Realizar Valoración </h1>
-	</body>
 
+	<body>
+		<h1> Se ha producido un error </h1>
+	</body>
 	
 </html>
