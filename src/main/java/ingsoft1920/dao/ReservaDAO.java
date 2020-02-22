@@ -269,7 +269,6 @@ public class ReservaDAO {
         String crearReserva = "INSERT INTO reserva (fecha_ent, fecha_sal, importe, hotel_id, tipo, cliente_id) VALUES (?,?,?,?,?,?)";
 
         PreparedStatement stmt = null;
-        ResultSet rs = null;
 
         try {
             stmt = conector.getConn().prepareStatement(crearReserva);
@@ -279,7 +278,7 @@ public class ReservaDAO {
             stmt.setString(4, String.valueOf(reserva.getHotel().getId()));
             stmt.setString(5, String.valueOf(reserva.getTipo().getTipo()));
             stmt.setString(6, String.valueOf(cliente_id));
-            rs = stmt.executeQuery();
+            stmt.executeQuery();
 
         } catch (SQLException e) {
             e.printStackTrace();
