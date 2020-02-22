@@ -8,7 +8,19 @@
 		</style
 	</body>
 	
-	<h1> Login </h1>
+	<h1> Iniciar sesión </h1>
+
+	<form method="POST">
+		<label>Correo</label>
+        <input type="text" name="email" autocomplete="off">
+        <br><br>
+
+		<label>Contraseña</label>
+        <input type="password" name="password" autocomplete="off">
+        <br><br>
+
+        <input type="submit" onclick="alert('Solicitud enviada')" value="Registrarme">
+    </form>
 
 	
 </html>

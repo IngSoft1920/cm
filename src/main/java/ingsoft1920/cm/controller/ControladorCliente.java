@@ -5,6 +5,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import ingsoft1920.cm.bean.Cliente;
 
 @Controller
 public class ControladorCliente {
@@ -27,10 +30,21 @@ public class ControladorCliente {
 		return "/home-client/registro.jsp";
 	}
 
+	@PostMapping("/home-client/registro")
+	public String registroForm(Cliente c) {
+		logger.info("Recibido: "+c);
+		return "/home-client/main.jsp";
+	}
+
 	@GetMapping("/home-client/login")
 	public String iniciarSesion() {
-
 		return "/home-client/login.jsp";
+	}
+
+	@PostMapping("/home-client/login")
+	public String iniciarSesionForm(String email,String password) {
+		logger.info("Recibido: email-"+email+", passwd-"+password);
+		return "home-client/main.jsp";
 	}
 
 	@GetMapping("/home-client/main")
