@@ -6,7 +6,7 @@ public class Factura {
 
 	private int id;
 	private double importe;
-	private double pagado;
+	private boolean pagado;
 	private String descripcion;
 	private Date fecha;
 	private int cliente_id;
@@ -22,10 +22,10 @@ public class Factura {
 	public void setImporte(double importe) {
 		this.importe = importe;
 	}
-	public double getPagado() {
+	public boolean getPagado() {
 		return pagado;
 	}
-	public void setPagado(double pagado) {
+	public void setPagado(boolean pagado) {
 		this.pagado = pagado;
 	}
 	public String getDescripcion() {
