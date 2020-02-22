@@ -39,4 +39,6 @@
 
     <button onclick="window.location.href='/home-client'">Regresar</button>
 
+    Este es pepe: ${pepe}
+
 </html>
