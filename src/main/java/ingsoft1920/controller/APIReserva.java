@@ -1,7 +1,8 @@
 package ingsoft1920.controller;
 
-import ingsoft1920.bean.Hotel;
+import ingsoft1920.model.Hotel;
 import ingsoft1920.model.Reserva;
+import ingsoft1920.model.Tipo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -174,4 +175,38 @@ public class APIReserva {
          */
     }
 
+    @ResponseBody
+    @GetMapping("/crearReserva")
+    public void crearReserva(@RequestBody String req) {
+        /*
+         * {
+         *
+         *  "fecha_inicio":"yyyy-MM-dd"
+         *  "fecha_fin":"yyyy-MM-dd"
+         *  "precio":"1023124"
+         *  "hotel_id":"12"
+         *  "tipo":"lujo"
+         *  "cliente_id":"123456789"
+         *
+         * }
+         */
+
+        //Parseamos el texto a un JsonObject
+        JsonObject obj = (JsonObject) JsonParser.parseString(req);
+
+        //Vamos accediendo a sus propiedades, y las guardamos
+        String fecha_ent = obj.get("fecha_inicio").getAsString();
+        String fecha_sal = obj.get("fecha_fin").getAsString();
+        double precio = obj.get("precio").getAsDouble();
+        int hotel_id = obj.get("hotel_id").getAsInt();
+        String tipo = obj.get("tipo").getAsString();
+        int cliente_id = obj.get("cliente_id").getAsInt();
+
+        ReservaDAO reservaDAO = new ReservaDAO();
+
+        Reserva reserva = new Reserva(new Hotel(hotel_id, "", ""), new Tipo(tipo, precio, 0));
+
+        reservaDAO.crearReserva(reserva, cliente_id);
+
+    }
 }
