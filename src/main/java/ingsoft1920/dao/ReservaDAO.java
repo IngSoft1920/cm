@@ -46,6 +46,11 @@ public class ReservaDAO {
     }
 
     public HashSet<String> getCiudades(){
+
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
+
         String getCiudades = "SELECT hotel.ciudad FROM hotel GROUP BY hotel.ciudad";
 
         PreparedStatement stmt = null;
@@ -65,6 +70,8 @@ public class ReservaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        conector.closeConn();
 
         return ciudades;
     }
@@ -98,6 +105,10 @@ public class ReservaDAO {
     //TODO: PREPARED STATEMENT
     public HashSet<Hotel> getHotelesPorUbicacion(String ciudad){
 
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
+
         String getHoteles = (ciudad.compareTo("") == 0) ? "SELECT * FROM hotel WHERE hotel.ciudad = " + ciudad : "SELECT * FROM hotel";
 
         if (conector.getConn() == null)
@@ -124,10 +135,16 @@ public class ReservaDAO {
             e.printStackTrace();
         }
 
+        conector.closeConn();
+
         return res;
     }
 
-    public HashSet<Tipo> getNumeroHabitacionesDisponibles(int hotel_id, String fecha_inicio, String fecha_fin) {
+    private HashSet<Tipo> getNumeroHabitacionesDisponibles(int hotel_id, String fecha_inicio, String fecha_fin) {
+
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
         //Por cada dia hay que ver cuantas habitaciones hay reservadas (por cada tipo)
         String getReservasPorDias =
@@ -153,8 +170,6 @@ public class ReservaDAO {
         String day = fecha_inicio;
         String nextDay = getNextDay(day);
 
-        if (conector.getConn() == null)
-            conector.conectar();
 
         PreparedStatement stmt = null;
         PreparedStatement stmtGetNumHabitaciones = null;
@@ -247,6 +262,10 @@ public class ReservaDAO {
 
         HashSet<Reserva> res = new HashSet<Reserva>();
 
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
+
         if (hotel_id == -1){
             for (Hotel hotel: getHotelesPorUbicacion(ciudad)) {
                 for (Tipo tipo: getNumeroHabitacionesDisponibles(hotel.getId(), fechaInicio, fechaFin)) {
@@ -263,15 +282,20 @@ public class ReservaDAO {
             }
         }
 
+        conector.closeConn();
         return res;
     }
 
 
     public void crearReserva(Reserva reserva, int cliente_id){
+
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
+
         String crearReserva = "INSERT INTO reserva (fecha_ent, fecha_sal, importe, hotel_id, tipo, cliente_id) VALUES (?,?,?,?,?,?)";
 
         PreparedStatement stmt = null;
-        ResultSet rs = null;
 
         try {
             stmt = conector.getConn().prepareStatement(crearReserva);
@@ -281,10 +305,33 @@ public class ReservaDAO {
             stmt.setString(4, String.valueOf(reserva.getHotel().getId()));
             stmt.setString(5, String.valueOf(reserva.getTipo().getTipo()));
             stmt.setString(6, String.valueOf(cliente_id));
-            rs = stmt.executeQuery();
+            stmt.executeQuery();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        conector.closeConn();
+    }
+
+
+    public void cancelarReserva(int id){
+        String borrarReserva = "DELETE FROM reserva WHERE id = ?";
+
+        if (!conector.isConnected()){
+            conector.conectar();
+        }
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conector.getConn().prepareStatement(borrarReserva);
+            stmt.setString(1, String.valueOf(id));
+            stmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        conector.closeConn();
+
     }
 }
