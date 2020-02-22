@@ -311,4 +311,25 @@ public class ReservaDAO {
 
         conector.closeConn();
     }
+
+
+    public void cancelarReserva(int id){
+        String borrarReserva = "DELETE FROM reserva WHERE id = ?";
+
+        if (!conector.isConnected()){
+            conector.conectar();
+        }
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conector.getConn().prepareStatement(borrarReserva);
+            stmt.setString(1, String.valueOf(id));
+            stmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        conector.closeConn();
+
+    }
 }

@@ -209,4 +209,25 @@ public class APIReserva {
         reservaDAO.crearReserva(reserva, cliente_id);
 
     }
+
+    @ResponseBody
+    @GetMapping("/cancelarReserva")
+    public void cancelarReserva(@RequestBody String req) {
+        /*
+         * {
+         *  "id"="1234567890"
+         * }
+         */
+
+        //Parseamos el texto a un JsonObject
+        JsonObject obj = (JsonObject) JsonParser.parseString(req);
+
+        //Vamos accediendo a sus propiedades, y las guardamos
+        int id = obj.get("id").getAsInt();
+
+        ReservaDAO reservaDAO = new ReservaDAO();
+
+        reservaDAO.cancelarReserva(id);
+
+    }
 }

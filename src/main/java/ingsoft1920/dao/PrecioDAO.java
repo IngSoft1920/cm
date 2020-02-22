@@ -35,5 +35,5 @@ public class PrecioDAO {
         conector.closeConn();
 
     }
-    
+
 }
