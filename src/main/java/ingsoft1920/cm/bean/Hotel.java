@@ -9,6 +9,7 @@ public class Hotel {
 	private String nombre;
 	private String continente;
 	private String pais;
+	private String ciudad;
 	private String direccion;
 	public int getId() {
 		return id;
@@ -34,6 +35,12 @@ public class Hotel {
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
+	public String getCiudad() {
+		return ciudad;
+	}
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
 	public String getDireccion() {
 		return direccion;
 	}
@@ -42,10 +49,9 @@ public class Hotel {
 	}
 	@Override
 	public String toString() {
-		return "Hotel [id=" + id + ", nombre=" + nombre + ", continente=" + continente + ", pais=" + pais
-				+ ", direccion=" + direccion + "]";
+		return "Hotel [id=" + id + ", nombre=" + nombre + ", continente=" + continente + ", pais=" + pais + ", ciudad="
+				+ ciudad + ", direccion=" + direccion + "]";
 	}
-
 
 
 

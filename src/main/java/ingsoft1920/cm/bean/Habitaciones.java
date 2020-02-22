@@ -3,7 +3,6 @@ package ingsoft1920.cm.bean;
 public class Habitaciones {
 
 	public enum Tipo { normal , premium }
-
 	private int hotel_id;
 	private Tipo tipo;
 	private int num_disponibles;
