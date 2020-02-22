@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @SpringBootApplication
 @Controller
-public class CmApplication implements ErrorController {
+public class CmApplication /*implements ErrorController*/ {
 	final static Logger logger = LogManager.getLogger(CmApplication.class.getName());
 
 	public static void main(String[] args) {
@@ -19,13 +19,13 @@ public class CmApplication implements ErrorController {
 		SpringApplication.run(CmApplication.class, args);
 	}
 	
-	@RequestMapping("/error")
-	public String error() {
-		return "/error.jsp";
-	}
-
-	@Override
-	public String getErrorPath() {
-		return "/error";
-	}
+//	@RequestMapping("/error")
+//	public String error() {
+//		return "/error.jsp";
+//	}
+//
+//	@Override
+//	public String getErrorPath() {
+//		return "/error";
+//	}
 }

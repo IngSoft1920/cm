@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Cliente;
 import ingsoft1920.cm.bean.Factura;
+import ingsoft1920.cm.bean.Feedback;
 import ingsoft1920.cm.bean.Reserva;
 import ingsoft1920.cm.bean.Habitaciones.Tipo;
 import ingsoft1920.cm.bean.Hotel;
@@ -23,6 +24,7 @@ public class FakeDB {
 	private ArrayList<Factura> facturas;
 	private ArrayList<Reserva> reservas;
 	private ArrayList<Hotel> hoteles;
+	private ArrayList<Feedback> valoraciones;
 
 	public FakeDB() {
 		facturas = new ArrayList<>();
@@ -36,6 +38,8 @@ public class FakeDB {
 		
 		hoteles = new ArrayList<>();
 		rellenarHoteles();
+		
+		valoraciones = new ArrayList<>();
 	}
 	
 	
@@ -50,7 +54,7 @@ public class FakeDB {
 		hoteles.add(h1);
 		
 		Hotel h2 = new Hotel();
-			h2.setId(1);
+			h2.setId(2);
 			h2.setNombre("Hotel Azúcar");
 			h2.setContinente("América");
 			h2.setPais("Cuba");
@@ -162,6 +166,30 @@ public class FakeDB {
 	
 	public List<Hotel> hoteles(){
 		return hoteles;
+	}
+	
+	public void anadirValoracion(String cabecera,String cuerpo,double nota,
+								 int cliente_id,int hotel_id)
+	{
+		int id = -1;
+		if( valoraciones.isEmpty() )
+			id = 1;
+		else
+			id = valoraciones.get( valoraciones.size()-1 ).getId()+1;
+		
+		
+		Feedback f = new Feedback();
+			f.setId(id);
+			f.setCabecera(cabecera);
+			f.setCuerpo(cuerpo);
+			f.setNota(nota);
+			f.setCliente_id(cliente_id);
+			f.setHotel_id(hotel_id);
+		valoraciones.add(f);
+	}
+	
+	public List<Feedback> feedback() {
+		return valoraciones;
 	}
 
 }

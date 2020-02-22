@@ -11,8 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import ingsoft1920.cm.bean.Cliente;
 import ingsoft1920.cm.bean.Factura;
@@ -131,11 +134,54 @@ public class ControladorCliente {
 	}
 
 	@GetMapping("/home-client/main/feedback")
-	public String realizarValoracion() {
+	public String realizarValoracion(Model m) {
 		//TODO llamar dao
+		
+		List<Hotel> hoteles = fake.hoteles();
+		m.addAttribute("hoteles", hoteles);
+		
 		return "/home-client/main/feedback.jsp";
+	}
+	
+	// Aquí recibimos el hotel que ha seleccionado 
+	// el usuario para hacer una valoración
+	@PostMapping("/home-client/main/feedback/{hotel_id}")
+	public String realizarValoracionForm(@PathVariable int hotel_id) {
+		return "redirect:/home-client/main/feedback-escribir/"+hotel_id;
+	}
+	
+	
+	@GetMapping("/home-client/main/feedback-escribir/{hotel_id}")
+	public String escribirValoracion(@PathVariable int hotel_id,Model m) {
+		m.addAttribute("hotelValoradoID", hotel_id);
+		return "/home-client/main/feedback-escribir.jsp";
+	}
+	
+	@PostMapping("/home-client/main/feedback-escribir/{hotel_id}")
+	public String recibirValoracion(@PathVariable int hotel_id,
+									@ModelAttribute("cliente") Cliente c,
+									String cabecera,String cuerpo,double nota) {
+		
+		fake.anadirValoracion(cabecera, cuerpo, nota, c.getId(), hotel_id);
+		
+		System.out.println( fake.feedback() );
+		
+		return "redirect:/home-client/main";
 	}
 
 
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
