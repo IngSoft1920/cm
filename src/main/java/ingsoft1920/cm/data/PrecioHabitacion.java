@@ -112,7 +112,7 @@ public class PrecioHabitacion {
 			} while (datosPrecios == null); //Hasta que consiga la linea
 				
 			if (datosPrecios.estado != 1) {
-				Habitacion hab = new Habitacion(dt.ciudad, dt.tipo_habitacion, dt.ocupacion, 
+				PrecioHabitacion hab = new PrecioHabitacion(dt.ciudad, dt.tipo_habitacion, dt.ocupacion, 
 						dt.regimenComidas, /*evento, */ dt.nota_feedback, dt.politica_hotel, datosPrecios);
 				DatosPrecios.cambiarEstado();
 			}	
