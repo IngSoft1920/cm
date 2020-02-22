@@ -2,7 +2,9 @@ package ingsoft1920.cm.controller;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -10,12 +12,17 @@ import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Cliente;
 import ingsoft1920.cm.bean.Factura;
+import ingsoft1920.cm.bean.Reserva;
+import ingsoft1920.cm.bean.Habitaciones.Tipo;
+import ingsoft1920.cm.bean.Hotel;
 
 @Component
 public class FakeDB {
 	
 	private ArrayList<Cliente> clientes;
 	private ArrayList<Factura> facturas;
+	private ArrayList<Reserva> reservas;
+	private ArrayList<Hotel> hoteles;
 
 	public FakeDB() {
 		facturas = new ArrayList<>();
@@ -23,8 +30,58 @@ public class FakeDB {
 		
 		clientes = new ArrayList<>();
 		rellenarClientes();
+		
+		reservas = new ArrayList<>();
+		rellenarReservas();
+		
+		hoteles = new ArrayList<>();
+		rellenarHoteles();
 	}
 	
+	
+	private void rellenarHoteles() {
+		Hotel h1 = new Hotel();
+			h1.setId(1);
+			h1.setNombre("Hotel Sol");
+			h1.setContinente("Europa");
+			h1.setPais("España");
+			h1.setCiudad("Madrid");
+			h1.setDireccion("Calle Gran vía,12");
+		hoteles.add(h1);
+		
+		Hotel h2 = new Hotel();
+			h2.setId(1);
+			h2.setNombre("Hotel Azúcar");
+			h2.setContinente("América");
+			h2.setPais("Cuba");
+			h2.setCiudad("La Habana");
+			h2.setDireccion("Calle Rueda,100");
+		hoteles.add(h2);
+	}
+
+
+	private void rellenarReservas() {
+		Reserva r1 = new Reserva();
+			r1.setId(1);
+			r1.setFecha_entrada(Date.valueOf("2020-12-20"));
+			r1.setFecha_salida(Date.valueOf("2020-12-25"));
+			r1.setImporte(150.0);
+			r1.setHotel_id(1);
+			r1.setTipo(Tipo.normal);
+			r1.setCliente_id(1);
+		reservas.add(r1);
+		
+		Reserva r2 = new Reserva();
+			r2.setId(2);
+			r2.setFecha_entrada(Date.valueOf("2020-10-1"));
+			r2.setFecha_salida(Date.valueOf("2020-10-3"));
+			r2.setImporte(30.0);
+			r2.setHotel_id(2);
+			r2.setTipo(Tipo.premium);
+			r2.setCliente_id(1);
+		reservas.add(r2);
+	}
+
 	private void rellenarClientes() {
 		Cliente c1 = new Cliente();
 		  c1.setId(1);
@@ -64,7 +121,7 @@ public class FakeDB {
 	    facturas.add(f3);
 	}
 	
-	List<Factura> facturasCliente(int id_cliente){
+	public List<Factura> facturasCliente(int id_cliente){
 		System.out.println(facturas);
 		return facturas
 				 .stream()
@@ -94,5 +151,17 @@ public class FakeDB {
 		
 		return ( o.isEmpty() ? null : o.get() );
 	}	
+	
+	// Decirles a cm1 que hay que cambiar este método
+	public Map<Reserva,Hotel> reservasCliente(int cliente_id){
+		Map<Reserva,Hotel> res = new HashMap<>();
+		for(int i=0;i<Math.min(hoteles.size(), reservas.size());i++)
+			res.put(reservas.get(i), hoteles.get(i));
+		return res;
+	}
+	
+	public List<Hotel> hoteles(){
+		return hoteles;
+	}
 
 }

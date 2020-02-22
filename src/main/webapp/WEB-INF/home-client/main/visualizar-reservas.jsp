@@ -12,13 +12,16 @@
 
 
 		<ul>
-			<c:forEach var="factura" items="${facturas}">
+			<!-- reservasMap es un Map<Reserva,Hotel> -->
+			<c:forEach var="entrada" items="${reservasMap}">
 				<li>
 					<p>
-						<b>Importe:</b> ${factura.importe}€ <br>
-						<b>Descripción:</b> ${factura.descripcion} <br>
-						<b>Fecha:</b> ${factura.fecha} <br>
-						<b>Pagado:</b> ${factura.pagado} <br>
+						<b>Importe:</b> ${entrada.key.importe}€ <br>
+						<b>Tipo:</b> ${entrada.key.tipo} <br>
+						<b>Fecha entrada:</b> ${entrada.key.fecha_entrada} <br>
+						<b>Fecha salida:</b> ${entrada.key.fecha_salida} <br>
+						<b>Hotel:</b> ${entrada.value.nombre} <br>
+						<b>Dirección:</b> ${entrada.value.direccion}. ${entrada.value.ciudad}, ${entrada.value.pais}. <br>
 					</p>
 				</li>
 			</c:forEach>	

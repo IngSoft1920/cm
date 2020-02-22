@@ -2,6 +2,7 @@ package ingsoft1920.cm.controller;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ingsoft1920.cm.bean.Cliente;
 import ingsoft1920.cm.bean.Factura;
+import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.Reserva;
 
 @Controller
 @SessionAttributes(names = {"cliente"})
@@ -105,15 +109,21 @@ public class ControladorCliente {
 	}
 
 	@GetMapping("/home-client/main/visualizar-reservas")
-	public String visualizarReservas() {
+	public String visualizarReservas(@ModelAttribute("cliente") Cliente clienteSesion,
+									 Model m) {
+		
+		// TODO llamar dao
+		Map<Reserva,Hotel> reservasCliente = fake.reservasCliente(clienteSesion.getId());
+		m.addAttribute("reservasMap",reservasCliente);
+		
 		return "/home-client/main/visualizar-reservas.jsp";
 	}
 
 	@GetMapping("/home-client/main/visualizar-facturas")
-	public String visualizarFacturas(Model m) {
+	public String visualizarFacturas(@ModelAttribute("cliente") Cliente clienteSesion,
+									 Model m) {
 
-		// TODO llamar al método facturasCliente(int id_cliente); de FacturaDAO
-		Cliente clienteSesion = (Cliente) m.getAttribute("cliente");
+		// TODO llamar dao
 		List<Factura> facturasCliente = fake.facturasCliente( clienteSesion.getId() );
 		m.addAttribute("facturas", facturasCliente);
 		
@@ -122,6 +132,7 @@ public class ControladorCliente {
 
 	@GetMapping("/home-client/main/feedback")
 	public String realizarValoracion() {
+		//TODO llamar dao
 		return "/home-client/main/feedback.jsp";
 	}
 
