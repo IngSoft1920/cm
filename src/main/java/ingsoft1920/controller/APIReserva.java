@@ -21,7 +21,7 @@ import java.util.LinkedList;
 public class APIReserva {
 
     @ResponseBody
-    @GetMapping("/datoUsuario1")
+    @GetMapping("/precioDisponible")
     public LinkedList<String> getPrecioDisponibles(@RequestBody String req) {
         //Suponiendo que me llega algo como
         /*
@@ -89,7 +89,7 @@ public class APIReserva {
 
 
     @ResponseBody
-    @GetMapping("/datoUsuario1")
+    @GetMapping("/ciudades")
     public String getCiudades() {
 
         ReservaDAO reserva = new ReservaDAO();
@@ -122,7 +122,7 @@ public class APIReserva {
     }
 
     @ResponseBody
-    @GetMapping("/datoUsuario1")
+    @GetMapping("/hoteles")
     public LinkedList<String> getHoteles(@RequestBody String req) {
         /*
          * {
@@ -207,6 +207,27 @@ public class APIReserva {
         Reserva reserva = new Reserva(new Hotel(hotel_id, "", ""), new Tipo(tipo, precio, 0));
 
         reservaDAO.crearReserva(reserva, cliente_id);
+
+    }
+
+    @ResponseBody
+    @GetMapping("/cancelarReserva")
+    public void cancelarReserva(@RequestBody String req) {
+        /*
+         * {
+         *  "id"="1234567890"
+         * }
+         */
+
+        //Parseamos el texto a un JsonObject
+        JsonObject obj = (JsonObject) JsonParser.parseString(req);
+
+        //Vamos accediendo a sus propiedades, y las guardamos
+        int id = obj.get("id").getAsInt();
+
+        ReservaDAO reservaDAO = new ReservaDAO();
+
+        reservaDAO.cancelarReserva(id);
 
     }
 }
