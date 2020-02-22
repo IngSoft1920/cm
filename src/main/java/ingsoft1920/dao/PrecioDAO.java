@@ -31,8 +31,9 @@ public class PrecioDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (conector.isConnected()){
-            conector.closeConn();
-        }
+
+        conector.closeConn();
+
     }
+    
 }
