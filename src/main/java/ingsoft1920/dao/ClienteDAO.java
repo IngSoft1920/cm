@@ -16,7 +16,7 @@ public class ClienteDAO {
 		@Autowired
 		private QueryRunner runner;
 		
-		private static conectorBBDD conector = new conectorBBDD("localhost:3306", "root", "Arturo26118", "bd-reservas-cm");
+		private static conectorBBDD conector = new conectorBBDD("piedrafita.ls.fi.upm.es", "cm2", "ingSoft20cm2.902", "cm");
 
 		public int anadirCliente(String nombre, String dni, String email, String password) {
 

@@ -82,7 +82,9 @@ public class ReservaDAO {
             rs = stmt.executeQuery();
 
             if (rs.next()){
-                hotel.setNombre(rs.getString("nombre")); hotel.setUbicacion(rs.getString("ciudad")); hotel.setId(Integer.parseInt(rs.getString("id")));
+                hotel.setNombre(rs.getString("nombre")); 
+                hotel.setUbicacion(rs.getString("ciudad")); 
+                hotel.setId(Integer.parseInt(rs.getString("id")));
             }
 
         } catch (SQLException e) {
