@@ -29,7 +29,36 @@ public class ControladorCliente {
 
 	@GetMapping("/home-client/login")
 	public String iniciarSesion() {
+
 		return "/home-client/login.jsp";
 	}
+
+	@GetMapping("/home-client/main")
+	public String mainCliente() {
+		return "/home-client/main.jsp";
+	}
+
+	@GetMapping("/home-client/main/reservar")
+	public String reservar() {
+		return "/home-client/main/reservar.jsp";
+	}
+
+	@GetMapping("/home-client/main/cancelar-reserva")
+	public String cancelarReserva() {
+		return "/home-client/main/cancelar-reserva.jsp";
+	}
+
+	@GetMapping("/home-client/main/visualizar-reservas")
+	public String visualizarReservas() {
+		return "/home-client/main/visualizar-reservas.jsp";
+	}
+
+	@GetMapping("/home-client/main/feedback")
+	public String realizarValoracion() {
+		return "/home-client/main/feedback.jsp";
+	}
+
+
+
 
 }
