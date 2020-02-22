@@ -8,7 +8,7 @@
 		</style
 	</body>
 	
-	<h1> Reservar </h1>
+	<h1> Resultados de búsqueda </h1>
 
 	
 </html>

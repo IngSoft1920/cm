@@ -1,5 +1,7 @@
 package ingsoft1920.cm.controller;
 
+import java.sql.Date;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -52,10 +54,28 @@ public class ControladorCliente {
 		return "/home-client/main.jsp";
 	}
 
-	@GetMapping("/home-client/main/reservar")
-	public String reservar() {
-		return "/home-client/main/reservar.jsp";
+	@GetMapping("/home-client/main/reservar-buscar")
+	public String reservarBuscar() {
+		return "/home-client/main/reservar-buscar.jsp";
 	}
+
+	@PostMapping("/home-client/main/reservar-buscar")
+	public String reservarForm(String continente,String pais,String ciudad,
+							   Date fecha_entrada,Date fecha_salida) {
+
+		String texto =
+				String.format("Recibido: continente:%s,pais:%s,ciudad:%s,fechaIn:%s,fechaFin:%s",
+							     continente,
+							     pais,
+							     ciudad,
+							     fecha_entrada,
+							     fecha_salida);
+
+		logger.info(texto);
+
+		return "/home-client/main/reservar-resultados.jsp";
+	}
+
 
 	@GetMapping("/home-client/main/cancelar-reserva")
 	public String cancelarReserva() {
