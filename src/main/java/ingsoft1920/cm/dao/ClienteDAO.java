@@ -1,4 +1,4 @@
-package ingsoft1920.dao;
+package ingsoft1920.cm.dao;
 
 import java.math.BigInteger;	
 import java.sql.Connection;
