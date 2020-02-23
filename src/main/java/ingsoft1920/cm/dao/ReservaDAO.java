@@ -45,6 +45,7 @@ public class ReservaDAO {
         return dateFormat.format(nextDay);
     }
 
+
     public HashSet<String> getCiudades(){
 
         if (! conector.isConnected()){
@@ -76,6 +77,7 @@ public class ReservaDAO {
         return ciudades;
     }
 
+
     private Hotel getHotel(int id) {
 
         String getHotel = "SELECT * FROM hotel WHERE hotel.id = " + id;
@@ -100,7 +102,7 @@ public class ReservaDAO {
 
     }
 
-    //TODO: PREPARED STATEMENT
+
     public HashSet<Hotel> getHotelesPorUbicacion(String ciudad){
 
         if (! conector.isConnected()){
@@ -137,6 +139,7 @@ public class ReservaDAO {
 
         return res;
     }
+
 
     private HashSet<Tipo> getNumeroHabitacionesDisponibles(int hotel_id, String fecha_inicio, String fecha_fin) {
 
@@ -332,4 +335,5 @@ public class ReservaDAO {
         conector.closeConn();
 
     }
+
 }

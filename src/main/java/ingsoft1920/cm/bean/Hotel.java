@@ -11,7 +11,20 @@ public class Hotel {
 	private String pais;
 	private String ciudad;
 	private String direccion;
-	public int getId() {
+
+    public Hotel() {
+    }
+
+    public Hotel(int id, String nombre, String continente, String pais, String ciudad, String direccion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.continente = continente;
+        this.pais = pais;
+        this.ciudad = ciudad;
+        this.direccion = direccion;
+    }
+
+    public int getId() {
 		return id;
 	}
 	public void setId(int id) {
