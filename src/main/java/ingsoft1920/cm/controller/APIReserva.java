@@ -88,7 +88,6 @@ public class APIReserva {
          */
     }
 
-
     @ResponseBody
     @GetMapping("/ciudades")
     public String getCiudades() {

@@ -3,6 +3,7 @@ package ingsoft1920.cm.dao;
 import ingsoft1920.cm.conector.conectorBBDD;
 import ingsoft1920.cm.model.Precio;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -22,10 +23,10 @@ public class PrecioDAO {
 
         try {
             stmt = conector.getConn().prepareStatement(anadirPrecio);
-            stmt.setString(1, String.valueOf(precio.getHotel_id()));
-            stmt.setString(2, String.valueOf(precio.getTipo()));
-            stmt.setString(3, String.valueOf(precio.getFecha()));
-            stmt.setString(4, String.valueOf(precio.getPrecio()));
+            stmt.setInt(1, precio.getHotel_id());
+            stmt.setString(2, precio.getTipo());
+            stmt.setDate(3, Date.valueOf(precio.getFecha()));
+            stmt.setDouble(4, precio.getPrecio());
             stmt.executeQuery();
 
         } catch (SQLException e) {
