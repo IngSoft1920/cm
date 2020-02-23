@@ -1,4 +1,4 @@
-package ingsoft1920.cm.controller.homecorp;
+package ingsoft1920.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
-
-import ingsoft1920.cm.controller.FakeDB;
 
 @Controller
 @RequestMapping("/proveedor")

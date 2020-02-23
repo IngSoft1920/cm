@@ -1,4 +1,4 @@
-package ingsoft1920.cm.controller.homecorp;
+package ingsoft1920.cm.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import ingsoft1920.cm.controller.FakeDB;
 
 @Controller
 @RequestMapping("/home-corp")

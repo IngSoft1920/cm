@@ -1,4 +1,4 @@
-package ingsoft1920.cm.controller.homecorp;
+package ingsoft1920.cm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ingsoft1920.cm.apiout.APIout;
 import ingsoft1920.cm.bean.Empleado;
-import ingsoft1920.cm.controller.FakeDB;
 
 @Controller
 @RequestMapping("/empleado")
