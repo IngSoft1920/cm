@@ -1,4 +1,4 @@
-package ingsoft1920.model;
+package ingsoft1920.cm.model;
 
 public class Tipo {
 

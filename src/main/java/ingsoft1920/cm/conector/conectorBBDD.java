@@ -1,4 +1,4 @@
-package ingsoft1920.conector;
+package ingsoft1920.cm.conector;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

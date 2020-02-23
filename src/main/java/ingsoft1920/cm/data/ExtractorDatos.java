@@ -2,7 +2,7 @@ package ingsoft1920.cm.data;
 
 import java.util.LinkedList;
 
-import ingsoft1920.model.Peticion;
+import ingsoft1920.cm.model.Peticion;
 
 public class ExtractorDatos {
 

@@ -1,4 +1,4 @@
-package ingsoft1920.controller;
+package ingsoft1920.cm.controller;
 
 import java.util.LinkedList;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import ingsoft1920.dao.ReservaDAO;
+import ingsoft1920.cm.dao.ReservaDAO;
 
 public class APIRRHH {
 
