@@ -10,6 +10,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
+import com.fasterxml.jackson.core.JsonFactoryBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -63,14 +64,33 @@ public class APIout {
 	
 	public static void enviarEmpleado(Empleado e) {
 		String empleadoJson = gson.toJson(e,Empleado.class);
-		System.out.println(empleadoJson);
-		enviar(empleadoJson,7001,"/creaEmpleado");
+		enviar(empleadoJson,7002,"/creaEmpleado");
 	}
 	
-	public static void eliminarEmpleado(Empleado e) {
+	public static void eliminarEmpleado(String email) {
 		JsonObject jsonO = new JsonObject();
-			jsonO.addProperty("email", e.getEmail());
+		  jsonO.addProperty("email", email);
+		  
+		enviar(jsonO.toString(),7002,"/eliminarEmpleado");
 	}
+	
+	public static void asignarNomina(int id_empleado,double valor) {
+		JsonObject jsonO = new JsonObject();
+			jsonO.addProperty("id_empleado",id_empleado);
+			jsonO.addProperty("valor",valor);
+			
+		enviar(jsonO.toString(),7002,"/asignaNomina");
+	}
+	
+//	public static void main(String[] args) {
+////		Empleado e = new Empleado();
+////			e.setId(5);
+////			e.setNombre("Hulio");
+////			e.setApellidos("Castro");
+////			e.setTelefono("123456");
+////			e.setEmail("j@gmail.com");
+//		asignarNomina(5,100);
+//	}
 	
 
 }

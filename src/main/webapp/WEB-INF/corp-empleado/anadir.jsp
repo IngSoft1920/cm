@@ -29,6 +29,10 @@
             <input type="text" name="ocupacion" autocomplete="off">
             <br><br>
 
+            <label>Nómina</label>
+            <input type="number" name="nomina" autocomplete="off">
+            <br><br>
+
             <input type="submit" value="Enviar">
         </form>
         <input type="submit" value="Volver" onclick="window.location='/home-corp';" />

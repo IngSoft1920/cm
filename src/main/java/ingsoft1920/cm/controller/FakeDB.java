@@ -336,7 +336,7 @@ public class FakeDB {
 		return proveedores;
 	}
 
-	public void anadirEmpleado(int hotel_id,String nombre,String apellidos,String email,
+	public Empleado anadirEmpleado(int hotel_id,String nombre,String apellidos,String email,
 							   String telefono, String ocupacion)
 	{
 		int id = -1;
@@ -354,6 +354,7 @@ public class FakeDB {
 			e.setTelefono(telefono);
 			e.setOcupacion(ocupacion);
 		empleados.add(e);
+		return e;
 	}
 	
 	public void anadirProveedor(int hotel_id,String empresa,String producto) {
@@ -380,13 +381,16 @@ public class FakeDB {
 		return proveedores;
 	}
 	
-	public void eliminarEmpleado(int empleado_id) {
+	public Empleado eliminarEmpleado(int empleado_id) {
+		Empleado res=null;
 		for(int i=0;i<empleados.size();i++) {
 			if(empleados.get(i).getId()==empleado_id) {
+				res = empleados.get(i);
 				empleados.remove(i);
 				break;
 			}
 		}
+		return res;
 	}
 	
 	public void eliminarProveedor(int proveedor_id) {

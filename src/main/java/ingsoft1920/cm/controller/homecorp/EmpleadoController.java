@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import ingsoft1920.cm.apiout.APIout;
+import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.controller.FakeDB;
 
 @Controller
@@ -38,10 +40,13 @@ public class EmpleadoController {
 	@PostMapping("/anadir")
 	public String recibirEmpleadoFormulario(@ModelAttribute("hotel_id") int hotel_id,
 											String nombre,String apellidos,String email,
-											String telefono, String ocupacion) 
+											String telefono, String ocupacion,double nomina) 
 	{
 		//TODO dao
-		fake.anadirEmpleado(hotel_id, nombre, apellidos, email, telefono, ocupacion);
+		Empleado anadido = fake.anadirEmpleado(hotel_id, nombre, apellidos, email, telefono, ocupacion);
+		APIout.enviarEmpleado(anadido);
+		APIout.asignarNomina(anadido.getId(), nomina);
+		
 		return "redirect:/empleado/"+hotel_id;
 	}
 	
@@ -56,7 +61,9 @@ public class EmpleadoController {
 	public String recibirEmpleadoAEliminar(@ModelAttribute("hotel_id") int hotel_id,
 										   int empleado_id) {
 		//TODO dao
-		fake.eliminarEmpleado(empleado_id);
+		Empleado eliminado = fake.eliminarEmpleado(empleado_id);
+		APIout.eliminarEmpleado(eliminado.getEmail());
+		
 		return "redirect:/empleado/"+hotel_id;
 	}
 	
