@@ -1,7 +1,7 @@
-package ingsoft1920.dao;
+package ingsoft1920.cm.dao;
 
-import ingsoft1920.conector.conectorBBDD;
-import ingsoft1920.model.Precio;
+import ingsoft1920.cm.conector.conectorBBDD;
+import ingsoft1920.cm.model.Precio;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

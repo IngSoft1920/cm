@@ -1,8 +1,10 @@
-package ingsoft1920.controller;
+package ingsoft1920.cm.controller;
 
-import ingsoft1920.model.Hotel;
-import ingsoft1920.model.Reserva;
-import ingsoft1920.model.Tipo;
+import ingsoft1920.cm.dao.ReservaDAO;
+import ingsoft1920.cm.model.Hotel;
+import ingsoft1920.cm.model.Reserva;
+import ingsoft1920.cm.model.Tipo;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import ingsoft1920.dao.ReservaDAO;
 
 import java.util.HashSet;
 import java.util.LinkedList;

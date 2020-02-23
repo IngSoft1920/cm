@@ -1,6 +1,6 @@
-package ingsoft1920.model;
+package ingsoft1920.cm.model;
 
-import ingsoft1920.model.Hotel;
+import ingsoft1920.cm.model.Hotel;
 
 public class Reserva {
 

@@ -1,5 +1,7 @@
 package ingsoft1920.cm.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import ingsoft1920.cm.bean.Proveedor;;
 @Controller
 public class ControladorCorporativo {
 
+	final static Logger logger = LogManager.getLogger(ControladorCorporativo.class.getName());
 
 	@GetMapping("/home-corp")
 	public String homeCorporativo() {
@@ -41,7 +44,7 @@ public class ControladorCorporativo {
 		System.out.println("Datos guardados correctamente.");
 		return "home-corp/home-empleado-hotel/anadir-empleado.jsp";
 	}
-	
+
 	@GetMapping("/home-corp/home-empleado-hotel/anadir-empleado")
 	public String anadirEmpleadoForm() {
 		return "home-corp/home-empleado-hotel.jsp";

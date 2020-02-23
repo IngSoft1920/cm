@@ -1,4 +1,4 @@
-package ingsoft1920.dao;
+package ingsoft1920.cm.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,10 +11,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import ingsoft1920.model.Hotel;
-import ingsoft1920.conector.conectorBBDD;
-import ingsoft1920.model.Reserva;
-import ingsoft1920.model.Tipo;
+import ingsoft1920.cm.conector.conectorBBDD;
+import ingsoft1920.cm.model.Hotel;
+import ingsoft1920.cm.model.Reserva;
+import ingsoft1920.cm.model.Tipo;
 
 public class ReservaDAO {
 
