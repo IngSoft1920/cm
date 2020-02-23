@@ -21,7 +21,7 @@
 				 <br>
 			</c:forEach>
 		</ul>
-		
+		<input type="submit" value="Volver" onclick="window.location='/home-corp';" />
 	</body>
 
 </html>

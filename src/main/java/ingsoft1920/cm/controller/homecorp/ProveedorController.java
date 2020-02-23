@@ -45,5 +45,20 @@ public class ProveedorController {
 		return "redirect:/proveedor/"+hotel_id;
 	}
 	
+	@GetMapping("/eliminar")
+	public String elegirProveedorAEliminar(Model m) {
+		//TODO dao
+		m.addAttribute("proveedores", fake.proveedores());
+		return "/corp-proveedor/eliminar.jsp";
+	}
+	
+	@PostMapping("/eliminar")
+	public String recibirEmpleadoAEliminar(@ModelAttribute("hotel_id") int hotel_id,
+										   int proveedor_id) {
+		//TODO dao
+		fake.eliminarProveedor(proveedor_id);
+		return "redirect:/proveedor/"+hotel_id;
+	}
+	
 
 }

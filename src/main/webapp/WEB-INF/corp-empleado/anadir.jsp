@@ -31,7 +31,7 @@
 
             <input type="submit" value="Enviar">
         </form>
-
+        <input type="submit" value="Volver" onclick="window.location='/home-corp';" />
     </body>
 
 </html>

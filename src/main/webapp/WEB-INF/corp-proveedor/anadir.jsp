@@ -6,7 +6,7 @@
     </head>
 
     <body>
-        <h1>Añadir empleado</h1>
+        <h1>Añadir Proveedor</h1>
         
         <form method="POST">
             <label>Empresa</label>
@@ -19,7 +19,7 @@
 
             <input type="submit" value="Enviar">
         </form>
-
+        <input type="submit" value="Volver" onclick="window.location='/home-corp';" />
     </body>
 
 </html>

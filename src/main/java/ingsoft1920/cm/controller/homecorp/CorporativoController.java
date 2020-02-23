@@ -24,35 +24,43 @@ public class CorporativoController {
 	
 	@GetMapping("/select-hotel/{accion}")
 	public String seleccionarHotel(Model m) {
-		
-		// accion está en { "empleado" , "proveedor" }. Nos permite reutilizar el 
-		// formulario para elegir el hotel para ambas acciones. Esto es
-		// útil en el PostMapping
-					
 		//TODO dao
 		m.addAttribute("hoteles",fake.hoteles());
-		
 		return "/corp/select-hotel.jsp";
 	}
 	
 	@PostMapping("/select-hotel/{accion}")
 	public String recibirHotelSeleccionado(@PathVariable("accion") String accion,
 										   int hotel_id) {
+		
 		String res = "redirect:";
 		
 		switch(accion) {
 		
 		case "empleado":
-			res+="/empleado";
+			res+="/empleado/"+hotel_id;
 			break;
 			
 		case "proveedor":
-			res+="/proveedor";
+			res+="/proveedor/"+hotel_id;
 			break;
-		
+			
+		case "editar":
+			res+="/hotel/editar/"+hotel_id;
+			break;
+			
+		case "eliminar":
+			//TODO dao
+			fake.eliminarHotel(hotel_id);
+			res+="/hotel";
+			break;
+			
+		case "facturacion":
+			res+="/hotel/facturacion/"+hotel_id;
+			break;
 		}
 		
-		return res+"/"+hotel_id;
+		return res;
 	}
 	
 

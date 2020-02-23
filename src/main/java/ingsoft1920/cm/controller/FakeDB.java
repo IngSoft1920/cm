@@ -319,6 +319,7 @@ public class FakeDB {
 		}
 
 		Reserva r = new Reserva();
+			r.setId(id);
 			r.setFecha_entrada(fecha_entrada);
 			r.setFecha_salida(fecha_salida);
 			r.setImporte(importe);
@@ -396,6 +397,49 @@ public class FakeDB {
 				break;
 			}
 		}
+	}
+	
+	public void anadirHotel(String nombre,String continente,String pais,
+						    String ciudad, String direccion)
+	{
+		int id = -1;
+		if( hoteles.isEmpty() ) {
+			id = 1;
+		} else {
+			id = hoteles.get( hoteles.size()-1 ).getId()+1;
+		}
+		
+		Hotel h = new Hotel();
+			h.setId(id);
+			h.setNombre(nombre);
+			h.setContinente(continente);
+			h.setPais(pais);
+			h.setCiudad(ciudad);
+			h.setDireccion(direccion);
+		hoteles.add(h);
+			
+	}
+	
+	public void eliminarHotel(int hotel_id) {
+		for(int i=0;i<hoteles.size();i++) {
+			if(hoteles.get(i).getId()==hotel_id) {
+				hoteles.remove(i);
+				break;
+			}
+		}
+	}
+	
+	public void editarHotel(int hotel_id,String nombre) {
+		for(int i=0;i<hoteles.size();i++) {
+			if(hoteles.get(i).getId()==hotel_id) {
+				hoteles.get(i).setNombre(nombre);
+				break;
+			}
+		}
+	}
+	
+	public List<Factura> facturacionHotel(int hotel_id) {
+		return facturas;
 	}
 
 }
