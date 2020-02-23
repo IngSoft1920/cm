@@ -188,5 +188,4 @@ public class EmpleadoDAO {
         return empleados;
     }
 
-
 }

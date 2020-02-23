@@ -55,7 +55,7 @@ public class APIReserva {
 
             obj.addProperty("nombre", reserva1.getHotel().getNombre());
             obj.addProperty("ubicacion", reserva1.getHotel().getUbicacion());
-            obj.addProperty("id", reserva1.getHotel().getId());
+            obj.addProperty("hotel_id", reserva1.getHotel().getId());
             obj.addProperty("tipo", reserva1.getTipo().getTipo());
             obj.addProperty("precio", reserva1.getTipo().getPrecio());
 
@@ -73,14 +73,14 @@ public class APIReserva {
          * {
          *  "nombre":"Uno caro"
          * 	"ubicacion":"Ayelo"
-         *  "id":"1"
+         *  "hotel_id":"1"
          *  "tipo":"lujo"
          *  "precio":"1000000"
          * },
          * {
          *  "nombre":"Otro caro"
          * 	"ubicacion":"Ayelo"
-         *  "id":"2020"
+         *  "hotel_id":"2020"
          *  "tipo":"lujo"
          *  "precio":"1000000"
          * }
