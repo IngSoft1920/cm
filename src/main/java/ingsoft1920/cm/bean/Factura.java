@@ -10,7 +10,20 @@ public class Factura {
 	private String descripcion;
 	private Date fecha;
 	private int cliente_id;
-	public int getId() {
+
+    public Factura() {
+    }
+
+    public Factura(int id, double importe, boolean pagado, String descripcion, Date fecha, int cliente_id) {
+        this.id = id;
+        this.importe = importe;
+        this.pagado = pagado;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.cliente_id = cliente_id;
+    }
+
+    public int getId() {
 		return id;
 	}
 	public void setId(int id) {

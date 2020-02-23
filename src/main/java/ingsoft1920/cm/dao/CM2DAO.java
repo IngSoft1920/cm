@@ -1,16 +1,17 @@
 package ingsoft1920.cm.dao;
 
+import ingsoft1920.cm.bean.Factura;
 import ingsoft1920.cm.bean.Habitaciones;
+import ingsoft1920.cm.bean.Precio;
 import ingsoft1920.cm.conector.conectorBBDD;
 import ingsoft1920.cm.bean.Hotel;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class CM2DAO {
 
@@ -191,5 +192,121 @@ public class CM2DAO {
 
         return hoteles;
 
+    }
+
+    public List<Factura> facturacionHotel (int hotel_id){
+
+        if (! conector.isConnected()) {
+            conector.conectar();
+        }
+
+        String getFacturas = "SELECT factura.*\n" +
+                "FROM (SELECT * \n" +
+                "        FROM reserva\n" +
+                "        WHERE reserva.hotel_id = 1) AS reservas_hotel\n" +
+                "INNER JOIN factura \n" +
+                "ON reservas_hotel.cliente_id = factura.cliente_id\n" +
+                "WHERE NOT pagado";
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Factura> facturas = new LinkedList<>();
+
+        try {
+            stmt = conector.getConn().prepareStatement(getFacturas);
+            rs = stmt.executeQuery();
+
+            while (rs.next()){
+                facturas.add(new Factura(rs.getInt("id"), rs.getInt("importe"), rs.getBoolean("pagado"), rs.getString("descripcion"), rs.getDate("fecha"), rs.getInt("cliente_id")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return facturas;
+    }
+
+    private Map<Hotel, List<Precio>> getHotelesPorUbicacion (String continente, String pais, String ciudad){
+
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
+
+        String getHotelesPorUbicacion = "SELECT *  " +
+                "FROM hotel " +
+                "WHERE hotel.continente = ? AND hotel.pais = ? AND hotel.ciudad = ?";
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        Map<Hotel, List<Precio>> hoteles = new HashMap<>();
+
+        try {
+            stmt = conector.getConn().prepareStatement(getHotelesPorUbicacion);
+            stmt.setString(1, continente);
+            stmt.setString(1, pais);
+            stmt.setString(3, ciudad);
+
+            rs = stmt.executeQuery();
+            while (rs.next()){
+                Hotel hotel = new Hotel(rs.getInt("id"), rs.getString("nombre"), rs.getString("continente"), rs.getString("pais"), rs.getString("ciudad"), rs.getString("direccion"));
+                hoteles.put(hotel, new LinkedList<>());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return hoteles;
+    }
+
+    private List<Precio> getPreciosPorFechas (int hotel_id, Date fecha_entrada, Date fecha_salida){
+
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
+
+        String getPreciosPorFechas = "SELECT *\n" +
+                                    "FROM precio \n" +
+                                    "WHERE precio.hotel_id = ? AND ? <= precio.fecha AND ? > precio.fecha";
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Precio> precios = new LinkedList<>();
+
+        try {
+            stmt = conector.getConn().prepareStatement(getPreciosPorFechas);
+            stmt.setInt(1, hotel_id);
+            stmt.setDate(2, fecha_entrada);
+            stmt.setDate(2, fecha_salida);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()){
+                Precio precio = new Precio(rs.getInt("hotel_id"), Habitaciones.Tipo.valueOf(rs.getString("tipo")), rs.getDate("fecha"), rs.getDouble("precio"));
+                precios.add(precio);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return precios;
+    }
+
+    public Map<Hotel, List<Precio>> hotelesPorReserva(String continente, String pais, String ciudad, Date fecha_entrada, Date fecha_salida){
+        String getPreciosPorFechas = "SELECT *\n" +
+                                        "FROM precio \n" +
+                                        "WHERE DATE(\"2000-10-12\") <= precio.fecha AND DATE(\"2025-10-12\") > precio.fecha";
+
+        Map<Hotel, List<Precio>> hoteles = getHotelesPorUbicacion(continente, pais, ciudad);
+
+        for (Hotel hotel: hoteles.keySet()) {
+            hoteles.get(hotel).addAll(getPreciosPorFechas(hotel.getId(), fecha_entrada, fecha_salida));
+        }
+
+        return hoteles;
     }
 }
