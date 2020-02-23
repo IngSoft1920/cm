@@ -180,7 +180,7 @@ public class FakeDB {
 									.filter( c -> c.getEmail().equals(email) && c.getPassword().equals(password) )
 									.findFirst();
 
-		return ( o.isEmpty() ? null : o.get() );
+		return ( o.isPresent() ? o.get() : null );
 	}
 
 	// Decirles a cm1 que hay que cambiar este método
