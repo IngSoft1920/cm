@@ -1,6 +1,6 @@
 package ingsoft1920.dao;
 
-import java.math.BigInteger;
+import java.math.BigInteger;	
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,9 +10,10 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ingsoft1920.cm.bean.Cliente;
-import ingsoft1920.conector.conectorBBDD;
+//import ingsoft1920.conector.conectorBBDD;
 
 public class ClienteDAO {
+		/*
 		@Autowired
 		private QueryRunner runner;
 		
@@ -68,5 +69,5 @@ public class ClienteDAO {
 	            e.printStackTrace();
 	        }
 			return c;
-		}
+		}*/
 }
