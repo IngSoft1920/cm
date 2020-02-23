@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import ingsoft1920.cm.bean.Habitaciones;
 import ingsoft1920.cm.conector.conectorBBDD;
 import ingsoft1920.cm.model.Hotel;
 import ingsoft1920.cm.model.Reserva;
@@ -76,7 +77,6 @@ public class ReservaDAO {
         return ciudades;
     }
 
-
     private Hotel getHotel(int id) {
 
         String getHotel = "SELECT * FROM hotel WHERE hotel.id = " + id;
@@ -100,7 +100,6 @@ public class ReservaDAO {
         return hotel;
 
     }
-
 
     public HashSet<Hotel> getHotelesPorUbicacion(String ciudad){
 
@@ -272,7 +271,6 @@ public class ReservaDAO {
         return res;
     }
 
-
     public HashSet<Reserva> getPrecios(int hotel_id, String ciudad, String fechaInicio, String fechaFin){
 
         HashSet<Reserva> res = new HashSet<>();
@@ -301,7 +299,6 @@ public class ReservaDAO {
         return res;
     }
 
-
     public void crearReserva(Reserva reserva, int cliente_id){
 
         if (! conector.isConnected()){
@@ -329,6 +326,11 @@ public class ReservaDAO {
         conector.closeConn();
     }
 
+    public void anadirReserva(java.sql.Date fecha_entrada, java.sql.Date fecha_salida, double importe, int hotel_id, Habitaciones.Tipo tipo, int cliente_id){
+        Reserva reserva = new Reserva(new Hotel(hotel_id, "", ""), new Tipo(tipo.toString(), importe, 0));
+
+        crearReserva(reserva, cliente_id);
+    }
 
     public void cancelarReserva(int id){
         String borrarReserva = "DELETE FROM reserva WHERE id = ?";
@@ -348,6 +350,45 @@ public class ReservaDAO {
 
         conector.closeConn();
 
+    }
+
+    public List<ingsoft1920.cm.bean.Reserva> reservasCliente (int cliente_id){
+
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
+        String getReservas = "SELECT * FROM reserva WHERE cliente_id = ?";
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ingsoft1920.cm.bean.Reserva reserva = null;
+        List<ingsoft1920.cm.bean.Reserva> reservas = new LinkedList<>();
+
+        try {
+            stmt = conector.getConn().prepareStatement(getReservas);
+            stmt.setInt(1, cliente_id);
+
+            rs = stmt.executeQuery();
+
+            while (rs.next()){
+
+                reserva = new ingsoft1920.cm.bean.Reserva();
+
+                reserva.setId(rs.getInt("id"));
+                reserva.setFecha_entrada(rs.getDate("fecha_ent"));
+                reserva.setFecha_salida(rs.getDate("fecha_sal"));
+                reserva.setImporte(rs.getDouble("importe"));
+                reserva.setHotel_id(rs.getInt("hotel_id"));
+                reserva.setTipo(Habitaciones.Tipo.valueOf(rs.getString("tipo")));
+                reserva.setCliente_id(rs.getInt("cliente_id"));
+
+                reservas.add(reserva);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return reservas;
     }
 
 }
