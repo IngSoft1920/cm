@@ -7,16 +7,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Cliente;
+import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Factura;
 import ingsoft1920.cm.bean.Feedback;
 import ingsoft1920.cm.bean.Habitaciones.Tipo;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Precio;
+import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.bean.Reserva;
 
 @Component
@@ -28,7 +31,9 @@ public class FakeDB {
 	private ArrayList<Hotel> hoteles;
 	private ArrayList<Feedback> valoraciones;
 	private ArrayList<Precio> precios;
-
+	private ArrayList<Empleado> empleados;
+	private ArrayList<Proveedor> proveedores;
+ 
 	public FakeDB() {
 		facturas = new ArrayList<>();
 		rellenarFacturas();
@@ -44,8 +49,49 @@ public class FakeDB {
 
 		valoraciones = new ArrayList<>();
 
-		precios = new ArrayList<Precio>();
+		precios = new ArrayList<>();
 		rellenarPrecios();
+		
+		empleados = new ArrayList<>();
+		rellenarEmpleados();
+		
+		proveedores = new ArrayList<>();
+		rellenarProveedores();
+	}
+
+
+	private void rellenarProveedores() {
+		Proveedor p1 = new Proveedor();
+			p1.setId(1);
+			p1.setEmpresa("Vegetales SA");
+			p1.setProducto("tomates");
+		proveedores.add(p1);
+		
+		Proveedor p2 = new Proveedor();
+			p2.setId(2);
+			p2.setEmpresa("Manteles SA");
+			p2.setProducto("sábanas");
+		proveedores.add(p2);
+	}
+
+	private void rellenarEmpleados() {
+		Empleado e1 = new Empleado();
+			e1.setId(1);
+			e1.setNombre("Juan");
+			e1.setApellidos("Cuesta");
+			e1.setTelefono("123456");
+			e1.setOcupacion("camarero");
+			e1.setEmail("j@gmail.com");
+		empleados.add(e1);
+		
+		Empleado e2 = new Empleado();
+			e2.setId(2);
+			e2.setNombre("Pedro");
+			e2.setApellidos("Kurtz");
+			e2.setTelefono("300300300");
+			e2.setOcupacion("chef");
+			e2.setEmail("p@gmail.com");
+		empleados.add(e2);
 	}
 
 
@@ -265,13 +311,14 @@ public class FakeDB {
 							  int hotel_id, Tipo tipo, int cliente_id)
 	{
 		int id = -1;
-		if( reservas.isEmpty() ) {
+		if( reservas.size() == 0 ) {
 			id = 1;
 		} else {
 			id = reservas.get( reservas.size()-1 ).getId()+1;
 		}
 
 		Reserva r = new Reserva();
+			r.setId(id);
 			r.setFecha_entrada(fecha_entrada);
 			r.setFecha_salida(fecha_salida);
 			r.setImporte(importe);
@@ -280,7 +327,118 @@ public class FakeDB {
 			r.setCliente_id(cliente_id);
 		reservas.add(r);
 	}
+	
+	public List<Empleado> empleadosHotel(int hotel_id){
+		return empleados;
+	}
+	
+	public List<Proveedor> proveedoresHotel(int hotel_id){
+		return proveedores;
+	}
 
-
+	public void anadirEmpleado(int hotel_id,String nombre,String apellidos,String email,
+							   String telefono, String ocupacion)
+	{
+		int id = -1;
+		if( empleados.isEmpty() ) {
+			id = 1;
+		} else {
+			id = empleados.get( empleados.size()-1 ).getId()+1;
+		}
+		
+		Empleado e = new Empleado();
+			e.setId(id);
+			e.setNombre(nombre);
+			e.setApellidos(apellidos);
+			e.setEmail(email);
+			e.setTelefono(telefono);
+			e.setOcupacion(ocupacion);
+		empleados.add(e);
+	}
+	
+	public void anadirProveedor(int hotel_id,String empresa,String producto) {
+		
+		int id = -1;
+		if( proveedores.isEmpty() ) {
+			id = 1;
+		} else {
+			id = proveedores.get( proveedores.size()-1 ).getId()+1;
+		}
+		
+		Proveedor p = new Proveedor();
+			p.setId(id);
+			p.setEmpresa(empresa);
+			p.setProducto(producto);
+		proveedores.add(p);
+	}
+	
+	public List<Empleado> empleados(){
+		return empleados;
+	}
+	
+	public List<Proveedor> proveedores(){
+		return proveedores;
+	}
+	
+	public void eliminarEmpleado(int empleado_id) {
+		for(int i=0;i<empleados.size();i++) {
+			if(empleados.get(i).getId()==empleado_id) {
+				empleados.remove(i);
+				break;
+			}
+		}
+	}
+	
+	public void eliminarProveedor(int proveedor_id) {
+		for(int i=0;i<proveedores.size();i++) {
+			if(proveedores.get(i).getId()==proveedor_id) {
+				proveedores.remove(i);
+				break;
+			}
+		}
+	}
+	
+	public void anadirHotel(String nombre,String continente,String pais,
+						    String ciudad, String direccion)
+	{
+		int id = -1;
+		if( hoteles.isEmpty() ) {
+			id = 1;
+		} else {
+			id = hoteles.get( hoteles.size()-1 ).getId()+1;
+		}
+		
+		Hotel h = new Hotel();
+			h.setId(id);
+			h.setNombre(nombre);
+			h.setContinente(continente);
+			h.setPais(pais);
+			h.setCiudad(ciudad);
+			h.setDireccion(direccion);
+		hoteles.add(h);
+			
+	}
+	
+	public void eliminarHotel(int hotel_id) {
+		for(int i=0;i<hoteles.size();i++) {
+			if(hoteles.get(i).getId()==hotel_id) {
+				hoteles.remove(i);
+				break;
+			}
+		}
+	}
+	
+	public void editarHotel(int hotel_id,String nombre) {
+		for(int i=0;i<hoteles.size();i++) {
+			if(hoteles.get(i).getId()==hotel_id) {
+				hoteles.get(i).setNombre(nombre);
+				break;
+			}
+		}
+	}
+	
+	public List<Factura> facturacionHotel(int hotel_id) {
+		return facturas;
+	}
 
 }
