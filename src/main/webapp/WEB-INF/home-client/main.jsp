@@ -9,8 +9,6 @@
 		
 		<h1> Hola ${cliente.nombre} </h1>
 
-		¡quitar esto!... id: ${cliente.id}
-
    		<h2><a href="/home-client/main/reservar-buscar">Reservar</a></h2>
     	<h2><a href="/home-client/main/cancelar-reserva">Cancelar reserva</a></h2>
 		<h2><a href="/home-client/main/visualizar-reservas">Ver mis reservas</a></h2>

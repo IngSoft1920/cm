@@ -17,10 +17,12 @@ public class ControladorCorporativo {
 
 	final static Logger logger = LogManager.getLogger(ControladorCorporativo.class.getName());
 
-	@GetMapping("/home-corp")
-	public String homeCorporativo() {
-		return "home-corp.jsp";
-	}
+//	@GetMapping("/home-corp")
+//	public String homeCorporativo() {
+//		return "home-corp.jsp";
+//	}
+	
+	/*
 
 	@GetMapping("/home-corp/anadir-hotel")
 	public String anadirHotelForm() {
@@ -65,5 +67,5 @@ public class ControladorCorporativo {
 		System.out.println("Añadido "+p+" a la base de datos correctamente.");
 		return "home-corp/anadir-proveedor.jsp";
 	}
-
+*/
 }
