@@ -11,7 +11,21 @@ public class Reserva {
 	private int hotel_id;
 	private Habitaciones.Tipo tipo;
 	private int cliente_id;
-	public int getId() {
+
+    public Reserva() {
+    }
+
+    public Reserva(int id, Date fecha_entrada, Date fecha_salida, double importe, int hotel_id, Habitaciones.Tipo tipo, int cliente_id) {
+        this.id = id;
+        this.fecha_entrada = fecha_entrada;
+        this.fecha_salida = fecha_salida;
+        this.importe = importe;
+        this.hotel_id = hotel_id;
+        this.tipo = tipo;
+        this.cliente_id = cliente_id;
+    }
+
+    public int getId() {
 		return id;
 	}
 	public void setId(int id) {

@@ -9,7 +9,17 @@ public class Precio {
 	private Date fecha;
 	private double precio;
 
-	public int getHotel_id() {
+    public Precio() {
+    }
+
+    public Precio(int hotel_id, Habitaciones.Tipo tipo, Date fecha, double precio) {
+        this.hotel_id = hotel_id;
+        this.tipo = tipo;
+        this.fecha = fecha;
+        this.precio = precio;
+    }
+
+    public int getHotel_id() {
 		return hotel_id;
 	}
 	public void setHotel_id(int hotel_id) {

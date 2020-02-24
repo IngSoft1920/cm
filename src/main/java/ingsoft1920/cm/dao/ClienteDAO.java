@@ -10,10 +10,10 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ingsoft1920.cm.bean.Cliente;
-//import ingsoft1920.conector.conectorBBDD;
+import ingsoft1920.cm.conector.conectorBBDD;
 
 public class ClienteDAO {
-		/*
+
 		@Autowired
 		private QueryRunner runner;
 		
@@ -69,5 +69,5 @@ public class ClienteDAO {
 	            e.printStackTrace();
 	        }
 			return c;
-		}*/
+		}
 }

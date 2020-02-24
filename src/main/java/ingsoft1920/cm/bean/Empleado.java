@@ -9,7 +9,20 @@ public class Empleado {
 	private String email;
 	private String telefono;
 	private String ocupacion;
-	public int getId() {
+
+    public Empleado() {
+    }
+
+    public Empleado(int id, String nombre, String apellidos, String email, String telefono, String ocupacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.email = email;
+        this.telefono = telefono;
+        this.ocupacion = ocupacion;
+    }
+
+    public int getId() {
 		return id;
 	}
 	public void setId(int id) {
