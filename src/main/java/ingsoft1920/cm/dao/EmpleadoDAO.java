@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EmpleadoDAO {
 
-    private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711", "piedrafita.ls.fi.upm.es");
+    private static conectorBBDD conector = new conectorBBDD();
 
     private int anadirEmpleadoEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion){
 
@@ -142,6 +142,7 @@ public class EmpleadoDAO {
             while (rs.next()){
                 empleado = new Empleado(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido1"), rs.getString("email"), rs.getString("telefono"), rs.getString("ocupacion"));
                 empleados.add(empleado);
+                System.out.println(empleado);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -187,5 +188,11 @@ public class EmpleadoDAO {
 
         return empleados;
     }
+    
+    public static void main(String[] args) {
+		System.out.println("HEEEEEEREEEEEEEEEEEEE");
+
+		System.out.println( new HotelDAO().hoteles()  );
+	}
 
 }

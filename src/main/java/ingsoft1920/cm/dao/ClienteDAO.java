@@ -17,8 +17,9 @@ public class ClienteDAO {
 		@Autowired
 		private QueryRunner runner;
 		
-		private static conectorBBDD conector = new conectorBBDD("piedrafita.ls.fi.upm.es", "cm1", "ingSoft20cm1.711", "cm");
-
+		private static conectorBBDD conector = new conectorBBDD();
+				
+				
 		public int anadirCliente(String nombre, String dni, String email, String password) {
 
 			String insertar = "INSERT INTO cliente (nombre,dni,email,password) VALUES (?,?,?,?)";

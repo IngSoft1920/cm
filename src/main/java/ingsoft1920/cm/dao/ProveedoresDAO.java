@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ProveedoresDAO {
 
-    private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711", "piedrafita.ls.fi.upm.es");
+    private static conectorBBDD conector = new conectorBBDD();
 
     private int anadirProveedor(String empresa, String producto){
 

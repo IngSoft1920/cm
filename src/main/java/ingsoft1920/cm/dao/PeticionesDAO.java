@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 public class PeticionesDAO {
 
-    private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711", "piedrafita.ls.fi.upm.es");
+    private static conectorBBDD conector = new conectorBBDD();
 
     public LinkedList<Peticion> getPeticiones(int id) {
 

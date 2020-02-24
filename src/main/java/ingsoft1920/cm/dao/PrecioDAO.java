@@ -10,8 +10,8 @@ import java.sql.SQLException;
 
 public class PrecioDAO {
 
-    private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711", "piedrafita.ls.fi.upm.es");
-
+    private static conectorBBDD conector = new conectorBBDD();
+    		
     //Recibe un objeto Precio (definido en ingsof1920/model)
     public void anadirPrecio(Precio precio){
 
