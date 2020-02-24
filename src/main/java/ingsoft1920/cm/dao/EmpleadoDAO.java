@@ -32,6 +32,8 @@ public class EmpleadoDAO {
             stmt.setString(4, telefono);
             stmt.setString(5, ocupacion);
 
+            stmt.execute();
+
             rs = stmt.getGeneratedKeys();
 
             if (rs.next()) {
@@ -56,7 +58,7 @@ public class EmpleadoDAO {
             stmt.setInt(1, hotel_id);
             stmt.setInt(2, empleado_id);
 
-            stmt.executeQuery();
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

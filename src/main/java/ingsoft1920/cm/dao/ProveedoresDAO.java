@@ -30,6 +30,8 @@ public class ProveedoresDAO {
             stmt.setString(1, empresa);
             stmt.setString(2, producto);
 
+            stmt.execute();
+
             rs = stmt.getGeneratedKeys();
 
             if (rs.next()) {
@@ -54,7 +56,7 @@ public class ProveedoresDAO {
             stmt.setInt(1, hotel_id);
             stmt.setInt(2, proveedor_id);
 
-            stmt.executeQuery();
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();

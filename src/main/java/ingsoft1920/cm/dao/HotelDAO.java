@@ -37,6 +37,7 @@ public class HotelDAO {
             stmt.setString(4, ciudad);
             stmt.setString(5, direccion);
 
+            stmt.execute();
             rs = stmt.getGeneratedKeys();
 
             if (rs.next()) {
@@ -71,7 +72,7 @@ public class HotelDAO {
             stmt.setString(2, tipo.toString());
             stmt.setInt(3, num);
 
-            stmt.executeQuery();
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
