@@ -16,13 +16,15 @@ import ingsoft1920.cm.model.Tipo;
 
 public class ReservaDAO {
 
-    private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711", "piedrafita.ls.fi.upm.es");
+	private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711",
+			"piedrafita.ls.fi.upm.es");
 
-    /*
-    @param day con el formato yyyy-MM-dd
-    @return dia siguiente
-     */
-    private String getNextDay(String day) {
+	/*
+	 * @param day con el formato yyyy-MM-dd
+	 *
+	 * @return dia siguiente
+	 */
+	private String getNextDay(String day) {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 

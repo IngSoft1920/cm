@@ -13,47 +13,37 @@ import ingsoft1920.cm.dao.ReservaDAO;
 
 public class APIRRHH {
 
+	@ResponseBody
+	@GetMapping("/cojoBaja")
+	public String puedeCogerBaja(@RequestBody String req) {
+		/*
+		 * { "id_empleado":7867 "id_baja": 4 "duracion": 8657 }
+		 */
 
-    @ResponseBody
-    @GetMapping("/cojoBaja")
-    public String puedeCogerBaja(@RequestBody String req) {
-        /*
-         * {
-         * 	"id_empleado":7867
-         *  "id_baja": 4
-         *  "duracion": 8657
-         * }
-         */
+		// Parseamos el texto a un JsonObject
+		JsonObject obj = (JsonObject) JsonParser.parseString(req);
 
-        //Parseamos el texto a un JsonObject
-        JsonObject obj = (JsonObject) JsonParser.parseString(req);
+		LinkedList<String> res = new LinkedList<String>();
 
-        LinkedList<String> res = new LinkedList<String>();
+		// Vamos accediendo a sus propiedades, y las guardamos
+		int idEmpleado = obj.get("id_empleado").getAsInt();
+		int idBaja = obj.get("id_baja").getAsInt();
+		int duracion = obj.get("duracion").getAsInt();
 
-        //Vamos accediendo a sus propiedades, y las guardamos
-        int idEmpleado = obj.get("id_empleado").getAsInt();
-        int idBaja = obj.get("id_baja").getAsInt();
-        int duracion = obj.get("duracion").getAsInt();
+		ReservaDAO reserva = new ReservaDAO();
 
-        ReservaDAO reserva = new ReservaDAO();
+		String resultado = "denegada";// Por ahora denegamos todas las bajas
 
-        String resultado = "denegada";//Por ahora denegamos todas las bajas
+		obj = new JsonObject();
+		obj.addProperty("id_empleado", idEmpleado);
+		obj.addProperty("id_bajo", idBaja);
+		obj.addProperty("resultado", resultado);
 
-        obj = new JsonObject();
-        obj.addProperty("id_empleado", idEmpleado);
-        obj.addProperty("id_bajo", idBaja);
-        obj.addProperty("resultado", resultado);
+		return obj.getAsString();
 
-
-        return obj.getAsString();
-
-        //Devolvera lo siguiente en el cuerpo de la respuesta
-        /*
-         * {
-         * 	"id_empleado":7867
-         *  "id_baja": 4
-         *  "resultado": "denegado"
-         * }
-         */
-    }
+		// Devolvera lo siguiente en el cuerpo de la respuesta
+		/*
+		 * { "id_empleado":7867 "id_baja": 4 "resultado": "denegado" }
+		 */
+	}
 }

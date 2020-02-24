@@ -1,6 +1,5 @@
 package ingsoft1920.cm.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,55 +13,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CorporativoController {
 	@Autowired
 	FakeDB fake;
-	
+
 	@GetMapping
 	public String homeCorporativo() {
 		return "/corp/home-corp.jsp";
 	}
-	
+
 	@GetMapping("/select-hotel/{accion}")
 	public String seleccionarHotel(Model m) {
-		//TODO dao
-		m.addAttribute("hoteles",fake.hoteles());
+		// TODO dao
+		m.addAttribute("hoteles", fake.hoteles());
 		return "/corp/select-hotel.jsp";
 	}
-	
+
 	@PostMapping("/select-hotel/{accion}")
-	public String recibirHotelSeleccionado(@PathVariable("accion") String accion,
-										   int hotel_id) {
-		
+	public String recibirHotelSeleccionado(@PathVariable("accion") String accion, int hotel_id) {
+
 		String res = "redirect:";
-		
-		switch(accion) {
-		
+
+		switch (accion) {
+
 		case "empleado":
-			res+="/empleado/"+hotel_id;
+			res += "/empleado/" + hotel_id;
 			break;
-			
+
 		case "proveedor":
-			res+="/proveedor/"+hotel_id;
+			res += "/proveedor/" + hotel_id;
 			break;
-			
+
 		case "editar":
-			res+="/hotel/editar/"+hotel_id;
+			res += "/hotel/editar/" + hotel_id;
 			break;
-			
+
 		case "eliminar":
-			//TODO dao
+			// TODO dao
 			fake.eliminarHotel(hotel_id);
-			res+="/hotel";
+			res += "/hotel";
 			break;
-			
+
 		case "facturacion":
-			res+="/hotel/facturacion/"+hotel_id;
+			res += "/hotel/facturacion/" + hotel_id;
 			break;
 		}
-		
+
 		return res;
 	}
-	
 
-
-	
-	
 }

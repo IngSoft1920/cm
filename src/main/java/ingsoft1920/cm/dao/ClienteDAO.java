@@ -1,6 +1,6 @@
 package ingsoft1920.cm.dao;
 
-import java.math.BigInteger;	
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,60 +14,60 @@ import ingsoft1920.cm.conector.conectorBBDD;
 
 public class ClienteDAO {
 
-		@Autowired
-		private QueryRunner runner;
-		
-		private static conectorBBDD conector = new conectorBBDD("piedrafita.ls.fi.upm.es", "cm1", "ingSoft20cm1.711", "cm");
+	@Autowired
+	private QueryRunner runner;
 
-		public int anadirCliente(String nombre, String dni, String email, String password) {
+	private static conectorBBDD conector = new conectorBBDD("piedrafita.ls.fi.upm.es", "cm1", "ingSoft20cm1.711", "cm");
 
-			String insertar = "INSERT INTO cliente (nombre,dni,email,password) VALUES (?,?,?,?)";
-			String obtenerId = "SELECT id FROM cliente WHERE name= "+ nombre;
-			Integer idCliente = null;
-			
-			PreparedStatement statement = null;
-			PreparedStatement statement2 = null;
-	        ResultSet resultset = null;
-	        ResultSet resultset2 = null;
+	public int anadirCliente(String nombre, String dni, String email, String password) {
 
-	        try {
-	            statement = conector.getConn().prepareStatement(insertar);
-	            statement.setString(1, nombre);
-	            statement.setString(2, dni);
-	            statement.setString(3, email);
-	            statement.setString(4, password);
-	            resultset = statement.executeQuery();
-	            statement2 = conector.getConn().prepareStatement(obtenerId);
-	            resultset2 = statement2.executeQuery();
-	            idCliente = Integer.parseInt(resultset2.getString("id"));
+		String insertar = "INSERT INTO cliente (nombre,dni,email,password) VALUES (?,?,?,?)";
+		String obtenerId = "SELECT id FROM cliente WHERE name= " + nombre;
+		Integer idCliente = null;
 
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	        return idCliente;
+		PreparedStatement statement = null;
+		PreparedStatement statement2 = null;
+		ResultSet resultset = null;
+		ResultSet resultset2 = null;
+
+		try {
+			statement = conector.getConn().prepareStatement(insertar);
+			statement.setString(1, nombre);
+			statement.setString(2, dni);
+			statement.setString(3, email);
+			statement.setString(4, password);
+			resultset = statement.executeQuery();
+			statement2 = conector.getConn().prepareStatement(obtenerId);
+			resultset2 = statement2.executeQuery();
+			idCliente = Integer.parseInt(resultset2.getString("id"));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		
-		public Cliente login (String email, String password) {
-			Cliente c = new Cliente();
-			
-			String clienteRegistrado = "SELECT * FROM Cliente where email= "+email+" and password = "+password;
-			PreparedStatement statement = null;
-	        ResultSet resultset = null;
-	        
-	        try {
-	        	statement = conector.getConn().prepareStatement(clienteRegistrado);
-	        	resultset = statement.executeQuery();
-	        	if (resultset.next()){
-	        		c.setId(Integer.parseInt(resultset.getString("id")));
-	                c.setNombre(resultset.getString("nombre"));
-	                c.setDNI(resultset.getString("dni"));
-	                c.setEmail(resultset.getString("email"));
-	                c.setPassword(resultset.getString("password"));
-	            }
+		return idCliente;
+	}
 
-	        }catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-			return c;
+	public Cliente login(String email, String password) {
+		Cliente c = new Cliente();
+
+		String clienteRegistrado = "SELECT * FROM Cliente where email= " + email + " and password = " + password;
+		PreparedStatement statement = null;
+		ResultSet resultset = null;
+
+		try {
+			statement = conector.getConn().prepareStatement(clienteRegistrado);
+			resultset = statement.executeQuery();
+			if (resultset.next()) {
+				c.setId(Integer.parseInt(resultset.getString("id")));
+				c.setNombre(resultset.getString("nombre"));
+				c.setDNI(resultset.getString("dni"));
+				c.setEmail(resultset.getString("email"));
+				c.setPassword(resultset.getString("password"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		return c;
+	}
 }
