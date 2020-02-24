@@ -12,7 +12,7 @@ public class PrecioDAO {
 
     private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711", "piedrafita.ls.fi.upm.es");
 
-    //Recibe un objeto Precio (definido en ingsof1920/model)
+    //Recibe un objeto Precio (definido en ingsof1920/bean)
     public void anadirPrecio(Precio precio){
 
         if (! conector.isConnected()){
