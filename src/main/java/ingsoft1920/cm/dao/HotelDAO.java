@@ -55,7 +55,7 @@ public class HotelDAO {
 
     private void anadirTipo (int id, Habitaciones.Tipo tipo, int num){
 
-        String anadirHotel = "INSERT INTO habitacion (hotel_id, tipo, n_disponibles) VALUES (?,?,?)";
+        String anadirHotel = "INSERT INTO habitacion (hotel_id, tipo, total_habitaciones) VALUES (?,?,?)";
 
         if (! conector.isConnected()){
             conector.conectar();
@@ -136,7 +136,7 @@ public class HotelDAO {
 
     private void editarTipo(int id, Habitaciones.Tipo tipo, int num) {
 
-        String editarHotel = "UPDATE habitacion SET n_disponible = ? WHERE hotel_id  = ? AND = ?";
+        String editarHotel = "UPDATE habitacion SET total_habitaciones = ? WHERE hotel_id  = ? AND tipo = ?";
 
         if (! conector.isConnected()){
             conector.conectar();
@@ -205,7 +205,7 @@ public class HotelDAO {
         String getFacturas = "SELECT factura.*\n" +
                 "FROM (SELECT * \n" +
                 "        FROM reserva\n" +
-                "        WHERE reserva.hotel_id = 1) AS reservas_hotel\n" +
+                "        WHERE reserva.hotel_id = ?) AS reservas_hotel\n" +
                 "INNER JOIN factura \n" +
                 "ON reservas_hotel.cliente_id = factura.cliente_id\n" +
                 "WHERE NOT pagado";
@@ -216,6 +216,7 @@ public class HotelDAO {
 
         try {
             stmt = conector.getConn().prepareStatement(getFacturas);
+            stmt.setInt(1, hotel_id);
             rs = stmt.executeQuery();
 
             while (rs.next()){
@@ -287,7 +288,7 @@ public class HotelDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()){
-                Precio precio = new Precio(rs.getInt("hotel_id"), Habitaciones.Tipo.valueOf(rs.getString("tipo")), rs.getDate("fecha"), rs.getDouble("precio"));
+                Precio precio = new Precio(rs.getInt("hotel_id"), Habitaciones.Tipo.valueOf(rs.getString("habitaciones_tipo")), rs.getDate("fecha"), rs.getDouble("precio"));
                 precios.add(precio);
             }
 

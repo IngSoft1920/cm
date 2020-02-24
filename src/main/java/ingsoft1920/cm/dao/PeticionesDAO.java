@@ -13,7 +13,7 @@ public class PeticionesDAO {
 
     private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20ge1.711", "piedrafita.ls.fi.upm.es");
 
-    private LinkedList<Peticion> getPeticiones(int id) {
+    public LinkedList<Peticion> getPeticiones(int id) {
 
         if (!conector.isConnected()){
             conector.conectar();
@@ -24,7 +24,7 @@ public class PeticionesDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        String getPeticiones = "SELECT * FROM peticion";
+        String getPeticiones = "SELECT * FROM peticiones";
 
         try {
             stmt = conector.getConn().prepareStatement(getPeticiones);
@@ -59,4 +59,6 @@ public class PeticionesDAO {
 
         conector.closeConn();
     }
+
+
 }
