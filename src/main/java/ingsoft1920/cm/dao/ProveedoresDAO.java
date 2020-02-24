@@ -16,7 +16,7 @@ public class ProveedoresDAO {
 
     private int anadirProveedor(String empresa, String producto){
 
-        String anadirEmpleado = "INSERT INTO empleado (empresa, producto) VALUES (?,?)";
+        String anadirProveedor = "INSERT INTO proveedor (empresa, producto) VALUES (?,?)";
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -24,7 +24,7 @@ public class ProveedoresDAO {
         int id = -1;
 
         try {
-            stmt = conector.getConn().prepareStatement(anadirEmpleado);
+            stmt = conector.getConn().prepareStatement(anadirProveedor);
 
             stmt.setString(1, empresa);
             stmt.setString(2, producto);
@@ -43,12 +43,12 @@ public class ProveedoresDAO {
 
     private void anadirProveedorHotel (int hotel_id, int proveedor_id){
 
-        String anadirEmpleadoHotel = "INSERT INTO proveedor_hotel (hotel_id, proveedor_id) VALUES (?, ?)";
+        String anadirProveedorHotel = "INSERT INTO proveedor_hotel (hotel_id, proveedores_id) VALUES (?, ?)";
 
         PreparedStatement stmt = null;
 
         try {
-            stmt = conector.getConn().prepareStatement(anadirEmpleadoHotel);
+            stmt = conector.getConn().prepareStatement(anadirProveedorHotel);
 
             stmt.setInt(1, hotel_id);
             stmt.setInt(2, proveedor_id);
@@ -90,7 +90,8 @@ public class ProveedoresDAO {
     }
 
     private void borrarProveedorHotel (int id){
-        String borrarEmpleadoEmpleado = "DELETE FROM hotel_proveedor WHERE id = ?";
+
+        String borrarProveedorHotel = "DELETE FROM hotel_proveedor WHERE proveedores_id = ?";
 
         if (! conector.isConnected()){
             conector.conectar();
@@ -99,7 +100,7 @@ public class ProveedoresDAO {
         PreparedStatement stmt;
 
         try {
-            stmt = conector.getConn().prepareStatement(borrarEmpleadoEmpleado);
+            stmt = conector.getConn().prepareStatement(borrarProveedorHotel);
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -155,7 +156,7 @@ public class ProveedoresDAO {
                 "FROM hotel_proveedor " +
                 "WHERE hotel_id = ?) as ids_proveedores " +
                 "JOIN proveedor " +
-                "ON ids_proveedores.proveedor_id = proveedor.id";
+                "ON ids_proveedores.proveedores_id = proveedor.id";
 
         PreparedStatement stmt = null;
         ResultSet rs = null;

@@ -12,13 +12,13 @@ public class PrecioDAO {
 
     private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711", "piedrafita.ls.fi.upm.es");
 
-    //Recibe un objeto Precio (definido en ingsof1920/bean)
+    //Recibe un objeto Precio (definido en ingsof1920/model)
     public void anadirPrecio(Precio precio){
 
         if (! conector.isConnected()){
             conector.conectar();
         }
-        String anadirPrecio = "INSERT INTO precio (hotel_id, tipo, fecha, precio) VALUES (?,?,?,?)";
+        String anadirPrecio = "INSERT INTO precio (hotel_id, tipo, fecha, valor) VALUES (?,?,?,?)";
 
         PreparedStatement stmt;
 
