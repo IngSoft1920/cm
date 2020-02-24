@@ -4,7 +4,17 @@ public class Proveedor {
 	private int id;
 	private String empresa;
 	private String producto;
-	public int getId() {
+
+    public Proveedor() {
+    }
+
+    public Proveedor(int id, String empresa, String producto) {
+        this.id = id;
+        this.empresa = empresa;
+        this.producto = producto;
+    }
+
+    public int getId() {
 		return id;
 	}
 	public void setId(int id) {

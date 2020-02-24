@@ -11,11 +11,11 @@ import java.util.List;
 
 public class EmpleadoDAO {
 
-    private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20ge1.711", "piedrafita.ls.fi.upm.es");
+    private static conectorBBDD conector = new conectorBBDD();
 
     private int anadirEmpleadoEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion){
 
-        String anadirEmpleado = "INSERT INTO empleado (nombre, apellidos, email, telefono, ocupacion) VALUES (?,?,?,?,?)";
+        String anadirEmpleado = "INSERT INTO empleado (nombre, apellido1, email, telefono, ocupacion) VALUES (?,?,?,?,?)";
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -45,7 +45,7 @@ public class EmpleadoDAO {
 
     private void anadirEmpleadoHotel (int hotel_id, int empleado_id){
 
-        String anadirEmpleadoHotel = "INSERT INTO hotel_empleado (hotel_id, empleado_id) VALUES (?, ?)";
+        String anadirEmpleadoHotel = "INSERT INTO hotel_empleados (hotel_id, empleados_id) VALUES (?, ?)";
 
         PreparedStatement stmt = null;
 
@@ -92,7 +92,7 @@ public class EmpleadoDAO {
     }
 
     private void borrarEmpleadoHotel (int id){
-        String borrarEmpleadoEmpleado = "DELETE FROM hotel_empleado WHERE id = ?";
+        String borrarEmpleadoEmpleado = "DELETE FROM hotel_empleados WHERE empleados_id = ?";
 
         if (! conector.isConnected()){
             conector.conectar();
@@ -140,8 +140,9 @@ public class EmpleadoDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()){
-                empleado = new Empleado(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("email"), rs.getString("telefono"), rs.getString("ocupacion"));
+                empleado = new Empleado(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido1"), rs.getString("email"), rs.getString("telefono"), rs.getString("ocupacion"));
                 empleados.add(empleado);
+                System.out.println(empleado);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -153,10 +154,10 @@ public class EmpleadoDAO {
     public List<Empleado> empleadosDeUnHotel(int hotel_id){
         String getEmpleadosDeUnHotel = "SELECT empleado.* " +
                                         "FROM (SELECT * " +
-                                                "FROM hotel_empleado" +
+                                                "FROM hotel_empleados" +
                                                 "WHERE hotel_id = ?) as ids_empleados " +
                                         "JOIN empleado " +
-                                        "ON ids_empleados.empleado_id = empleado.id";
+                                        "ON ids_empleados.empleados_id = empleado.id";
 
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -174,7 +175,7 @@ public class EmpleadoDAO {
 
                 empleado.setId(rs.getInt("id"));
                 empleado.setNombre(rs.getString("nombre"));
-                empleado.setApellidos(rs.getString("apellidos"));
+                empleado.setApellidos(rs.getString("apellido1"));
                 empleado.setEmail(rs.getString("email"));
                 empleado.setTelefono(rs.getString("telefono"));
                 empleado.setOcupacion(rs.getString("ocupacion"));
@@ -187,5 +188,11 @@ public class EmpleadoDAO {
 
         return empleados;
     }
+    
+    public static void main(String[] args) {
+		System.out.println("HEEEEEEREEEEEEEEEEEEE");
+
+		System.out.println( new HotelDAO().hoteles()  );
+	}
 
 }
