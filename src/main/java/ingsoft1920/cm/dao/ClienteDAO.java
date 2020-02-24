@@ -10,14 +10,14 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ingsoft1920.cm.bean.Cliente;
-//import ingsoft1920.conector.conectorBBDD;
+import ingsoft1920.cm.conector.conectorBBDD;
 
 public class ClienteDAO {
-		/*
+
 		@Autowired
 		private QueryRunner runner;
 		
-		private static conectorBBDD conector = new conectorBBDD("piedrafita.ls.fi.upm.es", "cm2", "ingSoft20cm2.902", "cm");
+		private static conectorBBDD conector = new conectorBBDD("piedrafita.ls.fi.upm.es", "cm1", "ingSoft20cm1.711", "cm");
 
 		public int anadirCliente(String nombre, String dni, String email, String password) {
 
@@ -69,5 +69,5 @@ public class ClienteDAO {
 	            e.printStackTrace();
 	        }
 			return c;
-		}*/
+		}
 }
