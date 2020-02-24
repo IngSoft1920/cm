@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,23 +34,24 @@ public class HotelDAO {
         ResultSet rs = null;
         try {
 
-            stmt = conector.getConn().prepareStatement(anadirHotel);
+            stmt = conector.getConn().prepareStatement(anadirHotel,Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, nombre);
             stmt.setString(2, continente);
             stmt.setString(3, pais);
             stmt.setString(4, ciudad);
             stmt.setString(5, direccion);
 
-            rs = stmt.executeQuery();
+            
+            stmt.execute();
+            rs = stmt.getGeneratedKeys();
 
             if (rs.next()){
-                id = rs.getInt("id");
+                id = rs.getInt(1);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return id;
     }
 
@@ -70,7 +72,7 @@ public class HotelDAO {
             stmt.setString(2, tipo.toString());
             stmt.setInt(3, num);
 
-            stmt.executeQuery();
+            stmt.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -120,12 +122,12 @@ public class HotelDAO {
         try {
 
             stmt = conector.getConn().prepareStatement(editarHotel);
-            stmt.setInt(6, id);
             stmt.setString(1, nombre);
             stmt.setString(2, continente);
-            stmt.setString(2, pais);
-            stmt.setString(2, ciudad);
-            stmt.setString(3, direccion);
+            stmt.setString(3, pais);
+            stmt.setString(4, ciudad);
+            stmt.setString(5, direccion);
+            stmt.setInt(6, id);
 
             stmt.executeUpdate();
 

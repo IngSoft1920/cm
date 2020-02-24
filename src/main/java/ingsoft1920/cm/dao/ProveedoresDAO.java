@@ -7,6 +7,7 @@ import ingsoft1920.cm.conector.conectorBBDD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,12 +25,13 @@ public class ProveedoresDAO {
         int id = -1;
 
         try {
-            stmt = conector.getConn().prepareStatement(anadirProveedor);
+            stmt = conector.getConn().prepareStatement(anadirProveedor,Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, empresa);
             stmt.setString(2, producto);
 
-            rs = stmt.executeQuery();
+            stmt.execute();
+            rs = stmt.getGeneratedKeys();
 
             if (rs.next()){
                 id = rs.getInt(1);
@@ -43,7 +45,7 @@ public class ProveedoresDAO {
 
     private void anadirProveedorHotel (int hotel_id, int proveedor_id){
 
-        String anadirProveedorHotel = "INSERT INTO proveedor_hotel (hotel_id, proveedores_id) VALUES (?, ?)";
+        String anadirProveedorHotel = "INSERT INTO hotel_proveedor (hotel_id, proveedores_id) VALUES (?, ?)";
 
         PreparedStatement stmt = null;
 
@@ -53,7 +55,7 @@ public class ProveedoresDAO {
             stmt.setInt(1, hotel_id);
             stmt.setInt(2, proveedor_id);
 
-            stmt.executeQuery();
+            stmt.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -151,13 +153,15 @@ public class ProveedoresDAO {
 
     public List<Proveedor> proveedoresDeUnHotel(int hotel_id){
 
-        String getEmpleadosDeUnHotel = "SELECT proveedor.* " +
-                "FROM (SELECT * " +
-                "FROM hotel_proveedor " +
-                "WHERE hotel_id = ?) as ids_proveedores " +
-                "JOIN proveedor " +
-                "ON ids_proveedores.proveedores_id = proveedor.id";
+    	 if (! conector.isConnected()){
+             conector.conectar();
+         }
 
+        String getEmpleadosDeUnHotel = "SELECT proveedor.* "+
+			   	   "FROM proveedor "+
+			   	   "JOIN hotel_proveedor ON proveedor.id=hotel_proveedor.proveedores_id "+
+			   	   "WHERE hotel_proveedor.hotel_id=?";
+        
         PreparedStatement stmt = null;
         ResultSet rs = null;
 

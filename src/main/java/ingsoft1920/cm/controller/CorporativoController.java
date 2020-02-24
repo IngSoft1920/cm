@@ -1,7 +1,6 @@
 package ingsoft1920.cm.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ingsoft1920.cm.dao.HotelDAO;
+
 @Controller
 @RequestMapping("/home-corp")
 public class CorporativoController {
-	@Autowired
-	FakeDB fake;
+	private HotelDAO hotelDao = new HotelDAO();
 	
 	@GetMapping
 	public String homeCorporativo() {
@@ -22,8 +22,7 @@ public class CorporativoController {
 	
 	@GetMapping("/select-hotel/{accion}")
 	public String seleccionarHotel(Model m) {
-		//TODO dao
-		m.addAttribute("hoteles",fake.hoteles());
+		m.addAttribute("hoteles",hotelDao.hoteles());
 		return "/corp/select-hotel.jsp";
 	}
 	
@@ -48,8 +47,7 @@ public class CorporativoController {
 			break;
 			
 		case "eliminar":
-			//TODO dao
-			fake.eliminarHotel(hotel_id);
+			hotelDao.eliminarHotel(hotel_id);
 			res+="/hotel";
 			break;
 			
