@@ -12,51 +12,47 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping("/proveedor")
-@SessionAttributes(names = {"hotel_id"})
+@SessionAttributes(names = { "hotel_id" })
 public class ProveedorController {
-	
+
 	@Autowired
 	FakeDB fake;
-	
-	
+
 	@GetMapping("/{hotel_id}")
 	public String homeProveedor(@PathVariable("hotel_id") int hotel_id, Model m) {
-		
-		//TODO dao
-		m.addAttribute("proveedores", fake.proveedoresHotel(hotel_id) );
+
+		// TODO dao
+		m.addAttribute("proveedores", fake.proveedoresHotel(hotel_id));
 		m.addAttribute("hotel_id", hotel_id);
-		
+
 		return "/corp-proveedor/home.jsp";
 	}
-	
+
 	@GetMapping("/anadir")
 	public String formularioAnadirProveedor() {
 		return "/corp-proveedor/anadir.jsp";
 	}
-	
+
 	@PostMapping("/anadir")
-	public String recibirProveedorFormulario(@ModelAttribute("hotel_id") int hotel_id,
-											 String empresa,String producto)
-	{
-		//TODO dao
-		fake.anadirProveedor(hotel_id, empresa,producto);
-		return "redirect:/proveedor/"+hotel_id;
+	public String recibirProveedorFormulario(@ModelAttribute("hotel_id") int hotel_id, String empresa,
+			String producto) {
+		// TODO dao
+		fake.anadirProveedor(hotel_id, empresa, producto);
+		return "redirect:/proveedor/" + hotel_id;
 	}
-	
+
 	@GetMapping("/eliminar")
 	public String elegirProveedorAEliminar(Model m) {
-		//TODO dao
+		// TODO dao
 		m.addAttribute("proveedores", fake.proveedores());
 		return "/corp-proveedor/eliminar.jsp";
 	}
-	
+
 	@PostMapping("/eliminar")
-	public String recibirEmpleadoAEliminar(@ModelAttribute("hotel_id") int hotel_id,
-										   int proveedor_id) {
-		//TODO dao
+	public String recibirEmpleadoAEliminar(@ModelAttribute("hotel_id") int hotel_id, int proveedor_id) {
+		// TODO dao
 		fake.eliminarProveedor(proveedor_id);
-		return "redirect:/proveedor/"+hotel_id;
+		return "redirect:/proveedor/" + hotel_id;
 	}
-	
 
 }

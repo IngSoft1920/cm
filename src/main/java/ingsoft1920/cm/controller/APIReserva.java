@@ -21,213 +21,174 @@ import java.util.LinkedList;
 @Controller
 public class APIReserva {
 
-    @ResponseBody
-    @GetMapping("/precioDisponible")
-    public LinkedList<String> getPrecioDisponibles(@RequestBody String req) {
-        //Suponiendo que me llega algo como
-        /*
-         * {
-         * 	"hotel_id":"12"
-         *  "ubicacion":"Ayelo"
-         *  "fecha_inicio":"yyyy-MM-dd"
-         *  "fecha_fin":"yyyy-MM-dd"
-         * }
-         */
+	@ResponseBody
+	@GetMapping("/precioDisponible")
+	public LinkedList<String> getPrecioDisponibles(@RequestBody String req) {
+		// Suponiendo que me llega algo como
+		/*
+		 * { "hotel_id":"12" "ubicacion":"Ayelo" "fecha_inicio":"yyyy-MM-dd"
+		 * "fecha_fin":"yyyy-MM-dd" }
+		 */
 
-        //Parseamos el texto a un JsonObject
-        JsonObject obj = (JsonObject) JsonParser.parseString(req);
+		// Parseamos el texto a un JsonObject
+		JsonObject obj = (JsonObject) JsonParser.parseString(req);
 
-        //Vamos accediendo a sus propiedades, y las guardamos
-        int hotel_id = obj.get("hotel_id").getAsInt();
-        String ubicacion = obj.get("ubicacion").getAsString();
-        String fechaInicio = obj.get("fecha_inicio").getAsString();
-        String fechaFin = obj.get("fecha_fin").getAsString();
+		// Vamos accediendo a sus propiedades, y las guardamos
+		int hotel_id = obj.get("hotel_id").getAsInt();
+		String ubicacion = obj.get("ubicacion").getAsString();
+		String fechaInicio = obj.get("fecha_inicio").getAsString();
+		String fechaFin = obj.get("fecha_fin").getAsString();
 
-        ReservaDAO reserva = new ReservaDAO();
+		ReservaDAO reserva = new ReservaDAO();
 
-        LinkedList<String> res = new LinkedList<String>();
+		LinkedList<String> res = new LinkedList<String>();
 
-        HashSet<Reserva> reservas = reserva.getPrecios(hotel_id, ubicacion, fechaInicio, fechaFin);
+		HashSet<Reserva> reservas = reserva.getPrecios(hotel_id, ubicacion, fechaInicio, fechaFin);
 
-        for (Reserva reserva1: reservas) {
-            //Instanciamos un nuevo objeto Json
-            obj = new JsonObject();
+		for (Reserva reserva1 : reservas) {
+			// Instanciamos un nuevo objeto Json
+			obj = new JsonObject();
 
-            obj.addProperty("nombre", reserva1.getHotel().getNombre());
-            obj.addProperty("ubicacion", reserva1.getHotel().getUbicacion());
-            obj.addProperty("hotel_id", reserva1.getHotel().getId());
-            obj.addProperty("tipo", reserva1.getTipo().getTipo());
-            obj.addProperty("precio", reserva1.getTipo().getPrecio());
+			obj.addProperty("nombre", reserva1.getHotel().getNombre());
+			obj.addProperty("ubicacion", reserva1.getHotel().getUbicacion());
+			obj.addProperty("hotel_id", reserva1.getHotel().getId());
+			obj.addProperty("tipo", reserva1.getTipo().getTipo());
+			obj.addProperty("precio", reserva1.getTipo().getPrecio());
 
+			res.add(obj.getAsString());
 
-            res.add(obj.getAsString());
+		}
 
-        }
+		return res;
 
+		// Devolvera lo siguiente en el cuerpo de la respuesta
+		/*
+		 * [ { "nombre":"Uno caro" "ubicacion":"Ayelo" "hotel_id":"1" "tipo":"lujo"
+		 * "precio":"1000000" }, { "nombre":"Otro caro" "ubicacion":"Ayelo"
+		 * "hotel_id":"2020" "tipo":"lujo" "precio":"1000000" } ]
+		 */
+	}
 
-        return res;
+	@ResponseBody
+	@GetMapping("/ciudades")
+	public String getCiudades() {
 
-        //Devolvera lo siguiente en el cuerpo de la respuesta
-        /*
-         * [
-         * {
-         *  "nombre":"Uno caro"
-         * 	"ubicacion":"Ayelo"
-         *  "hotel_id":"1"
-         *  "tipo":"lujo"
-         *  "precio":"1000000"
-         * },
-         * {
-         *  "nombre":"Otro caro"
-         * 	"ubicacion":"Ayelo"
-         *  "hotel_id":"2020"
-         *  "tipo":"lujo"
-         *  "precio":"1000000"
-         * }
-         * ]
-         */
-    }
+		ReservaDAO reserva = new ReservaDAO();
 
-    @ResponseBody
-    @GetMapping("/ciudades")
-    public String getCiudades() {
+		HashSet<String> ciudades = reserva.getCiudades();
 
-        ReservaDAO reserva = new ReservaDAO();
+		// Instanciamos un nuevo objeto Json
+		JsonObject res = new JsonObject();
 
-        HashSet<String> ciudades = reserva.getCiudades();
+		// Declaramos una nueva lista (array) en Json y añadimos elementos
+		JsonArray ciudades_arr = new JsonArray();
+		JsonArray precios = new JsonArray();
+		for (String ciudad : ciudades) {
+			ciudades_arr.add(ciudad);
+		}
 
-        //Instanciamos un nuevo objeto Json
-        JsonObject res = new JsonObject();
+		// Si estamos añadiendo un objeto Json (como es un array) a otro, tenemos que
+		// utilizar
+		// el metodo add("nombrePropiedad",valor)
+		res.add("ciudades", ciudades_arr);
 
-        //Declaramos una nueva lista (array) en Json y añadimos elementos
-        JsonArray ciudades_arr = new JsonArray();
-        JsonArray precios = new JsonArray();
-        for (String ciudad: ciudades) {
-            ciudades_arr.add(ciudad);
-        }
+		// Obtenemos la representacion en String del objeto JSON y la enviamos como
+		// respuesta
+		return res.getAsString();
 
-        //Si estamos añadiendo un objeto Json (como es un array) a otro, tenemos que utilizar
-        //el metodo add("nombrePropiedad",valor)
-        res.add("ciudades", ciudades_arr);
+		// Devolvera lo siguiente en el cuerpo de la respuesta
+		/*
+		 * { "ciudades":[Valencia, Tavernes, ...] }
+		 */
+	}
 
-        //Obtenemos la representacion en String del objeto JSON y la enviamos como respuesta
-        return res.getAsString();
+	@ResponseBody
+	@GetMapping("/hoteles")
+	public LinkedList<String> getHoteles(@RequestBody String req) {
+		/*
+		 * { "ubicacion":"Benitatxell", }
+		 */
 
-        //Devolvera lo siguiente en el cuerpo de la respuesta
-        /*
-         * {
-         * 	"ciudades":[Valencia, Tavernes, ...]
-         * }
-         */
-    }
+		// Parseamos el texto a un JsonObject
+		JsonObject obj = (JsonObject) JsonParser.parseString(req);
 
-    @ResponseBody
-    @GetMapping("/hoteles")
-    public LinkedList<String> getHoteles(@RequestBody String req) {
-        /*
-         * {
-         * 	"ubicacion":"Benitatxell",
-         * }
-         */
+		LinkedList<String> res = new LinkedList<String>();
 
-        //Parseamos el texto a un JsonObject
-        JsonObject obj = (JsonObject) JsonParser.parseString(req);
+		// Vamos accediendo a sus propiedades, y las guardamos
+		String ubicacion = obj.get("ubicacion").getAsString();
 
-        LinkedList<String> res = new LinkedList<String>();
+		ReservaDAO reserva = new ReservaDAO();
 
-        //Vamos accediendo a sus propiedades, y las guardamos
-        String ubicacion = obj.get("ubicacion").getAsString();
+		HashSet<Hotel> hoteles = reserva.getHotelesPorUbicacion(ubicacion);
 
-        ReservaDAO reserva = new ReservaDAO();
+		for (Hotel hotel : hoteles) {
+			// Instanciamos un nuevo objeto Json
+			obj = new JsonObject();
 
-        HashSet<Hotel> hoteles = reserva.getHotelesPorUbicacion(ubicacion);
+			obj.addProperty("nombre", hotel.getNombre());
+			obj.addProperty("ubicacion", hotel.getUbicacion());
+			obj.addProperty("id", hotel.getId());
 
-        for (Hotel hotel: hoteles) {
-            //Instanciamos un nuevo objeto Json
-            obj = new JsonObject();
+			res.add(obj.getAsString());
 
-            obj.addProperty("nombre", hotel.getNombre());
-            obj.addProperty("ubicacion", hotel.getUbicacion());
-            obj.addProperty("id", hotel.getId());
+		}
 
+		return res;
 
-            res.add(obj.getAsString());
+		// Devolvera lo siguiente en el cuerpo de la respuesta
+		/*
+		 * [ { "nombre":"Uno caro" "ubicacion":"Benitaxell" "id":"1" }, {
+		 * "nombre":"Otro caro" "ubicacion":"Benitaxell" "id":"2020" } ]
+		 */
+	}
 
-        }
+	@ResponseBody
+	@GetMapping("/crearReserva")
+	public void crearReserva(@RequestBody String req) {
+		/*
+		 * {
+		 *
+		 * "fecha_inicio":"yyyy-MM-dd" "fecha_fin":"yyyy-MM-dd" "precio":"1023124"
+		 * "hotel_id":"12" "tipo":"lujo" "cliente_id":"123456789"
+		 *
+		 * }
+		 */
 
+		// Parseamos el texto a un JsonObject
+		JsonObject obj = (JsonObject) JsonParser.parseString(req);
 
-        return res;
+		// Vamos accediendo a sus propiedades, y las guardamos
+		String fecha_ent = obj.get("fecha_inicio").getAsString();
+		String fecha_sal = obj.get("fecha_fin").getAsString();
+		double precio = obj.get("precio").getAsDouble();
+		int hotel_id = obj.get("hotel_id").getAsInt();
+		String tipo = obj.get("tipo").getAsString();
+		int cliente_id = obj.get("cliente_id").getAsInt();
 
-        //Devolvera lo siguiente en el cuerpo de la respuesta
-        /*
-         * [
-         * {
-         *  "nombre":"Uno caro"
-         * 	"ubicacion":"Benitaxell"
-         *  "id":"1"
-         * },
-         * {
-         *  "nombre":"Otro caro"
-         * 	"ubicacion":"Benitaxell"
-         *  "id":"2020"
-         * }
-         * ]
-         */
-    }
+		ReservaDAO reservaDAO = new ReservaDAO();
 
-    @ResponseBody
-    @GetMapping("/crearReserva")
-    public void crearReserva(@RequestBody String req) {
-        /*
-         * {
-         *
-         *  "fecha_inicio":"yyyy-MM-dd"
-         *  "fecha_fin":"yyyy-MM-dd"
-         *  "precio":"1023124"
-         *  "hotel_id":"12"
-         *  "tipo":"lujo"
-         *  "cliente_id":"123456789"
-         *
-         * }
-         */
+		Reserva reserva = new Reserva(new Hotel(hotel_id, "", ""), new Tipo(tipo, precio, 0));
 
-        //Parseamos el texto a un JsonObject
-        JsonObject obj = (JsonObject) JsonParser.parseString(req);
+		reservaDAO.crearReserva(reserva, cliente_id);
 
-        //Vamos accediendo a sus propiedades, y las guardamos
-        String fecha_ent = obj.get("fecha_inicio").getAsString();
-        String fecha_sal = obj.get("fecha_fin").getAsString();
-        double precio = obj.get("precio").getAsDouble();
-        int hotel_id = obj.get("hotel_id").getAsInt();
-        String tipo = obj.get("tipo").getAsString();
-        int cliente_id = obj.get("cliente_id").getAsInt();
+	}
 
-        ReservaDAO reservaDAO = new ReservaDAO();
+	@ResponseBody
+	@GetMapping("/cancelarReserva")
+	public void cancelarReserva(@RequestBody String req) {
+		/*
+		 * { "id"="1234567890" }
+		 */
 
-        Reserva reserva = new Reserva(new Hotel(hotel_id, "", ""), new Tipo(tipo, precio, 0));
+		// Parseamos el texto a un JsonObject
+		JsonObject obj = (JsonObject) JsonParser.parseString(req);
 
-        reservaDAO.crearReserva(reserva, cliente_id);
+		// Vamos accediendo a sus propiedades, y las guardamos
+		int id = obj.get("id").getAsInt();
 
-    }
+		ReservaDAO reservaDAO = new ReservaDAO();
 
-    @ResponseBody
-    @GetMapping("/cancelarReserva")
-    public void cancelarReserva(@RequestBody String req) {
-        /*
-         * {
-         *  "id"="1234567890"
-         * }
-         */
+		reservaDAO.cancelarReserva(id);
 
-        //Parseamos el texto a un JsonObject
-        JsonObject obj = (JsonObject) JsonParser.parseString(req);
-
-        //Vamos accediendo a sus propiedades, y las guardamos
-        int id = obj.get("id").getAsInt();
-
-        ReservaDAO reservaDAO = new ReservaDAO();
-
-        reservaDAO.cancelarReserva(id);
-
-    }
+	}
 }
