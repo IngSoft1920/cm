@@ -10,8 +10,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class HotelDAO {
 
@@ -297,9 +299,6 @@ public class HotelDAO {
     }
 
     public Map<Hotel, List<Precio>> hotelesPorReserva(String continente, String pais, String ciudad, Date fecha_entrada, Date fecha_salida){
-        String getPreciosPorFechas = "SELECT *\n" +
-                                        "FROM precio \n" +
-                                        "WHERE DATE(\"2000-10-12\") <= precio.fecha AND DATE(\"2025-10-12\") > precio.fecha";
 
         Map<Hotel, List<Precio>> hoteles = getHotelesPorUbicacion(continente, pais, ciudad);
 
