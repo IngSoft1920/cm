@@ -46,7 +46,7 @@ public class PeticionesDAO {
             conector.conectar();
         }
 
-        String cambiaEstado = "UPDATE peticion SET estado = 1 WHERE id = ?";
+        String cambiaEstado = "UPDATE peticiones SET estado = 1 WHERE id = ?";
 
         PreparedStatement stmt = null;
 
