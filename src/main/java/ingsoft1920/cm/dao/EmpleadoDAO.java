@@ -11,136 +11,133 @@ import java.util.List;
 
 public class EmpleadoDAO {
 
-	private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711",
-			"piedrafita.ls.fi.upm.es");
+    private static conectorBBDD conector = new conectorBBDD();
 
-	private int anadirEmpleadoEmpleado(String nombre, String apellidos, String email, String telefono,
-			String ocupacion) {
+    private int anadirEmpleadoEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion){
 
-		String anadirEmpleado = "INSERT INTO empleado (nombre, apellido1, email, telefono, ocupacion) VALUES (?,?,?,?,?)";
+        String anadirEmpleado = "INSERT INTO empleado (nombre, apellido1, email, telefono, ocupacion) VALUES (?,?,?,?,?)";
 
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-		int id = -1;
+        int id = -1;
 
-		try {
-			stmt = conector.getConn().prepareStatement(anadirEmpleado);
+        try {
+            stmt = conector.getConn().prepareStatement(anadirEmpleado);
 
-			stmt.setString(1, nombre);
-			stmt.setString(2, apellidos);
-			stmt.setString(3, email);
-			stmt.setString(4, telefono);
-			stmt.setString(5, ocupacion);
+            stmt.setString(1, nombre);
+            stmt.setString(2, apellidos);
+            stmt.setString(3, email);
+            stmt.setString(4, telefono);
+            stmt.setString(5, ocupacion);
 
-			rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
 
-			if (rs.next()) {
-				id = rs.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+            if (rs.next()){
+                id = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-		return id;
-	}
+        return id;
+    }
 
-	private void anadirEmpleadoHotel(int hotel_id, int empleado_id) {
+    private void anadirEmpleadoHotel (int hotel_id, int empleado_id){
 
-		String anadirEmpleadoHotel = "INSERT INTO hotel_empleados (hotel_id, empleados_id) VALUES (?, ?)";
+        String anadirEmpleadoHotel = "INSERT INTO hotel_empleados (hotel_id, empleados_id) VALUES (?, ?)";
 
-		PreparedStatement stmt = null;
+        PreparedStatement stmt = null;
 
-		try {
-			stmt = conector.getConn().prepareStatement(anadirEmpleadoHotel);
+        try {
+            stmt = conector.getConn().prepareStatement(anadirEmpleadoHotel);
 
-			stmt.setInt(1, hotel_id);
-			stmt.setInt(2, empleado_id);
+            stmt.setInt(1, hotel_id);
+            stmt.setInt(2, empleado_id);
 
-			stmt.executeQuery();
+            stmt.executeQuery();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public void anadirEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion,
-			int hotel_id) {
+    public void anadirEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion, int hotel_id){
 
-		if (!conector.isConnected()) {
-			conector.conectar();
-		}
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
-		anadirEmpleadoHotel(hotel_id, anadirEmpleadoEmpleado(nombre, apellidos, email, telefono, ocupacion));
+        anadirEmpleadoHotel(hotel_id, anadirEmpleadoEmpleado(nombre, apellidos, email, telefono, ocupacion));
 
-		conector.closeConn();
-	}
+        conector.closeConn();
+    }
 
-	private void borrarEmpleadoEmpleado(int id) {
-		String borrarEmpleadoEmpleado = "DELETE FROM empleado WHERE id = ?";
+    private void borrarEmpleadoEmpleado(int id){
+        String borrarEmpleadoEmpleado = "DELETE FROM empleado WHERE id = ?";
 
-		if (!conector.isConnected()) {
-			conector.conectar();
-		}
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
-		PreparedStatement stmt;
+        PreparedStatement stmt;
 
-		try {
-			stmt = conector.getConn().prepareStatement(borrarEmpleadoEmpleado);
-			stmt.setInt(1, id);
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            stmt = conector.getConn().prepareStatement(borrarEmpleadoEmpleado);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	private void borrarEmpleadoHotel(int id) {
-		String borrarEmpleadoEmpleado = "DELETE FROM hotel_empleados WHERE empleados_id = ?";
+    private void borrarEmpleadoHotel (int id){
+        String borrarEmpleadoEmpleado = "DELETE FROM hotel_empleados WHERE empleados_id = ?";
 
-		if (!conector.isConnected()) {
-			conector.conectar();
-		}
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
-		PreparedStatement stmt;
+        PreparedStatement stmt;
 
-		try {
-			stmt = conector.getConn().prepareStatement(borrarEmpleadoEmpleado);
-			stmt.setInt(1, id);
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            stmt = conector.getConn().prepareStatement(borrarEmpleadoEmpleado);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public void borrarEmpleado(int id) {
+    public void borrarEmpleado(int id){
 
-		if (!conector.isConnected()) {
-			conector.conectar();
-		}
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
-		borrarEmpleadoEmpleado(id);
-		borrarEmpleadoHotel(id);
+        borrarEmpleadoEmpleado(id);
+        borrarEmpleadoHotel(id);
 
-		conector.closeConn();
-	}
+        conector.closeConn();
+    }
 
-	public List<Empleado> empleados() {
+    public List<Empleado> empleados() {
 
-		if (!conector.isConnected()) {
-			conector.conectar();
-		}
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
-		String getEmpleados = "SELECT * FROM empleado";
+        String getEmpleados = "SELECT * FROM empleado";
 
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-		List<Empleado> empleados = new LinkedList<>();
-		Empleado empleado;
+        List<Empleado> empleados = new LinkedList<>();
+        Empleado empleado;
 
-		try {
-			stmt = conector.getConn().prepareStatement(getEmpleados);
-			rs = stmt.executeQuery();
+        try {
+            stmt = conector.getConn().prepareStatement(getEmpleados);
+            rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				empleado = new Empleado(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido1"),
@@ -151,40 +148,43 @@ public class EmpleadoDAO {
 			e.printStackTrace();
 		}
 
-		return empleados;
-	}
+        return empleados;
+    }
 
-	public List<Empleado> empleadosDeUnHotel(int hotel_id) {
-		String getEmpleadosDeUnHotel = "SELECT empleado.* " + "FROM (SELECT * " + "FROM hotel_empleados"
-				+ "WHERE hotel_id = ?) as ids_empleados " + "JOIN empleado "
-				+ "ON ids_empleados.empleados_id = empleado.id";
+    public List<Empleado> empleadosDeUnHotel(int hotel_id){
+        String getEmpleadosDeUnHotel = "SELECT empleado.* " +
+                                        "FROM (SELECT * " +
+                                                "FROM hotel_empleados" +
+                                                "WHERE hotel_id = ?) as ids_empleados " +
+                                        "JOIN empleado " +
+                                        "ON ids_empleados.empleados_id = empleado.id";
 
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-		List<Empleado> empleados = new LinkedList<>();
+        List<Empleado> empleados = new LinkedList<>();
 
-		try {
-			stmt = conector.getConn().prepareStatement(getEmpleadosDeUnHotel);
-			stmt.setInt(1, hotel_id);
+        try {
+            stmt = conector.getConn().prepareStatement(getEmpleadosDeUnHotel);
+            stmt.setInt(1, hotel_id);
 
-			rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
 
-			while (rs.next()) {
-				Empleado empleado = new Empleado();
+            while (rs.next()){
+                Empleado empleado = new Empleado();
 
-				empleado.setId(rs.getInt("id"));
-				empleado.setNombre(rs.getString("nombre"));
-				empleado.setApellidos(rs.getString("apellido1"));
-				empleado.setEmail(rs.getString("email"));
-				empleado.setTelefono(rs.getString("telefono"));
-				empleado.setOcupacion(rs.getString("ocupacion"));
+                empleado.setId(rs.getInt("id"));
+                empleado.setNombre(rs.getString("nombre"));
+                empleado.setApellidos(rs.getString("apellido1"));
+                empleado.setEmail(rs.getString("email"));
+                empleado.setTelefono(rs.getString("telefono"));
+                empleado.setOcupacion(rs.getString("ocupacion"));
 
-				empleados.add(empleado);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+                empleados.add(empleado);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 		return empleados;
 	}

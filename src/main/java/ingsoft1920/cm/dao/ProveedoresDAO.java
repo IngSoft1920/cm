@@ -12,170 +12,172 @@ import java.util.List;
 
 public class ProveedoresDAO {
 
-	private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711",
-			"piedrafita.ls.fi.upm.es");
+    private static conectorBBDD conector = new conectorBBDD();
 
-	private int anadirProveedor(String empresa, String producto) {
+    private int anadirProveedor(String empresa, String producto){
 
-		String anadirProveedor = "INSERT INTO proveedor (empresa, producto) VALUES (?,?)";
+        String anadirProveedor = "INSERT INTO proveedor (empresa, producto) VALUES (?,?)";
 
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-		int id = -1;
+        int id = -1;
 
-		try {
-			stmt = conector.getConn().prepareStatement(anadirProveedor);
+        try {
+            stmt = conector.getConn().prepareStatement(anadirProveedor);
 
-			stmt.setString(1, empresa);
-			stmt.setString(2, producto);
+            stmt.setString(1, empresa);
+            stmt.setString(2, producto);
 
-			rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
 
-			if (rs.next()) {
-				id = rs.getInt(1);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+            if (rs.next()){
+                id = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-		return id;
-	}
+        return id;
+    }
 
-	private void anadirProveedorHotel(int hotel_id, int proveedor_id) {
+    private void anadirProveedorHotel (int hotel_id, int proveedor_id){
 
-		String anadirProveedorHotel = "INSERT INTO proveedor_hotel (hotel_id, proveedores_id) VALUES (?, ?)";
+        String anadirProveedorHotel = "INSERT INTO proveedor_hotel (hotel_id, proveedores_id) VALUES (?, ?)";
 
-		PreparedStatement stmt = null;
+        PreparedStatement stmt = null;
 
-		try {
-			stmt = conector.getConn().prepareStatement(anadirProveedorHotel);
+        try {
+            stmt = conector.getConn().prepareStatement(anadirProveedorHotel);
 
-			stmt.setInt(1, hotel_id);
-			stmt.setInt(2, proveedor_id);
+            stmt.setInt(1, hotel_id);
+            stmt.setInt(2, proveedor_id);
 
-			stmt.executeQuery();
+            stmt.executeQuery();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public void anadirProveedor(String empresa, String producto, int hotel_id) {
+    public void anadirProveedor(String empresa, String producto, int hotel_id){
 
-		if (!conector.isConnected()) {
-			conector.conectar();
-		}
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
-		anadirProveedorHotel(hotel_id, anadirProveedor(empresa, producto));
+        anadirProveedorHotel(hotel_id, anadirProveedor(empresa, producto));
 
-		conector.closeConn();
-	}
+        conector.closeConn();
+    }
 
-	private void borrarProveedorProveedor(int id) {
-		String borrarEmpleadoEmpleado = "DELETE FROM proveedor WHERE id = ?";
+    private void borrarProveedorProveedor(int id){
+        String borrarEmpleadoEmpleado = "DELETE FROM proveedor WHERE id = ?";
 
-		if (!conector.isConnected()) {
-			conector.conectar();
-		}
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
-		PreparedStatement stmt;
+        PreparedStatement stmt;
 
-		try {
-			stmt = conector.getConn().prepareStatement(borrarEmpleadoEmpleado);
-			stmt.setInt(1, id);
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            stmt = conector.getConn().prepareStatement(borrarEmpleadoEmpleado);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	private void borrarProveedorHotel(int id) {
+    private void borrarProveedorHotel (int id){
 
-		String borrarProveedorHotel = "DELETE FROM hotel_proveedor WHERE proveedores_id = ?";
+        String borrarProveedorHotel = "DELETE FROM hotel_proveedor WHERE proveedores_id = ?";
 
-		if (!conector.isConnected()) {
-			conector.conectar();
-		}
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
-		PreparedStatement stmt;
+        PreparedStatement stmt;
 
-		try {
-			stmt = conector.getConn().prepareStatement(borrarProveedorHotel);
-			stmt.setInt(1, id);
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            stmt = conector.getConn().prepareStatement(borrarProveedorHotel);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public void borrarProveedor(int id) {
+    public void borrarProveedor(int id){
 
-		if (!conector.isConnected()) {
-			conector.conectar();
-		}
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
-		borrarProveedorProveedor(id);
-		borrarProveedorHotel(id);
+        borrarProveedorProveedor(id);
+        borrarProveedorHotel(id);
 
-		conector.closeConn();
-	}
+        conector.closeConn();
+    }
 
-	public List<Proveedor> proveedores() {
+    public List<Proveedor> proveedores() {
 
-		if (!conector.isConnected()) {
-			conector.conectar();
-		}
+        if (! conector.isConnected()){
+            conector.conectar();
+        }
 
-		String getEmpleados = "SELECT * FROM proveedor";
+        String getEmpleados = "SELECT * FROM proveedor";
 
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-		List<Proveedor> proveedores = new LinkedList<>();
-		Proveedor proveedor;
+        List<Proveedor> proveedores = new LinkedList<>();
+        Proveedor proveedor;
 
-		try {
-			stmt = conector.getConn().prepareStatement(getEmpleados);
-			rs = stmt.executeQuery();
+        try {
+            stmt = conector.getConn().prepareStatement(getEmpleados);
+            rs = stmt.executeQuery();
 
-			while (rs.next()) {
-				proveedor = new Proveedor(rs.getInt("id"), rs.getString("empresa"), rs.getString("producto"));
-				proveedores.add(proveedor);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+            while (rs.next()){
+                proveedor = new Proveedor(rs.getInt("id"), rs.getString("empresa"), rs.getString("producto"));
+                proveedores.add(proveedor);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-		return proveedores;
-	}
+        return proveedores;
+    }
 
-	public List<Proveedor> proveedoresDeUnHotel(int hotel_id) {
+    public List<Proveedor> proveedoresDeUnHotel(int hotel_id){
 
-		String getEmpleadosDeUnHotel = "SELECT proveedor.* " + "FROM (SELECT * " + "FROM hotel_proveedor "
-				+ "WHERE hotel_id = ?) as ids_proveedores " + "JOIN proveedor "
-				+ "ON ids_proveedores.proveedores_id = proveedor.id";
+        String getEmpleadosDeUnHotel = "SELECT proveedor.* " +
+                "FROM (SELECT * " +
+                "FROM hotel_proveedor " +
+                "WHERE hotel_id = ?) as ids_proveedores " +
+                "JOIN proveedor " +
+                "ON ids_proveedores.proveedores_id = proveedor.id";
 
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
-		List<Proveedor> proveedores = new LinkedList<>();
+        List<Proveedor> proveedores = new LinkedList<>();
 
-		try {
-			stmt = conector.getConn().prepareStatement(getEmpleadosDeUnHotel);
-			stmt.setInt(1, hotel_id);
+        try {
+            stmt = conector.getConn().prepareStatement(getEmpleadosDeUnHotel);
+            stmt.setInt(1, hotel_id);
 
-			rs = stmt.executeQuery();
+            rs = stmt.executeQuery();
 
-			while (rs.next()) {
+            while (rs.next()){
 
-				proveedores.add(new Proveedor(rs.getInt("id"), rs.getString("empresa"), rs.getString("producto")));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+                proveedores.add(new Proveedor(rs.getInt("id"), rs.getString("empresa"), rs.getString("producto")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-		return proveedores;
-	}
+        return proveedores;
+    }
 
 }

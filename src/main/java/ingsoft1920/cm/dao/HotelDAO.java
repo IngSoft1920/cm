@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class HotelDAO {
 
-    private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20cm1.711", "piedrafita.ls.fi.upm.es");
+    private static conectorBBDD conector = new conectorBBDD();
 
     private int anadirHotel (String nombre, String continente, String pais, String ciudad, String direccion){
 

@@ -4,74 +4,38 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 public class conectorBBDD {
 
-	private Connection conn = null;
-	private static String servidor, usuario, contrasena, baseDeDatos;
+	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
-	public conectorBBDD(String servidor, String usuario, String contrasena, String baseDeDatos) {
-		init(servidor, usuario, contrasena, baseDeDatos);
-	}
+	private static final String SERVIDOR = "piedrafita.ls.fi.upm.es:8000";
+	private static final String BBDD = "cm";
+	private static final String URL = "jdbc:mysql://"+SERVIDOR+"/"+BBDD;
 
-	/**
-	 * @return the conn
-	 */
-	public Connection getConn() {
-		return conn;
-	}
+	private static final String USUARIO = "cm1";
+	private static final String PASSWD = "ingSoft20cm1.711";
+
+
+    private Connection conn = null;
 
 	public void conectar() {
-
-		if (conn == null) {
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-
-				conn = DriverManager.getConnection("jdbc:mysql://" + servidor + "/" + baseDeDatos
-						+ "?rewriteBatchedStatements=TRUE&" + "user=" + usuario + "&password=" + contrasena
-						+ "&useJDBCCompliantTimezoneShift=true&serverTimezone=UTC");
-
-			} catch (SQLException ex) {
-
-				System.out.println("SQLException: " + ex.getMessage());
-				System.out.println("SQLState: " + ex.getSQLState());
-				System.out.println("VendorError: " + ex.getErrorCode());
-
-			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
+		try
+		{
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(URL, USUARIO, PASSWD);
+		} catch(Exception e) { e.printStackTrace(); }
 	}
 
-	public void init(String servidor, String usuario, String contrasena, String baseDeDatos) {
+    public  Connection getConn() { return conn; }
+    public boolean isConnected() { return conn != null; }
 
-		conectorBBDD.servidor = servidor;
-		conectorBBDD.usuario = usuario;
-		conectorBBDD.contrasena = contrasena;
-		conectorBBDD.baseDeDatos = baseDeDatos;
-
-		if (conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			conn = null;
-		}
-	}
-
-	public boolean isConnected() {
-		return conn != null;
-	}
-
-	public void closeConn() {
-		if (conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		conn = null;
-	}
+    public void closeConn() {
+        if(conn != null) {
+            try { conn.close(); }
+            catch (SQLException e) { e.printStackTrace(); }
+            conn = null;
+        }
+    }
 
 }
