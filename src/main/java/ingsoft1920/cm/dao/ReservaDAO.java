@@ -145,9 +145,9 @@ public class ReservaDAO {
 
         //Hay que saber cuantas habitaciones hay en un hotel de un cierto tipo
         String getNumeroDeHabitaciones =
-                "SELECT habitaciones.tipo, habitaciones.total_habitaciones " +
-                        "FROM habitaciones " +
-                        "WHERE habitaciones.hotel_id = ?";
+                "SELECT habitacion.tipo, habitacion.total_habitaciones " +
+                        "FROM habitacion " +
+                        "WHERE habitacion.hotel_id = ?";
 
 
         Map<String, Tipo> disponibles = new HashMap<>();
@@ -211,7 +211,7 @@ public class ReservaDAO {
 
         //Por cada dia hay que ver cuantas habitaciones hay reservadas (por cada tipo)
         String getReservasPorDias =
-                "SELECT reserva.habitacion_tipo, count(reserva.tipo) as 'num_reservas' " +
+                "SELECT reserva.habitacion_tipo, count(reserva.habitacion_tipo) as 'num_reservas' " +
                         "FROM reserva " +
                         "WHERE reserva.hotel_id = ? " +
                         "AND reserva.fecha_inicio <= ? AND reserva.fecha_fin >= ? " +
@@ -398,7 +398,7 @@ public class ReservaDAO {
                 reserva.setFecha_salida(rs.getDate("fecha_fin"));
                 reserva.setImporte(rs.getDouble("importe"));
                 reserva.setHotel_id(rs.getInt("hotel_id"));
-                reserva.setTipo(Habitaciones.Tipo.valueOf(rs.getString("tipo")));
+                reserva.setTipo(Habitaciones.Tipo.valueOf(rs.getString("habitacion_tipo")));
                 reserva.setCliente_id(rs.getInt("cliente_id"));
 
                 reservas.add(reserva);
