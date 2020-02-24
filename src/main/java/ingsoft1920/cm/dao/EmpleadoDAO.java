@@ -6,6 +6,7 @@ import ingsoft1920.cm.conector.conectorBBDD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class EmpleadoDAO {
         int id = -1;
 
         try {
-            stmt = conector.getConn().prepareStatement(anadirEmpleado);
+            stmt = conector.getConn().prepareStatement(anadirEmpleado, Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, nombre);
             stmt.setString(2, apellidos);
@@ -31,9 +32,9 @@ public class EmpleadoDAO {
             stmt.setString(4, telefono);
             stmt.setString(5, ocupacion);
 
-            rs = stmt.executeQuery();
+            rs = stmt.getGeneratedKeys();
 
-            if (rs.next()){
+            if (rs.next()) {
                 id = rs.getInt(1);
             }
         } catch (SQLException e) {

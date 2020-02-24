@@ -6,10 +6,7 @@ import ingsoft1920.cm.bean.Precio;
 import ingsoft1920.cm.conector.conectorBBDD;
 import ingsoft1920.cm.bean.Hotel;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,14 +30,18 @@ public class HotelDAO {
         ResultSet rs = null;
         try {
 
-            stmt = conector.getConn().prepareStatement(anadirHotel);
+            stmt = conector.getConn().prepareStatement(anadirHotel, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, nombre);
             stmt.setString(2, continente);
             stmt.setString(3, pais);
             stmt.setString(4, ciudad);
             stmt.setString(5, direccion);
 
-            rs = stmt.executeQuery();
+            rs = stmt.getGeneratedKeys();
+
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
 
             if (rs.next()){
                 id = rs.getInt("id");

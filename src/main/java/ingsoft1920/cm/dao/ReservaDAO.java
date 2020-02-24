@@ -3,6 +3,7 @@ package ingsoft1920.cm.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -319,17 +320,17 @@ public class ReservaDAO {
         int id = 0;
 
         try {
-            stmt = conector.getConn().prepareStatement(crearReserva);
+            stmt = conector.getConn().prepareStatement(crearReserva, Statement.RETURN_GENERATED_KEYS);
             stmt.setDate(1, java.sql.Date.valueOf(reserva.getFecha_ent()));
             stmt.setDate(2, java.sql.Date.valueOf(reserva.getFecha_sal()));
             stmt.setDouble(3, reserva.getTipo().getPrecio());
             stmt.setInt(4, reserva.getHotel().getId());
             stmt.setString(5, reserva.getTipo().getTipo());
             stmt.setInt(6, cliente_id);
-            rs = stmt.executeQuery();
+            rs = stmt.getGeneratedKeys();
 
-            if (rs.next()){
-                id = rs.getInt("id");
+            if (rs.next()) {
+                id = rs.getInt(1);
             }
 
         } catch (SQLException e) {
