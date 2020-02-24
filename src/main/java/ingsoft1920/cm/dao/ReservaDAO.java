@@ -16,7 +16,7 @@ import ingsoft1920.cm.model.Tipo;
 
 public class ReservaDAO {
 
-    private static conectorBBDD conector = new conectorBBDD("localhost:3306", "root", "SUPERGUILLE", "practica1");
+    private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20ge1.711", "piedrafita.ls.fi.upm.es");
 
     /*
     @param day con el formato yyyy-MM-dd

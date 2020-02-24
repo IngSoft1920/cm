@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EmpleadoDAO {
 
-    private static conectorBBDD conector = new conectorBBDD("localhost:3306", "root", "SUPERGUILLE", "practica1");
+    private static conectorBBDD conector = new conectorBBDD("8000", "cm1", "ingSoft20ge1.711", "piedrafita.ls.fi.upm.es");
 
     private int anadirEmpleadoEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion){
 
