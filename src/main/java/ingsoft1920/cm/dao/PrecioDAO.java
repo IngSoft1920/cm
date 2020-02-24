@@ -17,7 +17,7 @@ public class PrecioDAO {
         if (! conector.isConnected()){
             conector.conectar();
         }
-        String anadirPrecio = "INSERT INTO precio (hotel_id, tipo, fecha, precio) VALUES (?,?,DATE(?),?)";
+        String anadirPrecio = "INSERT INTO precio (hotel_id, tipo, fecha, precio) VALUES (?,?,?,?)";
 
         PreparedStatement stmt;
 
