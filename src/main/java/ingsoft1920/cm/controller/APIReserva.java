@@ -103,7 +103,7 @@ public class APIReserva {
 
         //Declaramos una nueva lista (array) en Json y añadimos elementos
         JsonArray ciudades_arr = new JsonArray();
-        JsonArray precios = new JsonArray();
+
         for (String ciudad: ciudades) {
             ciudades_arr.add(ciudad);
         }

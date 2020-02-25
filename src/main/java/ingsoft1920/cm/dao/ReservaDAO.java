@@ -68,7 +68,6 @@ public class ReservaDAO {
                 ciudades.add(rs.getString("ciudad"));
             }
 
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -123,6 +122,8 @@ public class ReservaDAO {
             if (ciudad.compareTo("") != 0){
                 stmt.setString(1, ciudad);
             }
+
+            rs = stmt.executeQuery();
 
             while(rs.next()){
                 Hotel hotel = new Hotel();
