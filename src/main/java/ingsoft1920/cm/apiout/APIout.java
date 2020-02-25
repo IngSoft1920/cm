@@ -31,11 +31,8 @@ public class APIout {
 		HttpClient client = HttpClientBuilder.create().build();
 
 		HttpResponse respuesta = null;
-		try {
-			respuesta = client.execute(post);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		try { respuesta = client.execute(post); }
+		catch (IOException e) { e.printStackTrace(); return; }
 
 		int codigoRespuesta = respuesta.getStatusLine().getStatusCode();
 

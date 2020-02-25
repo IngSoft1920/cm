@@ -278,8 +278,8 @@ CREATE TABLE `hotel_proveedor` (
   `hotel_id` bigint(20) NOT NULL,
   `proveedores_id` bigint(20) NOT NULL,
   PRIMARY KEY(`hotel_id`,`proveedores_id`),
-  CONSTRAINT `FK413i8ywpygy3yvgr65ptp0cj3` FOREIGN KEY (`proveedores_id`) REFERENCES `hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT `FKnl8191o13n59wbgavmnlrrrf9` FOREIGN KEY (`hotel_id`) REFERENCES `proveedor` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT `FK413i8ywpygy3yvgr65ptp0cj3` FOREIGN KEY (`proveedores_id`) REFERENCES `proveedor` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT `FKnl8191o13n59wbgavmnlrrrf9` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
