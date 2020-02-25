@@ -366,7 +366,7 @@ public class ReservaDAO {
         try {
             stmt = conector.getConn().prepareStatement(borrarReserva);
             stmt.setInt(1, id);
-            stmt.executeQuery();
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
