@@ -107,6 +107,8 @@ public class HotelDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        conector.closeConn();
     }
 
     private void editarHotel (int id, String nombre, String continente, String pais, String ciudad, String direccion){
@@ -194,6 +196,8 @@ public class HotelDAO {
             e.printStackTrace();
         }
 
+        conector.closeConn();
+
         return hoteles;
 
     }
@@ -228,6 +232,8 @@ public class HotelDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        conector.closeConn();
 
         return facturas;
     }
@@ -309,6 +315,9 @@ public class HotelDAO {
             hoteles.get(hotel).addAll(getPreciosPorFechas(hotel.getId(), fecha_entrada, fecha_salida));
         }
 
+        conector.closeConn();
+
         return hoteles;
     }
+
 }

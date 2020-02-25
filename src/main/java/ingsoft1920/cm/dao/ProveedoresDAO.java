@@ -148,6 +148,8 @@ public class ProveedoresDAO {
             e.printStackTrace();
         }
 
+        conector.closeConn();
+
         return proveedores;
     }
 
@@ -180,6 +182,8 @@ public class ProveedoresDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        conector.closeConn();
 
         return proveedores;
     }

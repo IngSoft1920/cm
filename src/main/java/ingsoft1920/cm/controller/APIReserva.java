@@ -17,13 +17,14 @@ import com.google.gson.JsonParser;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 public class APIReserva {
 
     @ResponseBody
-    @GetMapping("/precioDisponible")
-    public LinkedList<String> getPrecioDisponibles(@RequestBody String req) {
+    @PostMapping("/precioDisponible")
+    public String getPrecioDisponibles(@RequestBody String req) {
         //Suponiendo que me llega algo como
         /*
          * {
@@ -45,7 +46,8 @@ public class APIReserva {
 
         ReservaDAO reserva = new ReservaDAO();
 
-        LinkedList<String> res = new LinkedList<String>();
+        //Instanciamos un nuevo objeto Json
+        JsonArray res = new JsonArray();
 
         HashSet<Reserva> reservas = reserva.getPrecios(hotel_id, ubicacion, fechaInicio, fechaFin);
 
@@ -60,12 +62,12 @@ public class APIReserva {
             obj.addProperty("precio", reserva1.getTipo().getPrecio());
 
 
-            res.add(obj.getAsString());
+            res.add(obj);
 
         }
 
 
-        return res;
+        return res.toString();
 
         //Devolvera lo siguiente en el cuerpo de la respuesta
         /*
@@ -101,7 +103,7 @@ public class APIReserva {
 
         //Declaramos una nueva lista (array) en Json y añadimos elementos
         JsonArray ciudades_arr = new JsonArray();
-        JsonArray precios = new JsonArray();
+
         for (String ciudad: ciudades) {
             ciudades_arr.add(ciudad);
         }
@@ -111,7 +113,7 @@ public class APIReserva {
         res.add("ciudades", ciudades_arr);
 
         //Obtenemos la representacion en String del objeto JSON y la enviamos como respuesta
-        return res.getAsString();
+        return res.toString();
 
         //Devolvera lo siguiente en el cuerpo de la respuesta
         /*
@@ -122,7 +124,7 @@ public class APIReserva {
     }
 
     @ResponseBody
-    @GetMapping("/hoteles")
+    @PostMapping("/hoteles")
     public String getHoteles(@RequestBody String req) {
         /*
          * {
@@ -157,7 +159,7 @@ public class APIReserva {
         }
 
 
-        return res.getAsString();
+        return res.toString();
 
         //Devolvera lo siguiente en el cuerpo de la respuesta
         /*
@@ -177,7 +179,7 @@ public class APIReserva {
     }
 
     @ResponseBody
-    @GetMapping("/crearReserva")
+    @PostMapping("/crearReserva")
     public void crearReserva(@RequestBody String req) {
         /*
          * {
@@ -212,7 +214,7 @@ public class APIReserva {
     }
 
     @ResponseBody
-    @GetMapping("/cancelarReserva")
+    @PostMapping("/cancelarReserva")
     public void cancelarReserva(@RequestBody String req) {
         /*
          * {
@@ -231,4 +233,58 @@ public class APIReserva {
         reservaDAO.cancelarReserva(id);
 
     }
+
+    @ResponseBody
+    @PostMapping("/reservasCliente")
+    public String reservasCliente(@RequestBody String req) {
+        //Suponiendo que me llega algo como
+        /*
+         * {
+         *  "cliente_id":"12345"
+         * }
+         */
+        //Parseamos el texto a un JsonObject
+        JsonObject obj = (JsonObject) JsonParser.parseString(req);
+        //Vamos accediendo a sus propiedades, y las guardamos
+        int cliente_id = obj.get("cliente_id").getAsInt();
+
+        ReservaDAO reserva = new ReservaDAO();
+
+        List<ingsoft1920.cm.bean.Reserva> reservas = reserva.reservasCliente(cliente_id);
+
+        JsonArray res = new JsonArray();
+
+        for (ingsoft1920.cm.bean.Reserva reserva1: reservas) {
+
+            //Instanciamos un nuevo objeto Json
+            obj = new JsonObject();
+
+            obj.addProperty("id", reserva1.getId());
+            obj.addProperty("fecha_ent", String.valueOf(reserva1.getFecha_entrada()));
+            obj.addProperty("fechas_sal", String.valueOf(reserva1.getFecha_salida()));
+            obj.addProperty("importe", reserva1.getImporte());
+            obj.addProperty("hotel_id", reserva1.getHotel_id());
+            obj.addProperty("tipo", String.valueOf(reserva1.getTipo()));
+            obj.addProperty("cliente_id", reserva1.getCliente_id());
+
+            res.add(obj);
+        }
+
+        return res.toString();
+        //Devolvera lo siguiente en el cuerpo de la respuesta
+        /*
+         * [
+         * {
+         *  "id":"1"
+         *  "fecha_ent":"2020-05-02"
+         *  "fecha_sal":"2020-05-06"
+         *  "importe":"2000"
+         *  "hotel_id":"123"
+         *  "tipo":"lujo"
+         *  "cliente_id":"12"
+         * }
+         * ]
+         */
+    }
+
 }
