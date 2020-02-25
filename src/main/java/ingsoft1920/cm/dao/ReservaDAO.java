@@ -147,9 +147,9 @@ public class ReservaDAO {
 
         //Hay que saber cuantas habitaciones hay en un hotel de un cierto tipo
         String getNumeroDeHabitaciones =
-                "SELECT habitaciones.tipo, habitaciones.total_habitaciones " +
-                        "FROM habitaciones " +
-                        "WHERE habitaciones.hotel_id = ?";
+                "SELECT habitacion.tipo, habitacion.total_habitaciones " +
+                        "FROM habitacion " +
+                        "WHERE habitacion.hotel_id = ?";
 
 
         Map<String, Tipo> disponibles = new HashMap<>();
@@ -178,7 +178,7 @@ public class ReservaDAO {
         //Por cada tipo de reserva hay que mirar el precio
         String getPrecio =
                 "SELECT precio.valor " +
-                        "FROM precio" +
+                        "FROM precio " +
                         "WHERE precio.hotel_id = ? AND precio.fecha = ? AND precio.habitacion_tipo = ?";
 
         PreparedStatement stmtGetPrecio = null;
@@ -213,7 +213,7 @@ public class ReservaDAO {
 
         //Por cada dia hay que ver cuantas habitaciones hay reservadas (por cada tipo)
         String getReservasPorDias =
-                "SELECT reserva.habitacion_tipo, count(reserva.tipo) as 'num_reservas' " +
+                "SELECT reserva.habitacion_tipo, count(reserva.habitacion_tipo) as 'num_reservas' " +
                         "FROM reserva " +
                         "WHERE reserva.hotel_id = ? " +
                         "AND reserva.fecha_inicio <= ? AND reserva.fecha_fin >= ? " +
@@ -232,7 +232,7 @@ public class ReservaDAO {
 
         try {
 
-            while (nextDay != fecha_fin) {
+            while (nextDay != fecha_fin && ! disponibles.isEmpty()) {
 
                 stmt = conector.getConn().prepareStatement(getReservasPorDias);
 
