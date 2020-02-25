@@ -18,8 +18,8 @@ public class ClienteDAO {
 		private QueryRunner runner;
 		
 		private static conectorBBDD conector = new conectorBBDD();
-				
-				
+
+
 		public int anadirCliente(String nombre, String dni, String email, String password) {
 
 			String insertar = "INSERT INTO cliente (nombre,dni,email,password) VALUES (?,?,?,?)";

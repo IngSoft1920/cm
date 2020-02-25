@@ -16,7 +16,7 @@ import ingsoft1920.cm.dao.EmpleadoDAO;
 
 @Controller
 @RequestMapping("/empleado")
-@SessionAttributes(names = {"hotel_id"})
+@SessionAttributes(names = { "hotel_id" })
 public class EmpleadoController {
 	
 	private EmpleadoDAO empleadoDao = new EmpleadoDAO();
@@ -29,12 +29,12 @@ public class EmpleadoController {
 		
 		return "/corp-empleado/home.jsp";
 	}
-	
+
 	@GetMapping("/anadir")
 	public String formularioAnadirEmpleado() {
 		return "/corp-empleado/anadir.jsp";
 	}
-	
+
 	@PostMapping("/anadir")
 	public String recibirEmpleadoFormulario(@ModelAttribute("hotel_id") int hotel_id,
 											String nombre,String apellidos,String email,
@@ -45,17 +45,17 @@ public class EmpleadoController {
 		
 		APIout.enviarEmpleado(anadido);
 		APIout.asignarNomina(anadido.getId(), nomina);
-		
-		return "redirect:/empleado/"+hotel_id;
+
+		return "redirect:/empleado/" + hotel_id;
 	}
-	
+
 	@GetMapping("/eliminar")
 	public String elegirEmpleadoAEliminar(@ModelAttribute("hotel_id") int hotel_id,
 										  Model m) {
 		m.addAttribute("empleados", empleadoDao.empleadosDeUnHotel(hotel_id));
 		return "/corp-empleado/eliminar.jsp";
 	}
-	
+
 	@PostMapping("/eliminar")
 	public String recibirEmpleadoAEliminar(@ModelAttribute("hotel_id") int hotel_id,
 										   int empleado_id) {
@@ -70,10 +70,8 @@ public class EmpleadoController {
 		
 		empleadoDao.borrarEmpleado(empleado_id);
 		APIout.eliminarEmpleado(eliminado.getEmail());
-		
-		return "redirect:/empleado/"+hotel_id;
+
+		return "redirect:/empleado/" + hotel_id;
 	}
-	
-	
 
 }

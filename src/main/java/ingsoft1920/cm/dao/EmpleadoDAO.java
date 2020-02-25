@@ -35,7 +35,7 @@ public class EmpleadoDAO {
             stmt.execute();
             rs = stmt.getGeneratedKeys();
 
-            if (rs.next()){
+            if (rs.next()) {
                 id = rs.getInt(1);
             }
         } catch (SQLException e) {
@@ -143,14 +143,14 @@ public class EmpleadoDAO {
             stmt = conector.getConn().prepareStatement(getEmpleados);
             rs = stmt.executeQuery();
 
-            while (rs.next()){
-                empleado = new Empleado(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido1"), rs.getString("email"), rs.getString("telefono"), rs.getString("ocupacion"));
-                empleados.add(empleado);
-                System.out.println(empleado);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+			while (rs.next()) {
+				empleado = new Empleado(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido1"),
+						rs.getString("email"), rs.getString("telefono"), rs.getString("ocupacion"));
+				empleados.add(empleado);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
         return empleados;
     }

@@ -1,6 +1,5 @@
 package ingsoft1920.cm.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,48 +18,43 @@ public class CorporativoController {
 	public String homeCorporativo() {
 		return "/corp/home-corp.jsp";
 	}
-	
+
 	@GetMapping("/select-hotel/{accion}")
 	public String seleccionarHotel(Model m) {
 		m.addAttribute("hoteles",hotelDao.hoteles());
 		return "/corp/select-hotel.jsp";
 	}
-	
+
 	@PostMapping("/select-hotel/{accion}")
-	public String recibirHotelSeleccionado(@PathVariable("accion") String accion,
-										   int hotel_id) {
-		
+	public String recibirHotelSeleccionado(@PathVariable("accion") String accion, int hotel_id) {
+
 		String res = "redirect:";
-		
-		switch(accion) {
-		
+
+		switch (accion) {
+
 		case "empleado":
-			res+="/empleado/"+hotel_id;
+			res += "/empleado/" + hotel_id;
 			break;
-			
+
 		case "proveedor":
-			res+="/proveedor/"+hotel_id;
+			res += "/proveedor/" + hotel_id;
 			break;
-			
+
 		case "editar":
-			res+="/hotel/editar/"+hotel_id;
+			res += "/hotel/editar/" + hotel_id;
 			break;
-			
+
 		case "eliminar":
 			hotelDao.eliminarHotel(hotel_id);
 			res+="/hotel";
 			break;
-			
+
 		case "facturacion":
-			res+="/hotel/facturacion/"+hotel_id;
+			res += "/hotel/facturacion/" + hotel_id;
 			break;
 		}
-		
+
 		return res;
 	}
-	
 
-
-	
-	
 }

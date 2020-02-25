@@ -33,7 +33,7 @@ public class ProveedoresDAO {
             stmt.execute();
             rs = stmt.getGeneratedKeys();
 
-            if (rs.next()){
+            if (rs.next()) {
                 id = rs.getInt(1);
             }
         } catch (SQLException e) {

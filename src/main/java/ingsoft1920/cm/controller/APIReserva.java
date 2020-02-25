@@ -123,7 +123,7 @@ public class APIReserva {
 
     @ResponseBody
     @GetMapping("/hoteles")
-    public LinkedList<String> getHoteles(@RequestBody String req) {
+    public String getHoteles(@RequestBody String req) {
         /*
          * {
          * 	"ubicacion":"Benitatxell",
@@ -133,7 +133,7 @@ public class APIReserva {
         //Parseamos el texto a un JsonObject
         JsonObject obj = (JsonObject) JsonParser.parseString(req);
 
-        LinkedList<String> res = new LinkedList<String>();
+        //LinkedList<String> res = new LinkedList<String>();
 
         //Vamos accediendo a sus propiedades, y las guardamos
         String ubicacion = obj.get("ubicacion").getAsString();
@@ -141,6 +141,7 @@ public class APIReserva {
         ReservaDAO reserva = new ReservaDAO();
 
         HashSet<Hotel> hoteles = reserva.getHotelesPorUbicacion(ubicacion);
+        JsonArray res = new JsonArray();
 
         for (Hotel hotel: hoteles) {
             //Instanciamos un nuevo objeto Json
@@ -151,12 +152,12 @@ public class APIReserva {
             obj.addProperty("id", hotel.getId());
 
 
-            res.add(obj.getAsString());
+            res.add(obj);
 
         }
 
 
-        return res;
+        return res.getAsString();
 
         //Devolvera lo siguiente en el cuerpo de la respuesta
         /*

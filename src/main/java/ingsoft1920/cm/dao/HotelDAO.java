@@ -138,7 +138,7 @@ public class HotelDAO {
 
     private void editarTipo(int id, Habitaciones.Tipo tipo, int num) {
 
-        String editarHotel = "UPDATE habitacion SET total_habitaciones = ? WHERE hotel_id  = ? AND tipo = ?";
+        String editarHotel = "UPDATE habitacion SET tipo = ? WHERE hotel_id  = ? AND total_habitaciones = ?";
 
         if (! conector.isConnected()){
             conector.conectar();
@@ -222,7 +222,7 @@ public class HotelDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()){
-                facturas.add(new Factura(rs.getInt("id"), rs.getInt("importe"), rs.getBoolean("pagado"), rs.getString("descripcion"), rs.getDate("fecha"), rs.getInt("cliente_id")));
+                facturas.add(new Factura(rs.getInt("id"), rs.getInt("importe"), rs.getBoolean("pagado"), rs.getString("descripcion"), rs.getDate("fecha_factura"), rs.getInt("cliente_id")));
             }
 
         } catch (SQLException e) {
@@ -285,7 +285,7 @@ public class HotelDAO {
             stmt = conector.getConn().prepareStatement(getPreciosPorFechas);
             stmt.setInt(1, hotel_id);
             stmt.setDate(2, fecha_entrada);
-            stmt.setDate(2, fecha_salida);
+            stmt.setDate(3, fecha_salida);
 
             rs = stmt.executeQuery();
 

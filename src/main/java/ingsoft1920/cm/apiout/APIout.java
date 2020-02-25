@@ -1,6 +1,5 @@
 package ingsoft1920.cm.apiout;
 
-
 import java.io.IOException;
 
 import org.apache.http.HttpResponse;
@@ -22,32 +21,36 @@ public class APIout {
 	private static final String SERVIDOR = "http://piedrafita.ls.fi.upm.es";
 	private static final Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
 
+	public static void enviar(String json, int puerto, String endpoint) {
 
-	public static void enviar(String json,int puerto,String endpoint) {
-
-		String destino = SERVIDOR+":"+puerto+endpoint;
+		String destino = SERVIDOR + ":" + puerto + endpoint;
 		HttpPost post = new HttpPost(destino);
-		  post.addHeader("Content-Type", "application/json");
-		  post.setEntity( new StringEntity(json,"UTF-8") );
-
+		post.addHeader("Content-Type", "application/json");
+		post.setEntity(new StringEntity(json, "UTF-8"));
 
 		HttpClient client = HttpClientBuilder.create().build();
 
 		HttpResponse respuesta = null;
-		try { respuesta = client.execute(post); }
-		catch (IOException e) { e.printStackTrace(); }
+		try {
+			respuesta = client.execute(post);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		int codigoRespuesta = respuesta.getStatusLine().getStatusCode();
 
-		if( codigoRespuesta != 200 ) {
-			System.out.println("Ha habido un error, con código "+codigoRespuesta);
+		if (codigoRespuesta != 200) {
+			System.out.println("Ha habido un error, con código " + codigoRespuesta);
 			return;
 		}
 
 		// Leemos la respuesta
 		String mensRespuesta = "";
-		try { mensRespuesta = EntityUtils.toString(respuesta.getEntity()); }
-		catch(IOException e) { e.printStackTrace(); }
+		try {
+			mensRespuesta = EntityUtils.toString(respuesta.getEntity());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		System.out.println(mensRespuesta);
 	}
@@ -56,34 +59,31 @@ public class APIout {
 		String reservaJson = gson.toJson(r, Reserva.class);
 
 		// Cambiar el endpoint al que diga dho
-		enviar(reservaJson,7002,"/recibirReserva");
+		enviar(reservaJson, 7002, "/recibirReserva");
 	}
 
-
-
 	public static void enviarEmpleado(Empleado e) {
-		String empleadoJson = gson.toJson(e,Empleado.class);
-		enviar(empleadoJson,7002,"/creaEmpleado");
+		String empleadoJson = gson.toJson(e, Empleado.class);
+		enviar(empleadoJson, 7002, "/creaEmpleado");
 	}
 
 	public static void eliminarEmpleado(String email) {
 		JsonObject jsonO = new JsonObject();
-		  jsonO.addProperty("email", email);
+		jsonO.addProperty("email", email);
 
-		enviar(jsonO.toString(),7002,"/eliminarEmpleado");
+		enviar(jsonO.toString(), 7002, "/eliminarEmpleado");
 	}
 
-	public static void asignarNomina(int id_empleado,double valor) {
+	public static void asignarNomina(int id_empleado, double valor) {
 		JsonObject jsonO = new JsonObject();
-			jsonO.addProperty("id_empleado",id_empleado);
-			jsonO.addProperty("valor",valor);
+		jsonO.addProperty("id_empleado", id_empleado);
+		jsonO.addProperty("valor", valor);
 
-		enviar(jsonO.toString(),7002,"/asignaNomina");
+		enviar(jsonO.toString(), 7002, "/asignaNomina");
 	}
 
 	public static void main(String[] args) {
 
 	}
-
 
 }

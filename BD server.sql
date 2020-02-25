@@ -417,7 +417,7 @@ CREATE TABLE `habitacion` (
   `tipo` varchar(255) NOT NULL,
   `total_habitaciones` int,
   `hotel_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`tipo`,`hotel_id`),
+  PRIMARY KEY (`tipo`, `hotel_id`),
   KEY `FKs2vh7wnovk8bur9j6u9bdebra` (`hotel_id`),
   CONSTRAINT `FKs2vh7wnovk8bur9j6u9bdebra` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

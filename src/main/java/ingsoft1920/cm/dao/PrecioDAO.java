@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class PrecioDAO {
 
     private static conectorBBDD conector = new conectorBBDD();
-    		
+
     //Recibe un objeto Precio (definido en ingsof1920/model)
     public void anadirPrecio(Precio precio){
 
@@ -24,11 +24,13 @@ public class PrecioDAO {
 
         try {
             stmt = conector.getConn().prepareStatement(anadirPrecio);
+
             stmt.setInt(1, precio.getHotel_id());
             stmt.setString(2, precio.getTipo());
             stmt.setDate(3, Date.valueOf(precio.getFecha()));
             stmt.setDouble(4, precio.getPrecio());
-            stmt.executeQuery();
+
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
