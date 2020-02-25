@@ -15,13 +15,13 @@ import ingsoft1920.cm.dao.ProveedoresDAO;
 @RequestMapping("/proveedor")
 @SessionAttributes(names = { "hotel_id" })
 public class ProveedorController {
-	
+
 	private ProveedoresDAO proveedorDao = new ProveedoresDAO();
-	
-	
+
+
 	@GetMapping("/{hotel_id}")
 	public String homeProveedor(@PathVariable("hotel_id") int hotel_id, Model m) {
-		
+
 		m.addAttribute("proveedores", proveedorDao.proveedoresDeUnHotel(hotel_id) );
 		m.addAttribute("hotel_id", hotel_id);
 
@@ -37,7 +37,7 @@ public class ProveedorController {
 	public String recibirProveedorFormulario(@ModelAttribute("hotel_id") int hotel_id,
 											 String empresa,String producto)
 	{
-		proveedorDao.anadirProveedor(producto, empresa,hotel_id);
+		proveedorDao.anadirProveedor(empresa,producto,hotel_id);
 		return "redirect:/proveedor/"+hotel_id;
 	}
 
