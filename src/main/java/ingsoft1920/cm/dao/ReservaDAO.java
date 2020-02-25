@@ -413,6 +413,8 @@ public class ReservaDAO {
             e.printStackTrace();
         }
 
+        conector.closeConn();
+
         return reservas;
     }
 
