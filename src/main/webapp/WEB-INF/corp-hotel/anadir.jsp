@@ -29,6 +29,14 @@
             <input type="text" name="direccion" autocomplete="off">
             <br><br>
 
+            <label>Num. habitaciones normales:</label>
+            <input type="number" name="numNormales" autocomplete="off">
+            <br><br>
+
+            <label>Num. habitaciones premium:</label>
+            <input type="number" name="numPremium" autocomplete="off">
+            <br><br>
+
             <input type="submit" value="Enviar">
         </form>
         <input type="submit" value="Volver" onclick="window.location='/hotel';" />

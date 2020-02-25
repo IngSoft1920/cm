@@ -24,7 +24,7 @@ public class EmpleadoDAO {
         int id = -1;
 
         try {
-            stmt = conector.getConn().prepareStatement(anadirEmpleado, Statement.RETURN_GENERATED_KEYS);
+            stmt = conector.getConn().prepareStatement(anadirEmpleado,Statement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, nombre);
             stmt.setString(2, apellidos);
@@ -33,7 +33,6 @@ public class EmpleadoDAO {
             stmt.setString(5, ocupacion);
 
             stmt.execute();
-
             rs = stmt.getGeneratedKeys();
 
             if (rs.next()) {
@@ -42,7 +41,6 @@ public class EmpleadoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return id;
     }
 
@@ -51,6 +49,7 @@ public class EmpleadoDAO {
         String anadirEmpleadoHotel = "INSERT INTO hotel_empleados (hotel_id, empleados_id) VALUES (?, ?)";
 
         PreparedStatement stmt = null;
+        int id=-1;
 
         try {
             stmt = conector.getConn().prepareStatement(anadirEmpleadoHotel);
@@ -58,22 +57,24 @@ public class EmpleadoDAO {
             stmt.setInt(1, hotel_id);
             stmt.setInt(2, empleado_id);
 
-            stmt.executeUpdate();
+            stmt.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void anadirEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion, int hotel_id){
+    public int anadirEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion, int hotel_id){
 
         if (! conector.isConnected()){
             conector.conectar();
         }
 
-        anadirEmpleadoHotel(hotel_id, anadirEmpleadoEmpleado(nombre, apellidos, email, telefono, ocupacion));
+        int id = anadirEmpleadoEmpleado(nombre, apellidos, email, telefono, ocupacion);
+        anadirEmpleadoHotel(hotel_id, id );
 
         conector.closeConn();
+        return id;
     }
 
     private void borrarEmpleadoEmpleado(int id){
@@ -155,13 +156,16 @@ public class EmpleadoDAO {
     }
 
     public List<Empleado> empleadosDeUnHotel(int hotel_id){
-        String getEmpleadosDeUnHotel = "SELECT empleado.* " +
-                                        "FROM (SELECT * " +
-                                                "FROM hotel_empleados" +
-                                                "WHERE hotel_id = ?) as ids_empleados " +
-                                        "JOIN empleado " +
-                                        "ON ids_empleados.empleados_id = empleado.id";
-
+    	
+    	if (! conector.isConnected()){
+            conector.conectar();
+        }
+    	
+    	String getEmpleadosDeUnHotel = "SELECT empleado.* "+
+    							   	   "FROM empleado "+
+    							   	   "JOIN hotel_empleados ON empleado.id=hotel_empleados.empleados_id "+
+    							   	   "WHERE hotel_empleados.hotel_id=?";
+  
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
@@ -189,7 +193,8 @@ public class EmpleadoDAO {
             e.printStackTrace();
         }
 
-		return empleados;
-	}
+        return empleados;
+    }
+    
 
 }

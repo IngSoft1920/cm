@@ -82,12 +82,12 @@ DROP TABLE IF EXISTS `empleado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `empleado` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `apellido1` varchar(255) DEFAULT NULL,
   `apellido2` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) DEFAULT NULL,
-  `nomina` float NOT NULL,
+  `nomina` float,
   `ocupacion` varchar(255) DEFAULT NULL,
   `telefono` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -113,7 +113,7 @@ DROP TABLE IF EXISTS `factura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `factura` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(255) DEFAULT NULL,
   `fecha_factura` datetime(6) DEFAULT NULL,
   `importe` float NOT NULL,
@@ -121,7 +121,8 @@ CREATE TABLE `factura` (
   `cliente_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK2602efsrpmevi8yxg464stfn5` (`cliente_id`),
-  CONSTRAINT `FK2602efsrpmevi8yxg464stfn5` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
+  CONSTRAINT `FK2602efsrpmevi8yxg464stfn5` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -151,8 +152,8 @@ CREATE TABLE `feedback` (
   PRIMARY KEY (`id`),
   KEY `FK74fgwqxcx4kvrgc2q8cseukpw` (`cliente_id`),
   KEY `FKt9lta62m3mgg7eh81ed3umcj2` (`hotel_id`),
-  CONSTRAINT `FK74fgwqxcx4kvrgc2q8cseukpw` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
-  CONSTRAINT `FKt9lta62m3mgg7eh81ed3umcj2` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`)
+  CONSTRAINT `FK74fgwqxcx4kvrgc2q8cseukpw` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT `FKt9lta62m3mgg7eh81ed3umcj2` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -219,7 +220,7 @@ DROP TABLE IF EXISTS `hotel`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `hotel` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) AUTO_INCREMENT,
   `ciudad` varchar(255) DEFAULT NULL,
   `continente` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
@@ -234,14 +235,15 @@ CREATE TABLE `hotel` (
 -- Dumping data for table `hotel`
 --
 
+
 LOCK TABLES `hotel` WRITE;
 /*!40000 ALTER TABLE `hotel` DISABLE KEYS */;
-INSERT INTO `hotel` VALUES (1,'Cadiz','Europa',NULL,'Pepe Arriba','Espana'),(2,'Cadiz','Europa',NULL,'Pepe Playa','Espana'),(3,'Cadiz','Europa',NULL,'Barcelo Playa','Espana'),(4,'Malaga','Europa',NULL,'Barcelo Playa','Espana'),(5,'BArcelona','Europa',NULL,'Barcelo Playa','Espana'),(6,'BArcelona','Europa',NULL,'Barcelo Number one','Espana'),(7,'Madrid','Europa',NULL,'Madrid Number one','Espana'),(8,'Madrid','Europa',NULL,'Madrid Plaza','Espana');
+INSERT INTO `hotel` VALUES (1,'Cádiz','Europa','Calle Croqueta,21','Pepe Arriba','España'),(2,'Málaga','Europa','Calle Compila,33','Pepe Playa','España'),(3,'Asturias','Europa','Calle Frío,21','Barcelo Playa','España'),(4,'Málaga','Europa','Calle Río,21','La Cabaña','España');
 /*!40000 ALTER TABLE `hotel` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `hotel_empleados`
+-- Table structure for table ``
 --
 
 DROP TABLE IF EXISTS `hotel_empleados`;
@@ -250,10 +252,9 @@ DROP TABLE IF EXISTS `hotel_empleados`;
 CREATE TABLE `hotel_empleados` (
   `hotel_id` bigint(20) NOT NULL,
   `empleados_id` bigint(20) NOT NULL,
-  KEY `FKlumpi08vmf0op9ykflx1acukb` (`empleados_id`),
-  KEY `FKp91hy5x0kloalo0x7qpips4lu` (`hotel_id`),
-  CONSTRAINT `FKlumpi08vmf0op9ykflx1acukb` FOREIGN KEY (`empleados_id`) REFERENCES `hotel` (`id`),
-  CONSTRAINT `FKp91hy5x0kloalo0x7qpips4lu` FOREIGN KEY (`hotel_id`) REFERENCES `empleado` (`id`)
+  PRIMARY KEY(`hotel_id`,`empleados_id`),
+  CONSTRAINT `FKlumpi08vmf0op9ykflx1acukb` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT `FKp91hy5x0kloalo0x7qpips4lu` FOREIGN KEY (`empleados_id`) REFERENCES `empleado` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -276,10 +277,9 @@ DROP TABLE IF EXISTS `hotel_proveedor`;
 CREATE TABLE `hotel_proveedor` (
   `hotel_id` bigint(20) NOT NULL,
   `proveedores_id` bigint(20) NOT NULL,
-  KEY `FK413i8ywpygy3yvgr65ptp0cj3` (`proveedores_id`),
-  KEY `FKnl8191o13n59wbgavmnlrrrf9` (`hotel_id`),
-  CONSTRAINT `FK413i8ywpygy3yvgr65ptp0cj3` FOREIGN KEY (`proveedores_id`) REFERENCES `hotel` (`id`),
-  CONSTRAINT `FKnl8191o13n59wbgavmnlrrrf9` FOREIGN KEY (`hotel_id`) REFERENCES `proveedor` (`id`)
+  PRIMARY KEY(`hotel_id`,`proveedores_id`),
+  CONSTRAINT `FK413i8ywpygy3yvgr65ptp0cj3` FOREIGN KEY (`proveedores_id`) REFERENCES `hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT `FKnl8191o13n59wbgavmnlrrrf9` FOREIGN KEY (`hotel_id`) REFERENCES `proveedor` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -334,7 +334,7 @@ CREATE TABLE `precio` (
   `hotel_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK6e28katsdsweinfsil7y3s2o7` (`habitacion_tipo`),
-  CONSTRAINT `FK6e28katsdsweinfsil7y3s2o7` FOREIGN KEY (`habitacion_tipo`) REFERENCES `habitacion` (`tipo`)
+  CONSTRAINT `FK6e28katsdsweinfsil7y3s2o7` FOREIGN KEY (`habitacion_tipo`) REFERENCES `habitacion` (`tipo`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -355,7 +355,7 @@ DROP TABLE IF EXISTS `proveedor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `proveedor` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `empresa` varchar(255) DEFAULT NULL,
   `producto` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -391,9 +391,9 @@ CREATE TABLE `reserva` (
   KEY `FK7cg2jiyn5cf6f6elccvb6963k` (`cliente_id`),
   KEY `FKgve13jsoas3vq4xoo73lur8kv` (`hotel_id`),
   KEY `FK1yd4ab5vb7l6calqbyqrppaib` (`habitacion_tipo`),
-  CONSTRAINT `FK1yd4ab5vb7l6calqbyqrppaib` FOREIGN KEY (`habitacion_tipo`) REFERENCES `habitacion` (`tipo`),
-  CONSTRAINT `FK7cg2jiyn5cf6f6elccvb6963k` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
-  CONSTRAINT `FKgve13jsoas3vq4xoo73lur8kv` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`)
+  CONSTRAINT `FK1yd4ab5vb7l6calqbyqrppaib` FOREIGN KEY (`habitacion_tipo`) REFERENCES `habitacion` (`tipo`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT `FK7cg2jiyn5cf6f6elccvb6963k` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT `FKgve13jsoas3vq4xoo73lur8kv` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -419,7 +419,7 @@ CREATE TABLE `habitacion` (
   `hotel_id` bigint(20) NOT NULL,
   PRIMARY KEY (`tipo`, `hotel_id`),
   KEY `FKs2vh7wnovk8bur9j6u9bdebra` (`hotel_id`),
-  CONSTRAINT `FKs2vh7wnovk8bur9j6u9bdebra` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`)
+  CONSTRAINT `FKs2vh7wnovk8bur9j6u9bdebra` FOREIGN KEY (`hotel_id`) REFERENCES `hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
