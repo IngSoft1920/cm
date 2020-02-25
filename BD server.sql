@@ -300,7 +300,7 @@ DROP TABLE IF EXISTS `peticiones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `peticiones` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `ciudad` varchar(255) DEFAULT NULL,
   `estado` int(11) DEFAULT NULL,
   `fecha_peticiones` datetime(6) DEFAULT NULL,
@@ -327,7 +327,7 @@ DROP TABLE IF EXISTS `precio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `precio` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `fecha` datetime(6) NOT NULL,
   `valor` float DEFAULT NULL,
   `habitacion_tipo` varchar(255) NOT NULL,
@@ -379,7 +379,7 @@ DROP TABLE IF EXISTS `reserva`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `reserva` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `fecha_fin` date DEFAULT NULL,
   `fecha_inicio` date DEFAULT NULL,
   `importe` float NOT NULL,
