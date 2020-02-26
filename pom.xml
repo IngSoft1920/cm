@@ -12,6 +12,7 @@
 	<artifactId>cm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cm</name>
+	<packaging>war</packaging>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -52,6 +53,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
+		
+		<dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-jasper</artifactId>
+        <scope>provided</scope>
+   		</dependency>
+   		
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
@@ -69,6 +77,33 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+				<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		
+			<dependency>
+	    <groupId>commons-dbutils</groupId>
+	    <artifactId>commons-dbutils</artifactId>
+	    <version>1.6</version>
+		</dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+		
+			<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+	<dependency>
+	    <groupId>org.apache.httpcomponents</groupId>
+	    <artifactId>httpclient</artifactId>
+	</dependency>
+		
+		
+		
 	</dependencies>
 
 	<build>
