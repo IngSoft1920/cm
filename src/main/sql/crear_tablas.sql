@@ -149,7 +149,6 @@ CREATE TABLE `Empleado` (
     `email` VARCHAR(100) NOT NULL,
     `telefono` VARCHAR(10) NOT NULL,
     `sueldo` DOUBLE,
-    `nomina` DOUBLE AS (`sueldo`),
     PRIMARY KEY (id)
 );
 
