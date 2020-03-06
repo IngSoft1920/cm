@@ -231,3 +231,29 @@ CREATE TABLE `Factura` (
     FOREIGN KEY (`reserva_id`) REFERENCES `Reserva` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`servicio_id`) REFERENCES `Servicio` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+
+
+/*
+---------------------------------------------------  PARTE PARA RM  ---------------------------------------------------
+*/
+
+CREATE TABLE `Peticion` (
+    `id`INT AUTO_INCREMENT,
+    `ciudad` VARCHAR(100) NOT NULL,
+    `fecha` DATE NOT NULL,
+    `tipo_hab_id` INT NOT NULL,
+    `estado` BOOLEAN NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`tipo_hab_id`) REFERENCES `Hotel_Tipo_Habitacion` (`tipo_hab_id`) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE `Datos_Precio` (
+    `id` INT AUTO_INCREMENT,
+    `precio` DOUBLE NOT NULL,
+    `puntuacion` DOUBLE NOT NULL,
+    `estado` BOOLEAN NOT NULL,
+    `peticion_id` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`peticion_id`) REFERENCES `Peticion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+);
