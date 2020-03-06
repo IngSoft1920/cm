@@ -27,7 +27,13 @@ public class conectorBBDD {
 		} catch(Exception e) { e.printStackTrace(); }
 	}
 
-    public  Connection getConn() { return conn; }
+    public  Connection getConn() {
+	    if (! isConnected()){
+	        conectar();
+        }
+	    return conn;
+	}
+
     public boolean isConnected() { return conn != null; }
 
     public void closeConn() {
