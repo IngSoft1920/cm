@@ -4,6 +4,7 @@ import ingsoft1920.cm.conector.conectorBBDD;
 import ingsoft1920.cm.bean.Peticion;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.*;
@@ -54,4 +55,25 @@ public class PeticionDAO {
 
         conector.closeConn();
     }
+
+    public void add(Peticion peticion){
+
+        String add = "INSERT INTO Peticion (ciudad, fecha, tipo_hab_id, estado) VALUES (?, ?, ?, ?)";
+
+        ScalarHandler<Integer> handler = new ScalarHandler<>();
+
+        Integer idGenerado = null;
+
+        try( Connection conn = conector.getConn() )
+        {
+            idGenerado = runner.insert(conn, add, handler, peticion.getCiudad(), peticion.getFecha(), peticion.getTipo_hab_id(), peticion.getEstado());
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        peticion.setId(idGenerado);
+        conector.closeConn();
+    }
+
 }
