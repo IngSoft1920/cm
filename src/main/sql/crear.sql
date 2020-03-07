@@ -1,6 +1,9 @@
-DROP DATABASE cm;
+/*
+DROP DATABASE IF EXISTS cm;
 CREATE DATABASE cm;
 USE cm;
+*/
+
 
 CREATE TABLE `Hotel`(
 	`id` INT NOT NULL AUTO_INCREMENT,
@@ -158,7 +161,7 @@ CREATE TABLE `Empleado` (
     `nombre` VARCHAR(100) NOT NULL,
     `apellidos` VARCHAR(100) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
-    `telefono` VARCHAR(10) NOT NULL,
+    `telefono` VARCHAR(15) NOT NULL,
     `sueldo` DOUBLE,
     PRIMARY KEY (`id`)
 );
@@ -251,7 +254,6 @@ CREATE TABLE `Factura` (
 /*
 ---------------------------------------------------  PARTE PARA RM  ---------------------------------------------------
 */
-
 CREATE TABLE `Peticion` (
     `id`INT AUTO_INCREMENT,
     `ciudad` VARCHAR(100) NOT NULL,
