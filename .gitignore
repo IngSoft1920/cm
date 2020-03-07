@@ -57,3 +57,7 @@ build/
 
 ### Eclipse ###
 /bin/
+
+### DBeaver ###
+**/.dbeaver
+**/sql/Scripts

@@ -1,3 +1,6 @@
+DROP DATABASE cm;
+CREATE DATABASE cm;
+USE cm;
 
 CREATE TABLE `Hotel`(
 	`id` INT NOT NULL AUTO_INCREMENT,
@@ -26,7 +29,8 @@ CREATE TABLE `Hotel_Tipo_Habitacion` (
 	`tipo_hab_id` INT NOT NULL,
     `num_disponibles` INT NOT NULL,
 	FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`tipo_hab_id`) REFERENCES `Tipo_Habitacion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (`tipo_hab_id`) REFERENCES `Tipo_Habitacion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY KEY (`hotel_id`,`tipo_hab_id`)
 );
 
 CREATE TABLE `Precio` (
@@ -34,8 +38,8 @@ CREATE TABLE `Precio` (
 	`hotel_id` INT NOT NULL,
 	`tipo_hab_id` INT NOT NULL,
     `precio` INT NOT NULL,
-	FOREIGN KEY (`hotel_id`) REFERENCES `Hotel_Tipo_Habitacion` (`hotel_id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`tipo_hab_id`) REFERENCES `Hotel_Tipo_Habitacion` (`tipo_hab_id`) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (`hotel_id`,`tipo_hab_id`) REFERENCES `Hotel_Tipo_Habitacion` (`hotel_id`,`tipo_hab_id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY KEY (`hotel_id`,`tipo_hab_id`,`fecha`)
 );
 
 /*
@@ -52,7 +56,8 @@ CREATE TABLE `Hotel_Categoria`(
 	`hotel_id` INT NOT NULL,
 	`categoria_id` INT NOT NULL,
 	FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (`categoria_id`) REFERENCES `Categoria` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+	FOREIGN KEY (`categoria_id`) REFERENCES `Categoria` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY (`hotel_id`,`categoria_id`)
 );
 
 /*
@@ -76,18 +81,20 @@ CREATE TABLE `Proveedor_Producto` (
 	`proveedor_id` INT NOT NULL,
 	`producto_id` INT NOT NULL,
 	FOREIGN KEY (`proveedor_id`) REFERENCES `Proveedor` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+	FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY(`proveedor_id`,`producto_id`)
 );
-/*UNIDAD DE MEDIDA???*/
+
 CREATE TABLE `Hotel_Proveedor_Producto` (
 	`hotel_id` INT NOT NULL,
 	`proveedor_id` INT NOT NULL,
 	`producto_id` INT,
 	`precio` DOUBLE,
-    `unidad_medida` ENUM('kilo','gramo','litro','unidad','watt'),
+    `unidad_medida` VARCHAR(40),
     FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (`proveedor_id`) REFERENCES `Proveedor` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+	FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY (`hotel_id`,`proveedor_id`,`producto_id`)
 );
 
 CREATE TABLE `Pedido` (
@@ -103,7 +110,8 @@ CREATE TABLE `Pedido_Producto` (
 	`producto_id` INT NOT NULL,
 	`cantidad` DOUBLE NOT NULL,
 	FOREIGN KEY (`pedido_id`) REFERENCES `Pedido` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-	FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+	FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY (`pedido_id`,`producto_id`)
 );
 
 
@@ -127,15 +135,18 @@ CREATE TABLE `Servicio_Profesion` (
 	`profesion_id` INT,
     `servicio_id` INT,
     FOREIGN KEY (`profesion_id`) REFERENCES `Profesion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`servicio_id`) REFERENCES `Servicio` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (`servicio_id`) REFERENCES `Servicio` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY KEY (`profesion_id`,`servicio_id`)
 );
 
 CREATE TABLE `Hotel_Servicio` (
 	`hotel_id` INT,
     `servicio_id` INT,
     `precio` INT,
+    `unidad_medida` VARCHAR(40),
     FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`servicio_id`) REFERENCES `Servicio` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (`servicio_id`) REFERENCES `Servicio` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY KEY (`hotel_id`,`servicio_id`)
 );
 
 /*
@@ -145,7 +156,7 @@ CREATE TABLE `Hotel_Servicio` (
 CREATE TABLE `Empleado` (
 	`id` INT  AUTO_INCREMENT,
     `nombre` VARCHAR(100) NOT NULL,
-    `apellido` VARCHAR(100) NOT NULL,
+    `apellidos` VARCHAR(100) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
     `telefono` VARCHAR(10) NOT NULL,
     `sueldo` DOUBLE,
@@ -157,7 +168,8 @@ CREATE TABLE `Hotel_Empleado`(
     `hotel_id` INT,
     `fecha_contratacion` DATE,
     FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`empleado_id`) REFERENCES `Empleado` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (`empleado_id`) REFERENCES `Empleado` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    PRIMARY KEY (`empleado_id`,`hotel_id`)
 );
 
 CREATE TABLE `Ausencia`	(
@@ -208,7 +220,8 @@ CREATE TABLE `Reserva`	(
     `tipo_hab_id` INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`tipo_hab_id`) REFERENCES `Tipo_Habitacion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (`tipo_hab_id`) REFERENCES `Tipo_Habitacion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 /*PARA PODER ASOCIAR VARIOS CIENTES A UNA RESERVA*/
@@ -216,7 +229,8 @@ CREATE TABLE `Cliente_Reserva` (
 	`reserva_id` INT NOT NULL,
     `cliente_id` INT NOT NULL,
     FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (`reserva_id`) REFERENCES `Reserva` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (`reserva_id`) REFERENCES `Reserva` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	PRIMARY KEY (`reserva_id`,`cliente_id`)
 );
 
 /*FUTURO: No habria que asociarla tabien a un cliente*/
