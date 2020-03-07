@@ -33,7 +33,7 @@ CREATE TABLE `Hotel_Tipo_Habitacion` (
     PRIMARY KEY (`hotel_id`,`tipo_hab_id`)
 );
 
-CREATE TABLE `Precio` (
+CREATE TABLE `Precio_Habitacion` (
 	`fecha` DATE NOT NULL,
 	`hotel_id` INT NOT NULL,
 	`tipo_hab_id` INT NOT NULL,
@@ -122,13 +122,13 @@ CREATE TABLE `Pedido_Producto` (
 CREATE TABLE `Profesion` (
 	`id` INT AUTO_INCREMENT,
     `nombre` VARCHAR(100) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Servicio` (
 	`id` INT  AUTO_INCREMENT,
     `nombre` VARCHAR(100) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Servicio_Profesion` (
@@ -160,7 +160,7 @@ CREATE TABLE `Empleado` (
     `email` VARCHAR(100) NOT NULL,
     `telefono` VARCHAR(10) NOT NULL,
     `sueldo` DOUBLE,
-    PRIMARY KEY (id)
+    PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Hotel_Empleado`(
@@ -179,7 +179,7 @@ CREATE TABLE `Ausencia`	(
     `fecha_fin` DATE,
     `estado` ENUM('denegada', 'aprobada', 'pendiente'),
     `empleado_id` INT,
-    PRIMARY KEY (id),
+    PRIMARY KEY (`id`),
     FOREIGN KEY (`empleado_id`) REFERENCES `Empleado` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -204,7 +204,7 @@ CREATE TABLE `Valoracion` (
     `nota` INT,
     `cliente_id` INT,
     `hotel_id` INT NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (`id`),
     FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id`) ON UPDATE CASCADE ON DELETE SET NULL
 );
@@ -218,7 +218,7 @@ CREATE TABLE `Reserva`	(
     `hotel_id` INT NOT NULL,
     `cliente_id` INT NOT NULL,
     `tipo_hab_id` INT NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (`id`),
     FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`tipo_hab_id`) REFERENCES `Tipo_Habitacion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
