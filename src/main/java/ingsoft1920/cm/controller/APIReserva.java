@@ -49,7 +49,7 @@ public class APIReserva {
         //Instanciamos un nuevo objeto Json
         JsonArray res = new JsonArray();
 
-        HashSet<Reserva> reservas = reserva.getPrecios(hotel_id, ubicacion, fechaInicio, fechaFin);
+        HashSet<Reserva> reservas = null; /*reserva.getPrecios(hotel_id, ubicacion, fechaInicio, fechaFin);*/
 
         for (Reserva reserva1: reservas) {
             //Instanciamos un nuevo objeto Json
@@ -96,7 +96,7 @@ public class APIReserva {
 
         ReservaDAO reserva = new ReservaDAO();
 
-        HashSet<String> ciudades = reserva.getCiudades();
+        HashSet<String> ciudades = null; /*reserva.getCiudades();*/
 
         //Instanciamos un nuevo objeto Json
         JsonObject res = new JsonObject();
@@ -142,7 +142,7 @@ public class APIReserva {
 
         ReservaDAO reserva = new ReservaDAO();
 
-        HashSet<Hotel> hoteles = reserva.getHotelesPorUbicacion(ubicacion);
+        HashSet<Hotel> hoteles = null; /*reserva.getHotelesPorUbicacion(ubicacion);*/
         JsonArray res = new JsonArray();
 
         for (Hotel hotel: hoteles) {
@@ -209,7 +209,7 @@ public class APIReserva {
 
         Reserva reserva = new Reserva(new Hotel(hotel_id, "", ""), new Tipo(tipo, precio, 0));
 
-        reservaDAO.crearReserva(reserva, cliente_id);
+        //reservaDAO.crearReserva(reserva, cliente_id);
 
     }
 
@@ -230,7 +230,7 @@ public class APIReserva {
 
         ReservaDAO reservaDAO = new ReservaDAO();
 
-        reservaDAO.cancelarReserva(id);
+        //reservaDAO.cancelarReserva(id);
 
     }
 
@@ -250,7 +250,7 @@ public class APIReserva {
 
         ReservaDAO reserva = new ReservaDAO();
 
-        List<ingsoft1920.cm.bean.Reserva> reservas = reserva.reservasCliente(cliente_id);
+        List<ingsoft1920.cm.bean.Reserva> reservas = null; /*reserva.reservasCliente(cliente_id);*/
 
         JsonArray res = new JsonArray();
 

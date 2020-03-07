@@ -2,7 +2,7 @@ package ingsoft1920.cm.dao;
 
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Proveedor;
-import ingsoft1920.cm.conector.conectorBBDD;
+import ingsoft1920.cm.conector.ConectorBBDD;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +12,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProveedoresDAO {
+	
+	/*
 
-    private static conectorBBDD conector = new conectorBBDD();
+    private static ConectorBBDD conector = new ConectorBBDD();
 
     private int anadirProveedor(String empresa, String producto){
 
@@ -186,6 +188,6 @@ public class ProveedoresDAO {
         conector.closeConn();
 
         return proveedores;
-    }
+    }*/
 
 }

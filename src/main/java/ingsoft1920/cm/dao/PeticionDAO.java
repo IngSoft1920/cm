@@ -1,6 +1,6 @@
 package ingsoft1920.cm.dao;
 
-import ingsoft1920.cm.conector.conectorBBDD;
+import ingsoft1920.cm.conector.ConectorBBDD;
 import ingsoft1920.cm.bean.Peticion;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -17,7 +17,7 @@ public class PeticionDAO {
     @Autowired
     private QueryRunner runner;
 
-    private static conectorBBDD conector = new conectorBBDD();
+    private ConectorBBDD conector = new ConectorBBDD();
 
     public List<Peticion> getPeticiones() {
 
@@ -36,7 +36,6 @@ public class PeticionDAO {
             e.printStackTrace();
         }
 
-        conector.closeConn();
 
         return peticiones;
     }
@@ -53,7 +52,6 @@ public class PeticionDAO {
             e.printStackTrace();
         }
 
-        conector.closeConn();
     }
 
     public void add(Peticion peticion){
@@ -73,7 +71,6 @@ public class PeticionDAO {
         }
 
         peticion.setId(idGenerado);
-        conector.closeConn();
     }
 
 }

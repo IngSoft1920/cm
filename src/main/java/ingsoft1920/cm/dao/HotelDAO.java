@@ -3,7 +3,7 @@ package ingsoft1920.cm.dao;
 import ingsoft1920.cm.bean.Factura;
 import ingsoft1920.cm.bean.Habitaciones;
 import ingsoft1920.cm.bean.Precio;
-import ingsoft1920.cm.conector.conectorBBDD;
+import ingsoft1920.cm.conector.ConectorBBDD;
 import ingsoft1920.cm.bean.Hotel;
 
 import java.sql.Date;
@@ -17,8 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 public class HotelDAO {
+	
+	/*
 
-    private static conectorBBDD conector = new conectorBBDD();
+    private static ConectorBBDD conector = new ConectorBBDD();
 
     private int anadirHotel (String nombre, String continente, String pais, String ciudad, String direccion){
 
@@ -26,7 +28,7 @@ public class HotelDAO {
 
         if (! conector.isConnected()){
             conector.conectar();
-        }
+        }	
 
         int id = 0;
 
@@ -319,5 +321,6 @@ public class HotelDAO {
 
         return hoteles;
     }
+    */
 
 }

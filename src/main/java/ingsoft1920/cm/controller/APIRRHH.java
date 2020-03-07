@@ -12,6 +12,8 @@ import com.google.gson.JsonParser;
 import ingsoft1920.cm.dao.ReservaDAO;
 
 public class APIRRHH {
+	
+	
 
 	@ResponseBody
 	@GetMapping("/cojoBaja")
@@ -46,4 +48,6 @@ public class APIRRHH {
 		 * { "id_empleado":7867 "id_baja": 4 "resultado": "denegado" }
 		 */
 	}
+
+	
 }

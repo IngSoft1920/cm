@@ -19,6 +19,8 @@ import ingsoft1920.cm.dao.EmpleadoDAO;
 @SessionAttributes(names = { "hotel_id" })
 public class EmpleadoController {
 	
+	/*
+	
 	private EmpleadoDAO empleadoDao = new EmpleadoDAO();
 	
 	@GetMapping("/{hotel_id}")
@@ -73,5 +75,7 @@ public class EmpleadoController {
 
 		return "redirect:/empleado/" + hotel_id;
 	}
+	
+	*/
 
 }

@@ -24,6 +24,8 @@ import ingsoft1920.cm.bean.Reserva;
 
 @Component
 public class FakeDB {
+	
+	/*
 
 	private ArrayList<Cliente> clientes;
 	private ArrayList<Factura> facturas;
@@ -418,5 +420,6 @@ public class FakeDB {
 	public List<Factura> facturacionHotel(int hotel_id) {
 		return facturas;
 	}
+	*/
 
 }

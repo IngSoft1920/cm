@@ -10,19 +10,18 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import ingsoft1920.cm.bean.Habitaciones;
-import ingsoft1920.cm.conector.conectorBBDD;
+import ingsoft1920.cm.conector.ConectorBBDD;
 import ingsoft1920.cm.model.Hotel;
 import ingsoft1920.cm.model.Reserva;
 import ingsoft1920.cm.model.Tipo;
 
 public class ReservaDAO {
 
-    private static conectorBBDD conector = new conectorBBDD();
+	
+	/*
+    private static ConectorBBDD conector = new ConectorBBDD();
 
-    /*
-    @param day con el formato yyyy-MM-dd
-    @return dia siguiente
-     */
+
     private String getNextDay(String day) {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -44,9 +43,7 @@ public class ReservaDAO {
         return dateFormat.format(nextDay);
     }
 
-    /**
-     * @return ciudades
-     */
+
     public HashSet<String> getCiudades(){
 
         if (! conector.isConnected()){
@@ -417,5 +414,7 @@ public class ReservaDAO {
 
         return reservas;
     }
+    
+    */
 
 }

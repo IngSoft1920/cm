@@ -1,7 +1,7 @@
 package ingsoft1920.cm.dao;
 
 import ingsoft1920.cm.bean.Empleado;
-import ingsoft1920.cm.conector.conectorBBDD;
+import ingsoft1920.cm.conector.ConectorBBDD;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,8 +11,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class EmpleadoDAO {
+	
+	/*
 
-    private static conectorBBDD conector = new conectorBBDD();
+    private static ConectorBBDD conector = new ConectorBBDD();
 
     private int anadirEmpleadoEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion){
 
@@ -122,7 +124,6 @@ public class EmpleadoDAO {
         borrarEmpleadoEmpleado(id);
         borrarEmpleadoHotel(id);
 
-        conector.closeConn();
     }
 
     public List<Empleado> empleados() {
@@ -195,6 +196,6 @@ public class EmpleadoDAO {
 
         return empleados;
     }
-    
+    */
 
 }

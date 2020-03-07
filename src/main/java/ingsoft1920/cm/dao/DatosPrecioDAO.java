@@ -2,7 +2,7 @@ package ingsoft1920.cm.dao;
 
 import ingsoft1920.cm.bean.DatosPrecio;
 import ingsoft1920.cm.bean.Peticion;
-import ingsoft1920.cm.conector.conectorBBDD;
+import ingsoft1920.cm.conector.ConectorBBDD;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -18,7 +18,7 @@ public class DatosPrecioDAO {
     @Autowired
     private QueryRunner runner;
 
-    private static conectorBBDD conector = new conectorBBDD();
+    private static ConectorBBDD conector = new ConectorBBDD();
 
     public void cambiaEstado(int id){
 
@@ -32,7 +32,6 @@ public class DatosPrecioDAO {
             e.printStackTrace();
         }
 
-        conector.closeConn();
     }
 
     public List<DatosPrecio> get(int idPeticion){
@@ -52,7 +51,6 @@ public class DatosPrecioDAO {
             e.printStackTrace();
         }
 
-        conector.closeConn();
 
         return datosPrecios;
     }
@@ -74,7 +72,6 @@ public class DatosPrecioDAO {
         }
 
         datosPrecio.setId(idGenerado);
-        conector.closeConn();
     }
 
 }

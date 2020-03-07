@@ -1,7 +1,7 @@
 package ingsoft1920.cm.dao;
 
 import ingsoft1920.cm.bean.Habitaciones.Tipo;
-import ingsoft1920.cm.conector.conectorBBDD;
+import ingsoft1920.cm.conector.ConectorBBDD;
 import ingsoft1920.cm.model.Precio;
 
 import java.sql.Date;
@@ -10,7 +10,8 @@ import java.sql.SQLException;
 
 public class PrecioDAO {
 
-    private static conectorBBDD conector = new conectorBBDD();
+	/*
+    private static ConectorBBDD conector = new ConectorBBDD();
 
     //Recibe un objeto Precio (definido en ingsof1920/model)
     public void anadirPrecio(Precio precio){
@@ -87,6 +88,6 @@ public class PrecioDAO {
 				conector.closeConn();
 			}
 
-    }
+    }*/
     
 }

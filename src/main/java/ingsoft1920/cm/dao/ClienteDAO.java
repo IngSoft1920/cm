@@ -7,14 +7,14 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ingsoft1920.cm.bean.Cliente;
-import ingsoft1920.cm.conector.conectorBBDD;
+import ingsoft1920.cm.conector.ConectorBBDD;
 
 public class ClienteDAO {
 
 		@Autowired
 		private QueryRunner runner;
 		
-		private static conectorBBDD conector = new conectorBBDD();
+		private static ConectorBBDD conector = new ConectorBBDD();
 
 
 		public int anadirCliente(String nombre, String dni, String email, String password) {

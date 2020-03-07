@@ -27,6 +27,8 @@ import ingsoft1920.cm.bean.Reserva;
 @Controller
 @SessionAttributes(names = { "cliente", "seleccionHabitaciones", "fecha_entrada", "fecha_salida" })
 public class ControladorCliente {
+	
+	/*
 
 	final static Logger logger = LogManager.getLogger(ControladorCliente.class.getName());
 
@@ -199,5 +201,7 @@ public class ControladorCliente {
 		System.out.println(fake.feedback());
 		return "redirect:/home-client/main";
 	}
+	
+	*/
 
 }

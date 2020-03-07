@@ -18,6 +18,8 @@ import ingsoft1920.cm.dao.HotelDAO;
 @Controller
 @RequestMapping("/hotel")
 public class HotelController {
+	
+	/*
 
 	@Autowired
 	FakeDB fake;
@@ -90,5 +92,7 @@ public class HotelController {
 		m.addAttribute("facturas", hotelDao.facturacionHotel(hotel_id));
 		return "/corp-hotel/facturacion.jsp";
 	}
+	
+	*/
 
 }

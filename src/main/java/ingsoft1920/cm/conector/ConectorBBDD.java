@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-public class conectorBBDD {
+public class ConectorBBDD {
 
 	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
@@ -16,10 +16,9 @@ public class conectorBBDD {
 	private static final String USUARIO = "cm1";
 	private static final String PASSWD = "ingSoft20cm1.711";
 
-
     private Connection conn = null;
-
-	public void conectar() {
+    
+	private void conectar() {
 		try
 		{
 			Class.forName(JDBC_DRIVER);
@@ -27,21 +26,21 @@ public class conectorBBDD {
 		} catch(Exception e) { e.printStackTrace(); }
 	}
 
-    public  Connection getConn() {
-	    if (! isConnected()){
+    public Connection getConn() {
+	    if ( !isConnected() )
 	        conectar();
-        }
+        
 	    return conn;
 	}
 
-    public boolean isConnected() { return conn != null; }
-
-    public void closeConn() {
-        if(conn != null) {
-            try { conn.close(); }
-            catch (SQLException e) { e.printStackTrace(); }
-            conn = null;
-        }
+    private boolean isConnected() { 
+    	
+    	boolean res = false;
+    	
+    	try { res = conn != null && !conn.isClosed(); }
+    	catch( SQLException e ) { e.printStackTrace(); }
+    	
+    	return res;
     }
 
 }

@@ -12,6 +12,8 @@ import ingsoft1920.cm.dao.HotelDAO;
 @Controller
 @RequestMapping("/home-corp")
 public class CorporativoController {
+	
+	/*
 	private HotelDAO hotelDao = new HotelDAO();
 	
 	@GetMapping
@@ -56,5 +58,6 @@ public class CorporativoController {
 
 		return res;
 	}
+	*/
 
 }

@@ -16,6 +16,8 @@ import ingsoft1920.cm.dao.ProveedoresDAO;
 @SessionAttributes(names = { "hotel_id" })
 public class ProveedorController {
 
+	/*
+	
 	private ProveedoresDAO proveedorDao = new ProveedoresDAO();
 
 
@@ -54,5 +56,6 @@ public class ProveedorController {
 		proveedorDao.borrarProveedor(proveedor_id);
 		return "redirect:/proveedor/"+hotel_id;
 	}
-
+	
+	*/
 }
