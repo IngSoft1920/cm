@@ -219,6 +219,8 @@ CREATE TABLE `Reserva`	(
     `importe` INT NOT NULL,
     `regimen_comida` ENUM('no_aplica', 'media_pension', 'pension_completa', 'todo_incluido') NOT NULL,
     `numero_acompanantes` INT NOT NULL,
+    `nacionalidad` VARCHAR(20) NOT NULL, /*Está en país: España, México, etc*/
+    `telefono` VARCHAR(15) NOT NULL,
     `hotel_id` INT NOT NULL,
     `cliente_id` INT NOT NULL,
     `tipo_hab_id` INT NOT NULL,
@@ -243,6 +245,7 @@ CREATE TABLE `Factura` (
     `importe` DOUBLE NOT NULL,
     `fecha` DATE NOT NULL,
     `pagado` BOOLEAN DEFAULT FALSE,
+    `cantidad_consumida` INT NOT NULL,
     `reserva_id` INT NOT NULL,
     `servicio_id` INT NOT NULL,
     PRIMARY KEY (`id`),
