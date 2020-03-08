@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -55,6 +56,31 @@ public class ClienteController {
 			res.addProperty("id",id);
 				
 		return res.toString();
+	}
+	
+	/*
+	 {
+  	 "email" : "juan@gmail.com",
+  	 "password" : "patata"
+	 }
+	 */
+	@PostMapping("/cliente/login")
+	@ResponseBody
+	public String login(@RequestBody String json) {
+		JsonObject jsonO = JsonParser.parseString( json ).getAsJsonObject();
+		
+		String email = jsonO.get("email").getAsString();
+		String password = jsonO.get("password").getAsString();
+		
+		Cliente cliente = dao.login(email, password);
+		if( cliente == null ) {
+			JsonObject res = new JsonObject();
+			res.addProperty("error", "No se ha podido iniciar sesión");
+			return res.toString();
+		}
+		else {
+			return new Gson().toJson(cliente,Cliente.class).toString();
+		}
 	}
 
 }

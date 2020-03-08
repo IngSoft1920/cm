@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.sql.Connection;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,6 +43,21 @@ public class ClienteDAO {
 		} catch(Exception e) { e.printStackTrace(); }
 		
 		return ( res != null ? res.intValue() : -1 );
+	}
+	
+	// Devuelve null si no se ha podido hacer login
+	public Cliente login(String email,String password) {
+		Cliente res = null;
+		BeanHandler<Cliente> handler = new BeanHandler<>(Cliente.class);
+		String query = "SELECT * FROM Cliente WHERE email=? and password=?";
+		
+		try ( Connection conn = conector.getConn() )
+		{
+			res = runner.query(conn,query, handler,email,password);
+			
+		} catch( Exception e ) { e.printStackTrace(); }
+		
+		return res;
 	}
 
 }
