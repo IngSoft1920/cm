@@ -1,33 +1,29 @@
 package ingsoft1920.cm.bean;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Hotel {
-
+	
 	private int id;
 	private String nombre;
-	private String descripcion;
-	private int estrellas;
 	private String continente;
 	private String pais;
 	private String ciudad;
 	private String direccion;
+	private int estrellas;
+	private String descripcion;
 	
 	public Hotel() {}
 	
-	public Hotel(int id, String nombre, String descripcion, int estrellas, String continente, String pais,
-			String ciudad, String direccion) {
+	public Hotel(int id, String nombre, String continente, String pais, String ciudad, String direccion, int estrellas,
+			String descripcion) {
 		this.id = id;
 		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.estrellas = estrellas;
 		this.continente = continente;
 		this.pais = pais;
 		this.ciudad = ciudad;
 		this.direccion = direccion;
+		this.estrellas = estrellas;
+		this.descripcion = descripcion;
 	}
-	
 	public int getId() {
 		return id;
 	}
@@ -39,18 +35,6 @@ public class Hotel {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-	public String getDescripcion() {
-		return descripcion;
-	}
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-	public int getEstrellas() {
-		return estrellas;
-	}
-	public void setEstrellas(int estrellas) {
-		this.estrellas = estrellas;
 	}
 	public String getContinente() {
 		return continente;
@@ -76,10 +60,22 @@ public class Hotel {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+	public int getEstrellas() {
+		return estrellas;
+	}
+	public void setEstrellas(int estrellas) {
+		this.estrellas = estrellas;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 	@Override
 	public String toString() {
-		return "Hotel [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", estrellas=" + estrellas
-				+ ", continente=" + continente + ", pais=" + pais + ", ciudad=" + ciudad + ", direccion=" + direccion
+		return "Hotel [id=" + id + ", nombre=" + nombre + ", continente=" + continente + ", pais=" + pais + ", ciudad="
+				+ ciudad + ", direccion=" + direccion + ", estrellas=" + estrellas + ", descripcion=" + descripcion
 				+ "]";
 	}
 

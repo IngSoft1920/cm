@@ -1,9 +1,7 @@
-/*
+
 DROP DATABASE IF EXISTS cm;
 CREATE DATABASE cm;
 USE cm;
-*/
-
 
 CREATE TABLE `Hotel`(
 	`id` INT NOT NULL AUTO_INCREMENT,
@@ -193,7 +191,10 @@ CREATE TABLE `Ausencia`	(
 CREATE TABLE `Cliente` (
 	`id` INT  AUTO_INCREMENT,
     `nombre` VARCHAR(100) NOT NULL,
-    `DNI` VARCHAR(8) ,
+    `apellidos` VARCHAR(100),
+    `DNI` VARCHAR(8),
+    `nacionalidad` VARCHAR(20),
+    `telefono` VARCHAR(15),
     `email` VARCHAR(100) NOT NULL,
     `password` VARCHAR(100) NOT NULL,
     PRIMARY KEY (id)

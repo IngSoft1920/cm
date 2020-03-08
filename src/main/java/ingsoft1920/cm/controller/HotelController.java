@@ -1,6 +1,6 @@
 package ingsoft1920.cm.controller;
 
-import java.util.HashMap;
+import java.util.HashMap;	
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ingsoft1920.cm.bean.Habitaciones;
-import ingsoft1920.cm.bean.Hotel;
-import ingsoft1920.cm.dao.HotelDAO;
 
 @Controller
 @RequestMapping("/hotel")
