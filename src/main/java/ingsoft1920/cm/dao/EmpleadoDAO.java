@@ -83,7 +83,7 @@ public class EmpleadoDAO {
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, add, handler, empleado.getEmail());
+            idGenerado = runner.update(conn, add, handler, empleado.getEmail());
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -102,7 +102,7 @@ public class EmpleadoDAO {
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, add, handler, nuevoEmail, empleado.getEmail());
+            idGenerado = runner.update(conn, add, handler, nuevoEmail, empleado.getEmail());
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -121,7 +121,7 @@ public class EmpleadoDAO {
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, add, handler, nuevoNombre, empleado.getEmail());
+            idGenerado = runner.update(conn, add, handler, nuevoNombre, empleado.getEmail());
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -140,7 +140,7 @@ public class EmpleadoDAO {
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, add, handler, nuevosApellidos, empleado.getEmail());
+            idGenerado = runner.update(conn, add, handler, nuevosApellidos, empleado.getEmail());
         }
         catch(Exception e) {
             e.printStackTrace();
