@@ -16,7 +16,6 @@ public class PeticionDAO {
 
     @Autowired
     private QueryRunner runner;
-
     private ConectorBBDD conector = new ConectorBBDD();
 
     public List<Peticion> getPeticiones() {

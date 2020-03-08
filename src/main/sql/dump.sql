@@ -49,12 +49,12 @@ INSERT INTO Hotel_Empleado(empleado_id,hotel_id,fecha_contratacion) VALUES (1,1,
 
 INSERT INTO Ausencia(id,motivo,fecha_inicio,fecha_fin,estado,empleado_id) VALUES (1,'enfermedad','2020-10-01','2020-10-10','pendiente',1);
 
-INSERT INTO Cliente(id,nombre,DNI,email,`password`) VALUES (1,'Juan','321222F','juan@gmail.com','juanito123');
+INSERT INTO Cliente(id,nombre,DNI,nacionalidad,telefono,email,`password`) VALUES (1,'Juan','321222F','España','123456','juan@gmail.com','juanito123');
 
 INSERT INTO Valoracion(id,cabecera,cuerpo,nota,cliente_id,hotel_id) VALUES (1,'Muy bueno','Genial experiencia, especialmente la comida',5,1,1);
 
-INSERT INTO Reserva(id,fecha_entrada,fecha_salida,importe,regimen_comida,hotel_id,cliente_id,tipo_hab_id) VALUES (1,'2020-05-01','2020-05-10',300,'pension_completa',1,1,1);
+INSERT INTO Reserva(id,fecha_entrada,fecha_salida,importe,regimen_comida,numero_acompanantes,hotel_id,cliente_id,tipo_hab_id) VALUES (1,'2020-05-01','2020-05-10',300,'pension_completa',3,1,1,1);
 
 INSERT INTO Cliente_Reserva(reserva_id,cliente_id) VALUES (1,1);
 
-INSERT INTO Factura(id,importe,fecha,pagado,reserva_id,servicio_id) VALUES (1,50,'2020-05-04',false,1,1);
+INSERT INTO Factura(id,importe,fecha,pagado,cantidad_consumida,reserva_id,servicio_id) VALUES (1,50,'2020-05-04',false,10,1,1);

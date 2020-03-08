@@ -193,7 +193,7 @@ CREATE TABLE `Cliente` (
     `nombre` VARCHAR(100) NOT NULL,
     `apellidos` VARCHAR(100),
     `DNI` VARCHAR(8),
-    `nacionalidad` VARCHAR(20),
+    `nacionalidad` VARCHAR(20),    /*Está en país: España, México, etc*/
     `telefono` VARCHAR(15),
     `email` VARCHAR(100) NOT NULL,
     `password` VARCHAR(100) NOT NULL,
@@ -220,8 +220,6 @@ CREATE TABLE `Reserva`	(
     `importe` INT NOT NULL,
     `regimen_comida` ENUM('no_aplica', 'media_pension', 'pension_completa', 'todo_incluido') NOT NULL,
     `numero_acompanantes` INT NOT NULL,
-    `nacionalidad` VARCHAR(20) NOT NULL, /*Está en país: España, México, etc*/
-    `telefono` VARCHAR(15) NOT NULL,
     `hotel_id` INT NOT NULL,
     `cliente_id` INT NOT NULL,
     `tipo_hab_id` INT NOT NULL,
