@@ -4,7 +4,7 @@ CREATE DATABASE cm;
 USE cm;
 
 CREATE TABLE `Hotel`(
-	`id` INT NOT NULL A	UTO_INCREMENT,
+	`id` INT NOT NULL AUTO_INCREMENT,
 	`nombre` VARCHAR(100) NOT NULL,
     `continente` VARCHAR(100) NOT NULL,
     `pais` VARCHAR(100) NOT NULL,
@@ -192,7 +192,7 @@ CREATE TABLE `Cliente` (
 	`id` INT  AUTO_INCREMENT,
     `nombre` VARCHAR(100) NOT NULL,
     `apellidos` VARCHAR(100),
-    `DNI` VARCHAR(8),
+    `DNI` VARCHAR(15),
     `nacionalidad` VARCHAR(20),    /*Está en país: España, México, etc*/
     `telefono` VARCHAR(15),
     `email` VARCHAR(100) NOT NULL,

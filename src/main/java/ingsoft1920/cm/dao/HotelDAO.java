@@ -9,16 +9,15 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Hotel;
-import ingsoft1920.cm.bean.Servicio;
-import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.bean.aux.Hotel_Categoria;
 import ingsoft1920.cm.bean.aux.Hotel_Servicio;
 import ingsoft1920.cm.bean.aux.Hotel_Tipo_Habitacion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
+@Component
 public class HotelDAO {
 	
 	@Autowired
