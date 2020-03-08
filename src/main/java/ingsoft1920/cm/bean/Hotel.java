@@ -7,24 +7,28 @@ public class Hotel {
 
 	private int id;
 	private String nombre;
+	private String descripcion;
+	private int estrellas;
 	private String continente;
 	private String pais;
 	private String ciudad;
 	private String direccion;
-
-    public Hotel() {
-    }
-
-    public Hotel(int id, String nombre, String continente, String pais, String ciudad, String direccion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.continente = continente;
-        this.pais = pais;
-        this.ciudad = ciudad;
-        this.direccion = direccion;
-    }
-
-    public int getId() {
+	
+	public Hotel() {}
+	
+	public Hotel(int id, String nombre, String descripcion, int estrellas, String continente, String pais,
+			String ciudad, String direccion) {
+		this.id = id;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.estrellas = estrellas;
+		this.continente = continente;
+		this.pais = pais;
+		this.ciudad = ciudad;
+		this.direccion = direccion;
+	}
+	
+	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
@@ -35,6 +39,18 @@ public class Hotel {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	public int getEstrellas() {
+		return estrellas;
+	}
+	public void setEstrellas(int estrellas) {
+		this.estrellas = estrellas;
 	}
 	public String getContinente() {
 		return continente;
@@ -62,10 +78,9 @@ public class Hotel {
 	}
 	@Override
 	public String toString() {
-		return "Hotel [id=" + id + ", nombre=" + nombre + ", continente=" + continente + ", pais=" + pais + ", ciudad="
-				+ ciudad + ", direccion=" + direccion + "]";
+		return "Hotel [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", estrellas=" + estrellas
+				+ ", continente=" + continente + ", pais=" + pais + ", ciudad=" + ciudad + ", direccion=" + direccion
+				+ "]";
 	}
-
-
 
 }

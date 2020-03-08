@@ -218,6 +218,7 @@ CREATE TABLE `Reserva`	(
     `fecha_salida` DATE NOT NULL,
     `importe` INT NOT NULL,
     `regimen_comida` ENUM('no_aplica', 'media_pension', 'pension_completa', 'todo_incluido') NOT NULL,
+    `numero_acompanantes` INT NOT NULL,
     `hotel_id` INT NOT NULL,
     `cliente_id` INT NOT NULL,
     `tipo_hab_id` INT NOT NULL,
