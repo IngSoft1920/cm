@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Component;
 
-public class ConectorBBDD {
+	public class ConectorBBDD {
 
 	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 

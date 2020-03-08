@@ -11,6 +11,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.aux.Hotel_Categoria;
 import ingsoft1920.cm.bean.aux.Hotel_Servicio;
@@ -117,6 +118,24 @@ public class HotelDAO {
 			res = runner.query(conn,query,handler);
 			
 		} catch( Exception e ) { e.printStackTrace(); }
+		return res;
+	}
+	
+	public List<Categoria> categoriasHotel(int hotelID){
+		List<Categoria> res = new ArrayList<>();
+		BeanListHandler<Categoria> handler = new BeanListHandler<>(Categoria.class);
+		String query = "SELECT c.* "
+					  +"FROM Categoria AS c "
+					  +"JOIN Hotel_Categoria AS hc ON c.id=hc.categoria_id "
+					  +"JOIN Hotel AS h ON hc.hotel_id=h.id "
+					  +"WHERE h.id=?;";
+		
+		try ( Connection conn = conector.getConn() )
+		{
+			res = runner.query(conn,query,handler,hotelID);
+			
+		} catch ( Exception e ) { e.printStackTrace(); }
+				
 		return res;
 	}
 	
