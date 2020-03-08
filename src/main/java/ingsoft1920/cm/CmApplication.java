@@ -16,8 +16,6 @@ public class CmApplication {
 	public static void main(String[] args) {
 		logger.warn("Aplicacion iniciada");
 		SpringApplication.run(CmApplication.class, args);
-		
-
 	}
 	
 }
