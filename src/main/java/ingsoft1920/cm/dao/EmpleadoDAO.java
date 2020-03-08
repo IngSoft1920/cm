@@ -111,5 +111,43 @@ public class EmpleadoDAO {
         empleado.setId(idGenerado);
     }
     
+    public void cambiarNombre(Empleado empleado, String nuevoNombre){
+
+        String add = "UPDATE Empleado SET nombre = ? WHERE email = ?";
+
+        ScalarHandler<Integer> handler = new ScalarHandler<>();
+
+        Integer idGenerado = null;
+
+        try( Connection conn = conector.getConn() )
+        {
+            idGenerado = runner.insert(conn, add, handler, nuevoNombre, empleado.getEmail());
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        empleado.setId(idGenerado);
+    }
+    
+    public void cambiarApellidos(Empleado empleado, String nuevosApellidos){
+
+        String add = "UPDATE Empleado SET apellidos = ? WHERE email = ?";
+
+        ScalarHandler<Integer> handler = new ScalarHandler<>();
+
+        Integer idGenerado = null;
+
+        try( Connection conn = conector.getConn() )
+        {
+            idGenerado = runner.insert(conn, add, handler, nuevosApellidos, empleado.getEmail());
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        empleado.setId(idGenerado);
+    }
+    
 
 }
