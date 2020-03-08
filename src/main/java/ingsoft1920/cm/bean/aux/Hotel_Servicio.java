@@ -4,11 +4,11 @@ public class Hotel_Servicio {
 	
 	private int hotel_id;
 	private int servicio_id;
-	private int precio;
+	private Integer precio; // Podría ser null
 	private String unidad_medida;
 	
 	public Hotel_Servicio() {}
-	public Hotel_Servicio(int hotel_id, int servicio_id, int precio, String unidad_medida) {
+	public Hotel_Servicio(int hotel_id, int servicio_id, Integer precio, String unidad_medida) {
 		this.hotel_id = hotel_id;
 		this.servicio_id = servicio_id;
 		this.precio = precio;
@@ -26,10 +26,10 @@ public class Hotel_Servicio {
 	public void setServicio_id(int servicio_id) {
 		this.servicio_id = servicio_id;
 	}
-	public int getPrecio() {
+	public Integer getPrecio() {
 		return precio;
 	}
-	public void setPrecio(int precio) {
+	public void setPrecio(Integer precio) {
 		this.precio = precio;
 	}
 	public String getUnidad_medida() {

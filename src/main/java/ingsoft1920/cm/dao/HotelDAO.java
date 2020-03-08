@@ -3,16 +3,20 @@ package ingsoft1920.cm.dao;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.Servicio;
 import ingsoft1920.cm.bean.aux.Hotel_Categoria;
 import ingsoft1920.cm.bean.aux.Hotel_Servicio;
 import ingsoft1920.cm.bean.aux.Hotel_Tipo_Habitacion;
@@ -136,6 +140,55 @@ public class HotelDAO {
 			
 		} catch ( Exception e ) { e.printStackTrace(); }
 				
+		return res;
+	}
+	
+	public Map<Servicio,Hotel_Servicio> serviciosHotel(int hotelID) {
+		Map<Servicio,Hotel_Servicio> res = null;
+		
+		// Tendremos un map por cada FILA de la consulta.
+		// La 'key' es justamente el nombre de la columna
+		List<Map<String,Object>> resConsulta = null;
+		MapListHandler handler = new MapListHandler();
+		String query = "SELECT s.id,s.nombre,hs.precio,hs.unidad_medida "
+					  +"FROM Servicio AS s "
+					  +"JOIN Hotel_Servicio AS hs ON s.id=hs.servicio_id "
+					  +"JOIN Hotel AS h ON hs.hotel_id=h.id "
+					  +"WHERE h.id=?;";
+		
+		try ( Connection conn = conector.getConn() )
+		{
+			resConsulta = runner.query(conn,query,handler,hotelID);
+			
+		} catch ( Exception e ) { e.printStackTrace(); }
+			
+		if( resConsulta != null ) {
+			res = new HashMap<>();
+			
+			int servicioID;
+			String nombreServicio;
+			Integer precioServicio;
+			String unidadMedida;
+			
+			Object aux;
+			for( Map<String,Object> fila : resConsulta ) {
+				
+				servicioID = (Integer) fila.get("id");
+				nombreServicio = (String) fila.get("nombre");
+				
+				// Este campo podría ser null y petar al hacer el cast a Integer
+				aux = fila.get("precio");
+				precioServicio = aux != null ? (Integer) fila.get("precio") : null;
+				
+				unidadMedida = (String) fila.get("unidad_medida");
+				
+				res.put(  
+						new Servicio(servicioID,nombreServicio),
+						new Hotel_Servicio(hotelID,servicioID,precioServicio,unidadMedida)
+						);
+			}
+		}
+		
 		return res;
 	}
 	
