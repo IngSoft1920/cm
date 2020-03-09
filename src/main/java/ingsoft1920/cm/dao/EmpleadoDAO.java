@@ -120,17 +120,20 @@ public class EmpleadoDAO {
     
     public void eliminarEmpleado(Empleado empleado){
 
-        String eliminaEmpleado = "DELETE FROM Empleado WHERE email = ?";
-
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
-
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, eliminaEmpleado, handler, empleado.getEmail());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+	    String eliminaEmpleado = "DELETE FROM Empleado WHERE id = ?";
+	
+	    try( Connection conn = conector.getConn() )
+	    {
+	        runner.update(conn, eliminaEmpleado, empleado.getId());
+	    }
+	    catch(Exception e) { e.printStackTrace(); }
+	    
+	    // Avisamos a em del borrado del empleado:
+	    JsonObject json = new JsonObject();
+	      json.addProperty("id",empleado.getId());
+	      
+	    APIout.enviar(json.toString(), 7002, "/eliminarEmpleado");
+        
     }
     
     public void cambiarEmail(Empleado empleado, String nuevoEmail){
