@@ -101,6 +101,7 @@ public class EmpleadoDAO {
         	  json.addProperty("telefono",empleado.getTelefono());
         	  json.addProperty("email",empleado.getEmail());
         	  json.addProperty("ocupacion",nombreProfesion);
+        	  json.addProperty("sueldo",empleado.getSueldo());
         	  json.addProperty("id_hotel",hotelEmpleado.getHotel_id());
         	
         	APIout.enviar(json.toString(),7002, "/creaEmpleado");
