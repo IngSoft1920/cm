@@ -1,4 +1,4 @@
-package ingsoft1920.cm.bean;
+package ingsoft1920.cm.bean.aux;
 
 public class Hotel_Tipo_Habitacion {
 	private int hotel_id;

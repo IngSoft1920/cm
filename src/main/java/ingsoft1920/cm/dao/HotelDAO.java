@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Hotel;
-import ingsoft1920.cm.bean.Hotel_Categoria;
-import ingsoft1920.cm.bean.Hotel_Servicio;
-import ingsoft1920.cm.bean.Hotel_Tipo_Habitacion;
 import ingsoft1920.cm.bean.Servicio;
+import ingsoft1920.cm.bean.aux.Hotel_Categoria;
+import ingsoft1920.cm.bean.aux.Hotel_Servicio;
+import ingsoft1920.cm.bean.aux.Hotel_Tipo_Habitacion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component

@@ -14,8 +14,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import ingsoft1920.cm.bean.Hotel;
-import ingsoft1920.cm.bean.Hotel_Servicio;
 import ingsoft1920.cm.bean.Servicio;
+import ingsoft1920.cm.bean.aux.Hotel_Servicio;
 import ingsoft1920.cm.dao.HotelDAO;
 
 

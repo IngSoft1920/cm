@@ -1,4 +1,4 @@
-package ingsoft1920.cm.bean;
+package ingsoft1920.cm.bean.aux;
 
 import java.sql.Date;
 
@@ -11,7 +11,6 @@ public class Hotel_Empleado {
 	public Hotel_Empleado() {}
 
 	public Hotel_Empleado(int empleado_id, int hotel_id, Date fecha_contratacion) {
-		super();
 		this.empleado_id = empleado_id;
 		this.hotel_id = hotel_id;
 		this.fecha_contratacion = fecha_contratacion;

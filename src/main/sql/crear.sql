@@ -161,7 +161,9 @@ CREATE TABLE `Empleado` (
     `email` VARCHAR(100) NOT NULL,
     `telefono` VARCHAR(15) NOT NULL,
     `sueldo` DOUBLE,
-    PRIMARY KEY (`id`)
+    `profesion_id` INT,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`profesion_id`) REFERENCES `Profesion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `Hotel_Empleado`(
