@@ -1,4 +1,4 @@
-package ingsoft1920.cm.bean.aux;
+package ingsoft1920.cm.bean;
 
 public class Hotel_Servicio {
 	
