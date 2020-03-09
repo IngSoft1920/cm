@@ -1,7 +1,11 @@
-/*package ingsoft1920.cm.fna;
+package ingsoft1920.cm.fna;
 
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -12,6 +16,8 @@ import org.springframework.stereotype.Component;
 import ingsoft1920.cm.bean.Cliente;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.conector.ConectorBBDD;
+import ingsoft1920.dho.controller.Conexion;
+import ingsoft1920.dho.fna.FacturaBean;
 
 @Component
 public class FacturaDAO {
@@ -22,27 +28,28 @@ public class FacturaDAO {
 	@Autowired
     private ConectorBBDD conector = new ConectorBBDD();
 	
-	public double beneficio(Hotel h) {
-		BigInteger res = null;
-		double beneficio = 0;
-		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-	
-		
+	public double beneficio(int hotel_id) {
+		double beneficio = 0;		
 		String query = "SELECT sum(f.importe), sum(r.importe), h.id " + "FROM Factura AS f"  
 					  +"JOIN Reserva AS r on f.reserva_id = r.id " + "JOIN Hotel AS h on r.hotel_id=h.id"
-				      + "WHERE h.id=?";
-					 
-		
-		try ( Connection conn = conector.getConn() )
-		{
-			for(Factura elem: facturas) {
-				
+				      + "WHERE h.id="+hotel_id;
+		java.sql.Statement stmt= null;
+		ResultSet rs= null;
+		try {
+			stmt=conector.getConn().createStatement();
+			rs=stmt.executeQuery(query);
+			while(rs.next()) {
+				beneficio+=rs.getDouble("sum(f.importe)")+rs.getDouble("sum(r.importe)");
 			}
-		} catch(Exception e) { e.printStackTrace(); }
-		
-		return ( res != null ? res.intValue() : -1 );
+		}catch (SQLException ex){ 
+			System.out.println("SQLException: " + ex.getMessage());
+		} finally { // it is a good idea to release resources in a finally block 
+			if (rs != null) { try { rs.close(); } catch (SQLException sqlEx) { } rs = null; } 
+			if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
+		}
+		return beneficio;
 	}
-	
+	/*
 	// Devuelve null si no se ha podido hacer login
 	public Cliente login(String email,String password) {
 		Cliente res = null;
@@ -57,8 +64,8 @@ public class FacturaDAO {
 		
 		return res;
 	}
-/*
- * try{
+
+  try{
 		    stmt = conexion.getConexion().createStatement();
 		    rs = stmt.executeQuery("SELECT sum(importe) AS sumaReservas, sum(precio) AS sumaFacturas\r\n" + "FROM Reserva, Factura\r\n" + 
 		    "WHERE hotel_id=" +hotel_id + "\r\n", "SET total="sumaReservas+sumaFacturas +"\r\n");
@@ -70,7 +77,6 @@ public class FacturaDAO {
 		}
 		return total;
 	} 
+	*/
  
 }
-
-*/
