@@ -1,30 +1,37 @@
 package ingsoft1920.cm.bean;
 
+import java.math.BigInteger;
 
 public class Empleado {
 	
-	private int id;
+	private BigInteger id;
 	private String nombre;
 	private String apellidos;
 	private String email;
 	private String telefono;
 	private String sueldo;
-	
+	private Profesion profesion_id;
+
 	public Empleado() {}
 	
-	public Empleado(int id, String nombre, String apellidos, String email, String telefono, String sueldo) {
+	
+	public Empleado(BigInteger id, String nombre, String apellidos, String email, String telefono, String sueldo,
+			Profesion profesion_id) {
+		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
 		this.telefono = telefono;
 		this.sueldo = sueldo;
+		this.profesion_id = profesion_id;
 	}
-	public int getId() {
+
+	public BigInteger getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(BigInteger idGenerado) {
+		this.id = idGenerado;
 	}
 	public String getNombre() {
 		return nombre;
@@ -56,10 +63,17 @@ public class Empleado {
 	public void setSueldo(String sueldo) {
 		this.sueldo = sueldo;
 	}
+	public Profesion getProfesion_id() {
+		return profesion_id;
+	}
+	public void setProfesion_id(Profesion profesion_id) {
+		this.profesion_id = profesion_id;
+	}
+
 	@Override
 	public String toString() {
 		return "Empleado [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
-				+ ", telefono=" + telefono + ", sueldo=" + sueldo + "]";
+				+ ", telefono=" + telefono + ", sueldo=" + sueldo + ", profesion_id=" + profesion_id + "]";
 	}
 	
 	
