@@ -7,10 +7,31 @@ public class FacturaDAO {
 	
 	
 	//Dado el id de un hotel, devolver la suma de todos los salarios de ese hotel
+
 	public static int getSalario (int hotel_id) {
-		return 0;
-	}
+		if (conexion==null) 
+			conexion.conectar();
+		
+		java.sql.PreparedStatement stmt = null; 
+		ResultSet rs = null; 
+		try {
 	
+			stmt = conexion.getConexion().prepareStatement("SELECT SUM(sueldo) FROM Hotel_Empleado,Empleado  WHERE empleado.id=Hotel_Empleado.empleado_id && Hotel_Empleado.id=hotel_id");		
+			double a =stmt.executeUpdate();
+			
+			
+		}
+		catch (SQLException ex){ 
+			System.out.println("SQLException: " + ex.getMessage());
+		} finally { // it is a good idea to release resources in a finally block 
+			if (rs != null) { try { rs.close(); } catch (SQLException sqlEx) { } rs = null; } 
+			if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
+		}
+		
+	}
+	}	
+		return a;
+	}
 	//Dado el id de un hotel, por cada reserva que haya en el hotel, sumar el importe de la reserva y el precio de las facturas asociadas 
 	//a dicha reserva. Teneis que devolver el total de todas las reservas del hotel
 	public static int getBeneficios (int hotel_id) {
