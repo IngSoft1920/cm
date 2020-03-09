@@ -2,9 +2,10 @@ package ingsoft1920.cm.data;
 
 import java.util.Calendar;
 
+/*
 import pruebas.Peticion;
 import pruebas.Precio;
-import pruebas.PrecioHabitacion;
+import pruebas.PrecioHabitacion;*/
 
 public class PrecioHabitacion {
 
