@@ -101,7 +101,7 @@ public class EmpleadoDAO {
         	  json.addProperty("telefono",empleado.getTelefono());
         	  json.addProperty("email",empleado.getEmail());
         	  json.addProperty("ocupacion",nombreProfesion);
-        	  json.addProperty("sueldo",empleado.getSueldo());
+        	  json.addProperty("valor",empleado.getSueldo());
         	  json.addProperty("id_hotel",hotelEmpleado.getHotel_id());
         	
         	APIout.enviar(json.toString(),7002, "/creaEmpleado");
@@ -112,11 +112,14 @@ public class EmpleadoDAO {
     
     public static void main(String[] args) {
     	EmpleadoDAO dao = new EmpleadoDAO();
-    	
+    	   	
 		Empleado pepe = new Empleado(-1, "Pepe", "Dominguez Perez", "pepe@gmail.com", "123456", 1500, 1);
 		Hotel_Empleado he = new Hotel_Empleado(-1, 1, Date.valueOf("2020-02-01"));
 		
 		System.out.println( dao.anadirEmpleado(pepe,he) );
+    	
+		//dao.eliminarEmpleado( pepe );
+    	
 	}
     
     public void eliminarEmpleado(Empleado empleado){
