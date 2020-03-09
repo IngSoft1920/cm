@@ -223,7 +223,7 @@ CREATE TABLE `Reserva`	(
     `regimen_comida` ENUM('no_aplica', 'media_pension', 'pension_completa', 'todo_incluido') NOT NULL,
     `numero_acompanantes` INT NOT NULL,
     `hotel_id` INT NOT NULL,
-    `cliente_id` INT NOT NULL,
+    `cliente_id` INT,
     `tipo_hab_id` INT NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,

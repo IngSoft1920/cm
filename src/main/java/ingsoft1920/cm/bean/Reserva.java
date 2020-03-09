@@ -13,13 +13,13 @@ public class Reserva {
 	private Regimen regimen_comida;
 	private int numero_acompanantes;
 	private int hotel_id;
-	private int cliente_id;
+	private Integer cliente_id; // Integer porque podría ser null (reserva anónima)
 	private int tipo_hab_id;
 	
 	public Reserva() {}
 	
 	public Reserva(int id, Date fecha_entrada, Date fecha_salida, int importe, Regimen regimen_comida,
-			int numero_acompanantes, int hotel_id, int cliente_id, int tipo_hab_id) {
+			int numero_acompanantes, int hotel_id, Integer cliente_id, int tipo_hab_id) {
 		this.id = id;
 		this.fecha_entrada = fecha_entrada;
 		this.fecha_salida = fecha_salida;
@@ -72,10 +72,10 @@ public class Reserva {
 	public void setHotel_id(int hotel_id) {
 		this.hotel_id = hotel_id;
 	}
-	public int getCliente_id() {
+	public Integer getCliente_id() {
 		return cliente_id;
 	}
-	public void setCliente_id(int cliente_id) {
+	public void setCliente_id(Integer cliente_id) {
 		this.cliente_id = cliente_id;
 	}
 	public int getTipo_hab_id() {

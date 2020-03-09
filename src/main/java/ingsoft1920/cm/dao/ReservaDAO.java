@@ -6,10 +6,12 @@ import java.sql.Connection;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Reserva;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
+@Component
 public class ReservaDAO {
 
 	@Autowired
@@ -18,7 +20,7 @@ public class ReservaDAO {
 	@Autowired
     private ConectorBBDD conector = new ConectorBBDD();
 	
-	public int anadir(Reserva r) {
+	public int anadir(Reserva r) {		
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 		String query = "INSERT INTO Reserva "
@@ -33,7 +35,7 @@ public class ReservaDAO {
 								 r.getFecha_entrada(),
 								 r.getFecha_salida(),
 								 r.getImporte(),
-								 r.getRegimen_comida(),
+								 r.getRegimen_comida().toString(),
 								 r.getNumero_acompanantes(),
 								 r.getHotel_id(),
 								 r.getCliente_id(),
