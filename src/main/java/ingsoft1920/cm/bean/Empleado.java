@@ -1,8 +1,10 @@
 package ingsoft1920.cm.bean;
 
+import java.math.BigInteger;
+
 public class Empleado {
 	
-	private int id;
+	private BigInteger id;
 	private String nombre;
 	private String apellidos;
 	private String email;
@@ -13,7 +15,7 @@ public class Empleado {
 	public Empleado() {}
 	
 	
-	public Empleado(int id, String nombre, String apellidos, String email, String telefono, String sueldo,
+	public Empleado(BigInteger id, String nombre, String apellidos, String email, String telefono, String sueldo,
 			Profesion profesion_id) {
 		super();
 		this.id = id;
@@ -25,11 +27,11 @@ public class Empleado {
 		this.profesion_id = profesion_id;
 	}
 
-	public int getId() {
+	public BigInteger getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(BigInteger idGenerado) {
+		this.id = idGenerado;
 	}
 	public String getNombre() {
 		return nombre;

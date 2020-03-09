@@ -2,12 +2,14 @@ package ingsoft1920.cm.dao;
 
 import ingsoft1920.cm.conector.ConectorBBDD;
 import ingsoft1920.cm.bean.Empleado;
+import ingsoft1920.cm.bean.Hotel_Empleado;
 import ingsoft1920.cm.bean.Profesion;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,7 +41,7 @@ public class EmpleadoDAO {
         return empleados;
     }
 
-    public void asignarSueldo(int id, int sueldo){
+    public void asignarSueldo(BigInteger id, int sueldo){
 
         String asignaSueldo = "UPDATE Empleado SET sueldo = ? WHERE id = ?";
 
@@ -53,20 +55,24 @@ public class EmpleadoDAO {
 
     }
 
-    public void anadirEmpleado(Empleado empleado){
+    public void anadirEmpleado(Empleado empleado, Hotel_Empleado hotelEmpleado){
 
         String anadeEmpleado = "INSERT INTO Empleado (nombre, apellidos, email,"
         		+ " telefono, sueldo, profesion) VALUES (?, ?, ?, ?, ?, ?)";
+        String anadeEmpleadoaHotel = "INSERT INTO Hotel_Empleado (empleado_id, hotel_id, fecha_contratacion)"
+        		+ " VALUES (?, ?, ?)";
 
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
-        Integer idGenerado = null;
+        BigInteger idGenerado = null;
 
         try( Connection conn = conector.getConn() )
         {
             idGenerado = runner.insert(conn, anadeEmpleado, handler,
             		empleado.getNombre(), empleado.getApellidos(), empleado.getEmail(),
             		empleado.getTelefono(), empleado.getSueldo(), empleado.getProfesion_id());
+            runner.insert(conn, anadeEmpleadoaHotel, handler,
+            		idGenerado, hotelEmpleado.getHotel_id(), hotelEmpleado.getFecha_contratacion());
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -94,7 +100,7 @@ public class EmpleadoDAO {
 
         String cambiaEmail = "UPDATE Empleado SET email = ? WHERE email = ?";
 
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
         try( Connection conn = conector.getConn() )
         {
@@ -109,7 +115,7 @@ public class EmpleadoDAO {
 
         String cambiaNombre = "UPDATE Empleado SET nombre = ? WHERE email = ?";
 
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
         try( Connection conn = conector.getConn() )
         {
@@ -124,7 +130,7 @@ public class EmpleadoDAO {
 
         String cambiaApellidos = "UPDATE Empleado SET apellidos = ? WHERE email = ?";
 
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
         try( Connection conn = conector.getConn() )
         {
@@ -138,13 +144,13 @@ public class EmpleadoDAO {
     
     public void cambiarProfesion(Empleado empleado, Profesion nuevaProfesion){
 
-        String add = "UPDATE Empleado SET profesion_id = ? WHERE email = ?";
+        String cambiaProfesion = "UPDATE Empleado SET profesion_id = ? WHERE email = ?";
 
         ScalarHandler<Integer> handler = new ScalarHandler<>();
 
         try( Connection conn = conector.getConn() )
         {
-            runner.update(conn, add, handler, nuevaProfesion, empleado.getEmail());
+            runner.update(conn, cambiaProfesion, handler, nuevaProfesion, empleado.getEmail());
         }
         catch(Exception e) {
             e.printStackTrace();

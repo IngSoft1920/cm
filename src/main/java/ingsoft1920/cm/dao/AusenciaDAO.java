@@ -7,6 +7,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class AusenciaDAO {
         return ausencias;
     }
 
-    public void cambiarEstadoAusencia(int id, int estado){
+    public void cambiarEstadoAusencia(BigInteger id, int estado){
 
         String cambiaEstado = "UPDATE Ausencia SET estado = ? WHERE id = ?";
 
@@ -51,14 +52,14 @@ public class AusenciaDAO {
         }
     }
 
-    public int anadirAusencia( Ausencia ausencia){
+    public BigInteger anadirAusencia(Ausencia ausencia){
 
         String anadirAusencia = "INSERT INTO Ausencia (motivo, fecha_inicio, fecha_fin, estado,"
         		+ " empleado_id) VALUES ( ?, ?, ?, ?, ?)";
 
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
-        Integer idGenerado = null;
+        BigInteger idGenerado = null;
 
         try( Connection conn = conector.getConn() )
         {
@@ -76,7 +77,7 @@ public class AusenciaDAO {
 
         String eliminarAusencia = "DELETE FROM Ausencia WHERE id = ?";
 
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
         try( Connection conn = conector.getConn() )
         {
@@ -92,7 +93,7 @@ public class AusenciaDAO {
 
         String cambiarMotivo = "UPDATE Ausencia SET motivo = ? WHERE id = ?";
 
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
         try( Connection conn = conector.getConn() )
         {
@@ -107,7 +108,7 @@ public class AusenciaDAO {
 
         String cambiaFechaInicio = "UPDATE Ausencia SET fecha_inicio = ? WHERE id = ?";
 
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
         try( Connection conn = conector.getConn() )
         {
@@ -123,7 +124,7 @@ public class AusenciaDAO {
 
         String cambiaFechaFin = "UPDATE Ausencia SET fecha_fin = ? WHERE id = ?";
 
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
         try( Connection conn = conector.getConn() )
         {
