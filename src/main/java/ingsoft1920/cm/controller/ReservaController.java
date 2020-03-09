@@ -93,5 +93,12 @@ public class ReservaController {
 		
 		return res.toString();
 	}
+	
+	@PostMapping("/reserva/eliminar/{reserva_id}")
+	@ResponseBody
+	public void eliminarReserva(@PathVariable int reserva_id) {
+		dao.eliminarReserva(reserva_id);
+	}
+	
 
 }
