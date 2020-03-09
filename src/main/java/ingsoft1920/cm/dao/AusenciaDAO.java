@@ -1,16 +1,20 @@
 package ingsoft1920.cm.dao;
 
-import ingsoft1920.cm.conector.ConectorBBDD;
-import ingsoft1920.cm.bean.Ausencia;
+import java.math.BigInteger;
+import java.sql.Connection;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigInteger;
-import java.sql.*;
-import java.util.LinkedList;
-import java.util.List;
+import com.google.gson.JsonObject;
+
+import ingsoft1920.cm.apiout.APIout;
+import ingsoft1920.cm.bean.Ausencia;
+import ingsoft1920.cm.conector.ConectorBBDD;
 
 public class AusenciaDAO {
 
@@ -20,7 +24,7 @@ public class AusenciaDAO {
 
     private ConectorBBDD conector = new ConectorBBDD();
 
-    public List<Ausencia> getAusencias() {
+    public List<Ausencia> ausencias() {
 
         BeanListHandler<Ausencia> beanListHandler = new BeanListHandler<>(Ausencia.class);
         QueryRunner runner = new QueryRunner();
@@ -39,38 +43,48 @@ public class AusenciaDAO {
         return ausencias;
     }
 
-    public void cambiarEstadoAusencia(BigInteger id, int estado){
+    public void resultadoAusencia(Ausencia a,Ausencia.Estado resolucion){
 
         String cambiaEstado = "UPDATE Ausencia SET estado = ? WHERE id = ?";
 
         try( Connection conn = conector.getConn() )
         {
-            runner.update(conn, cambiaEstado, estado, id);
+            runner.update(conn, cambiaEstado, resolucion, a.getId());
         }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+        catch(Exception e) { e.printStackTrace(); }
+        
+        // Notificamos a em del resultado
+        JsonObject json = new JsonObject();
+          json.addProperty("id_ausencia",a.getId());
+          json.addProperty("resultado",resolucion.name());
+          json.addProperty("motivo",a.getMotivo());
+        APIout.enviar(json.toString(), 7002, "/resultadoAusencia");
+        
     }
 
-    public BigInteger anadirAusencia(Ausencia ausencia){
-
-        String anadirAusencia = "INSERT INTO Ausencia (motivo, fecha_inicio, fecha_fin, estado,"
-        		+ " empleado_id) VALUES ( ?, ?, ?, ?, ?)";
-
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-
+    public int anadir(Ausencia a){
         BigInteger idGenerado = null;
-
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+        String query = "INSERT INTO Ausencia "
+        			  +"(id,motivo,fecha_inicio,fecha_fin,estado,empleado_id) "
+        			  +"VALUES (?,?,?,?,?,?)";
+        
+        
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, anadirAusencia, handler, ausencia.getMotivo(),
-            		ausencia.getFecha_inicio(), ausencia.getFecha_fin(),ausencia.getEstado(),ausencia.getEmpleado_id());
+            idGenerado = runner.insert(conn, query, handler,
+            						   a.getId(),
+            						   a.getMotivo(),
+            						   a.getFecha_inicio(),
+            						   a.getFecha_fin(),
+            						   a.getEstado(),
+            						   a.getEmpleado_id()
+            						  );
+            
         }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+        catch(Exception e) { e.printStackTrace(); }
 
-        return idGenerado;
+        return ( idGenerado != null ? idGenerado.intValue() : -1 );
     }
     
     public void eliminarAusencia(Ausencia ausencia){

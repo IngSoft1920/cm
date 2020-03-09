@@ -133,7 +133,6 @@ public class EmpleadoDAO {
 	      json.addProperty("id",empleado.getId());
 	      
 	    APIout.enviar(json.toString(), 7002, "/eliminarEmpleado");
-        
     }
     
     public void cambiarEmail(Empleado empleado, String nuevoEmail){

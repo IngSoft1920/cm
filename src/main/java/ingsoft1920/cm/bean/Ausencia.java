@@ -1,24 +1,23 @@
 package ingsoft1920.cm.bean;
 
-import java.math.BigInteger;
 import java.sql.Date;
 
 public class Ausencia {
 	
 	public enum Estado { denegada , aprobada , pendiente }
 	
-	private BigInteger id;
+	private int id;
 	private String motivo;
 	private Date fecha_inicio;
 	private Date fecha_fin;
 	private Estado estado;
-	private BigInteger empleado_id;
+	private int empleado_id;
 	
 	
 	public Ausencia() {}
 	
-	public Ausencia(BigInteger id, String motivo, Date fecha_inicio,
-			Date fecha_fin, Estado estado, BigInteger empleado_id) {
+	public Ausencia(int id, String motivo, Date fecha_inicio,
+			Date fecha_fin, Estado estado, int empleado_id) {
 		this.id = id;
 		this.motivo = motivo;
 		this.fecha_inicio = fecha_inicio;
@@ -26,10 +25,10 @@ public class Ausencia {
 		this.estado = estado;
 		this.empleado_id = empleado_id;
 	}
-	public BigInteger getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(BigInteger id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getMotivo() {
@@ -56,10 +55,10 @@ public class Ausencia {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	public BigInteger getEmpleado_id() {
+	public int getEmpleado_id() {
 		return empleado_id;
 	}
-	public void setEmpleado_id(BigInteger empleado_id) {
+	public void setEmpleado_id(int empleado_id) {
 		this.empleado_id = empleado_id;
 	}
 	@Override
