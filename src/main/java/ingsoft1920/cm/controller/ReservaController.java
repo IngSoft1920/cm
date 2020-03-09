@@ -1,13 +1,17 @@
 package ingsoft1920.cm.controller;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -62,6 +66,31 @@ public class ReservaController {
 		else
 			res.addProperty("id",id);
 				
+		return res.toString();
+	}
+
+	
+	@GetMapping("/reserva/cliente/{cliente_id}")
+	@ResponseBody
+	public String reservasCliente(@PathVariable int cliente_id) {
+		
+		List<Reserva> reservasCliente = dao.reservasDeUnCliente(cliente_id);
+		
+		JsonArray res = new JsonArray();
+		JsonObject elem;
+		for( Reserva r : reservasCliente ) {
+			elem = new JsonObject();
+			  elem.addProperty("reserva_id",r.getId());
+			  elem.addProperty("hotel_id",r.getHotel_id());
+			  elem.addProperty("tipo_hab_id",r.getTipo_hab_id());
+			  elem.addProperty("regimen",r.getRegimen_comida().name());
+			  elem.addProperty("importe",r.getImporte());
+			  elem.addProperty("fecha_entrada",r.getFecha_entrada().toString());
+			  elem.addProperty("fecha_salida",r.getFecha_salida().toString());
+			  
+			res.add(elem);
+		}
+		
 		return res.toString();
 	}
 
