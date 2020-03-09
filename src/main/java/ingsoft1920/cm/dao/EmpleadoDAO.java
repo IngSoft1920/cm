@@ -2,6 +2,7 @@ package ingsoft1920.cm.dao;
 
 import ingsoft1920.cm.conector.ConectorBBDD;
 import ingsoft1920.cm.bean.Empleado;
+import ingsoft1920.cm.bean.Profesion;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -35,8 +36,6 @@ public class EmpleadoDAO {
         catch(Exception e) {
             e.printStackTrace();
         }
-
-
         return empleados;
     }
 
@@ -54,9 +53,10 @@ public class EmpleadoDAO {
 
     }
 
-    public void add(Empleado empleado){
+    public void anadirEmpleado(Empleado empleado){
 
-        String add = "INSERT INTO Empleado (id, nombre, apellidos, email, telefono, sueldo) VALUES (?, ?, ?, ?, ?, ?)";
+        String anadeEmpleado = "INSERT INTO Empleado (nombre, apellidos, email,"
+        		+ " telefono, sueldo, profesion) VALUES (?, ?, ?, ?, ?, ?)";
 
         ScalarHandler<Integer> handler = new ScalarHandler<>();
 
@@ -64,7 +64,9 @@ public class EmpleadoDAO {
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, add, handler, empleado.getId(), empleado.getNombre(), empleado.getApellidos(), empleado.getEmail(), empleado.getTelefono(), empleado.getSueldo());
+            idGenerado = runner.insert(conn, anadeEmpleado, handler,
+            		empleado.getNombre(), empleado.getApellidos(), empleado.getEmail(),
+            		empleado.getTelefono(), empleado.getSueldo(), empleado.getProfesion_id());
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -73,80 +75,81 @@ public class EmpleadoDAO {
         empleado.setId(idGenerado);
     }
     
-    public void delete(Empleado empleado){
+    public void eliminarEmpleado(Empleado empleado){
 
-        String add = "DELETE FROM Empleado WHERE email = ?";
+        String eliminaEmpleado = "DELETE FROM Empleado WHERE email = ?";
 
         ScalarHandler<Integer> handler = new ScalarHandler<>();
 
-        Integer idGenerado = null;
-
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.update(conn, add, handler, empleado.getEmail());
+            runner.update(conn, eliminaEmpleado, handler, empleado.getEmail());
         }
         catch(Exception e) {
             e.printStackTrace();
         }
-
-        empleado.setId(idGenerado);
     }
     
     public void cambiarEmail(Empleado empleado, String nuevoEmail){
 
-        String add = "UPDATE Empleado SET email = ? WHERE email = ?";
+        String cambiaEmail = "UPDATE Empleado SET email = ? WHERE email = ?";
 
         ScalarHandler<Integer> handler = new ScalarHandler<>();
 
-        Integer idGenerado = null;
-
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.update(conn, add, handler, nuevoEmail, empleado.getEmail());
+            runner.update(conn, cambiaEmail, handler, nuevoEmail, empleado.getEmail());
         }
         catch(Exception e) {
             e.printStackTrace();
         }
-
-        empleado.setId(idGenerado);
     }
     
     public void cambiarNombre(Empleado empleado, String nuevoNombre){
 
-        String add = "UPDATE Empleado SET nombre = ? WHERE email = ?";
+        String cambiaNombre = "UPDATE Empleado SET nombre = ? WHERE email = ?";
 
         ScalarHandler<Integer> handler = new ScalarHandler<>();
 
-        Integer idGenerado = null;
-
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.update(conn, add, handler, nuevoNombre, empleado.getEmail());
+            runner.update(conn, cambiaNombre, handler, nuevoNombre, empleado.getEmail());
         }
         catch(Exception e) {
             e.printStackTrace();
         }
-
-        empleado.setId(idGenerado);
     }
     
     public void cambiarApellidos(Empleado empleado, String nuevosApellidos){
 
-        String add = "UPDATE Empleado SET apellidos = ? WHERE email = ?";
+        String cambiaApellidos = "UPDATE Empleado SET apellidos = ? WHERE email = ?";
 
         ScalarHandler<Integer> handler = new ScalarHandler<>();
 
-        Integer idGenerado = null;
+        try( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, cambiaApellidos, handler, nuevosApellidos,
+            		empleado.getEmail());
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void cambiarProfesion(Empleado empleado, Profesion nuevaProfesion){
+
+        String add = "UPDATE Empleado SET profesion_id = ? WHERE email = ?";
+
+        ScalarHandler<Integer> handler = new ScalarHandler<>();
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.update(conn, add, handler, nuevosApellidos, empleado.getEmail());
+            runner.update(conn, add, handler, nuevaProfesion, empleado.getEmail());
         }
         catch(Exception e) {
             e.printStackTrace();
         }
 
-        empleado.setId(idGenerado);
     }
     
 
