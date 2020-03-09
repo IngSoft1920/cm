@@ -192,15 +192,15 @@ public class HotelDAO {
 		return res;
 	}
 	
-	public static void main(String[] args) {
-		HotelDAO dao = new HotelDAO();		
-		
-		Hotel h = new Hotel(-1, "Super Exp", "America", "Argentina", "Buenos Aires", "Calle Jose,21", 4, "Una experiencia auténticamente argentina");
-		List<Hotel_Tipo_Habitacion> habs = List.of(new Hotel_Tipo_Habitacion(-1,1,100),new Hotel_Tipo_Habitacion(-1,2,20));
-		List<Hotel_Servicio> servs = List.of(new Hotel_Servicio(-1, 2, 20, "por_dia"));
-		List<Hotel_Categoria> cats = List.of();
-		
-		dao.anadir(h, habs, servs, cats);
-	}
+//	public static void main(String[] args) {
+//		HotelDAO dao = new HotelDAO();		
+//		
+//		Hotel h = new Hotel(-1, "Super Exp", "America", "Argentina", "Buenos Aires", "Calle Jose,21", 4, "Una experiencia auténticamente argentina");
+//		List<Hotel_Tipo_Habitacion> habs = List.of(new Hotel_Tipo_Habitacion(-1,1,100),new Hotel_Tipo_Habitacion(-1,2,20));
+//		List<Hotel_Servicio> servs = List.of(new Hotel_Servicio(-1, 2, 20, "por_dia"));
+//		List<Hotel_Categoria> cats = List.of();
+//		
+//		dao.anadir(h, habs, servs, cats);
+//	}
 
 }

@@ -1,5 +1,6 @@
 package ingsoft1920.cm.bean;
 
+
 public class Empleado {
 	
 	private int id;
