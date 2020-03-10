@@ -3,8 +3,11 @@ package ingsoft1920.cm.dao;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import ingsoft1920.cm.bean.Peticion;
+import ingsoft1920.cm.model.Disponibles;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
@@ -66,5 +69,39 @@ public class ReservaDAO {
 			
 		} catch(Exception e) { e.printStackTrace(); }
 	}
+
+	public List<Disponibles> disponibles(){
+
+        BeanListHandler<Disponibles> beanListHandler = new BeanListHandler<>(Disponibles.class);
+        QueryRunner runner = new QueryRunner();
+
+	    String disponiblesQuery =
+                "SELECT Hotel_Tipo_Habitacion.hotel_id, Hotel_Tipo_Habitacion.tipo_hab_id, Tipo_Habitacion.nombre_tipo, Hotel_Tipo_Habitacion.num_disponibles, SUM(Precio_Habitacion.precio) AS precio_total\n" +
+                        "FROM Hotel_Tipo_Habitacion\n" +
+                        "JOIN Precio_Habitacion\n" +
+                        "\tON Precio_Habitacion.hotel_id = Hotel_Tipo_Habitacion.hotel_id AND Precio_Habitacion.tipo_hab_id = Hotel_Tipo_Habitacion.tipo_hab_id AND Precio_Habitacion.fecha >= @fentrada AND Precio_Habitacion.fecha < @fsalida\n" +
+                        "JOIN Tipo_Habitacion\n" +
+                        "\tON Hotel_Tipo_Habitacion.tipo_hab_id = Tipo_Habitacion.id\n" +
+                        "LEFT JOIN (SELECT Reserva.hotel_id, Reserva.tipo_hab_id, COUNT(*) AS num_reservadas\n" +
+                        "\tFROM Reserva\n" +
+                        "\tWHERE Reserva.fecha_entrada <= @fsalida AND Reserva.fecha_salida >= @fentrada\n" +
+                        "\tGROUP BY Reserva.hotel_id, Reserva.tipo_hab_id) AS reservadas\n" +
+                        "ON reservadas.hotel_id = Hotel_Tipo_Habitacion.hotel_id AND reservadas.tipo_hab_id = Hotel_Tipo_Habitacion.tipo_hab_id AND Hotel_Tipo_Habitacion.num_disponibles < reservadas.num_reservadas\n" +
+                        "WHERE reservadas.hotel_id IS NULL OR reservadas.tipo_hab_id IS NULL\n" +
+                        "GROUP BY Hotel_Tipo_Habitacion.hotel_id, Hotel_Tipo_Habitacion.tipo_hab_id;";
+
+        List<Disponibles> disponibles = new LinkedList<>();
+
+        try( Connection conn = conector.getConn() )
+        {
+            disponibles = runner.query(conn, disponiblesQuery, beanListHandler);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return disponibles;
+
+    }
 
 }
