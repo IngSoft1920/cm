@@ -1,13 +1,14 @@
 package ingsoft1920.cm.controller;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.gson.JsonParser;
+import ingsoft1920.cm.model.Disponibles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -73,4 +74,59 @@ public class HotelController {
 		return res.toString();
 	}
 
+    @GetMapping("/hotel/disponibles")
+    @ResponseBody
+    public String disponibles(@RequestParam Date fecha_inicio, @RequestParam Date fecha_fin){
+
+        List<Disponibles> disponibles = dao.disponibles(fecha_inicio, fecha_fin);
+
+        JsonArray res = new JsonArray();
+        JsonArray habitaciones;
+
+        JsonObject elem;
+        JsonObject habitacion;
+
+        int id;
+
+        Disponibles disponible;
+
+        int i = 0;
+
+        while( i < disponibles.size()){
+
+            disponible = disponibles.get(i);
+
+            elem = new JsonObject();
+            habitaciones = new JsonArray();
+
+            id = disponible.getHotel_id();
+            elem.addProperty("hotel_id", id);
+
+            while (disponible.getHotel_id() == id){
+
+                habitacion = new JsonObject();
+
+                habitacion.addProperty("tipo_hab_id", disponible.getTipo_ha_id());
+                habitacion.addProperty("nombre", disponible.getNombre_tipo());
+                habitacion.addProperty("precio_total", disponible.getPrecio_total());
+
+                habitaciones.add(habitacion);
+
+                i++;
+                if (i < (disponibles.size())){
+                    disponible = disponibles.get(i);
+                }
+                else{
+                    break;
+                }
+            }
+
+            elem.add("habitaciones", habitaciones);
+
+            res.add(elem);
+
+        }
+
+        return res.toString();
+    }
 }

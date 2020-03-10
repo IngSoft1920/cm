@@ -2,11 +2,10 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigInteger;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
+import ingsoft1920.cm.model.Disponibles;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
@@ -191,6 +190,40 @@ public class HotelDAO {
 		
 		return res;
 	}
+
+    public List<Disponibles> disponibles(Date fecha_entrada, Date fecha_salida){
+
+        BeanListHandler<Disponibles> beanListHandler = new BeanListHandler<>(Disponibles.class);
+        QueryRunner runner = new QueryRunner();
+
+        String disponiblesQuery =
+                "SELECT Hotel_Tipo_Habitacion.hotel_id, Hotel_Tipo_Habitacion.tipo_hab_id, Tipo_Habitacion.nombre_tipo, Hotel_Tipo_Habitacion.num_disponibles, SUM(Precio_Habitacion.precio) AS precio_total " +
+                        "FROM Hotel_Tipo_Habitacion " +
+                        "JOIN Precio_Habitacion " +
+                        "ON Precio_Habitacion.hotel_id = Hotel_Tipo_Habitacion.hotel_id AND Precio_Habitacion.tipo_hab_id = Hotel_Tipo_Habitacion.tipo_hab_id AND Precio_Habitacion.fecha >= ? AND Precio_Habitacion.fecha < ? " +
+                        "JOIN Tipo_Habitacion " +
+                        "ON Hotel_Tipo_Habitacion.tipo_hab_id = Tipo_Habitacion.id " +
+                        "LEFT JOIN (SELECT Reserva.hotel_id, Reserva.tipo_hab_id, COUNT(*) AS num_reservadas " +
+                        "FROM Reserva " +
+                        "WHERE Reserva.fecha_entrada <= ? AND Reserva.fecha_salida >= ? " +
+                        "GROUP BY Reserva.hotel_id, Reserva.tipo_hab_id) AS reservadas " +
+                        "ON reservadas.hotel_id = Hotel_Tipo_Habitacion.hotel_id AND reservadas.tipo_hab_id = Hotel_Tipo_Habitacion.tipo_hab_id AND Hotel_Tipo_Habitacion.num_disponibles < reservadas.num_reservadas " +
+                        "WHERE reservadas.hotel_id IS NULL OR reservadas.tipo_hab_id IS NULL " +
+                        "GROUP BY Hotel_Tipo_Habitacion.hotel_id, Hotel_Tipo_Habitacion.tipo_hab_id;";
+
+        List<Disponibles> disponibles = new LinkedList<>();
+
+        try( Connection conn = conector.getConn() )
+        {
+            disponibles = runner.query(conn, disponiblesQuery, beanListHandler, fecha_entrada, fecha_salida, fecha_salida, fecha_entrada);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return disponibles;
+
+    }
 	
 //	public static void main(String[] args) {
 //		HotelDAO dao = new HotelDAO();		
