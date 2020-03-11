@@ -16,7 +16,7 @@ import com.google.gson.JsonObject;
 import ingsoft1920.cm.apiout.APIout;
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Profesion;
-import ingsoft1920.cm.bean.aux.Hotel_Empleado;
+import ingsoft1920.cm.bean.auxiliares.Hotel_Empleado;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 public class EmpleadoDAO {
