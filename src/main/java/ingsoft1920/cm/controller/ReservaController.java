@@ -3,6 +3,7 @@ package ingsoft1920.cm.controller;
 import java.sql.Date;
 import java.util.List;
 
+import ingsoft1920.cm.model.Disponibles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,8 @@ import ingsoft1920.cm.dao.ReservaDAO;
 @Controller
 public class ReservaController {
 	
-	@Autowired
-	ReservaDAO dao;
+
+	ReservaDAO dao = new ReservaDAO();
 	
 	/*
 	 {
@@ -100,5 +101,4 @@ public class ReservaController {
 		dao.eliminarReserva(reserva_id);
 	}
 	
-
 }

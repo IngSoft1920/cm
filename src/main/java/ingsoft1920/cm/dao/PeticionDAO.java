@@ -23,13 +23,13 @@ public class PeticionDAO {
         BeanListHandler<Peticion> beanListHandler = new BeanListHandler<>(Peticion.class);
         QueryRunner runner = new QueryRunner();
 
-        String getPeticiones = "SELECT * FROM peticiones";
+        String getPeticiones = "SELECT * FROM peticion";
 
         List<Peticion> peticiones = new LinkedList<>();
 
         try( Connection conn = conector.getConn() )
         {
-            peticiones = runner.query(conn, "SELECT * FROM peticion", beanListHandler);
+            peticiones = runner.query(conn, getPeticiones, beanListHandler);
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -53,7 +53,7 @@ public class PeticionDAO {
 
     }
 
-    public void add(Peticion peticion){
+    public int add(Peticion peticion){
 
         String add = "INSERT INTO Peticion (ciudad, fecha, tipo_hab_id, estado) VALUES (?, ?, ?, ?)";
 
@@ -70,6 +70,8 @@ public class PeticionDAO {
         }
 
         peticion.setId(idGenerado);
+
+        return idGenerado;
     }
 
 }

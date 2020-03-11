@@ -17,9 +17,10 @@ import org.springframework.stereotype.Component;
 	private static final String USUARIO = "cm1";
 	private static final String PASSWD = "ingSoft20cm1.711";
 
+
     private Connection conn = null;
-    
-	private void conectar() {
+
+	public void conectar() {
 		try
 		{
 			Class.forName(JDBC_DRIVER);
@@ -28,20 +29,20 @@ import org.springframework.stereotype.Component;
 	}
 
     public Connection getConn() {
-	    if ( !isConnected() )
+	    if (! isConnected()){
 	        conectar();
-        
+        }
 	    return conn;
 	}
 
-    private boolean isConnected() { 
-    	
-    	boolean res = false;
-    	
-    	try { res = conn != null && !conn.isClosed(); }
-    	catch( SQLException e ) { e.printStackTrace(); }
-    	
-    	return res;
+    public boolean isConnected() {
+
+        boolean res = false;
+
+        try { res = conn != null && !conn.isClosed(); }
+        catch( SQLException e ) { e.printStackTrace(); }
+
+        return res;
     }
 
 }
