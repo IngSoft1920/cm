@@ -23,7 +23,7 @@ public class PeticionDAO {
         BeanListHandler<Peticion> beanListHandler = new BeanListHandler<>(Peticion.class);
         QueryRunner runner = new QueryRunner();
 
-        String getPeticiones = "SELECT * FROM peticion";
+        String getPeticiones = "SELECT * FROM Peticion";
 
         List<Peticion> peticiones = new LinkedList<>();
 
@@ -41,7 +41,7 @@ public class PeticionDAO {
 
     public void cambiaEstado(int id){
 
-        String cambiaEstado = "UPDATE Peticiones SET estado = TRUE WHERE id = ?";
+        String cambiaEstado = "UPDATE Peticion SET estado = TRUE WHERE id = ?";
 
         try( Connection conn = conector.getConn() )
         {
@@ -55,7 +55,7 @@ public class PeticionDAO {
 
     public int add(Peticion peticion){
 
-        String add = "INSERT INTO Peticion (ciudad, fecha, tipo_hab_id, estado) VALUES (?, ?, ?, ?)";
+        String add = "INSERT INTO Peticion (ciudad, estado, ano_CI, mes_CI, dia_CI, ano_CO, mes_CO, dia_CO, tipo_hab_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         ScalarHandler<Integer> handler = new ScalarHandler<>();
 
@@ -63,7 +63,7 @@ public class PeticionDAO {
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, add, handler, peticion.getCiudad(), peticion.getFecha(), peticion.getTipo_hab_id(), peticion.getEstado());
+            idGenerado = runner.insert(conn, add, handler, peticion.getCiudad(), peticion.getEstado(), peticion.getAnoCI(), peticion.getMesCI(), peticion.getDiaCI(), peticion.getAnoCO(), peticion.getMesCO(), peticion.getDiaCO(), peticion.getTipo_hab_id());
         }
         catch(Exception e) {
             e.printStackTrace();
