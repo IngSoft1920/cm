@@ -49,7 +49,7 @@ INSERT INTO Hotel_Empleado(empleado_id,hotel_id,fecha_contratacion) VALUES (1,1,
 
 INSERT INTO Ausencia(id,motivo,fecha_inicio,fecha_fin,estado,empleado_id) VALUES (1,'enfermedad','2020-10-01','2020-10-10','pendiente',1);
 
-INSERT INTO Cliente(id,nombre,DNI,nacionalidad,telefono,email,`password`) VALUES (1,'Juan','321222F','España','123456','juan@gmail.com','juanito123');
+INSERT INTO Cliente(id,nombre,apellidos,DNI,nacionalidad,telefono,email,`password`) VALUES (1,'Juan','García Cano','321222F','España','123456','juan@gmail.com','juanito123');
 
 INSERT INTO Valoracion(id,cabecera,cuerpo,nota,cliente_id,hotel_id) VALUES (1,'Muy bueno','Genial experiencia, especialmente la comida',5,1,1);
 
