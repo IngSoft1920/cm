@@ -41,9 +41,9 @@ public class DatosPrecioDAO {
         return datosPrecio;
     }
 
-    public DatosPrecio get(int id){
+    public DatosPrecio get(int peticion_id){
 
-        String selectQuery = "SELECT * FROM Datos_Precio WHERE id = ?";
+        String selectQuery = "SELECT * FROM Datos_Precio WHERE peticion_id = ?";
 
         BeanHandler<DatosPrecio> handler = new BeanHandler<>(DatosPrecio.class);
 
@@ -51,7 +51,7 @@ public class DatosPrecioDAO {
 
         try ( Connection conn = conector.getConn() )
         {
-            res = runner.query(conn, selectQuery, handler, id);
+            res = runner.query(conn, selectQuery, handler, peticion_id);
 
         } catch(Exception e) { e.printStackTrace(); }
 
@@ -78,5 +78,18 @@ public class DatosPrecioDAO {
         return idGenerado;
     }
 
+    public void cambiaEstado(int id){
+
+        String cambiaEstado = "UPDATE Datos_Precio SET estado = TRUE WHERE id = ?";
+
+        try( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, cambiaEstado, id);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
