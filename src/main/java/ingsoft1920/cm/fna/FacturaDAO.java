@@ -72,7 +72,13 @@ public class FacturaDAO {
 	public static HashMap<Integer, BeneficiosGastosModel> gastosAlimentosPorHotel(HashMap <Integer, BeneficiosGastosModel> map) {
 		//key=hotel_id, value=Beneficios del hotel
 		//Consulta para obtener el gastos de los alimentos
-		String consulta="";
+		String consulta=" SELECT HP.hotel_id , H.nombre, PPro.pedido_id,SUM(PPro.cantidad * HP.precio)\r\n" + 
+				" FROM Hotel_Proveedor_Producto AS HP\r\n" + 
+				" JOIN Pedido AS P ON P.hotel_id=HP.hotel_id\r\n" + 
+				" JOIN Pedido_Producto AS PPro ON PPro.pedido_id=P.id \r\n" + 
+				" JOIN Hotel AS H ON H.id = HP.hotel_id\r\n" + 
+				" GROUP BY hotel_id , pedido_id\r\n" + 
+				" ;";
 		java.sql.Statement stmt= null;
 		ResultSet rs= null;
 		BeneficiosGastosModel aux;
@@ -81,9 +87,21 @@ public class FacturaDAO {
 			rs=stmt.executeQuery(consulta);
 			while(rs.next()) {
 				//Aqui iria el codigo para ver si el hotel_id esta ya en el map
-				//En caso de estarlo, se actualizaria su value (añadirias el costeAlimentos)
+				aux=map.get(rs.getInt("HP.hotel_id"));
+				if(aux!=null) {
+					//En caso de estarlo, se actualizaria su value (añadirias el costeAlimentos)
+					if (aux.getGastoComida()!=null) {
+						aux.setGastoComida(aux.getGastoComida() + rs.getInt("SUM(PPro.cantidad * HP.precio)")  //Toma el gasto anterior y le suma el nuevo
+					}
+					else{
+					aux.setGastoComida(rs.getInt("SUM(PPro.cantidad * HP.precio)")); //por si acaso estaba guardado como null
+					}
+				}
 				//En caso de no estarlo, añadir nueva entrada (Nombre del hotel, y costeAlimentos, el resto de valores los pondrias a 0)
-			}
+				else {
+					aux=new BeneficiosGastosModel(rs.getString("H.nombre"),0,0,0,rs.getInt("SUM(PPro.cantidad * HP.precio")));
+					map.put(rs.getInt("HP.hotel_id"), aux);	
+				}
 		}catch (SQLException ex){ 
 			System.out.println("SQLException: " + ex.getMessage());
 		} finally { // it is a good idea to release resources in a finally block 
