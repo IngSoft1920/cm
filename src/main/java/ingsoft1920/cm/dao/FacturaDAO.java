@@ -7,6 +7,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class FacturaDAO {
 
@@ -42,15 +43,15 @@ public class FacturaDAO {
 
     /**
      * Pone pagado a true
-     * @param id
+     * @param reservaId
      */
-    public void pagar(int id){
+    public void pagar(int reservaId){
 
-        String paga = "UPDATE Peticiones SET pagado = TRUE WHERE id = ?";
+        String paga = "UPDATE Peticiones SET pagado = TRUE WHERE reserva_id = ?";
 
         try( Connection conn = conector.getConn() )
         {
-            runner.update(conn, paga, id);
+            runner.update(conn, paga, reservaId);
         }
         catch(Exception e) {
             e.printStackTrace();

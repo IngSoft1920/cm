@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import ingsoft1920.cm.bean.Factura;
 import ingsoft1920.cm.dao.FacturaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,29 +42,14 @@ public class FacturaController {
     ]
     */
 
-    /*
-    [
-    {
-    "id" : 1
-    },
-    {
-    "id" : 2
-    }
-    ]
-     */
-
-    @PostMapping("/facturas")
+    @GetMapping("/facturas")
     @ResponseBody
-    public String volcarFacturas(@RequestBody String json) {
+    public void volcarFacturas(@RequestBody String json) {
 
         JsonArray jsonA = JsonParser.parseString(json).getAsJsonArray();
 
         Factura factura = new Factura();
         JsonObject jsonO;
-
-        int id = 0;
-
-        LinkedList<Integer> idGenerados = new LinkedList<>();
 
         for ( JsonElement jsonE : jsonA){
             if (jsonE.isJsonObject()){
@@ -77,24 +63,40 @@ public class FacturaController {
                 factura.setServicio_id(jsonO.get("servicio_id").getAsInt());
                 factura.setReserva_id(jsonO.get("reserva_id").getAsInt());
 
-                id = dao.anadir(factura);
+               dao.anadir(factura);
 
-                idGenerados.add(id);
             }
         }
+    }
 
-        JsonArray res = new JsonArray();
-        JsonObject elem;
 
-        for(Integer idGenerado : idGenerados) {
-            elem = new JsonObject();
+    /*
+     [
+         {
+            "reserva_id" : 12
+         },
+         {
+            "reserva_id" : 16
+         }
+     ]
+    */
+    @GetMapping("/pagar")
+    @ResponseBody
+    public void pagarFacturas(@RequestBody String json) {
 
-            elem.addProperty("id", idGenerado);
+        JsonArray jsonA = JsonParser.parseString(json).getAsJsonArray();
 
-            res.add(elem);
+        JsonObject jsonO;
+
+        for ( JsonElement jsonE : jsonA){
+            if (jsonE.isJsonObject()){
+
+                jsonO = jsonE.getAsJsonObject();
+
+                dao.pagar(jsonO.get("reserva_id").getAsInt());
+
+            }
         }
-
-        return res.toString();
 
     }
 }
