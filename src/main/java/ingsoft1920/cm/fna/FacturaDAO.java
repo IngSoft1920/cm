@@ -39,7 +39,7 @@ public class FacturaDAO {
 			stmt=conector.getConn().createStatement();
 			rs=stmt.executeQuery(beneficiosReservas);
 			while(rs.next()) {
-				aux=new BeneficiosGastosModel(rs.getString("H.nombre"),rs.getInt("SUM(R.importe)"),0,0,0);
+				aux=new BeneficiosGastosModel(rs.getString("H.nombre"),rs.getDouble("SUM(R.importe)"),0,0,0);
 				map.put(rs.getInt("R.hotel_id"), aux);
 			}
 			rs.close();
@@ -48,12 +48,12 @@ public class FacturaDAO {
 				aux=map.get(rs.getInt("R.hotel_id"));
 				//El hotel ya esta, añadimos beneficios de los servicios
 				if(aux!=null) {
-					aux.setSumaFacturas(rs.getInt("SUM(F.importe)"));
+					aux.setSumaFacturas(rs.getDouble("SUM(F.importe)"));
 				}
 				//Sino existe creamos un nuevo hotel, teoricamente nunca se deberia meter en este else
 				//Porque no tiene sentido un hotel que no tiene clientes que alquilen habitaciones
 				else {
-					aux=new BeneficiosGastosModel(rs.getString("H.nombre"),0,rs.getInt("SUM(F.importe)"),0,0);
+					aux=new BeneficiosGastosModel(rs.getString("H.nombre"),0,rs.getDouble("SUM(F.importe)"),0,0);
 					map.put(rs.getInt("R.hotel_id"), aux);
 				}
 			}
@@ -90,11 +90,11 @@ public class FacturaDAO {
 				aux=map.get(rs.getInt("hotel_id"));
 				if(aux!=null) {
 					//En caso de estarlo, se actualizaria su value (añadirias el costeAlimentos)
-						aux.setGastoComida(aux.getGastoComida() + (rs.getInt("cantidad")*rs.getInt("precio"))); //Toma el gasto anterior y le suma el nuevo
+						aux.setGastoComida(aux.getGastoComida() + (rs.getDouble("cantidad")*rs.getDouble("precio"))); //Toma el gasto anterior y le suma el nuevo
 				}
 				//En caso de no estarlo, añadir nueva entrada (Nombre del hotel, y costeAlimentos, el resto de valores los pondrias a 0)
 				else {
-					aux=new BeneficiosGastosModel(rs.getString("nombre"),0,0,0,rs.getInt("cantidad")*rs.getInt("precio"));
+					aux=new BeneficiosGastosModel(rs.getString("nombre"),0,0,0,rs.getDouble("cantidad")*rs.getDouble("precio"));
 					map.put(rs.getInt("hotel_id"), aux);	
 				}
 			}

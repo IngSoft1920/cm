@@ -25,13 +25,13 @@ public class ConexionEM {
 				JsonArray id_HotelLista=obj.get("id_hotel").getAsJsonArray();
 				int[] id_hotel= new int[id_HotelLista.size()];
 				JsonArray sueldoLista=obj.get("valor").getAsJsonArray();
-				int[] sueldo= new int[sueldoLista.size()];
+				double[] sueldo= new double[sueldoLista.size()];
 				//Creamos un objeto auxiliar
 				BeneficiosGastosModel aux;
 				//Añadimos la info
 				for(int i=0;i<id_HotelLista.size();i++) {
 					id_hotel[i]=id_HotelLista.get(i).getAsInt();
-					sueldo[i]=sueldoLista.get(i).getAsInt();
+					sueldo[i]=sueldoLista.get(i).getAsDouble();
 					aux=map.get(id_hotel[i]);
 					System.out.println("Hotel_id: "+id_hotel[i]+" , sueldo: "+sueldo[i]);
 					if(aux!=null) {
