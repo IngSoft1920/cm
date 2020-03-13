@@ -11,12 +11,16 @@
 	<body>
 		<h1>Beneficios</h1>
 
-		
-			<form method="POST">
-				Hotel ID: <input type="integer" name="hotel_id" >
-                <input type="submit" value="Submit" />
-            </form>
-		
+			<c:forEach items="${treasureMap}" var="entry">
+
+
+				   <b>Hotel:</b> ${entry.value.nombreHotel} <emsp><b>ID:</b> ${entry.key}<br>
+				   <b> Dinero de las reservas:</b> <vd> ${entry.value.sumaReservas}€</vd><br>
+				   <b> Suma de las facturas:</b> <vd> ${entry.value.sumaFacturas}€</vd><br>
+				   <b> Dinero Invertido en Empleados:</b><rj> ${entry.value.sueldoEmpleados}€</rj><br>
+				   <b> Dinero Invertido en Comida:</b><rj> ${entry.value.gastoComida}€</rj><br><br><br>
+
+			</c:forEach>
 	</body>
 
 </html>
