@@ -12,12 +12,13 @@
 		<h1>Beneficios</h1>
 
 			<c:forEach items="${treasureMap}" var="entry">
-				   
-				   <b>Hotel:</b> ${entry.value.nombreHotel}$  <b>ID:</b> ${entry.key}$<br>
-				   <b> Dinero de las reservas:</b> ${entry.value.sumaReservas}$<br>
-				   <b> Suma de las facturas:</b> ${entry.value.sumaFacturas}$<br>
-				   <b> Dinero Invertido en Empleados:</b> ${entry.value.sueldoEmpleados}$<br>
-				   <b> Dinero Invertido en Comida:</b> ${entry.value.gastoComida}$<b
+
+
+				   <b>Hotel:</b> ${entry.value.nombreHotel} <emsp><b>ID:</b> ${entry.key}<br>
+				   <b> Dinero de las reservas:</b> <vd> ${entry.value.sumaReservas}€</vd><br>
+				   <b> Suma de las facturas:</b> <vd> ${entry.value.sumaFacturas}€</vd><br>
+				   <b> Dinero Invertido en Empleados:</b><rj> ${entry.value.sueldoEmpleados}€</rj><br>
+				   <b> Dinero Invertido en Comida:</b><rj> ${entry.value.gastoComida}€</rj><br><br><br>
 
 			</c:forEach>
 	</body>
