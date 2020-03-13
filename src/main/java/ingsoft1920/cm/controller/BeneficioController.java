@@ -18,7 +18,7 @@ public class BeneficioController {
 	@PostMapping("/beneficio")
 	public String beneficioHotel(@RequestParam("hotel_id") int hotel_id) {
 		
-		ganancias=beneficio.beneficioPorHotel(hotel_id);
+		//ganancias=beneficio.beneficioPorHotel(hotel_id);
 		
 		
 		return "redirect:beneficio-result";
