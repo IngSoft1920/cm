@@ -65,7 +65,7 @@ public class ReservaController {
 	}
 	
 	
-	/* Reserva NO ANÓNIMA
+	/* Reserva ANÓNIMA
 	 {
 	 "fecha_entrada" : “2020-02-10”,
 	 "fecha_salida" : “2020-02-15”,

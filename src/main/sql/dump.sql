@@ -43,11 +43,9 @@ INSERT INTO Hotel_Servicio(hotel_id,servicio_id,precio,unidad_medida) VALUES (1,
 INSERT INTO Hotel_Servicio(hotel_id,servicio_id,precio,unidad_medida) VALUES (1,2,25,'por_hora');
 INSERT INTO Hotel_Servicio(hotel_id,servicio_id,precio,unidad_medida) VALUES (2,1,NULL,NULL);
 
-INSERT INTO Empleado(id,nombre,apellidos,email,telefono,sueldo) VALUES (1,'Pepe','Rodríguez López','pepe@gmail.com','300300300','1200');
-
+/*INSERT INTO Empleado(id,nombre,apellidos,email,telefono,sueldo) VALUES (1,'Pepe','Rodríguez López','pepe@gmail.com','300300300','1200');
 INSERT INTO Hotel_Empleado(empleado_id,hotel_id,fecha_contratacion) VALUES (1,1,'2020-10-30');
-
-INSERT INTO Ausencia(id,motivo,fecha_inicio,fecha_fin,estado,empleado_id) VALUES (1,'enfermedad','2020-10-01','2020-10-10','pendiente',1);
+INSERT INTO Ausencia(id,motivo,fecha_inicio,fecha_fin,estado,empleado_id) VALUES (1,'enfermedad','2020-10-01','2020-10-10','pendiente',1);*/
 
 INSERT INTO Cliente(id,nombre,apellidos,DNI,nacionalidad,telefono,email,`password`) VALUES (1,'Juan','García Cano','321222F','España','123456','juan@gmail.com','juanito123');
 
