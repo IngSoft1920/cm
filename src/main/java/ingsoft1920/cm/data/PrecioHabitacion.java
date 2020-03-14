@@ -1,5 +1,11 @@
 package ingsoft1920.cm.data;
 
+import java.util.Calendar;
+
+import pruebas.Peticion;
+import pruebas.Precio;
+import pruebas.PrecioHabitacion;
+
 public class PrecioHabitacion {
 
 	private double precio = 100; // Precio base
@@ -30,10 +36,10 @@ public class PrecioHabitacion {
 	}
 
 	public double precioFinal() {
-		precioCiudad();
 		precioTipoHabitacion();
-		precioOcupacion();
 		precioRegimenComidas();
+		precioCiudad();
+		precioOcupacion();
 		//precioEvento();
 		precioPuntuacion();
 		return precio;
@@ -108,25 +114,33 @@ public class PrecioHabitacion {
 	}
 
 
-	public static void main(String[]args) {
-
-		for (DatosHotel dt : BBDD.getDatosHotel()) {
-			// for (Fecha fecha : Fechas) { ...
-			idPeticion = Peticion.add(dt.ciudad, fecha, dt.tipo_habitacion, 0);
-
-			//En este momento el equipo de uipath estara actualizando la tabla DatosPrecios
-			do {
-				datosPrecios = DatosPrecios.get(idPeticion);
-			} while (datosPrecios == null); //Hasta que consiga la linea
-
-			if (datosPrecios.estado != 1) {
-				PrecioHabitacion hab = new PrecioHabitacion(dt.ciudad, dt.tipo_habitacion, dt.ocupacion,
-						dt.regimenComidas, dt.nota_feedback, dt.politica_hotel, datosPrecios);
-				DatosPrecios.cambiarEstado();
+	public static void main(String[] args) {
+		List<DatosPrecios> datosPrecios;
+		Calendar fechas[] = new Calendar[30];
+			for (int i = 0; i < 30; i++) {
+				Calendar fecha = Calendar.getInstance();
+				fecha.add(Calendar.DAY_OF_MONTH, i);
+				fechas[i] = fecha;
+				//Cambiar fecha a un string YYYY-MM-DD
 			}
+			for (Calendar fecha : fechas) { 
+				idPeticion = Peticion.add(new Peticion(dt.ciudad, fecha, dt.tipo_habitacion, 0));
 
-			TablaPrecios.setPrecio(dt.idHotel, dt.tipo_habitacion, fecha, hab.precioFinal());
-			// }
+				//En este momento el equipo de uipath estara actualizando la tabla DatosPrecios
+				do {
+					datosPrecios = DatosPrecios.get(idPeticion);
+				} while (datosPrecios == null); //Hasta que consiga la linea
+
+				if (datosPrecios.get(0).estado = 0) {
+					PrecioHabitacion hab = new PrecioHabitacion(dt.ciudad, dt.tipo_habitacion, dt.ocupacion,
+							dt.regimenComidas, dt.nota_feedback, dt.politica_hotel, datosPrecios);
+					for (int i = 0; i > datosPrecios.size(); i++) {
+						datosPrecios.get(i).cambiarEstado();
+					}
+				}
+
+				PrecioDAO.anadirPrecio(new Precio(dt.idHotel, dt.tipo_habitacion, fecha, hab.precioFinal()));
+		 	}
 		}
 	}*/
 
