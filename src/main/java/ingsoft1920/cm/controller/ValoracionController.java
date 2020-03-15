@@ -1,9 +1,14 @@
 package ingsoft1920.cm.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
@@ -40,6 +45,10 @@ public class ValoracionController {
 									  jsonO.get("cliente_id").getAsInt(),
 									  jsonO.get("hotel_id").getAsInt()
 									 );
+	}
+	
+	public static void main(String[] args) {
+		System.out.println( LocalDateTime.now().getHour() );
 	}
 
 }
