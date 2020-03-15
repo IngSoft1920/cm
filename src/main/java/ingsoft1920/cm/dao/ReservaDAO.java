@@ -5,7 +5,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import ingsoft1920.cm.bean.Cliente;
+import ingsoft1920.cm.bean.Profesion;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,4 +70,25 @@ public class ReservaDAO {
 		} catch(Exception e) { e.printStackTrace(); }
 	}
 
+	public Cliente getCliente(int reserva_id){
+
+	    Cliente res = null;
+
+        BeanHandler<Cliente> handler = new BeanHandler<>(Cliente.class);
+
+        String query = "SELECT Cliente.* " +
+                       "FROM (SELECT Reserva.cliente_id " +
+                       "      FROM Reserva " +
+                       "      WHERE Reserva.id = ?) AS La_Reserva " +
+                       "JOIN Cliente " +
+                       "ON Cliente.id = La_Reserva.cliente_id ";
+
+        try ( Connection conn = conector.getConn() )
+        {
+            res = runner.query(conn, query, handler, reserva_id);
+
+        } catch(Exception e) { e.printStackTrace(); }
+
+        return res;
+    }
 }

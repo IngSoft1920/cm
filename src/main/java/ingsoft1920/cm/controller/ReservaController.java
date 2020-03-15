@@ -3,6 +3,7 @@ package ingsoft1920.cm.controller;
 import java.sql.Date;
 import java.util.List;
 
+import ingsoft1920.cm.apiout.APIout;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,8 +59,10 @@ public class ReservaController {
 		JsonObject res = new JsonObject();
 		if( id == -1 )
 			res.addProperty("error", "Se ha producido un error al añadir la reserva");
-		else
+		else{
 			res.addProperty("id",id);
+            APIout.enviar(json.toString(), 7001, "/recibirReserva");
+		}
 				
 		return res.toString();
 	}
@@ -109,6 +112,8 @@ public class ReservaController {
 		else {
 			res.addProperty("id_reserva",id);
 			res.addProperty("cliente_id",cliente_id);
+			jsonO.addProperty("cliente_id",cliente_id);
+			APIout.enviar(jsonO.toString(), 7001, "/recibirReserva");
 		}
 				
 		return res.toString();
@@ -144,5 +149,27 @@ public class ReservaController {
 	public void eliminarReserva(@PathVariable int reserva_id) {
 		dao.eliminarReserva(reserva_id);
 	}
-	
+
+    @GetMapping("/cliente/reserva")
+    @ResponseBody
+    public String clienteReserva(@RequestBody String json) {
+
+        JsonObject jsonO = JsonParser.parseString(json).getAsJsonObject();
+
+        Cliente cliente = dao.getCliente(jsonO.get("reserva_id").getAsInt());
+
+        JsonObject res = new JsonObject();
+
+        res.addProperty("cliente_id", cliente.getId());
+        res.addProperty("nombre", cliente.getNombre());
+        res.addProperty("apellidos", cliente.getApellidos());
+        res.addProperty("DNI", cliente.getDNI());
+        res.addProperty("email", cliente.getEmail());
+        res.addProperty("password", cliente.getPassword());
+        res.addProperty("nacionalidad", cliente.getNacionalidad());
+        res.addProperty("telefono", cliente.getTelefono());
+
+        return res.toString();
+    }
+
 }
