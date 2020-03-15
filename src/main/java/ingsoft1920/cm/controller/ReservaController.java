@@ -61,7 +61,7 @@ public class ReservaController {
 			res.addProperty("error", "Se ha producido un error al añadir la reserva");
 		else{
 			res.addProperty("id",id);
-            APIout.enviar(json.toString(), 7001, "/recibirReserva");
+            APIout.enviar(json, 7001, "/recibirReserva");
 		}
 				
 		return res.toString();

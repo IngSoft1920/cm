@@ -3,8 +3,14 @@ package ingsoft1920.cm.dao;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.*;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import ingsoft1920.cm.apiout.APIout;
+import ingsoft1920.cm.bean.auxiliares.DatosHotel;
 import ingsoft1920.cm.model.Disponibles;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -107,6 +113,11 @@ public class HotelDAO {
 			runner.batch(conn,queryCat, batch.toArray(new Object[categorias.size()][]));
 			
 		} catch(Exception e) { e.printStackTrace(); }
+
+		if (res != null){
+		    h.setId(res.intValue());
+		    enviarHorel(h, habs, servicios, categorias);
+        }
 		
 		return ( res != null ? res.intValue() : -1 );
 	}
@@ -224,16 +235,141 @@ public class HotelDAO {
         return disponibles;
 
     }
-	
-//	public static void main(String[] args) {
-//		HotelDAO dao = new HotelDAO();		
-//		
-//		Hotel h = new Hotel(-1, "Super Exp", "America", "Argentina", "Buenos Aires", "Calle Jose,21", 4, "Una experiencia auténticamente argentina");
-//		List<Hotel_Tipo_Habitacion> habs = List.of(new Hotel_Tipo_Habitacion(-1,1,100),new Hotel_Tipo_Habitacion(-1,2,20));
-//		List<Hotel_Servicio> servs = List.of(new Hotel_Servicio(-1, 2, 20, "por_dia"));
-//		List<Hotel_Categoria> cats = List.of();
-//		
-//		dao.anadir(h, habs, servs, cats);
-//	}
+
+    /**
+     * TODO consultas para obtener el nombre Servicio
+     * @param h
+     * @param habs
+     * @param servs
+     * @param cats
+     */
+    public void enviarHorel(Hotel h, List<Hotel_Tipo_Habitacion> habs, List<Hotel_Servicio> servs, List<Hotel_Categoria> cats){
+
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        TipoHabitacionDAO tipoHabitacionDAO = new TipoHabitacionDAO();
+
+        JsonObject jsonO = new JsonObject();
+
+        jsonO.addProperty("id", h.getId());
+        jsonO.addProperty("nombre", h.getNombre());
+        jsonO.addProperty("descripcion", h.getDescripcion());
+        jsonO.addProperty("estrellas", h.getEstrellas());
+        jsonO.addProperty("continente", h.getContinente());
+        jsonO.addProperty("pais", h.getPais());
+        jsonO.addProperty("ciudad", h.getCiudad());
+
+        JsonArray habitaciones = new JsonArray();
+        JsonObject habitacion;
+
+        for (Hotel_Tipo_Habitacion hab : habs) {
+            habitacion = new JsonObject();
+
+            habitacion.addProperty("id", hab.getTipo_hab_id());
+            habitacion.addProperty("nombre", tipoHabitacionDAO.get(hab.getTipo_hab_id()).getId());
+            habitacion.addProperty("num_disponibles", hab.getNum_disponibles());
+
+            habitaciones.add(habitacion);
+        }
+
+        jsonO.add("habitaciones", habitaciones);
+
+        JsonArray categorias = new JsonArray();
+        JsonObject categoria;
+
+        for (Hotel_Categoria cat: cats){
+            categoria = new JsonObject();
+
+            categoria.addProperty("id", cat.getCategoria_id());
+            categoria.addProperty("nombre", categoriaDAO.get(cat.getCategoria_id()).getId());
+
+            categorias.add(categoria);
+        }
+
+        jsonO.add("categorias", categorias);
+
+        JsonArray servicios = new JsonArray();
+        JsonObject servicio;
+
+        for (Hotel_Servicio serv : servs) {
+            servicio = new JsonObject();
+
+            servicio.addProperty("id", serv.getServicio_id());
+            servicio.addProperty("nombre", "nombre");
+            servicio.addProperty("precio", serv.getPrecio());
+            servicio.addProperty("unidad", serv.getUnidad_medida());
+
+            servicios.add(servicio);
+        }
+
+        jsonO.add("servicios", servicios);
+
+        APIout.enviar(jsonO.toString(), 7001, "/recibirHotel");
+    }
+
+    public List<DatosHotel> getDatosHotel(){
+
+        List<DatosHotel> res = new LinkedList<>();
+
+        String getHotelesTipo = "SELECT Hotel.id, Hotel.ciudad, Tipo_Habitacion.nombre_tipo " +
+                                "FROM Hotel " +
+                                "JOIN Hotel_Tipo_Habitacion " +
+                                "ON hotel.id = Hotel_Tipo_Habitacion.hotel_id " +
+                                "JOIN Tipo_Habitacion " +
+                                "ON Hotel_Tipo_Habitacion.tipo_hab_id = Tipo_Habitacion.id;";
+
+        String getValoracion = "SELECT AVG(nota) AS valoracion " +
+                               "FROM Valoracion " +
+                               "WHERE valoracion.hotel_id = ?;";
+
+        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatementVal;
+
+        try( Connection conn = conector.getConn() )
+        {
+            preparedStatement = conn.prepareStatement(getHotelesTipo);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            int lastId = -1;
+            DatosHotel datosHotel = new DatosHotel();
+
+            while (rs.next()){
+
+                if (rs.getInt("id") != lastId && lastId != -1){
+                    res.add(datosHotel);
+                }
+
+                if (rs.getInt("id") != lastId){
+                    preparedStatementVal = conn.prepareStatement(getValoracion);
+
+                    datosHotel = new DatosHotel();
+
+                    lastId = rs.getInt("id");
+                    datosHotel.setHotelID(lastId);
+                    datosHotel.setCiudad(rs.getString("ciudad"));
+                    datosHotel.addTipoHabitacion("nombre_tipo");
+                    datosHotel.setRegimen();
+
+                    preparedStatementVal.setInt(1, lastId);
+                    ResultSet rs_val = preparedStatementVal.executeQuery();
+                    if(rs_val.next()){
+                        datosHotel.setNota(rs_val.getDouble("valoracion"));
+                    }
+
+                    datosHotel.setOcupacion(0.8);
+                    datosHotel.setPoliticaHotel(1);
+               }
+               else {
+                   datosHotel.addTipoHabitacion("nombre_tipo");
+               }
+
+            }
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+
+    }
 
 }
