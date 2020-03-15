@@ -30,7 +30,7 @@ public class AusenciaDAO {
         BeanListHandler<Ausencia> beanListHandler = new BeanListHandler<>(Ausencia.class);
         QueryRunner runner = new QueryRunner();
 
-        String getAusencias = "SELECT * FROM ausencia";
+        String getAusencias = "SELECT * FROM Ausencia";
 
         List<Ausencia> ausencias = new LinkedList<>();
 
@@ -50,7 +50,7 @@ public class AusenciaDAO {
 
         try( Connection conn = conector.getConn() )
         {
-            runner.update(conn, cambiaEstado, resolucion, a.getId());
+            runner.update(conn, cambiaEstado, resolucion.name(), a.getId());
         }
         catch(Exception e) { e.printStackTrace(); }
         
@@ -62,6 +62,14 @@ public class AusenciaDAO {
         APIout.enviar(json.toString(), 7002, "/resultadoAusencia");
         
     }
+    
+    public static void main(String[] args) {
+    	
+    	AusenciaDAO dao = new AusenciaDAO();
+    	Ausencia primera = dao.ausencias().get(0);
+    	dao.resultadoAusencia(primera, Ausencia.Estado.aprobada);
+    	
+	}
 
     public int anadir(Ausencia a){
         BigInteger idGenerado = null;
