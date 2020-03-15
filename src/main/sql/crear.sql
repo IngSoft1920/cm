@@ -38,7 +38,7 @@ CREATE TABLE `Precio_Habitacion` (
 	`fecha` DATE NOT NULL,
 	`hotel_id` INT NOT NULL,
 	`tipo_hab_id` INT NOT NULL,
-    `precio` INT NOT NULL,
+    `precio_por_noche` INT NOT NULL,
     FOREIGN KEY (`hotel_id`,`tipo_hab_id`) REFERENCES `Hotel_Tipo_Habitacion` (`hotel_id`,`tipo_hab_id`) ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (`hotel_id`,`tipo_hab_id`,`fecha`)
 );
