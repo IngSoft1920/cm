@@ -9,6 +9,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonObject;
 
@@ -16,11 +17,11 @@ import ingsoft1920.cm.apiout.APIout;
 import ingsoft1920.cm.bean.Ausencia;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
+@Component
 public class AusenciaDAO {
 
-
     @Autowired
-    private QueryRunner runner;
+    private QueryRunner runner = new QueryRunner();
 
     private ConectorBBDD conector = new ConectorBBDD();
 
@@ -77,7 +78,7 @@ public class AusenciaDAO {
             						   a.getMotivo(),
             						   a.getFecha_inicio(),
             						   a.getFecha_fin(),
-            						   a.getEstado(),
+            						   a.getEstado().name(),
             						   a.getEmpleado_id()
             						  );
             
