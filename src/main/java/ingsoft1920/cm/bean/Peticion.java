@@ -7,27 +7,19 @@ public class Peticion {
     private int id;
     private String ciudad;
     private Boolean estado;
-    private int anoCI;
-    private int mesCI;
-    private int diaCI;
-    private int anoCO;
-    private int mesCO;
-    private int diaCO;
+    private Date fecha_CI;
+    private Date fecha_CO;
     private int tipo_hab_id;
 
     public Peticion() {
     }
 
-    public Peticion(int id, String ciudad, Boolean estado, int anoCI, int mesCI, int diaCI, int anoCO, int mesCO, int diaCO, int tipo_hab_id) {
+    public Peticion(int id, String ciudad, Boolean estado, Date fecha_CI, Date fecha_CO, int tipo_hab_id) {
         this.id = id;
         this.ciudad = ciudad;
         this.estado = estado;
-        this.anoCI = anoCI;
-        this.mesCI = mesCI;
-        this.diaCI = diaCI;
-        this.anoCO = anoCO;
-        this.mesCO = mesCO;
-        this.diaCO = diaCO;
+        this.fecha_CI = fecha_CI;
+        this.fecha_CO = fecha_CO;
         this.tipo_hab_id = tipo_hab_id;
     }
 
@@ -55,52 +47,20 @@ public class Peticion {
         this.estado = estado;
     }
 
-    public int getAnoCI() {
-        return anoCI;
+    public Date getFecha_CI() {
+        return fecha_CI;
     }
 
-    public void setAnoCI(int anoCI) {
-        this.anoCI = anoCI;
+    public void setFecha_CI(Date fecha_CI) {
+        this.fecha_CI = fecha_CI;
     }
 
-    public int getMesCI() {
-        return mesCI;
+    public Date getFecha_CO() {
+        return fecha_CO;
     }
 
-    public void setMesCI(int mesCI) {
-        this.mesCI = mesCI;
-    }
-
-    public int getDiaCI() {
-        return diaCI;
-    }
-
-    public void setDiaCI(int diaCI) {
-        this.diaCI = diaCI;
-    }
-
-    public int getAnoCO() {
-        return anoCO;
-    }
-
-    public void setAnoCO(int anoCO) {
-        this.anoCO = anoCO;
-    }
-
-    public int getMesCO() {
-        return mesCO;
-    }
-
-    public void setMesCO(int mesCO) {
-        this.mesCO = mesCO;
-    }
-
-    public int getDiaCO() {
-        return diaCO;
-    }
-
-    public void setDiaCO(int diaCO) {
-        this.diaCO = diaCO;
+    public void setFecha_CO(Date fecha_CO) {
+        this.fecha_CO = fecha_CO;
     }
 
     public int getTipo_hab_id() {

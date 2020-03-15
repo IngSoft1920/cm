@@ -53,9 +53,10 @@ public class PeticionDAO {
 
     }
 
+
     public int add(Peticion peticion){
 
-        String add = "INSERT INTO Peticion (ciudad, estado, ano_CI, mes_CI, dia_CI, ano_CO, mes_CO, dia_CO, tipo_hab_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String add = "INSERT INTO Peticion (ciudad, estado, fecha_CI, fecha_CO, tipo_hab_id) VALUES (?, ?, ?, ?, ?)";
 
         ScalarHandler<Integer> handler = new ScalarHandler<>();
 
@@ -63,7 +64,7 @@ public class PeticionDAO {
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, add, handler, peticion.getCiudad(), peticion.getEstado(), peticion.getAnoCI(), peticion.getMesCI(), peticion.getDiaCI(), peticion.getAnoCO(), peticion.getMesCO(), peticion.getDiaCO(), peticion.getTipo_hab_id());
+            idGenerado = runner.insert(conn, add, handler, peticion.getCiudad(), peticion.getEstado(), peticion.getFecha_CI(), peticion.getFecha_CO(), peticion.getTipo_hab_id());
         }
         catch(Exception e) {
             e.printStackTrace();

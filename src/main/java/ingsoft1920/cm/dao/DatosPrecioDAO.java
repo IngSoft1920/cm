@@ -41,13 +41,13 @@ public class DatosPrecioDAO {
         return datosPrecio;
     }
 
-    public DatosPrecio get(int peticion_id){
+    public List<DatosPrecio> get(int peticion_id){
 
         String selectQuery = "SELECT * FROM Datos_Precio WHERE peticion_id = ?";
 
-        BeanHandler<DatosPrecio> handler = new BeanHandler<>(DatosPrecio.class);
+        BeanListHandler<DatosPrecio> handler = new BeanListHandler<>(DatosPrecio.class);
 
-        DatosPrecio res = null;
+        List<DatosPrecio> res = null;
 
         try ( Connection conn = conector.getConn() )
         {
