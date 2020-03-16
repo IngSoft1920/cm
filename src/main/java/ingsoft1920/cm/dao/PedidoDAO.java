@@ -53,7 +53,7 @@ public class PedidoDAO {
 	public Pedido pedido(int id) {
 		Pedido res=null;
 		BeanHandler<Pedido> handler = new BeanHandler<>(Pedido.class);
-		String query = "SELECT * FROM Pedido WHERE Pedido.id == "+ id;
+		String query = "SELECT * FROM Pedido WHERE id = "+ id;
 
 		try (Connection conn = conector.getConn()) {
 			res = runner.query(conn, query, handler);

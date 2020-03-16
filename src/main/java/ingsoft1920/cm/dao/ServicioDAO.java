@@ -53,7 +53,7 @@ public class ServicioDAO {
 	public Servicio servicio(int id) {
 		Servicio res=null;
 		BeanHandler<Servicio> handler = new BeanHandler<>(Servicio.class);
-		String query = "SELECT * FROM Servicio WHERE Servicio.id == "+ id;
+		String query = "SELECT * FROM Servicio WHERE id = "+ id;
 
 		try (Connection conn = conector.getConn()) {
 			res = runner.query(conn, query, handler);
