@@ -2,11 +2,15 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ingsoft1920.cm.bean.Servicio;
 import ingsoft1920.cm.bean.Valoracion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
@@ -40,6 +44,20 @@ public class ValoracionDAO {
 		} catch(Exception e) { e.printStackTrace(); }
 		
 		return ( res != null ? res.intValue() : -1 );
+	}
+	
+	public List<Valoracion> valoraciones() {
+		List<Valoracion> res = new ArrayList<>();
+		BeanListHandler<Valoracion> handler = new BeanListHandler<>(Valoracion.class);
+		String query = "SELECT * FROM Valoracion";
+
+		try (Connection conn = conector.getConn()) {
+			res = runner.query(conn, query, handler);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 }

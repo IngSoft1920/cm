@@ -38,8 +38,6 @@ public class ServicioDAO {
 		try (Connection conn = conector.getConn()) {
 			res = runner.insert(conn, queryS, handler, s.getNombre());
 	
-
-			// Enlazamos con las categorias
 			batch = new ArrayList<>();
 			for (Servicio_Profesion pro : profesiones) {
 				batch.add(new Object[] { res.intValue(), pro.getProfesion_id() });
@@ -66,5 +64,6 @@ public class ServicioDAO {
 		}
 		return res;
 	}
+	
 
 }
