@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -49,6 +49,20 @@ public class ServicioDAO {
 		}
 
 		return (res != null ? res.intValue() : -1);
+	}
+	
+	public Servicio servicio(int id) {
+		Servicio res=null;
+		BeanHandler<Servicio> handler = new BeanHandler<>(Servicio.class);
+		String query = "SELECT * FROM Servcio WHERE User.id == "+ id;
+
+		try (Connection conn = conector.getConn()) {
+			res = runner.query(conn, query, handler);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	public List<Servicio> servicios() {
