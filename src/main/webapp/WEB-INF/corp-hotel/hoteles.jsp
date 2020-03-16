@@ -77,9 +77,9 @@
                         <div class="col-sm-4 offset-md-1 py-4">
 
                             <ul class="list-unstyled">
-                                <li><a href="anadir-hotel.html" class="text-black">Añadir Hotel</a>
+                                <li><a href="/anadir-hotel" class="text-black">Añadir Hotel</a>
                                 </li>
-                                <li><a href="/index.html" class="text-black">Inicio</a>
+                                <li><a href="/inicio" class="text-black">Inicio</a>
                                 </li>
                             </ul>
                         </div>
@@ -93,8 +93,8 @@
 
                         <strong>Hoteles</strong>
                     </a>
-                    <a class="navbar-nav" href="/index.html">Inicio</a>
-                    <a class="navbar-nav" href="anadir-hotel.html">Añadir Hotel</a>
+                    <a class="navbar-nav" href="/inicio">Inicio</a>
+                    <a class="navbar-nav" href="/anadir-hotel">Añadir Hotel</a>
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -121,8 +121,8 @@
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a class="btn btn-sm btn-outline-secondary" href="ver-hotel.html" role="button">Ver</a>
-                                            <a class="btn btn-sm btn-outline-secondary" href="editar-hotel.html" role="button">Editar</a>
+                                            <a class="btn btn-sm btn-outline-secondary" href="/ver-hotel" role="button">Ver</a>
+                                            <a class="btn btn-sm btn-outline-secondary" href="/editar-hotel" role="button">Editar</a>
 
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">

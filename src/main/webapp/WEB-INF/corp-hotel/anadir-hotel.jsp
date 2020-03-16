@@ -180,7 +180,7 @@
             </ul>
             <div class="container">
                 <p class="float-right">
-                    <a href="/index.html">Back to Home</a>
+                    <a href="/inicio">Back to Home</a>
                 </p>
 
             </div>

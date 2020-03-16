@@ -164,7 +164,7 @@
                     <hr class="mb-4">
 
                     <button class="btn btn-primary btn-lg " type="submit">Guardar cambios</button>
-                    <a class="btn btn-secondary btn-lg" href="hoteles.html" role="button">Cancelar</a>
+                    <a class="btn btn-secondary btn-lg" href="/hoteles" role="button">Cancelar</a>
                 </form>
             </div>
         </div>
@@ -182,7 +182,7 @@
             </ul>
             <div class="container">
                 <p class="float-right">
-                    <a href="index.html">Back to Home</a>
+                    <a href="/inicio">Back to Home</a>
                 </p>
 
             </div>

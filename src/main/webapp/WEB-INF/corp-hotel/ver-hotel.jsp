@@ -127,7 +127,7 @@
                     </div>
                 </div>
                 <hr class="mb-4">
-                <a class="btn btn-primary btn-lg btn-block" href="hoteles.html" role="button">Volver a Hoteles</a>
+                <a class="btn btn-primary btn-lg btn-block" href="/hoteles" role="button">Volver a Hoteles</a>
             </div>
         </div>
 
@@ -144,7 +144,7 @@
             </ul>
             <div class="container">
                 <p class="float-right">
-                    <a href="index.html">Back to Home</a>
+                    <a href="/inicio">Back to Home</a>
                 </p>
 
             </div>

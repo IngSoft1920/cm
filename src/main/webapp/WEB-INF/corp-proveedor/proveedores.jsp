@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="stylebox.css">
-    <title>Hoteles</title>
+    <title>Proveedores</title>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
                 </ul>
             </nav>
             <div class="login">
-                <a href="index.jsp">
+                <a href="inicio">
                     <img src="https://img.icons8.com/ios-glyphs/30/000000/home.png" />
                 </a>
             </div>
@@ -35,7 +35,7 @@
                     <div class="intro-text">
                         <h1>Lista de Proveedores</h1>
                         <p>
-                            Nuestros proveedores que conforman nuestra cadena.
+                            Nuestros proveedores que conforman la cadena.
                         </p>
                     </div>
 

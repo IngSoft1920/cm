@@ -21,15 +21,15 @@
             <ul class="nav-links">
                 <li><a class="nav-link" href="/hoteles">Hoteles</a>
                 </li>
-                <li><a class="nav-link" href="/corp-empleado/empleados">Empleados</a>
+                <li><a class="nav-link" href="/empleados">Empleados</a>
                 </li>
-                <li><a class="nav-link" href="/corp-proveedor/proveedores">Proveedores</a>
+                <li><a class="nav-link" href="/proveedores">Proveedores</a>
                 </li>
                 <li><a class="nav-link" href="#">Facturación</a></li>
             </ul>
         </nav>
         <div class="login">
-            <a href="/login">
+            <a href="/login-corp">
                 <img src="https://img.icons8.com/metro/26/000000/user-male.png">
             </a>
         </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="cta">
                     <form action="">
-                        <button class="cta-select" type="submit" formaction="login.jsp">Iniciar Sesión</button>
+                        <button class="cta-select" type="submit" formaction="login-corp">Iniciar Sesión</button>
                     </form>
 
                 </div>
