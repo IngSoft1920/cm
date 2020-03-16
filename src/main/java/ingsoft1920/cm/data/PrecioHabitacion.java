@@ -1,10 +1,16 @@
 package ingsoft1920.cm.data;
 
+/*
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 
-import pruebas.Peticion;
-import pruebas.Precio;
-import pruebas.PrecioHabitacion;
+import ingsoft1920.cm.bean.DatosPrecio;
+import ingsoft1920.cm.bean.Peticion;
+//import ingsoft1920.cm.bean.Precio;
+import ingsoft1920.cm.dao.DatosPrecioDAO;
+import ingsoft1920.cm.dao.PeticionDAO;
+//import ingsoft1920.cm.dao.PrecioDAO;
 
 public class PrecioHabitacion {
 
@@ -19,11 +25,11 @@ public class PrecioHabitacion {
 	private double puntuacion; //1-10
 	private int politica; // % max subidas/bajadas
 
-	/*
-	private ArrayList<DatosPrecios> dtPrecios; // datos de la competencia
+	
+	private ArrayList<DatosPrecio> dtPrecios; // datos de la competencia
 
 	public PrecioHabitacion(double precio, String ciudad, int tipoHabitacion, int ocupacion, int regimenComidas,
-			double puntuacion, int politica, ArrayList<DatosPrecios> dtPrecios) {
+			double puntuacion, int politica, ArrayList<DatosPrecio> dtPrecios) {
 		this.precio = precio;
 		this.ciudad = ciudad;
 		this.tipoHabitacion = tipoHabitacion;
@@ -92,13 +98,13 @@ public class PrecioHabitacion {
 		return "Precio Habitación: " + precioFinal();
 	}
 
-	public double procesar(ArrayList<DatosPrecios> dtPrecios) {
+	public double procesar(ArrayList<DatosPrecio> datosPrecio) {
 		ArrayList<Double> precios = new ArrayList<Double>();
 		ArrayList<Double> puntuaciones = new ArrayList<Double>();
 
-		for (DatoPrecios dt : dtPrecios) {
-			precios.add(dt.getPrecio());
-			puntuaciones.add(dt.getPuntuacion);
+		for (DatosPrecio data : datosPrecio) {
+			precios.add(data.getPrecio());
+			puntuaciones.add(data.getPuntuacion());
 		}
 
 		//Media ponderada segun puntuaciones
@@ -115,33 +121,40 @@ public class PrecioHabitacion {
 
 
 	public static void main(String[] args) {
-		List<DatosPrecios> datosPrecios;
-		Calendar fechas[] = new Calendar[30];
+		ArrayList<DatosPrecio> datosPrecio;
+		
+		for (DatosHotel dt : BBDD.getDatosHotel()) {
+			
+			//Fijamos los precios para un rango de 30 dias
+			LocalDate fechas [] = new LocalDate[30];
 			for (int i = 0; i < 30; i++) {
-				Calendar fecha = Calendar.getInstance();
-				fecha.add(Calendar.DAY_OF_MONTH, i);
-				fechas[i] = fecha;
-				//Cambiar fecha a un string YYYY-MM-DD
+				fechas[i] = LocalDate.now().plusDays(i);
 			}
-			for (Calendar fecha : fechas) { 
-				idPeticion = Peticion.add(new Peticion(dt.ciudad, fecha, dt.tipo_habitacion, 0));
 
-				//En este momento el equipo de uipath estara actualizando la tabla DatosPrecios
+			for (LocalDate fecha : fechas) { 
+				
+				datosPrecio.clear();
+				
+				int idPeticion = PeticionDAO.add(new Peticion(dt.ciudad, 0, 
+						fecha.getYear(), fecha.getMonthValue(), fecha.getDayOfMonth(), 
+						fecha.plusDays(1).getYear(), fecha.plusDays(1).getMonthValue(), fecha.getDayOfMonth(),
+						dt.tipo_habitacion));
+
+				// En este momento el equipo de UIpath lee de Peticion, (cambia el estado de la peticion procesada) 
+				// y actualiza la tabla DatosPrecio
 				do {
-					datosPrecios = DatosPrecios.get(idPeticion);
-				} while (datosPrecios == null); //Hasta que consiga la linea
-
-				if (datosPrecios.get(0).estado = 0) {
-					PrecioHabitacion hab = new PrecioHabitacion(dt.ciudad, dt.tipo_habitacion, dt.ocupacion,
-							dt.regimenComidas, dt.nota_feedback, dt.politica_hotel, datosPrecios);
-					for (int i = 0; i > datosPrecios.size(); i++) {
-						datosPrecios.get(i).cambiarEstado();
+					ArrayList<DatosPrecio> dataset = DatosPrecioDAO.get(idPeticion);
+					for (DatosPrecio data : dataset) {
+						datosPrecio.add(data);
 					}
-				}
+				} while (datosPrecio.size() == 0); //Hasta que consiga los datos
 
-				PrecioDAO.anadirPrecio(new Precio(dt.idHotel, dt.tipo_habitacion, fecha, hab.precioFinal()));
-		 	}
+				PrecioHabitacion hab = new PrecioHabitacion(dt.ciudad, dt.tipo_habitacion, dt.ocupacion,
+						dt.regimenComidas, dt.nota_feedback, dt.politica_hotel, datosPrecio);
+				
+				PrecioDAO.setPrecio(new Precio(dt.idHotel, dt.tipo_habitacion, fecha, hab.precioFinal()));
+			}
 		}
-	}*/
-
+	}
 }
+*/

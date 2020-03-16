@@ -1,4 +1,4 @@
-
+		
 DROP DATABASE IF EXISTS cm;
 CREATE DATABASE cm;
 USE cm;
@@ -38,7 +38,7 @@ CREATE TABLE `Precio_Habitacion` (
 	`fecha` DATE NOT NULL,
 	`hotel_id` INT NOT NULL,
 	`tipo_hab_id` INT NOT NULL,
-    `precio` INT NOT NULL,
+    `precio_por_noche` INT NOT NULL,
     FOREIGN KEY (`hotel_id`,`tipo_hab_id`) REFERENCES `Hotel_Tipo_Habitacion` (`hotel_id`,`tipo_hab_id`) ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (`hotel_id`,`tipo_hab_id`,`fecha`)
 );
@@ -161,7 +161,9 @@ CREATE TABLE `Empleado` (
     `email` VARCHAR(100) NOT NULL,
     `telefono` VARCHAR(15) NOT NULL,
     `sueldo` DOUBLE,
-    PRIMARY KEY (`id`)
+    `profesion_id` INT,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`profesion_id`) REFERENCES `Profesion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `Hotel_Empleado`(
@@ -190,13 +192,13 @@ CREATE TABLE `Ausencia`	(
 
 CREATE TABLE `Cliente` (
 	`id` INT  AUTO_INCREMENT,
-    `nombre` VARCHAR(100) NOT NULL,
+    `nombre` VARCHAR(100),
     `apellidos` VARCHAR(100),
     `DNI` VARCHAR(15),
     `nacionalidad` VARCHAR(20),    /*Está en país: España, México, etc*/
     `telefono` VARCHAR(15),
-    `email` VARCHAR(100) NOT NULL,
-    `password` VARCHAR(100) NOT NULL,
+    `email` VARCHAR(100),
+    `password` VARCHAR(100),
     PRIMARY KEY (id)
 );
 
@@ -221,7 +223,7 @@ CREATE TABLE `Reserva`	(
     `regimen_comida` ENUM('no_aplica', 'media_pension', 'pension_completa', 'todo_incluido') NOT NULL,
     `numero_acompanantes` INT NOT NULL,
     `hotel_id` INT NOT NULL,
-    `cliente_id` INT NOT NULL,
+    `cliente_id` INT,
     `tipo_hab_id` INT NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,

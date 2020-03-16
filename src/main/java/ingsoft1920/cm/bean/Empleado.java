@@ -1,22 +1,20 @@
 package ingsoft1920.cm.bean;
 
-import java.math.BigInteger;
 
 public class Empleado {
 	
-	private BigInteger id;
+	private int id;
 	private String nombre;
 	private String apellidos;
 	private String email;
 	private String telefono;
-	private String sueldo;
-	private Profesion profesion_id;
+	private double sueldo;
+	private int profesion_id;
 
 	public Empleado() {}
-	
-	
-	public Empleado(BigInteger id, String nombre, String apellidos, String email, String telefono, String sueldo,
-			Profesion profesion_id) {
+
+	public Empleado(int id, String nombre, String apellidos, String email, String telefono, double sueldo,
+			int profesion_id) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -27,10 +25,13 @@ public class Empleado {
 		this.profesion_id = profesion_id;
 	}
 
-	public BigInteger getId() {
+
+
+
+	public int getId() {
 		return id;
 	}
-	public void setId(BigInteger idGenerado) {
+	public void setId(int idGenerado) {
 		this.id = idGenerado;
 	}
 	public String getNombre() {
@@ -57,16 +58,16 @@ public class Empleado {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	public String getSueldo() {
+	public double getSueldo() {
 		return sueldo;
 	}
-	public void setSueldo(String sueldo) {
+	public void setSueldo(double sueldo) {
 		this.sueldo = sueldo;
 	}
-	public Profesion getProfesion_id() {
+	public int getProfesion_id() {
 		return profesion_id;
 	}
-	public void setProfesion_id(Profesion profesion_id) {
+	public void setProfesion_id(int profesion_id) {
 		this.profesion_id = profesion_id;
 	}
 
