@@ -13,7 +13,7 @@ import com.google.gson.JsonParser;
 public class ConexionEM {
 	public static HashMap<Integer, BeneficiosGastosModel> peticionSueldoEmpleados(HashMap <Integer, BeneficiosGastosModel> map) {
 		try {
-			HttpClient client= new HttpClient("http://piedrafita.ls.fi.upm.es:7000/sueldoHotel","GET");
+			HttpClient client= new HttpClient("http://piedrafita.ls.fi.upm.es:7002/sueldoHotel","GET");
 			int respCode = client.getResponseCode();
 			System.out.println(respCode);
 			if(respCode==200){
