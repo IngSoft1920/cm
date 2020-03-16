@@ -12,12 +12,12 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ingsoft1920.cm.bean.Servicio;
-import ingsoft1920.cm.bean.auxiliares.Servicio_Profesion;
+import ingsoft1920.cm.bean.Pedido;
+import ingsoft1920.cm.bean.auxiliares.Pedido_Producto;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
-public class ServicioDAO {
+public class PedidoDAO {
 
 	@Autowired
 	private QueryRunner runner = new QueryRunner();
@@ -25,23 +25,23 @@ public class ServicioDAO {
 	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 
-	public int anadir(Servicio s, List<Servicio_Profesion> profesiones) {
+	public int anadir(Pedido p, List<Pedido_Producto> productos) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
-		String queryS = "INSERT INTO Servicio " + "(nombre) " + "VALUES (?);";
+		String queryS = "INSERT INTO Pedido " + "(fecha,hotel_id) " + "VALUES (?,?);";
 
-		String queryPro = "INSERT INTO Servicio_Profesion " + "(profesion_id,servicio_id) " + "VALUES (?,?)";
+		String queryPro = "INSERT INTO Pedido_Producto " + "(producto_id,pedido_id,cantidad) " + "VALUES (?,?,?)";
 
 		List<Object[]> batch;
 		try (Connection conn = conector.getConn()) {
-			res = runner.insert(conn, queryS, handler, s.getNombre());
+			res = runner.insert(conn, queryS, handler, p.getFecha(),p.getHotel_id());
 	
 			batch = new ArrayList<>();
-			for (Servicio_Profesion pro : profesiones) {
-				batch.add(new Object[] { res.intValue(), pro.getProfesion_id() });
+			for (Pedido_Producto pro : productos) {
+				batch.add(new Object[] { res.intValue(), pro.getProducto_id() });
 			}
-			runner.batch(conn, queryPro, batch.toArray(new Object[profesiones.size()][]));
+			runner.batch(conn, queryPro, batch.toArray(new Object[productos.size()][]));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,10 +50,10 @@ public class ServicioDAO {
 		return (res != null ? res.intValue() : -1);
 	}
 	
-	public Servicio servicio(int id) {
-		Servicio res=null;
-		BeanHandler<Servicio> handler = new BeanHandler<>(Servicio.class);
-		String query = "SELECT * FROM Servicio WHERE Servicio.id == "+ id;
+	public Pedido pedido(int id) {
+		Pedido res=null;
+		BeanHandler<Pedido> handler = new BeanHandler<>(Pedido.class);
+		String query = "SELECT * FROM Pedido WHERE Pedido.id == "+ id;
 
 		try (Connection conn = conector.getConn()) {
 			res = runner.query(conn, query, handler);
@@ -64,10 +64,10 @@ public class ServicioDAO {
 		return res;
 	}
 
-	public List<Servicio> servicios() {
-		List<Servicio> res = new ArrayList<>();
-		BeanListHandler<Servicio> handler = new BeanListHandler<>(Servicio.class);
-		String query = "SELECT * FROM Servicio";
+	public List<Pedido> pedidos() {
+		List<Pedido> res = new ArrayList<>();
+		BeanListHandler<Pedido> handler = new BeanListHandler<>(Pedido.class);
+		String query = "SELECT * FROM Pedido";
 
 		try (Connection conn = conector.getConn()) {
 			res = runner.query(conn, query, handler);
