@@ -26,7 +26,6 @@ public class ServicioDAO {
 	private ConectorBBDD conector = new ConectorBBDD();
 
 	public int anadir(Servicio s, List<Servicio_Profesion> profesiones) {
-		// Primero añadimos el hotel mismamente
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
