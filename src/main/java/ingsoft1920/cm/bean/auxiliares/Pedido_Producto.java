@@ -1,7 +1,5 @@
 package ingsoft1920.cm.bean.auxiliares;
 
-import java.sql.Date;
-
 public class Pedido_Producto {
 	
 	private int pedido_id;

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Profesion;
-import ingsoft1920.cm.bean.Servicio_Profesion;
+import ingsoft1920.cm.bean.auxiliares.Servicio_Profesion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component

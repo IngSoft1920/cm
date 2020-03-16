@@ -1,4 +1,4 @@
-package ingsoft1920.cm.bean;
+package ingsoft1920.cm.bean.auxiliares;
 
 public class Servicio_Profesion {
 	private int servicio_id;

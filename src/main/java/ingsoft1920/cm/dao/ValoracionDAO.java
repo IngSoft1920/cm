@@ -11,7 +11,6 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ingsoft1920.cm.bean.Servicio;
 import ingsoft1920.cm.bean.Valoracion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
