@@ -163,7 +163,7 @@ public class HotelDAO {
 			  
 			  System.out.println( json.toString() );
 			
-			//APIout.enviar(json.toString(),7001,"/recibirHotel");
+			APIout.enviar(json.toString(),7001,"/recibirHotel");
 			  
 		}
 		
