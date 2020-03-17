@@ -50,6 +50,7 @@ INSERT INTO Ausencia(id,motivo,fecha_inicio,fecha_fin,estado,empleado_id) VALUES
 INSERT INTO Cliente(id,nombre,apellidos,DNI,nacionalidad,telefono,email,`password`) VALUES (1,'Juan','García Cano','321222F','España','123456','juan@gmail.com','juanito123');
 
 INSERT INTO Valoracion(id,cabecera,cuerpo,nota,cliente_id,hotel_id) VALUES (1,'Muy bueno','Genial experiencia, especialmente la comida',5,1,1);
+INSERT INTO Valoracion(id,cabecera,cuerpo,nota,cliente_id,hotel_id) VALUES (2,'Genial','Maravilloso, Imparable',5,1,1);
 
 INSERT INTO Reserva(id,fecha_entrada,fecha_salida,importe,regimen_comida,numero_acompanantes,hotel_id,cliente_id,tipo_hab_id) VALUES (1,'2020-05-01','2020-05-10',300,'pension_completa',3,1,1,1);
 

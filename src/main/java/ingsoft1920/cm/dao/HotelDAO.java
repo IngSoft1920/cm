@@ -1,8 +1,10 @@
 package ingsoft1920.cm.dao;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -324,7 +326,6 @@ public class HotelDAO {
 			res = new ArrayList<>();
 			
 			Properties elem;
-			Object aux;
 			for (Map<String, Object> fila : resConsulta) {
 				elem = new Properties();
 
@@ -346,54 +347,6 @@ public class HotelDAO {
 		}
 		return res;
 	}
-//
-//	// Esto es para una api de ge, igual es buena idea reescribirlo
-//	// con un una List<Properties> en vez de un map
-//	public Map<Servicio, Hotel_Servicio> serviciosHotel(int hotelID) {
-//		Map<Servicio, Hotel_Servicio> res = null;
-//
-//		// Tendremos un map por cada FILA de la consulta.
-//		// La 'key' es justamente el nombre de la columna
-//		List<Map<String, Object>> resConsulta = null;
-//		MapListHandler handler = new MapListHandler();
-//		String query = "SELECT s.id,s.nombre,hs.precio,hs.unidad_medida " + "FROM Servicio AS s "
-//				+ "JOIN Hotel_Servicio AS hs ON s.id=hs.servicio_id " + "JOIN Hotel AS h ON hs.hotel_id=h.id "
-//				+ "WHERE h.id=?;";
-//
-//		try (Connection conn = conector.getConn()) {
-//			resConsulta = runner.query(conn, query, handler, hotelID);
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		if (resConsulta != null) {
-//			res = new HashMap<>();
-//
-//			int servicioID;
-//			String nombreServicio;
-//			Integer precioServicio;
-//			String unidadMedida;
-//
-//			Object aux;
-//			for (Map<String, Object> fila : resConsulta) {
-//
-//				servicioID = (Integer) fila.get("id");
-//				nombreServicio = (String) fila.get("nombre");
-//
-//				// Este campo podría ser null y petar al hacer el cast a Integer
-//				aux = fila.get("precio");
-//				precioServicio = aux != null ? (Integer) fila.get("precio") : null;
-//
-//				unidadMedida = (String) fila.get("unidad_medida");
-//
-//				res.put(new Servicio(servicioID, nombreServicio),
-//						new Hotel_Servicio(hotelID, servicioID, precioServicio, unidadMedida));
-//			}
-//		}
-//
-//		return res;
-//	}
 
 	public List<Disponibles> disponibles(Date fecha_entrada, Date fecha_salida) {
 
@@ -425,31 +378,142 @@ public class HotelDAO {
 	}
 
 	
-	/*
+	/* Cada Properties de la lista tiene los siguientes atributos:
 	 
 	 id : int,
 	 ciudad : String,
-	 habitaciones : 
-	 
+	 nota : double
+	 ocupacion : Map<Date,Double> (ocupación en porcentaje, ej: 0.25 -> tiene ocupado un cuarto de su capacidad)
+	
+	 habitaciones : List<Properties> (cada una a su vez tendrá:
+	 								     id: int
+	 								     nombre: String
+	 								     capacidad: int
+	 								 )
 	 */
 	public List<Properties> getDataRM() {
 		List<Properties> res = new ArrayList<>();
-		
-		// Auxiliares
-		Properties aux;
-		List<Tipo_Habitacion> habitaciones;
-		
+				
 		List<Hotel> hoteles = hoteles();
+		Properties aux;
 		for( Hotel h : hoteles ) {
 			aux = new Properties();
 			
-			aux.put("id", h.getId());
-			aux.put("ciudad",h.getCiudad());
-			aux.put("habitaciones",null);
+			aux.put( "id" , h.getId() );
+			aux.put( "ciudad" , h.getCiudad() );
+			aux.put( "nota" , getNotaHotel(h.getId()) );
+			aux.put( "ocupacion" , getOcupacionesHotel(h.getId()) );
+			aux.put( "habitaciones" , getHabitacionesHotel(h.getId()) );
+			
+			res.add(aux);
+		}
+		return res;
+	}
+	
+	// Es la media de las valoraciones del hotel
+	public double getNotaHotel(int hotel_id) {
+		BigDecimal res = null;
+		ScalarHandler<BigDecimal> handler = new ScalarHandler<>();
+		String query = "SELECT AVG(nota) "
+					  +"FROM Valoracion "
+					  +"WHERE hotel_id=?;";
+		
+		try( Connection conn = conector.getConn() )
+		{
+			res = runner.query(conn, query, handler, hotel_id);
+			
+		} catch(Exception e) { e.printStackTrace(); }
+		
+		
+		return ( res != null ? res.doubleValue() : -1 );
+	}
+	
+	// La ocupación se devuelve en tanto porciento. Se devuelve
+	// todos los datos desde hoy hasta dentro de x dias
+	private static final int INVERVALO_DIAS = 365;
+	public Map<Date,Double> getOcupacionesHotel(int hotel_id) {
+		Map<Date,Double> res = new HashMap<>();
+		
+		LocalDate actual = LocalDate.now();
+		LocalDate fechaTope = actual.plusMonths(INVERVALO_DIAS);
+		
+		while( actual.isBefore(fechaTope) ) {
+			
+			res.put(Date.valueOf(actual),
+					getOcupacionHotel(hotel_id,Date.valueOf(actual)));
+			
+			actual = actual.plusDays(1);
 		}
 		
 		
 		return res;
+	}
+	
+	// Devuelve la ocupacion de un hotel en una fecha concreta
+	public double getOcupacionHotel(int hotel_id,Date fecha) {
+		BigDecimal res = null;
+		ScalarHandler<BigDecimal> handler = new ScalarHandler<>();
+		String query = "SELECT SUM(ocupadas)/SUM(disponibles) AS ocupacion "+
+						 "FROM ("+
+						 		"SELECT COUNT(*) AS ocupadas,hth.num_disponibles AS disponibles "+
+						 		"FROM Reserva r "+
+						 		"JOIN Hotel_Tipo_Habitacion hth	ON "+
+						 			"r.hotel_id = hth.hotel_id AND r.tipo_hab_id = hth.tipo_hab_id "+
+						 		"WHERE r.hotel_id = ? AND ? BETWEEN r.fecha_entrada AND r.fecha_salida "+ 
+						 		"GROUP BY r.tipo_hab_id "+
+						 		") AS aux;";
+		
+		try ( Connection conn = conector.getConn() )
+		{
+			res = runner.query(conn,query,handler,hotel_id,fecha);
+			
+		} catch( Exception e ) { e.printStackTrace(); }
+					 
+		return res != null ? res.doubleValue() : 0;
+	}
+	
+	/*
+	 id: int
+     nombre: String
+     capacidad: int
+	 */
+	public List<Properties> getHabitacionesHotel(int hotel_id) {
+		List<Properties> res = null;
+		List<Map<String, Object>> resConsulta = null;
+		MapListHandler handler = new MapListHandler();
+		String query = "SELECT th.id,th.nombre,hth.num_disponibles AS capacidad "
+					  +"FROM Hotel_Tipo_Habitacion hth "
+					  +"JOIN Tipo_Habitacion th ON hth.tipo_hab_id = th.id "
+					  +"WHERE hth.hotel_id = ?";
+		
+		try ( Connection conn = conector.getConn() )
+		{
+			resConsulta = runner.query(conn,query,handler,hotel_id);
+			
+		} catch( Exception e ) { e.printStackTrace(); }
+		
+		if( resConsulta != null ) {
+			res = new ArrayList<>();
+			Properties aux;
+			for( Map<String,Object> fila : resConsulta ) {
+				aux = new Properties();
+				
+				aux.put("id",(int) fila.get("id"));
+				aux.put("nombre",(String) fila.get("nombre"));
+				aux.put("capacidad",(int) fila.get("capacidad"));
+				
+				res.add(aux);
+			}
+		}
+		
+		return res;
+	}
+	
+	public static void main(String[] args) {
+		
+		for( Properties p : new HotelDAO().getDataRM() ) {
+			System.out.println("---> "  + p + "\n\n");
+		}
 	}
 
 }
