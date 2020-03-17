@@ -1,24 +1,23 @@
 package ingsoft1920.cm.bean;
 
-import java.sql.Date;
 
 public class DatosPrecio {
 
     private int id;
-    private String ciudad;
     private int estado;
-    private Date fecha;
     private int peticion_id;
+    private double precio;
+    private double puntuacion;
 
     public DatosPrecio() {
     }
 
-    public DatosPrecio(int id, String ciudad, int estado, Date fecha, int peticion_id) {
+    public DatosPrecio(int id, int estado, int peticion_id, double precio, double puntuacion) {
         this.id = id;
-        this.ciudad = ciudad;
         this.estado = estado;
-        this.fecha = fecha;
         this.peticion_id = peticion_id;
+        this.precio = precio;
+        this.puntuacion = puntuacion;
     }
 
     public int getId() {
@@ -29,12 +28,12 @@ public class DatosPrecio {
         this.id = id;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public int getEstado() {
@@ -45,12 +44,12 @@ public class DatosPrecio {
         this.estado = estado;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public double getPuntuacion() {
+        return puntuacion;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFecha(double puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
     public int getPeticion_id() {

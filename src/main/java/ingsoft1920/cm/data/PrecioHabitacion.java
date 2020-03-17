@@ -4,13 +4,17 @@ package ingsoft1920.cm.data;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import ingsoft1920.cm.bean.DatosPrecio;
+import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Peticion;
-//import ingsoft1920.cm.bean.Precio;
+import ingsoft1920.cm.bean.auxiliares.Precio_Habitacion;
 import ingsoft1920.cm.dao.DatosPrecioDAO;
+import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.PeticionDAO;
-//import ingsoft1920.cm.dao.PrecioDAO;
+import ingsoft1920.cm.dao.Precio_HabitacionDAO;
+
 
 public class PrecioHabitacion {
 
@@ -24,9 +28,8 @@ public class PrecioHabitacion {
 	private int evento; // con recogida de datos de eventos con uipath mas adelante
 	private double puntuacion; //1-10
 	private int politica; // % max subidas/bajadas
-
-	
 	private ArrayList<DatosPrecio> dtPrecios; // datos de la competencia
+	
 
 	public PrecioHabitacion(double precio, String ciudad, int tipoHabitacion, int ocupacion, int regimenComidas,
 			double puntuacion, int politica, ArrayList<DatosPrecio> dtPrecios) {
@@ -121,7 +124,14 @@ public class PrecioHabitacion {
 
 
 	public static void main(String[] args) {
+		
 		ArrayList<DatosPrecio> datosPrecio;
+		
+		HotelDAO hotelDAO = new HotelDAO();
+		PeticionDAO peticionDAO = new PeticionDAO();
+		DatosPrecioDAO datosPrecioDAO = new DatosPrecioDAO();
+		Precio_HabitacionDAO precio_HabitacionDAO = new Precio_HabitacionDAO();
+		
 		
 		for (DatosHotel dt : BBDD.getDatosHotel()) {
 			
@@ -135,15 +145,13 @@ public class PrecioHabitacion {
 				
 				datosPrecio.clear();
 				
-				int idPeticion = PeticionDAO.add(new Peticion(dt.ciudad, 0, 
-						fecha.getYear(), fecha.getMonthValue(), fecha.getDayOfMonth(), 
-						fecha.plusDays(1).getYear(), fecha.plusDays(1).getMonthValue(), fecha.getDayOfMonth(),
-						dt.tipo_habitacion));
+				int idPeticion = peticionDAO.add(new Peticion(dt.ciudad, 0, fecha, 
+						fecha.plusDays(1), fecha.getDayOfMonth(), dt.tipo_habitacion));
 
 				// En este momento el equipo de UIpath lee de Peticion, (cambia el estado de la peticion procesada) 
 				// y actualiza la tabla DatosPrecio
 				do {
-					ArrayList<DatosPrecio> dataset = DatosPrecioDAO.get(idPeticion);
+					List<DatosPrecio> dataset = datosPrecioDAO.get(idPeticion);
 					for (DatosPrecio data : dataset) {
 						datosPrecio.add(data);
 					}
@@ -152,9 +160,11 @@ public class PrecioHabitacion {
 				PrecioHabitacion hab = new PrecioHabitacion(dt.ciudad, dt.tipo_habitacion, dt.ocupacion,
 						dt.regimenComidas, dt.nota_feedback, dt.politica_hotel, datosPrecio);
 				
-				PrecioDAO.setPrecio(new Precio(dt.idHotel, dt.tipo_habitacion, fecha, hab.precioFinal()));
+				precio_HabitacionDAO.setPrecio(new Precio_Habitacion(dt.idHotel, dt.tipo_habitacion, fecha, hab.precioFinal()));
 			}
+			
 		}
 	}
 }
 */
+

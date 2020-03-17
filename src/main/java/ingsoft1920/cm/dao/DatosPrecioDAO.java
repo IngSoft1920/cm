@@ -60,14 +60,14 @@ public class DatosPrecioDAO {
 
     public int add(DatosPrecio datosPrecio){
 
-        String add = "INSERT INTO Datos_Precio (ciudad, estado, fecha, peticion_id) VALUES (?, ?, ?, ?)";
+        String add = "INSERT INTO Datos_Precio (estado, peticion_id, precio, puntuacion) VALUES (?, ?, ?, ?)";
         ScalarHandler<Integer> handler = new ScalarHandler<>();
 
         Integer idGenerado = null;
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, add, handler, datosPrecio.getCiudad(), datosPrecio.getEstado(), datosPrecio.getFecha(), datosPrecio.getPeticion_id());
+            idGenerado = runner.insert(conn, add, handler, datosPrecio.getEstado(), datosPrecio.getPeticion_id(), datosPrecio.getPrecio(), datosPrecio.getPuntuacion());
         }
         catch(Exception e) {
             e.printStackTrace();
