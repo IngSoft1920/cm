@@ -262,7 +262,8 @@ CREATE TABLE `Factura` (
 CREATE TABLE `Peticion` (
     `id`INT AUTO_INCREMENT,
     `ciudad` VARCHAR(100) NOT NULL,
-    `fecha` DATE NOT NULL,
+    `fecha_CI` DATE NOT NULL,
+    `fecha_CO` DATE NOT NULL,
     `tipo_hab_id` INT NOT NULL,
     `estado` BOOLEAN NOT NULL,
     PRIMARY KEY (`id`),
