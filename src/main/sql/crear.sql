@@ -197,7 +197,7 @@ CREATE TABLE `Cliente` (
     `DNI` VARCHAR(15),
     `nacionalidad` VARCHAR(20),    /*Está en país: España, México, etc*/
     `telefono` VARCHAR(15),
-    `email` VARCHAR(100),
+    `email` VARCHAR(100) UNIQUE,
     `password` VARCHAR(100),
     PRIMARY KEY (id)
 );
