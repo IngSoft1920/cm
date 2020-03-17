@@ -16,7 +16,7 @@ import java.util.List;
 public class CategoriaDAO {
 
     @Autowired
-    private QueryRunner runner;
+    private QueryRunner runner = new QueryRunner();
     private ConectorBBDD conector = new ConectorBBDD();
 
     public int anadir(Categoria categoria){

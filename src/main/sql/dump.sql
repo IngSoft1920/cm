@@ -2,9 +2,9 @@
 INSERT INTO Hotel (id,nombre,continente,pais,ciudad,direccion,descripcion,estrellas) VALUES (1,'Hotel Debod','Europa','España','Madrid','Calle Gran vía,21','Una experiencia milenaria',4);
 INSERT INTO Hotel (id,nombre,continente,pais,ciudad,direccion,descripcion,estrellas) VALUES (2,'Hotel Madroño','Europa','España','Madrid','Calle Sol,19','Como si estuvieses en la playa',3);
 
-INSERT INTO Tipo_Habitacion (id,nombre_tipo) VALUES (1,'normal');
-INSERT INTO Tipo_Habitacion (id,nombre_tipo) VALUES (2,'premium');
-INSERT INTO Tipo_Habitacion (id,nombre_tipo) VALUES (3,'presidencial');
+INSERT INTO Tipo_Habitacion (id,nombre) VALUES (1,'normal');
+INSERT INTO Tipo_Habitacion (id,nombre) VALUES (2,'premium');
+INSERT INTO Tipo_Habitacion (id,nombre) VALUES (3,'presidencial');
 
 INSERT INTO Hotel_Tipo_Habitacion (hotel_id,tipo_hab_id,num_disponibles) VALUES (1,1,50); 
 INSERT INTO Hotel_Tipo_Habitacion (hotel_id,tipo_hab_id,num_disponibles) VALUES (1,2,20);

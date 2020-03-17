@@ -3,9 +3,12 @@ package ingsoft1920.cm.dao;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-import ingsoft1920.cm.model.Disponibles;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -14,6 +17,10 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import ingsoft1920.cm.apiout.APIout;
 import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Servicio;
@@ -21,6 +28,7 @@ import ingsoft1920.cm.bean.auxiliares.Hotel_Categoria;
 import ingsoft1920.cm.bean.auxiliares.Hotel_Servicio;
 import ingsoft1920.cm.bean.auxiliares.Hotel_Tipo_Habitacion;
 import ingsoft1920.cm.conector.ConectorBBDD;
+import ingsoft1920.cm.model.Disponibles;
 
 
 @Component
@@ -37,26 +45,43 @@ public class HotelDAO {
 	// las listas no tendrán el campo hotel_id puesto (lógicamente pues
 	// estamos añadiendo el hotel correspondiente ahora. Este método
 	// devuelve el id generado para el hotel
-	public int anadir(Hotel h, List<Hotel_Tipo_Habitacion> habs, List<Hotel_Servicio> servicios,
-			List<Hotel_Categoria> categorias) {
+	public int anadir(Hotel h,
+					  List<Hotel_Tipo_Habitacion> habs,
+					  List<Hotel_Servicio> servicios,
+					  List<Hotel_Categoria> categorias) 
+	{
 		// Primero añadimos el hotel mismamente
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handlerH = new ScalarHandler<>();
-		String queryH = "INSERT INTO Hotel " + "(nombre,continente,pais,ciudad,direccion,estrellas,descripcion) "
-				+ "VALUES (?,?,?,?,?,?,?);";
+		String queryH = "INSERT INTO Hotel "
+					   +"(nombre,continente,pais,ciudad,direccion,estrellas,descripcion) "
+					   +"VALUES (?,?,?,?,?,?,?);";
 
-		String queryHabs = "INSERT INTO Hotel_Tipo_Habitacion " + "(hotel_id,tipo_hab_id,num_disponibles) "
-				+ "VALUES (?,?,?)";
+		String queryHabs = "INSERT INTO Hotel_Tipo_Habitacion "
+						  +"(hotel_id,tipo_hab_id,num_disponibles) "
+						  +"VALUES (?,?,?)";
 
-		String queryServ = "INSERT INTO Hotel_Servicio " + "(hotel_id,servicio_id,precio,unidad_medida) "
-				+ "VALUES (?,?,?,?)";
+		String queryServ = "INSERT INTO Hotel_Servicio "
+						  +"(hotel_id,servicio_id,precio,unidad_medida) "
+						  +"VALUES (?,?,?,?)";
 
-		String queryCat = "INSERT INTO Hotel_Categoria " + "(hotel_id,categoria_id) " + "VALUES (?,?)";
+		String queryCat = "INSERT INTO Hotel_Categoria "
+						 +"(hotel_id,categoria_id) "
+						 +"VALUES (?,?)";
 
 		List<Object[]> batch;
 		try (Connection conn = conector.getConn()) {
-			res = runner.insert(conn, queryH, handlerH, h.getNombre(), h.getContinente(), h.getPais(), h.getCiudad(),
-					h.getDireccion(), h.getEstrellas(), h.getDescripcion());
+			
+			// Insertamos el hotel
+			res = runner.insert(conn, queryH, handlerH,
+								h.getNombre(),
+								h.getContinente(),
+								h.getPais(), 
+								h.getCiudad(),
+								h.getDireccion(),
+								h.getEstrellas(),
+								h.getDescripcion()
+							   );
 
 			// Enlazamos con los tipo de habitaciones:
 			batch = new ArrayList<>();
@@ -68,8 +93,7 @@ public class HotelDAO {
 			// Enlazamos con los servicios
 			batch = new ArrayList<>();
 			for (Hotel_Servicio srv : servicios) {
-				batch.add(
-						new Object[] { res.intValue(), srv.getServicio_id(), srv.getPrecio(), srv.getUnidad_medida() });
+				batch.add(new Object[] { res.intValue(), srv.getServicio_id(), srv.getPrecio(), srv.getUnidad_medida() });
 			}
 			runner.batch(conn, queryServ, batch.toArray(new Object[servicios.size()][]));
 
@@ -80,11 +104,83 @@ public class HotelDAO {
 			}
 			runner.batch(conn, queryCat, batch.toArray(new Object[categorias.size()][]));
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		// Mandamos el hotel a dho:
+		if( res != null ) {
+			JsonObject aux;
+			
+			JsonObject json = new JsonObject();
+			  json.addProperty("id",res.intValue());
+			  json.addProperty("nombre",h.getNombre());
+			  json.addProperty("descripcion",h.getDescripcion());
+			  json.addProperty("estrellas",h.getEstrellas());
+			  json.addProperty("continente",h.getContinente());
+			  json.addProperty("pais",h.getPais());
+			  json.addProperty("ciudad",h.getCiudad());
+			  
+			  JsonArray habitaciones = new JsonArray();
+			  TipoHabitacionDAO thDAO = new TipoHabitacionDAO();
+			  for(Hotel_Tipo_Habitacion hth : habs) {
+				aux = new JsonObject();
+				
+				aux.addProperty("id",hth.getTipo_hab_id());
+				aux.addProperty("nombre",thDAO.get(hth.getTipo_hab_id()).getNombre());
+				aux.addProperty("num_disponibles",hth.getNum_disponibles());
+				
+				habitaciones.add(aux);
+			  }
+			  
+			  json.add("habitaciones",habitaciones);
+			  
+			  JsonArray cats = new JsonArray();
+			  CategoriaDAO catDAO = new CategoriaDAO();
+			  for(Hotel_Categoria hc : categorias) {
+				  aux = new JsonObject();
+				  
+				  aux.addProperty("id",hc.getCategoria_id());
+				  aux.addProperty("nombre",catDAO.get(hc.getCategoria_id()).getNombre());
+				  
+				  cats.add(aux);
+			  }
+			  
+			  json.add("categorias",cats);
+			  
+			  JsonArray servs = new JsonArray();
+			  ServicioDAO servDAO = new ServicioDAO();
+			  for(Hotel_Servicio hs : servicios) {
+				  aux = new JsonObject();
+				  
+				  aux.addProperty("id",hs.getServicio_id());
+				  aux.addProperty("nombre",servDAO.get(hs.getServicio_id()).getNombre());
+				  aux.addProperty("precio",hs.getPrecio());
+				  aux.addProperty("unidad",hs.getUnidad_medida());
+				  
+				  servs.add(aux);
+			  }
+			  
+			  json.add("servicios",servs);
+			  
+			  System.out.println( json.toString() );
+			
+			//APIout.enviar(json.toString(),7001,"/recibirHotel");
+			  
 		}
+		
 
 		return (res != null ? res.intValue() : -1);
+	}
+	
+	public static void main(String[] args) {
+		HotelDAO dao = new HotelDAO();
+		Hotel h = new Hotel(-1, "Hotel Test","America", "Colombia", "Bogotá", "Calle Oro,21", 5, "Brillante");
+		
+		List<Hotel_Tipo_Habitacion> habs = List.of( new Hotel_Tipo_Habitacion(-1, 1, 50) , new Hotel_Tipo_Habitacion(-1, 2, 25) );
+		List<Hotel_Servicio> servicios = List.of( new Hotel_Servicio(-1, 1, 100, "kilo") );
+		List<Hotel_Categoria> categorias = List.of( new Hotel_Categoria(-1, 1) );
+		
+		dao.anadir(h, habs, servicios, categorias);
+		
 	}
 
 	public List<Hotel> hoteles() {
@@ -131,7 +227,7 @@ public class HotelDAO {
 	 */
 	public void anadirHotel(Hotel h, List<Hotel_Tipo_Habitacion> habs, List<Hotel_Servicio> servicios,
 			List<Hotel_Categoria> categorias) {
-// Primero añadimos el hotel mismamente
+		// Primero añadimos el hotel mismamente
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handlerH = new ScalarHandler<>();
 		String queryH = "INSERT INTO Hotel " + "(nombre,continente,pais,ciudad,direccion,estrellas,descripcion) "

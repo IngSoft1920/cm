@@ -70,4 +70,5 @@ public class Peticion {
     public void setTipo_hab_id(int tipo_hab_id) {
         this.tipo_hab_id = tipo_hab_id;
     }
+    
 }

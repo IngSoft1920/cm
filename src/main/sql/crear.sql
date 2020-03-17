@@ -21,7 +21,7 @@ CREATE TABLE `Hotel`(
 
 CREATE TABLE `Tipo_Habitacion` (
 	`id` INT AUTO_INCREMENT,
-	`nombre_tipo` VARCHAR(100) NOT NULL,
+	`nombre` VARCHAR(100) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 

@@ -1,6 +1,5 @@
 package ingsoft1920.cm.dao;
 
-import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 import org.apache.commons.dbutils.QueryRunner;
@@ -16,7 +15,7 @@ import java.util.List;
 public class TipoHabitacionDAO {
 
     @Autowired
-    private QueryRunner runner;
+    private QueryRunner runner = new QueryRunner();
     private ConectorBBDD conector = new ConectorBBDD();
 
     public int anadir(Tipo_Habitacion tipoHabitacion){

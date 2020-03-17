@@ -12,6 +12,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Servicio;
 import ingsoft1920.cm.bean.auxiliares.Servicio_Profesion;
 import ingsoft1920.cm.conector.ConectorBBDD;
@@ -77,6 +78,23 @@ public class ServicioDAO {
 		}
 		return res;
 	}
+	
+	public Servicio get(int id){
+
+        String selectQuery = "SELECT * FROM Servicio WHERE id = ?";
+
+        BeanHandler<Servicio> handler = new BeanHandler<>(Servicio.class);
+
+        Servicio res = null;
+
+        try ( Connection conn = conector.getConn() )
+        {
+            res = runner.query(conn, selectQuery, handler, id);
+
+        } catch(Exception e) { e.printStackTrace(); }
+
+        return res;
+    }
 	
 
 }
