@@ -1,46 +1,107 @@
 package ingsoft1920.cm.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.auxiliares.Hotel_Categoria;
+import ingsoft1920.cm.bean.auxiliares.Hotel_Servicio;
+import ingsoft1920.cm.bean.auxiliares.Hotel_Tipo_Habitacion;
+import ingsoft1920.cm.dao.HotelDAO;
 
 @Controller
 public class HomeController {
-	
-	//Controlador para DEMO del 16/03
-	
+
+	@Autowired
+	public HotelDAO hotelDao;
+
+	// Controlador para DEMO del 16/03
+	// Pruebas para conectar vista-controlador
+
+	// index.html
 	@GetMapping("/inicio")
 	public String homeCorporativo() {
 		return "index.jsp";
 	}
-	
-	@GetMapping("/anadir-hotel")
-	public String anadirHotelForm() {
-		return "corp-hotel/anadir-hotel.jsp";
-	}
+
+	// Pagina de Hoteles
 	@GetMapping("/hoteles")
-	public String HotelForm() {
-		return "corp-hotel/hoteles.jsp";
-	}
-	@GetMapping("/ver-hotel")
-	public String verHotelForm() {
-		return "corp-hotel/ver-hotel.jsp";
-	}
-	@GetMapping("/editar-hotel")
-	public String editarHotelForm() {
-		return "corp-hotel/editar-hotel.jsp";
+	public ModelAndView HotelForm() {
+
+		List<Hotel> hoteles = new HotelDAO().hoteles();
+
+		return new ModelAndView("corp-hotel/hoteles.jsp", "hoteles", hoteles);
 	}
 
-	
+	@GetMapping("/anadir-hotel")
+	public ModelAndView anadirForm() {
+
+		return new ModelAndView("corp-hotel/anadir-hotel.jsp");
+	}
+
+	// Anadir-hotel Test
+//	@PostMapping("/anadir-hotel")
+//	public ModelAndView anadirHotelCompletoForm(Hotel hotel, List<Hotel_Tipo_Habitacion> numeroHabitaciones,
+//			List<Hotel_Servicio> servicios, List<Hotel_Categoria> categorias) {
+//
+//		
+//		int hotelCompleto = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
+//		int numeroHabitacionesHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
+//		int serviciosHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
+//		int categoriasHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
+//		
+//		
+//		Hotel hotelCompleto = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
+//		List<Hotel_Tipo_Habitacion> numeroHabitacionesHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
+//		List<Hotel_Servicio> serviciosHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
+//		List<Hotel_Categoria> categoriasHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
+//		
+//		System.out.println("Recuperando datos del hotel: " + hotelCompleto);
+//		System.out.println("Recuperando datos del tipo habitacion: " + numeroHabitacionesHotel);
+//		System.out.println("Recuperando datos del servicios: " + serviciosHotel);
+//		System.out.println("Recuperando datos del categorias: " + categoriasHotel);
+//
+//		return new ModelAndView("corp-hotel/ver-hotel.jsp");
+//	}
+
+	// Ver-hotel
+	@GetMapping("/ver-hotel/{id}")
+	public ModelAndView verHotelForm(@PathVariable(name = "id") long id) {
+
+		System.out.println("Recuperando datos del hotel: " + id);
+		Hotel hotel = new HotelDAO().obtenerHotelPorId(id);
+		System.out.println("Recuperando datos del hotel: " + hotel);
+
+		return new ModelAndView("corp-hotel/ver-hotel.jsp", "hotel", hotel);
+	}
+
+	// editar-hotel
+	@GetMapping("/editar-hotel/{id}")
+	public ModelAndView editarHotelForm(@PathVariable(name = "id") long id) {
+
+		System.out.println("Recuperando datos del hotel: " + id);
+		Hotel hotel = new HotelDAO().obtenerHotelPorId(id);
+		System.out.println("Recuperando datos del hotel: " + hotel);
+
+		return new ModelAndView("corp-hotel/editar-hotel.jsp", "hotel", hotel);
+	}
+
 	@GetMapping("/login-corp")
 	public String loginForm() {
 		return "login.jsp";
 	}
-	
+
 	@GetMapping("/empleados")
 	public String empleadosForm() {
 		return "corp-empleado/empleados.jsp";
 	}
-	
+
 	@GetMapping("/proveedores")
 	public String proveedoresForm() {
 		return "corp-proveedor/proveedores.jsp";

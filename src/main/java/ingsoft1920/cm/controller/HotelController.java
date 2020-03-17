@@ -4,26 +4,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.google.gson.JsonParser;
-import ingsoft1920.cm.apiout.APIout;
-import ingsoft1920.cm.bean.Categoria;
-import ingsoft1920.cm.bean.auxiliares.Hotel_Categoria;
-import ingsoft1920.cm.bean.auxiliares.Hotel_Tipo_Habitacion;
-import ingsoft1920.cm.dao.CategoriaDAO;
-import ingsoft1920.cm.dao.TipoHabitacionDAO;
-import ingsoft1920.cm.model.Disponibles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import ingsoft1920.cm.apiout.APIout;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Servicio;
+import ingsoft1920.cm.bean.auxiliares.Hotel_Categoria;
 import ingsoft1920.cm.bean.auxiliares.Hotel_Servicio;
+import ingsoft1920.cm.bean.auxiliares.Hotel_Tipo_Habitacion;
+import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.HotelDAO;
+import ingsoft1920.cm.dao.TipoHabitacionDAO;
+import ingsoft1920.cm.model.Disponibles;
 
 
 @Controller

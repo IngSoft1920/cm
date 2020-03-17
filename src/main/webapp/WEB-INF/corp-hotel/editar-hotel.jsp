@@ -64,7 +64,7 @@
                 <form class="needs-validation" novalidate="">
                     <div class="mb-3">
                         <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="Hotel Cadiz Playa" required="">
+                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="${hotel.nombre}" required="">
                         <div class="invalid-feedback">
                             El nombre del hotel es obligatorio
                         </div>
@@ -73,7 +73,7 @@
                     <div class="mb-3">
                         <label for="username">Continente</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="username" placeholder="Continente" value="Europa" required="">
+                            <input type="text" class="form-control" id="username" placeholder="Continente" value="${hotel.continente}" required="">
                             <div class="invalid-feedback" style="width: 100%;">
                                 Your continente is required.
                             </div>
@@ -82,7 +82,7 @@
 
                     <div class="mb-3">
                         <label for="text">Pais </label>
-                        <input type="text" class="form-control" id="text" value="Espana" placeholder="Pais">
+                        <input type="text" class="form-control" id="text" value="${hotel.pais}" placeholder="Pais">
                         <div class="invalid-feedback">
                             Please enter a valid Pais.
                         </div>
@@ -90,7 +90,7 @@
 
                     <div class="mb-3">
                         <label for="address">Ciudad</label>
-                        <input type="text" class="form-control" id="address" placeholder="Calle/Avenida/..." required="">
+                        <input type="text" class="form-control" id="address" placeholder="Calle/Avenida/..."  value="${hotel.ciudad}" required="">
                         <div class="invalid-feedback">
                             Please enter your ciudad.
                         </div>
@@ -98,7 +98,7 @@
 
                     <div class="mb-3">
                         <label for="address2">Direccion<span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite"  value="${hotel.direccion}">
                         <div class="invalid-feedback">
                             Please enter your Direccion.
                         </div>
@@ -135,7 +135,7 @@
 
                                 </select>-->
                             <div class="invalid-feedback">
-                                Please select a valid country.
+                                Please select a valid servicio.
                             </div>
                         </div>
 
