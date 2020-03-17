@@ -272,8 +272,8 @@ CREATE TABLE `Peticion` (
 
 CREATE TABLE `Datos_Precio` (
     `id` INT AUTO_INCREMENT,
-    `precio` DOUBLE NOT NULL,
-    `puntuacion` DOUBLE NOT NULL,
+    `precio` VARCHAR(30) NOT NULL,
+    `puntuacion` VARCHAR(30) NOT NULL,
     `estado` BOOLEAN NOT NULL,
     `peticion_id` INT NOT NULL,
     PRIMARY KEY (`id`),
