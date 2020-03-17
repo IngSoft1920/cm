@@ -3,6 +3,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ import ingsoft1920.cm.model.Disponibles;
 public class HotelController {
 	
 	@Autowired
-	HotelDAO dao;
+	HotelDAO dao = new HotelDAO();
 	
 	@GetMapping("/hotel/ge")
 	@ResponseBody
@@ -58,7 +59,13 @@ public class HotelController {
 	@ResponseBody
 	public String serviciosHotel(@PathVariable int hotel_id) {
 		
-		Map<Servicio,Hotel_Servicio> servicios = dao.serviciosHotel(hotel_id);
+		/* Cada Properties es así (todo se refiere al servicio):
+		 id : int /
+	 	 nombre : String
+	 	 precio : int
+	 	 unidad : String
+		 */
+		List<Properties> servicios = dao.serviciosHotelGE(hotel_id);
 		
 		if(servicios==null) {
 			JsonObject error = new JsonObject();
@@ -68,14 +75,20 @@ public class HotelController {
 		
 		JsonArray res = new JsonArray();
 		JsonObject elem;
-		for(Entry<Servicio,Hotel_Servicio> entrada : servicios.entrySet()) {
+		for( Properties serv : servicios ) {
 			elem = new JsonObject();
 			
-			elem.addProperty("id",entrada.getKey().getId());
-			elem.addProperty("nombre",entrada.getKey().getNombre());
-			elem.addProperty("precio",entrada.getValue().getPrecio());
-			elem.addProperty("unidad",entrada.getValue().getUnidad_medida());
+			elem.addProperty("id",(int) serv.get("id"));
+			elem.addProperty("nombre",(String) serv.get("nombre"));
 			
+			// Precio y unidad podrían ser campos a null
+			
+			elem.addProperty("precio", serv.get("precio") != null ?
+								(int) serv.get("precio") : null);
+			
+			elem.addProperty("unidad", serv.get("unidad") != null ? 
+							 (String) serv.get("unidad") : null);
+						
 			res.add(elem);
 		}
 		return res.toString();
