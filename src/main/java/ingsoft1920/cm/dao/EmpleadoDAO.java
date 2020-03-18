@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.google.gson.JsonObject;
 
 import ingsoft1920.cm.apiout.APIout;
 import ingsoft1920.cm.bean.Empleado;
+import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.auxiliares.Hotel_Empleado;
 import ingsoft1920.cm.conector.ConectorBBDD;
@@ -32,7 +34,7 @@ public class EmpleadoDAO {
         BeanListHandler<Empleado> beanListHandler = new BeanListHandler<>(Empleado.class);
         QueryRunner runner = new QueryRunner();
 
-        String getEmpleados = "SELECT * FROM empleado";
+        String getEmpleados = "SELECT * FROM Empleado";
 
         List<Empleado> empleados = new LinkedList<>();
 
@@ -123,6 +125,20 @@ public class EmpleadoDAO {
     	
 	}
     
+	public Empleado obtenerEmpleadoPorId(long id) {
+		Empleado res = new Empleado();
+		BeanHandler<Empleado> handler = new BeanHandler<>(Empleado.class);
+		String query = "SELECT * FROM Empleado as e " + "WHERE e.id=?;";
+
+		try (Connection conn = conector.getConn()) {
+			res = runner.query(conn, query, handler, id);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
     public void eliminarEmpleado(Empleado empleado){
 
 	    String eliminaEmpleado = "DELETE FROM Empleado WHERE id = ?";

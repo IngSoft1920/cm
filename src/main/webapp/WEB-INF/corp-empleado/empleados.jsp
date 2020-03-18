@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 
 <head>
@@ -81,92 +81,70 @@
 
         <main role="main">
             <div class="album py- bg-light">
-                <div class="container">
-
+                <div class="container">  
                     <div class="row">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Apellido</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Sueldo</th>
-                                    <th scope="col">Acciones</th>
+                        
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Sueldo</th>
+                                        <th scope="col">Acciones</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td>1000$</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-outline-secondary" href="ver-hotel.html" role="button">Ver</a>
-                                            <a class="btn btn-sm btn-outline-secondary" href="editar-hotel.html" role="button">Editar</a>
-                                            <!-- Button trigger modal -->
-                                            <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" href="#" role="button">
-                                                Eliminar
-                                            </a>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar Hotel
-                                                            </h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Esta seguro que desea eliminar el hotel?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                            <button type="button" class="btn btn-primary">Eliminar</button>
+                                    </tr>
+                                </thead>
+                        
+                                <tbody>
+                        <c:forEach var="empleado" items="${empleados}">            
+                                    <tr>
+                                        <th scope="row">${empleado.id}</th>
+                                        <td>${empleado.nombre}</td>
+                                        <td>${empleado.apellidos}</td>
+                                        <td>${empleado.email}</td>
+                                        <td>${empleado.sueldo}$</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn btn-sm btn-outline-secondary" href="/ver-empleado/${empleado.id}" role="button">Ver</a>
+                                                <a class="btn btn-sm btn-outline-secondary" href="/editar-empleado/${empleado.id}" role="button">Editar</a>
+                                                <!-- Button trigger modal -->
+                                                <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" href="#" role="button">
+                                                    Eliminar
+                                                </a>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Eliminar Hotel
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Esta seguro que desea eliminar el hotel?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                                <button type="button" class="btn btn-primary">Eliminar</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@gmail.com</td>
-                                    <td>1200$</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-outline-secondary" href="ver-hotel.html" role="button">Ver</a>
-                                            <a class="btn btn-sm btn-outline-secondary" href="editar-hotel.html" role="button">Editar</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>300$</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-sm btn-outline-secondary" href="ver-hotel.html" role="button">Ver</a>
-                                            <a class="btn btn-sm btn-outline-secondary" href="editar-hotel.html" role="button">Editar</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                        </c:forEach>     
+                                </tbody>
+                          
 
-
-                        </div>
+                            </table>
+                        
                     </div>
                 </div>
+            </div>
 
 
         </main>
