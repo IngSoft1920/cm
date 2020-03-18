@@ -6,13 +6,13 @@ public class DatosPrecio {
     private int id;
     private int estado;
     private int peticion_id;
-    private double precio;
-    private double puntuacion;
+    private String precio;
+    private String puntuacion;
 
     public DatosPrecio() {
     }
 
-    public DatosPrecio(int id, int estado, int peticion_id, double precio, double puntuacion) {
+    public DatosPrecio(int id, String precio, String puntuacion, int estado, int peticion_id) {
         this.id = id;
         this.estado = estado;
         this.peticion_id = peticion_id;
@@ -28,11 +28,11 @@ public class DatosPrecio {
         this.id = id;
     }
 
-    public double getPrecio() {
+    public String getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(String precio) {
         this.precio = precio;
     }
 
@@ -44,11 +44,11 @@ public class DatosPrecio {
         this.estado = estado;
     }
 
-    public double getPuntuacion() {
+    public String getPuntuacion() {
         return puntuacion;
     }
 
-    public void setFecha(double puntuacion) {
+    public void setPuntuacion(String puntuacion) {
         this.puntuacion = puntuacion;
     }
 
