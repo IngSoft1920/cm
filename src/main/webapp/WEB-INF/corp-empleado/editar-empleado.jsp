@@ -61,7 +61,7 @@
 
             <div class="col-md-18 order-md-1">
 
-                <form class="needs-validation" novalidate="">
+                <form class="needs-validation" novalidate="" method="POST">
                     <div class="mb-3">
                         <label for="firstName">Nombre</label>
                         <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="${empleado.nombre}" required="">

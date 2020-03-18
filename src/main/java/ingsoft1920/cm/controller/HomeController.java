@@ -114,6 +114,7 @@ public class HomeController {
 			return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
 		}
 	
+	
 	//ver empleado 
 	// Ver-hotel
 	@GetMapping("/ver-empleado/{id}")
@@ -127,13 +128,24 @@ public class HomeController {
 	}
 	//editar-hotel
 	@GetMapping("/editar-empleado/{id}")
-	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") long id) {
+	public ModelAndView geditarEmpleadoForm(@PathVariable(name = "id") long id,String firstName) {
 
-		System.out.println("Recuperando datos del empleado: " + id);
+		//System.out.println("Recuperando datos del empleado: " + id);
 		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
-		System.out.println("Recuperando datos del empleado: " + empleado);
-
+		//sets
+		//System.out.println("Recuperando datos del empleado: " + empleado);
+System.out.println("hola");
 		return new ModelAndView("corp-empleado/editar-empleado.jsp", "empleado", empleado);
+	}
+	@PostMapping("/editar-empleado/{id}")
+	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") long id,String firstName) {
+
+		//System.out.println("Recuperando datos del empleado: " + id);
+		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
+		//sets
+		//System.out.println("Recuperando datos del empleado: " + empleado);
+
+		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
 	}
 	
 	
