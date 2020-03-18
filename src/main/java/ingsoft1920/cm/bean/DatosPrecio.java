@@ -12,7 +12,7 @@ public class DatosPrecio {
     public DatosPrecio() {
     }
 
-    public DatosPrecio(int id, int estado, int peticion_id, String precio, String puntuacion) {
+    public DatosPrecio(int id, String precio, String puntuacion, int estado, int peticion_id) {
         this.id = id;
         this.estado = estado;
         this.peticion_id = peticion_id;
@@ -48,7 +48,7 @@ public class DatosPrecio {
         return puntuacion;
     }
 
-    public void setFecha(String puntuacion) {
+    public void setPuntuacion(String puntuacion) {
         this.puntuacion = puntuacion;
     }
 
