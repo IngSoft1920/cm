@@ -1,4 +1,4 @@
-package ingsoft1920.cm.dao;
+	package ingsoft1920.cm.dao;
 
 import ingsoft1920.cm.conector.ConectorBBDD;
 import ingsoft1920.cm.bean.Peticion;

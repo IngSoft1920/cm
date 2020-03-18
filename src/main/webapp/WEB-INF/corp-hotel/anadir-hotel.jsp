@@ -60,19 +60,19 @@
 
             <div class="col-md-18 order-md-1">
 
-                <form class="needs-validation" novalidate="">
+                <form class="needs-validation" novalidate=""  method="POST">
                     <div class="mb-3">
-                        <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="" required="">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="" required="">
                         <div class="invalid-feedback">
                             El nombre del hotel es obligatorio
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="username">Continente</label>
+                        <label for="continente">Continente</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="username" placeholder="Continente" required="">
+                            <input type="text" class="form-control" id="continente" name="continente" placeholder="Continente" required="">
                             <div class="invalid-feedback" style="width: 100%;">
                                 Your continente is required.
                             </div>
@@ -81,7 +81,7 @@
 
                     <div class="mb-3">
                         <label for="text">Pais </label>
-                        <input type="text" class="form-control" id="text" placeholder="Pais">
+                        <input type="text" class="form-control" id="text" name="pais" placeholder="Pais">
                         <div class="invalid-feedback">
                             Please enter a valid Pais.
                         </div>
@@ -89,7 +89,7 @@
 
                     <div class="mb-3">
                         <label for="address">Ciudad</label>
-                        <input type="text" class="form-control" id="address" placeholder="Calle/Avenida/..." required="">
+                        <input type="text" class="form-control" id="address"  name="ciudad" placeholder="Calle/Avenida/..." required="">
                         <div class="invalid-feedback">
                             Please enter your ciudad.
                         </div>
@@ -97,7 +97,7 @@
 
                     <div class="mb-3">
                         <label for="address2">Direccion<span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                        <input type="text" class="form-control" id="address2"  name="direccion" placeholder="Apartment or suite">
                         <div class="invalid-feedback">
                             Please enter your Direccion.
                         </div>
@@ -154,7 +154,7 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="zip">Estrellas</label>
-                            <input type="number" min="0" max="6" class="form-control" id="zip" placeholder="" required="">
+                            <input type="number" min="0" max="6" class="form-control" id="zip" name="estrellas" placeholder="" required="">
                             <div class="invalid-feedback">
                                 Numero de estrellas requeridas.
                             </div>
@@ -169,7 +169,7 @@
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">Â© 2020 Company Name</p>
+            <p class="mb-1">© 2020 Company Name</p>
             <ul class="list-inline">
                 <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Privacy</a>
                 </li>

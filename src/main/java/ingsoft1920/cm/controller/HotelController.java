@@ -3,34 +3,36 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 
-import com.google.gson.JsonParser;
-import ingsoft1920.cm.apiout.APIout;
-import ingsoft1920.cm.bean.Categoria;
-import ingsoft1920.cm.bean.auxiliares.Hotel_Categoria;
-import ingsoft1920.cm.bean.auxiliares.Hotel_Tipo_Habitacion;
-import ingsoft1920.cm.dao.CategoriaDAO;
-import ingsoft1920.cm.dao.TipoHabitacionDAO;
-import ingsoft1920.cm.model.Disponibles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import ingsoft1920.cm.apiout.APIout;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Servicio;
+import ingsoft1920.cm.bean.auxiliares.Hotel_Categoria;
 import ingsoft1920.cm.bean.auxiliares.Hotel_Servicio;
+import ingsoft1920.cm.bean.auxiliares.Hotel_Tipo_Habitacion;
+import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.HotelDAO;
+import ingsoft1920.cm.dao.TipoHabitacionDAO;
+import ingsoft1920.cm.model.Disponibles;
 
 
 @Controller
 public class HotelController {
 	
 	@Autowired
-	HotelDAO dao;
+	HotelDAO dao = new HotelDAO();
 	
 	@GetMapping("/hotel/ge")
 	@ResponseBody
@@ -57,7 +59,13 @@ public class HotelController {
 	@ResponseBody
 	public String serviciosHotel(@PathVariable int hotel_id) {
 		
-		Map<Servicio,Hotel_Servicio> servicios = dao.serviciosHotel(hotel_id);
+		/* Cada Properties es así (todo se refiere al servicio):
+		 id : int /
+	 	 nombre : String
+	 	 precio : int
+	 	 unidad : String
+		 */
+		List<Properties> servicios = dao.serviciosHotelGE(hotel_id);
 		
 		if(servicios==null) {
 			JsonObject error = new JsonObject();
@@ -67,14 +75,20 @@ public class HotelController {
 		
 		JsonArray res = new JsonArray();
 		JsonObject elem;
-		for(Entry<Servicio,Hotel_Servicio> entrada : servicios.entrySet()) {
+		for( Properties serv : servicios ) {
 			elem = new JsonObject();
 			
-			elem.addProperty("id",entrada.getKey().getId());
-			elem.addProperty("nombre",entrada.getKey().getNombre());
-			elem.addProperty("precio",entrada.getValue().getPrecio());
-			elem.addProperty("unidad",entrada.getValue().getUnidad_medida());
+			elem.addProperty("id",(int) serv.get("id"));
+			elem.addProperty("nombre",(String) serv.get("nombre"));
 			
+			// Precio y unidad podrían ser campos a null
+			
+			elem.addProperty("precio", serv.get("precio") != null ?
+								(int) serv.get("precio") : null);
+			
+			elem.addProperty("unidad", serv.get("unidad") != null ? 
+							 (String) serv.get("unidad") : null);
+						
 			res.add(elem);
 		}
 		return res.toString();
@@ -136,73 +150,5 @@ public class HotelController {
         return res.toString();
     }
 
-    /**
-     * TODO consultas para obtener el nombre Servicio y puerto
-     * @param h
-     * @param habs
-     * @param servs
-     * @param cats
-     */
-    public void enviarHorel(Hotel h, List<Hotel_Tipo_Habitacion> habs, List<Hotel_Servicio> servs, List<Hotel_Categoria> cats){
-
-        CategoriaDAO categoriaDAO = new CategoriaDAO();
-        TipoHabitacionDAO tipoHabitacionDAO = new TipoHabitacionDAO();
-
-	    JsonObject jsonO = new JsonObject();
-
-        jsonO.addProperty("id", h.getId());
-        jsonO.addProperty("nombre", h.getNombre());
-        jsonO.addProperty("descripcion", h.getDescripcion());
-        jsonO.addProperty("estrellas", h.getEstrellas());
-        jsonO.addProperty("continente", h.getContinente());
-        jsonO.addProperty("pais", h.getPais());
-        jsonO.addProperty("ciudad", h.getCiudad());
-
-        JsonArray habitaciones = new JsonArray();
-        JsonObject habitacion;
-
-        for (Hotel_Tipo_Habitacion hab : habs) {
-            habitacion = new JsonObject();
-
-            habitacion.addProperty("id", hab.getTipo_hab_id());
-            habitacion.addProperty("nombre", tipoHabitacionDAO.get(hab.getTipo_hab_id()).getId());
-            habitacion.addProperty("num_disponibles", hab.getNum_disponibles());
-
-            habitaciones.add(habitacion);
-        }
-
-        jsonO.add("habitaciones", habitaciones);
-
-        JsonArray categorias = new JsonArray();
-        JsonObject categoria;
-
-        for (Hotel_Categoria cat: cats){
-            categoria = new JsonObject();
-
-            categoria.addProperty("id", cat.getCategoria_id());
-            categoria.addProperty("nombre", categoriaDAO.get(cat.getCategoria_id()).getId());
-
-            categorias.add(categoria);
-        }
-
-        jsonO.add("categorias", categorias);
-
-        JsonArray servicios = new JsonArray();
-        JsonObject servicio;
-
-        for (Hotel_Servicio serv : servs) {
-            servicio = new JsonObject();
-
-            servicio.addProperty("id", serv.getServicio_id());
-            servicio.addProperty("nombre", "nombre");
-            servicio.addProperty("precio", serv.getPrecio());
-            servicio.addProperty("unidad", serv.getUnidad_medida());
-
-            servicios.add(servicio);
-        }
-
-        jsonO.add("servicios", servicios);
-
-        APIout.enviar(jsonO.toString(), 7001, "/recibirHotel");
-    }
+    
 }

@@ -57,36 +57,38 @@
         </div>
 
         <div class="row center">
-
+  
             <div class="col-md-18 order-md-1">
                 <div class="mb-3">
                     <label for="firstName">Nombre</label>
-                    <input type="text" class="form-control" id="firstName" readonly>
+                    <input type="text" class="form-control" id="firstName" readonly value="${hotel.nombre}" >
                 </div>
 
                 <div class="mb-3">
                     <label for="username">Continente</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="username" readonly>
+                        <input type="text" class="form-control" id="username" readonly  value="${hotel.continente}">
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label for="text">Pais </label>
-                    <input type="text" class="form-control" id="text" readonly>
+                    <input type="text" class="form-control" id="text" readonly value="${hotel.pais}">
                 </div>
 
                 <div class="mb-3">
                     <label for="address">Ciudad</label>
-                    <input type="text" class="form-control" id="address" readonly>
+                    <input type="text" class="form-control" id="address" readonly value="${hotel.ciudad}">
                 </div>
 
                 <div class="mb-3">
                     <label for="address2">Direccion<span class="text-muted">(Optional)</span></label>
-                    <input type="text" class="form-control" id="address2" readonly>
+                    <input type="text" class="form-control" id="address2" readonly value="${hotel.direccion}">
                 </div>
 
                 <div class="row">
+                
+                <!-- Para mostrar los servicios del hotel, hacer un for each -->
 
                     <div class="col-md-5 mb-3">
                         <label for="country">Servicios</label>
@@ -110,8 +112,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-md-4 mb-3">
                         <label for="state">Tipos de Habitacion.</label>
                         <select class="custom-select d-block w-100" id="state" multiple disabled>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="zip">Estrellas</label>
-                        <input type="number" min="0" max="6" class="form-control" id="zip" placeholder="" readonly>
+                        <input type="number" min="0" max="6" class="form-control" id="zip" value="${hotel.estrellas}" readonly>
                     </div>
                 </div>
                 <hr class="mb-4">

@@ -1,11 +1,8 @@
 package ingsoft1920.cm.dao;
 
-import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.DatosPrecio;
-import ingsoft1920.cm.bean.Peticion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
