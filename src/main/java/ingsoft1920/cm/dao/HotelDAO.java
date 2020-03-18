@@ -430,12 +430,12 @@ public class HotelDAO {
 	
 	// La ocupación se devuelve en tanto porciento. Se devuelve
 	// todos los datos desde hoy hasta dentro de x dias
-	private static final int INVERVALO_DIAS = 365;
+	private static final int INVERVALO_DIAS = 3;
 	public Map<Date,Double> getOcupacionesHotel(int hotel_id) {
 		Map<Date,Double> res = new HashMap<>();
 		
 		LocalDate actual = LocalDate.now();
-		LocalDate fechaTope = actual.plusMonths(INVERVALO_DIAS);
+		LocalDate fechaTope = actual.plusDays(INVERVALO_DIAS);
 		
 		while( actual.isBefore(fechaTope) ) {
 			
@@ -453,15 +453,15 @@ public class HotelDAO {
 	public double getOcupacionHotel(int hotel_id,Date fecha) {
 		BigDecimal res = null;
 		ScalarHandler<BigDecimal> handler = new ScalarHandler<>();
-		String query = "SELECT SUM(ocupadas)/SUM(disponibles) AS ocupacion "+
+		String query = "SELECT COUNT(*)/capacidad AS ocupacion "+
 						 "FROM ("+
-						 		"SELECT COUNT(*) AS ocupadas,hth.num_disponibles AS disponibles "+
-						 		"FROM Reserva r "+
-						 		"JOIN Hotel_Tipo_Habitacion hth	ON "+
-						 			"r.hotel_id = hth.hotel_id AND r.tipo_hab_id = hth.tipo_hab_id "+
-						 		"WHERE r.hotel_id = ? AND ? BETWEEN r.fecha_entrada AND r.fecha_salida "+ 
-						 		"GROUP BY r.tipo_hab_id "+
-						 		") AS aux;";
+						 		"SELECT hotel_id,SUM(num_disponibles) AS capacidad "+
+						 		"FROM Hotel_Tipo_Habitacion "+
+						 		"WHERE hotel_id = ? "+
+						 		") AS hcap "+
+						 "JOIN Reserva r ON hcap.hotel_id = r.hotel_id "+
+						"WHERE ? BETWEEN r.fecha_entrada AND r.fecha_salida "+ 
+						"GROUP BY r.hotel_id ";
 		
 		try ( Connection conn = conector.getConn() )
 		{
@@ -510,10 +510,7 @@ public class HotelDAO {
 	}
 	
 	public static void main(String[] args) {
-		
-		for( Properties p : new HotelDAO().getDataRM() ) {
-			System.out.println("---> "  + p + "\n\n");
-		}
+		System.out.println( new HotelDAO().getOcupacionesHotel(1) );
 	}
 
 }
