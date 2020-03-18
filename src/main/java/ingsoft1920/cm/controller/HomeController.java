@@ -16,6 +16,7 @@ import ingsoft1920.cm.bean.auxiliares.Hotel_Categoria;
 import ingsoft1920.cm.bean.auxiliares.Hotel_Servicio;
 import ingsoft1920.cm.bean.auxiliares.Hotel_Tipo_Habitacion;
 import ingsoft1920.cm.dao.EmpleadoDAO;
+import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
 
 @Controller
@@ -23,6 +24,7 @@ public class HomeController {
 
 	@Autowired
 	public HotelDAO hotelDao;
+	public EmpleadoDAO empleadoDao;
 
 	// Controlador para DEMO del 16/03
 	// Pruebas para conectar vista-controlador
@@ -134,15 +136,17 @@ public class HomeController {
 		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
 		//sets
 		//System.out.println("Recuperando datos del empleado: " + empleado);
-System.out.println("hola");
 		return new ModelAndView("corp-empleado/editar-empleado.jsp", "empleado", empleado);
 	}
 	@PostMapping("/editar-empleado/{id}")
-	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") long id,String firstName) {
+	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") long id,String firstName, String lastNames, 
+			String email, String telefono) {
 
 		//System.out.println("Recuperando datos del empleado: " + id);
 		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
-		//sets
+		System.out.println("antes");
+		empleadoDao.cambiarNombre(empleado, firstName);
+		System.out.println("despues");
 		//System.out.println("Recuperando datos del empleado: " + empleado);
 
 		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
