@@ -148,7 +148,21 @@ public class EmpleadoDAO {
 
         try( Connection conn = conector.getConn() )
         {
-            runner.update(conn, cambiaEmail, handler, empleado.getNombre(),empleado.getApellidos(),empleado.getEmail(),empleado.getTelefono(),empleado.getSueldo(), empleado.getEmail());
+            runner.update(conn, cambiaEmail, handler, empleado.getNombre(),empleado.getApellidos(),empleado.getEmail(),empleado.getTelefono(),empleado.getSueldo(), empleado.getId());
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void cambiarNombre(Empleado empleado, String nombre){
+
+        String cambiaEmail = "UPDATE Empleado SET nombre = ? WHERE id = ?";
+
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+
+        try( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, cambiaEmail, handler, nombre, empleado.getId());
         }
         catch(Exception e) {
             e.printStackTrace();
