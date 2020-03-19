@@ -140,66 +140,19 @@ public class EmpleadoDAO {
 	    APIout.enviar(json.toString(), 7002, "/eliminarEmpleado");
     }
     
-    public void cambiarEmail(Empleado empleado, String nuevoEmail){
+    public void editar(Empleado empleado){
 
-        String cambiaEmail = "UPDATE Empleado SET email = ? WHERE email = ?";
-
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiaEmail, handler, nuevoEmail, empleado.getEmail());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void cambiarNombre(Empleado empleado, String nuevoNombre){
-
-        String cambiaNombre = "UPDATE Empleado SET nombre = ? WHERE email = ?";
+        String cambiaEmail = "UPDATE Empleado SET nombre = ?, apellidos = ?, email = ?, telefono = ?, sueldo = ? WHERE id = ?";
 
         ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
         try( Connection conn = conector.getConn() )
         {
-            runner.update(conn, cambiaNombre, handler, nuevoNombre, empleado.getEmail());
+            runner.update(conn, cambiaEmail, handler, empleado.getNombre(),empleado.getApellidos(),empleado.getEmail(),empleado.getTelefono(),empleado.getSueldo(), empleado.getEmail());
         }
         catch(Exception e) {
             e.printStackTrace();
         }
-    }
-    
-    public void cambiarApellidos(Empleado empleado, String nuevosApellidos){
-
-        String cambiaApellidos = "UPDATE Empleado SET apellidos = ? WHERE email = ?";
-
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiaApellidos, handler, nuevosApellidos,
-            		empleado.getEmail());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void cambiarProfesion(Empleado empleado, Profesion nuevaProfesion){
-
-        String cambiaProfesion = "UPDATE Empleado SET profesion_id = ? WHERE email = ?";
-
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
-
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiaProfesion, handler, nuevaProfesion, empleado.getEmail());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-
     }
     
 
