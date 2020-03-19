@@ -165,8 +165,7 @@ public class HotelDAO {
 			  
 			  json.add("servicios",servs);
 			  
-			  System.out.println( json.toString() );
-			
+			System.out.println(json.toString());
 			APIout.enviar(json.toString(),7001,"/recibirHotel");
 			  
 		}
@@ -175,17 +174,17 @@ public class HotelDAO {
 		return (res != null ? res.intValue() : -1);
 	}
 	
-//	public static void main(String[] args) {
-//		HotelDAO dao = new HotelDAO();
-//		Hotel h = new Hotel(-1, "Hotel Test","America", "Colombia", "Bogotá", "Calle Oro,21", 5, "Brillante");
-//		
-//		List<Hotel_Tipo_Habitacion> habs = List.of( new Hotel_Tipo_Habitacion(-1, 1, 50) , new Hotel_Tipo_Habitacion(-1, 2, 25) );
-//		List<Hotel_Servicio> servicios = List.of( new Hotel_Servicio(-1, 1, 100, "kilo") );
-//		List<Hotel_Categoria> categorias = List.of( new Hotel_Categoria(-1, 1) );
-//		
-//		dao.anadir(h, habs, servicios, categorias);
-//		
-//	}
+	public static void main(String[] args) {
+		HotelDAO dao = new HotelDAO();
+		Hotel h = new Hotel(-1, "Hotel Test","America", "Colombia", "Bogotá", "Calle Oro,21", 5, "Brillante");
+		
+		List<Hotel_Tipo_Habitacion> habs = List.of( new Hotel_Tipo_Habitacion(-1, 1, 50) , new Hotel_Tipo_Habitacion(-1, 2, 25) );
+		List<Hotel_Servicio> servicios = List.of( new Hotel_Servicio(-1, 1, 100, "kilo") );
+		List<Hotel_Categoria> categorias = List.of( new Hotel_Categoria(-1, 1) );
+		
+		dao.anadir(h, habs, servicios, categorias);
+		
+	}
 
 	public List<Hotel> hoteles() {
 		List<Hotel> res = new ArrayList<>();
@@ -430,7 +429,7 @@ public class HotelDAO {
 	
 	// La ocupación se devuelve en tanto porciento. Se devuelve
 	// todos los datos desde hoy hasta dentro de x dias
-	private static final int INVERVALO_DIAS = 3;
+	private static final int INVERVALO_DIAS = 70;
 	public Map<Date,Double> getOcupacionesHotel(int hotel_id) {
 		Map<Date,Double> res = new HashMap<>();
 		
@@ -509,8 +508,5 @@ public class HotelDAO {
 		return res;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println( new HotelDAO().getOcupacionesHotel(1) );
-	}
 
 }
