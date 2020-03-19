@@ -217,6 +217,17 @@ public class EmpleadoDAO {
         }
 
     }
+    public void editar(Empleado empleado){
+        String cambiaEmail = "UPDATE Empleado SET nombre = ?, apellidos = ?, email = ?, telefono = ?, sueldo = ? WHERE id = ?";
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+        try( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, cambiaEmail, handler, empleado.getNombre(),empleado.getApellidos(),empleado.getEmail(),empleado.getTelefono(),empleado.getSueldo(), empleado.getId());
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
     
 
 }

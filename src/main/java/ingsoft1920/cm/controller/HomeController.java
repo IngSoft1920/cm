@@ -139,13 +139,12 @@ public class HomeController {
 		return new ModelAndView("corp-empleado/editar-empleado.jsp", "empleado", empleado);
 	}
 	@PostMapping("/editar-empleado/{id}")
-	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") long id,String firstName, String lastNames, 
-			String email, String telefono) {
+	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") long id) {
 
 		//System.out.println("Recuperando datos del empleado: " + id);
 		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
 		System.out.println("antes");
-		empleadoDao.cambiarNombre(empleado, firstName);
+		empleadoDao.editar(empleado);
 		System.out.println("despues");
 		//System.out.println("Recuperando datos del empleado: " + empleado);
 
