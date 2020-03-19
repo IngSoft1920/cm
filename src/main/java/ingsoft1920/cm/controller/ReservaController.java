@@ -150,7 +150,7 @@ public class ReservaController {
 		dao.eliminarReserva(reserva_id);
 	}
 
-    @GetMapping("/reserva/cliente/{reserva_id}")
+    @GetMapping("/reserva/getCliente/{reserva_id}")
     @ResponseBody
     public String clienteReserva(@PathVariable int reserva_id) {
 
