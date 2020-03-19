@@ -157,5 +157,16 @@ public class HomeController {
 	public String proveedoresForm() {
 		return "corp-proveedor/proveedores.jsp";
 	}
+	
+	@PostMapping("/eliminar-empleado/{id}")//duda
+	public String eliminarEmpleadoForm(@PathVariable(name = "id") long id) {
 
+		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
+		empleadoDao.eliminarEmpleado(empleado);
+		//List<Empleado> empleados = new EmpleadoDAO().getEmpleados();
+
+
+		return "corp-empleado/empleados.jsp";
+
+	}
 }
