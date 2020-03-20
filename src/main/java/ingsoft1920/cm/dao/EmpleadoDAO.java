@@ -11,6 +11,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonObject;
 
@@ -21,6 +22,7 @@ import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.auxiliares.Hotel_Empleado;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
+@Component
 public class EmpleadoDAO {
 
 
@@ -116,10 +118,10 @@ public class EmpleadoDAO {
     public static void main(String[] args) {
     	EmpleadoDAO dao = new EmpleadoDAO();
     	   	
-		Empleado pepe = new Empleado(7, "Pepe", "Dominguez Perez", "pepe@gmail.com", "123456", 1500, 1);
-		Hotel_Empleado he = new Hotel_Empleado(-1, 1, Date.valueOf("2020-02-01"));
-		
-		System.out.println( dao.anadirEmpleado(pepe,he) );
+		Empleado pepe = new Empleado(4, "Pepe", "Dominguez Perez", "pepe@gmail.com", "123456", 1500, 1);
+		//Hotel_Empleado he = new Hotel_Empleado(-1, 1, Date.valueOf("2020-02-01"));
+		//dao.cambiarNombre1(pepe, "juan");
+		//System.out.println( dao.anadirEmpleado(pepe,he) );
     	
 		//dao.eliminarEmpleado( pepe );
     	
@@ -222,12 +224,26 @@ public class EmpleadoDAO {
         ScalarHandler<BigInteger> handler = new ScalarHandler<>();
         try( Connection conn = conector.getConn() )
         {
-            runner.update(conn, cambiaEmail, handler, empleado.getNombre(),empleado.getApellidos(),empleado.getEmail(),empleado.getTelefono(),empleado.getSueldo(), empleado.getId());
+            runner.update(conn, cambiaEmail, empleado.getNombre(),empleado.getApellidos(),empleado.getEmail(),empleado.getTelefono(),empleado.getSueldo(), empleado.getId());
         }
         catch(Exception e) {
             e.printStackTrace();
         }
     }
-    
+    public void cambiarNombre1(Empleado empleado, String nombre){
+
+        String cambiaEmail = "UPDATE Empleado SET nombre = ? WHERE id = ?";
+
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+
+        try( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, cambiaEmail, nombre, empleado.getId());
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

@@ -64,7 +64,7 @@
                 <form class="needs-validation" novalidate="" method="POST">
                     <div class="mb-3">
                         <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="${empleado.nombre}" required="">
+                        <input type="text" class="form-control" name="firstName" placeholder="Nombre" value="${empleado.nombre}" required="">
                         <div class="invalid-feedback">
                             Required field.
                         </div>
@@ -73,7 +73,7 @@
                     <div class="mb-3">
                         <label for="lastNames">Apellidos</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="lastNames" placeholder="Apellidos" value="${empleado.apellidos}" required="">
+                            <input type="text" class="form-control" name="lastNames" placeholder="Apellidos" value="${empleado.apellidos}" required="">
                             <div class="invalid-feedback" style="width: 100%;">
                                 Required field.
                             </div>
@@ -82,7 +82,7 @@
 
                     <div class="mb-3">
                         <label for="email">Email </label>
-                        <input type="text" class="form-control" id="email" value="${empleado.email}" placeholder="Email" required="">
+                        <input type="text" class="form-control" name="email" value="${empleado.email}" placeholder="Email" required="">
                         <div class="invalid-feedback">
                             Required field.
                         </div>
@@ -90,7 +90,7 @@
 
                     <div class="mb-3">
                         <label for="telefono">Teléfono</label>
-                        <input type="text" class="form-control" id="telefono" placeholder="Numero de telef."  value="${empleado.telefono}" required="">
+                        <input type="text" class="form-control" name="telefono" placeholder="Numero de telef."  value="${empleado.telefono}" required="">
                         <div class="invalid-feedback">
                             Required field.
                         </div>
@@ -98,7 +98,7 @@
 
                     <div class="mb-3">
                         <label for="sueldo">Sueldo<span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="sueldo" placeholder="Sueldo"  value="${empleado.sueldo}">
+                        <input type="number" class="form-control" name="sueldo" placeholder="Sueldo"  value="${empleado.sueldo}">
                         <div class="invalid-feedback">
                             Required field.
                         </div>

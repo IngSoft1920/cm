@@ -24,6 +24,7 @@ public class HomeController {
 
 	@Autowired
 	public HotelDAO hotelDao;
+	@Autowired
 	public EmpleadoDAO empleadoDao;
 
 	// Controlador para DEMO del 16/03
@@ -139,13 +140,17 @@ public class HomeController {
 		return new ModelAndView("corp-empleado/editar-empleado.jsp", "empleado", empleado);
 	}
 	@PostMapping("/editar-empleado/{id}")
-	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") long id) {
+	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id, String firstName, String lastNames, 
+			String email, String telefono, Double sueldo) {
 
 		//System.out.println("Recuperando datos del empleado: " + id);
-		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
+		System.out.println(sueldo);
+		Empleado empleado = new Empleado(id,firstName,lastNames,email,telefono,sueldo,1);
 		System.out.println("antes");
 		empleadoDao.editar(empleado);
 		System.out.println("despues");
+		//empleado.setNombre(firstName);
+		//Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
 		//System.out.println("Recuperando datos del empleado: " + empleado);
 
 		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
