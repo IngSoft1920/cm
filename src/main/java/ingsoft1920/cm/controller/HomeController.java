@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
+
 import ingsoft1920.cm.bean.auxiliares.Hotel_Categoria;
 import ingsoft1920.cm.bean.auxiliares.Hotel_Servicio;
 import ingsoft1920.cm.bean.auxiliares.Hotel_Tipo_Habitacion;
+import ingsoft1920.cm.dao.EmpleadoDAO;
+import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
 
 @Controller
@@ -20,6 +24,8 @@ public class HomeController {
 
 	@Autowired
 	public HotelDAO hotelDao;
+	@Autowired
+	public EmpleadoDAO empleadoDao;
 
 	// Controlador para DEMO del 16/03
 	// Pruebas para conectar vista-controlador
@@ -97,14 +103,74 @@ public class HomeController {
 		return "login.jsp";
 	}
 
+	//@GetMapping("/empleados")
+	//public String empleadosForm() {
+		//return "corp-empleado/empleados.jsp";
+	//}
+	
+	//ver empleados
 	@GetMapping("/empleados")
-	public String empleadosForm() {
-		return "corp-empleado/empleados.jsp";
-	}
+		public ModelAndView empleadosForm() {
 
+			List<Empleado> empleados = new EmpleadoDAO().getEmpleados();
+
+			return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
+		}
+	
+	
+	//ver empleado 
+	// Ver-hotel
+	@GetMapping("/ver-empleado/{id}")
+	public ModelAndView verEmpleadoForm(@PathVariable(name = "id") long id) {
+
+		System.out.println("Recuperando datos del empleado: " + id);
+		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
+		System.out.println("Recuperando datos del empleado: " + empleado);
+
+		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
+	}
+	//editar-hotel
+	@GetMapping("/editar-empleado/{id}")
+	public ModelAndView geditarEmpleadoForm(@PathVariable(name = "id") long id,String firstName) {
+
+		//System.out.println("Recuperando datos del empleado: " + id);
+		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
+		//sets
+		//System.out.println("Recuperando datos del empleado: " + empleado);
+		return new ModelAndView("corp-empleado/editar-empleado.jsp", "empleado", empleado);
+	}
+	@PostMapping("/editar-empleado/{id}")
+	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id, String firstName, String lastNames, 
+			String email, String telefono, Double sueldo) {
+
+		//System.out.println("Recuperando datos del empleado: " + id);
+		System.out.println(sueldo);
+		Empleado empleado = new Empleado(id,firstName,lastNames,email,telefono,sueldo,1);
+		System.out.println("antes");
+		empleadoDao.editar(empleado);
+		System.out.println("despues");
+		//empleado.setNombre(firstName);
+		//Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
+		//System.out.println("Recuperando datos del empleado: " + empleado);
+
+		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
+	}
+	
+	
 	@GetMapping("/proveedores")
 	public String proveedoresForm() {
 		return "corp-proveedor/proveedores.jsp";
 	}
+	
+	@PostMapping("/eliminar-empleado/{id}")//duda
+	public String eliminarEmpleadoForm(@PathVariable(name = "id") long id) {
 
+		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
+		empleadoDao.eliminarEmpleado(empleado);
+		//List<Empleado> empleados = new EmpleadoDAO().getEmpleados();
+
+
+		return "corp-empleado/empleados.jsp";
+
+	}
 }
