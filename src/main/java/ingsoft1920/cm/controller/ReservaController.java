@@ -150,13 +150,11 @@ public class ReservaController {
 		dao.eliminarReserva(reserva_id);
 	}
 
-    @GetMapping("/cliente/reserva")
+    @GetMapping("/reserva/getCliente/{reserva_id}")
     @ResponseBody
-    public String clienteReserva(@RequestBody String json) {
+    public String clienteReserva(@PathVariable int reserva_id) {
 
-        JsonObject jsonO = JsonParser.parseString(json).getAsJsonObject();
-
-        Cliente cliente = dao.getCliente(jsonO.get("reserva_id").getAsInt());
+        Cliente cliente = dao.getCliente(reserva_id);
 
         JsonObject res = new JsonObject();
 

@@ -165,8 +165,7 @@ public class HotelDAO {
 			  
 			  json.add("servicios",servs);
 			  
-			  System.out.println( json.toString() );
-			
+			System.out.println(json.toString());
 			APIout.enviar(json.toString(),7001,"/recibirHotel");
 			  
 		}
@@ -430,7 +429,7 @@ public class HotelDAO {
 	
 	// La ocupación se devuelve en tanto porciento. Se devuelve
 	// todos los datos desde hoy hasta dentro de x dias
-	private static final int INVERVALO_DIAS = 3;
+	private static final int INVERVALO_DIAS = 70;
 	public Map<Date,Double> getOcupacionesHotel(int hotel_id) {
 		Map<Date,Double> res = new HashMap<>();
 		
@@ -509,8 +508,5 @@ public class HotelDAO {
 		return res;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println( new HotelDAO().getOcupacionesHotel(1) );
-	}
 
 }
