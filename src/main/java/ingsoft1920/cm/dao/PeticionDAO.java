@@ -7,6 +7,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class PeticionDAO {
 
 
     @Autowired
-    private QueryRunner runner;
+    private QueryRunner runner = new QueryRunner();
     private ConectorBBDD conector = new ConectorBBDD();
 
     public List<Peticion> getPeticiones() {
@@ -55,12 +56,12 @@ public class PeticionDAO {
 
 
     public int add(Peticion peticion){
-
+    	
         String add = "INSERT INTO Peticion (ciudad, estado, fecha_CI, fecha_CO, tipo_hab_id) VALUES (?, ?, ?, ?, ?)";
 
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
-        Integer idGenerado = null;
+        BigInteger idGenerado = null;
 
         try( Connection conn = conector.getConn() )
         {
@@ -70,9 +71,9 @@ public class PeticionDAO {
             e.printStackTrace();
         }
 
-        peticion.setId(idGenerado);
+        peticion.setId(idGenerado.intValue());
 
-        return idGenerado;
+        return idGenerado.intValue();
     }
 
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public class DatosPrecioDAO {
 
     @Autowired
-    private QueryRunner runner;
+    private QueryRunner runner = new QueryRunner();
     private ConectorBBDD conector = new ConectorBBDD();
 
     public List<DatosPrecio> datosPrecios(){

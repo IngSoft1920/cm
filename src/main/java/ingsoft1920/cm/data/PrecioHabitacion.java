@@ -32,7 +32,7 @@ public class PrecioHabitacion {
 	private double puntuacion; //1-10
 	private int politica; // % max subidas/bajadas
 	private ArrayList<DatosPrecio> dtPrecios; // datos de la competencia
-	
+
 
 	public PrecioHabitacion(String ciudad, int tipoHabitacion, double ocupacion, int regimenComidas,
 			double puntuacion, int politica, ArrayList<DatosPrecio> dtPrecios) {
@@ -137,49 +137,32 @@ public class PrecioHabitacion {
 
 
 	public static void main(String[] args) {
-		
-		ArrayList<DatosPrecio> datosPrecio = null;
-		
+
+		ArrayList<DatosPrecio> datosPrecio = new ArrayList<DatosPrecio>();
+
 		HotelDAO hotelDAO = new HotelDAO();
 		PeticionDAO peticionDAO = new PeticionDAO();
 		DatosPrecioDAO datosPrecioDAO = new DatosPrecioDAO();
 		Precio_HabitacionDAO precio_HabitacionDAO = new Precio_HabitacionDAO();
+
 		
-		/*
-		LocalDate fecha = LocalDate.now();
-		
-		System.out.println("entra0");
-		
-		List<Properties> listaProperties = hotelDAO.getDataRM();
-		
-		for (Properties dt : listaProperties) {
-			
-			//System.out.println(dt);
-	
-			for (Properties p_hab : (List<Properties>) dt.get("habitacion")) {
-				System.out.println( "id: " + (int) dt.get("id") + "ciudad: " + (String) dt.get("ciudad") + 
-						"hab: " + (int) p_hab.get("id") +
-						"ocupacion: " + ((Map<Date,Double>) dt.get("ocupacion")).get(Date.valueOf(fecha)) + 
-						"nota: " + (double) dt.get("nota"));
-			}
+		//Fijamos los precios para un rango de 30 dias
+		LocalDate fechas [] = new LocalDate[30];
+		for (int i = 0; i < 30; i++) {
+			fechas[i] = LocalDate.now().plusDays(i);
 		}
-		
-		   List<Properties> listaProperties = hotelDAO.getDataRM()
-		   for (Properties dt : listaProperties) {
-			
-			//Fijamos los precios para un rango de 30 dias
-			LocalDate fechas [] = new LocalDate[30];
-			for (int i = 0; i < 30; i++) {
-				fechas[i] = LocalDate.now().plusDays(i);
-			}
+
+		List<Properties> listaProperties = hotelDAO.getDataRM();
+		for (Properties dt : listaProperties) {
 
 			for (LocalDate fecha : fechas) { 
-				
+
 				int idPeticion = peticionDAO.add(new Peticion(0, (String) dt.get("ciudad"), false, Date.valueOf(fecha), 
-						Date.valueOf(fecha.plusDays(1)),  0));
+						Date.valueOf(fecha.plusDays(1)),  1));
 
 				// En este momento el equipo de UIpath lee de Peticion, (cambia el estado de la peticion procesada) 
 				// y actualiza la tabla DatosPrecio
+
 				do {
 					List<DatosPrecio> dataset = datosPrecioDAO.get(idPeticion);
 					for (DatosPrecio data : dataset) {
@@ -188,17 +171,17 @@ public class PrecioHabitacion {
 				} while (datosPrecio.size() == 0); //Hasta que consiga los datos
 
 				for (Properties p_hab : (List<Properties>) dt.get("habitacion")) { //Para cada tipo de habitacion
-					
+
 					PrecioHabitacion hab = new PrecioHabitacion( (String) dt.get("ciudad"), (int) p_hab.get("id"), 
 							((Map<Date,Double>) dt.get("ocupacion")).get(Date.valueOf(fecha)),
 							-1, (double) dt.get("nota"), -1, datosPrecio);
-					
+
 					precio_HabitacionDAO.setPrecio(new Precio_Habitacion( (int) dt.get("id"), 
 							(int) p_hab.get("id"), Date.valueOf(fecha), hab.precioFinal()));
 				}
 				datosPrecio.clear();
 			}	
-		}*/
+		}
 	}
 }
 

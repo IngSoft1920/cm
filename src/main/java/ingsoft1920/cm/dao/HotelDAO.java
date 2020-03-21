@@ -98,8 +98,71 @@ public class HotelDAO {
 			}
 			runner.batch(conn, queryCat, batch.toArray(new Object[categorias.size()][]));
 
+<<<<<<< HEAD
 		} catch (Exception e) {
 			e.printStackTrace();
+=======
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		// Mandamos el hotel a dho:
+		if( res != null ) {
+			JsonObject aux;
+			
+			JsonObject json = new JsonObject();
+			  json.addProperty("id",res.intValue());
+			  json.addProperty("nombre",h.getNombre());
+			  json.addProperty("descripcion",h.getDescripcion());
+			  json.addProperty("estrellas",h.getEstrellas());
+			  json.addProperty("continente",h.getContinente());
+			  json.addProperty("pais",h.getPais());
+			  json.addProperty("ciudad",h.getCiudad());
+			  
+			  JsonArray habitaciones = new JsonArray();
+			  TipoHabitacionDAO thDAO = new TipoHabitacionDAO();
+			  for(Hotel_Tipo_Habitacion hth : habs) {
+				aux = new JsonObject();
+				
+				aux.addProperty("id",hth.getTipo_hab_id());
+				aux.addProperty("nombre",thDAO.get(hth.getTipo_hab_id()).getNombre());
+				aux.addProperty("num_disponibles",hth.getNum_disponibles());
+				
+				habitaciones.add(aux);
+			  }
+			  
+			  json.add("habitaciones",habitaciones);
+			  
+			  JsonArray cats = new JsonArray();
+			  CategoriaDAO catDAO = new CategoriaDAO();
+			  for(Hotel_Categoria hc : categorias) {
+				  aux = new JsonObject();
+				  
+				  aux.addProperty("id",hc.getCategoria_id());
+				  aux.addProperty("nombre",catDAO.get(hc.getCategoria_id()).getNombre());
+				  
+				  cats.add(aux);
+			  }
+			  
+			  json.add("categorias",cats);
+			  
+			  JsonArray servs = new JsonArray();
+			  ServicioDAO servDAO = new ServicioDAO();
+			  for(Hotel_Servicio hs : servicios) {
+				  aux = new JsonObject();
+				  
+				  aux.addProperty("id",hs.getServicio_id());
+				  aux.addProperty("nombre",servDAO.get(hs.getServicio_id()).getNombre());
+				  aux.addProperty("precio",hs.getPrecio());
+				  aux.addProperty("unidad",hs.getUnidad_medida());
+				  
+				  servs.add(aux);
+			  }
+			  
+			  json.add("servicios",servs);
+			  
+			System.out.println(json.toString());
+			APIout.enviar(json.toString(),7001,"/recibirHotel");
+			  
+>>>>>>> branch 'develop' of https://github.com/IngSoft1920/cm.git
 		}
 
 		// Mandamos el hotel a dho:
@@ -433,11 +496,18 @@ public class HotelDAO {
 
 	// La ocupación se devuelve en tanto porciento. Se devuelve
 	// todos los datos desde hoy hasta dentro de x dias
+<<<<<<< HEAD
 	private static final int INVERVALO_DIAS = 3;
 
 	public Map<Date, Double> getOcupacionesHotel(int hotel_id) {
 		Map<Date, Double> res = new HashMap<>();
 
+=======
+	private static final int INVERVALO_DIAS = 30;
+	public Map<Date,Double> getOcupacionesHotel(int hotel_id) {
+		Map<Date,Double> res = new HashMap<>();
+		
+>>>>>>> branch 'develop' of https://github.com/IngSoft1920/cm.git
 		LocalDate actual = LocalDate.now();
 		LocalDate fechaTope = actual.plusDays(INVERVALO_DIAS);
 
@@ -503,9 +573,13 @@ public class HotelDAO {
 
 		return res;
 	}
+<<<<<<< HEAD
 
 	public static void main(String[] args) {
 		System.out.println(new HotelDAO().getOcupacionesHotel(1));
 	}
+=======
+	
+>>>>>>> branch 'develop' of https://github.com/IngSoft1920/cm.git
 
 }
