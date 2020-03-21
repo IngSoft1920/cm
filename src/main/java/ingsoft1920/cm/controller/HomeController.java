@@ -34,7 +34,7 @@ public class HomeController {
 	@GetMapping("/hoteles")
 	public ModelAndView HotelForm() {
 
-		List<Hotel> hoteles = new HotelDAO().hoteles();
+		List<Hotel> hoteles = hotelDao.hoteles();
 
 		return new ModelAndView("corp-hotel/hoteles.jsp", "hoteles", hoteles);
 	}
@@ -45,37 +45,12 @@ public class HomeController {
 		return new ModelAndView("corp-hotel/anadir-hotel.jsp");
 	}
 
-	// Anadir-hotel Test
-//	@PostMapping("/anadir-hotel")
-//	public ModelAndView anadirHotelCompletoForm(Hotel hotel, List<Hotel_Tipo_Habitacion> numeroHabitaciones,
-//			List<Hotel_Servicio> servicios, List<Hotel_Categoria> categorias) {
-//
-//		
-//		int hotelCompleto = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
-//		int numeroHabitacionesHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
-//		int serviciosHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
-//		int categoriasHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
-//		
-//		
-//		Hotel hotelCompleto = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
-//		List<Hotel_Tipo_Habitacion> numeroHabitacionesHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
-//		List<Hotel_Servicio> serviciosHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
-//		List<Hotel_Categoria> categoriasHotel = new HotelDAO().anadir(hotel, numeroHabitaciones, servicios, categorias);
-//		
-//		System.out.println("Recuperando datos del hotel: " + hotelCompleto);
-//		System.out.println("Recuperando datos del tipo habitacion: " + numeroHabitacionesHotel);
-//		System.out.println("Recuperando datos del servicios: " + serviciosHotel);
-//		System.out.println("Recuperando datos del categorias: " + categoriasHotel);
-//
-//		return new ModelAndView("corp-hotel/ver-hotel.jsp");
-//	}
-
 	// Ver-hotel
 	@GetMapping("/ver-hotel/{id}")
 	public ModelAndView verHotelForm(@PathVariable(name = "id") long id) {
 
 		System.out.println("Recuperando datos del hotel: " + id);
-		Hotel hotel = new HotelDAO().obtenerHotelPorId(id);
+		Hotel hotel = hotelDao.obtenerHotelPorId(id);
 		System.out.println("Recuperando datos del hotel: " + hotel);
 
 		return new ModelAndView("corp-hotel/ver-hotel.jsp", "hotel", hotel);
@@ -86,7 +61,7 @@ public class HomeController {
 	public ModelAndView editarHotelForm(@PathVariable(name = "id") long id) {
 
 		System.out.println("Recuperando datos del hotel: " + id);
-		Hotel hotel = new HotelDAO().obtenerHotelPorId(id);
+		Hotel hotel = hotelDao.obtenerHotelPorId(id);
 		System.out.println("Recuperando datos del hotel: " + hotel);
 
 		return new ModelAndView("corp-hotel/editar-hotel.jsp", "hotel", hotel);
@@ -106,5 +81,17 @@ public class HomeController {
 	public String proveedoresForm() {
 		return "corp-proveedor/proveedores.jsp";
 	}
+	
+	@GetMapping("/hoteles/eliminar-hotel/{id}")
+	public ModelAndView eliminarForm(@PathVariable( name ="id") long id) {
+		
+		System.out.println("Eliminando el hotel: " + id);
+		hotelDao.eliminarHotelPorId(id);
+		
+		return new ModelAndView("redirect:/hoteles");
+	}
+
+	
+	
 
 }

@@ -157,7 +157,8 @@
 															<div class="modal-footer">
 																<button type="button" class="btn btn-secondary"
 																	data-dismiss="modal">Cancelar</button>
-																<button type="button" class="btn btn-primary">Eliminar</button>
+																<a class="btn btn-primary"
+													href="/hoteles/eliminar-hotel/${hotel.id}" role="button">Eliminar</a>
 															</div>
 														</div>
 													</div>

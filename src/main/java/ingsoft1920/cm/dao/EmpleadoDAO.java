@@ -32,7 +32,7 @@ public class EmpleadoDAO {
         BeanListHandler<Empleado> beanListHandler = new BeanListHandler<>(Empleado.class);
         QueryRunner runner = new QueryRunner();
 
-        String getEmpleados = "SELECT * FROM empleado";
+        String getEmpleados = "SELECT * FROM Empleado";
 
         List<Empleado> empleados = new LinkedList<>();
 
