@@ -6,7 +6,7 @@ public class Peticion {
 
     private int id;
     private String ciudad;
-    private Boolean estado;
+    private boolean estado;
     private Date fecha_CI;
     private Date fecha_CO;
     private int tipo_hab_id;
@@ -14,7 +14,7 @@ public class Peticion {
     public Peticion() {
     }
 
-    public Peticion(int id, String ciudad, Boolean estado, Date fecha_CI, Date fecha_CO, int tipo_hab_id) {
+    public Peticion(int id, String ciudad, boolean estado, Date fecha_CI, Date fecha_CO, int tipo_hab_id) {
         this.id = id;
         this.ciudad = ciudad;
         this.estado = estado;
@@ -39,11 +39,11 @@ public class Peticion {
         this.ciudad = ciudad;
     }
 
-    public Boolean getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(Boolean estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 
@@ -70,4 +70,5 @@ public class Peticion {
     public void setTipo_hab_id(int tipo_hab_id) {
         this.tipo_hab_id = tipo_hab_id;
     }
+    
 }

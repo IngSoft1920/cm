@@ -2,9 +2,9 @@
 INSERT INTO Hotel (id,nombre,continente,pais,ciudad,direccion,descripcion,estrellas) VALUES (1,'Hotel Debod','Europa','España','Madrid','Calle Gran vía,21','Una experiencia milenaria',4);
 INSERT INTO Hotel (id,nombre,continente,pais,ciudad,direccion,descripcion,estrellas) VALUES (2,'Hotel Madroño','Europa','España','Madrid','Calle Sol,19','Como si estuvieses en la playa',3);
 
-INSERT INTO Tipo_Habitacion (id,nombre_tipo) VALUES (1,'normal');
-INSERT INTO Tipo_Habitacion (id,nombre_tipo) VALUES (2,'premium');
-INSERT INTO Tipo_Habitacion (id,nombre_tipo) VALUES (3,'presidencial');
+INSERT INTO Tipo_Habitacion (id,nombre) VALUES (1,'normal');
+INSERT INTO Tipo_Habitacion (id,nombre) VALUES (2,'premium');
+INSERT INTO Tipo_Habitacion (id,nombre) VALUES (3,'presidencial');
 
 INSERT INTO Hotel_Tipo_Habitacion (hotel_id,tipo_hab_id,num_disponibles) VALUES (1,1,50); 
 INSERT INTO Hotel_Tipo_Habitacion (hotel_id,tipo_hab_id,num_disponibles) VALUES (1,2,20);
@@ -50,6 +50,7 @@ INSERT INTO Ausencia(id,motivo,fecha_inicio,fecha_fin,estado,empleado_id) VALUES
 INSERT INTO Cliente(id,nombre,apellidos,DNI,nacionalidad,telefono,email,`password`) VALUES (1,'Juan','García Cano','321222F','España','123456','juan@gmail.com','juanito123');
 
 INSERT INTO Valoracion(id,cabecera,cuerpo,nota,cliente_id,hotel_id) VALUES (1,'Muy bueno','Genial experiencia, especialmente la comida',5,1,1);
+INSERT INTO Valoracion(id,cabecera,cuerpo,nota,cliente_id,hotel_id) VALUES (2,'Genial','Maravilloso, Imparable',5,1,1);
 
 INSERT INTO Reserva(id,fecha_entrada,fecha_salida,importe,regimen_comida,numero_acompanantes,hotel_id,cliente_id,tipo_hab_id) VALUES (1,'2020-05-01','2020-05-10',300,'pension_completa',3,1,1,1);
 
@@ -65,6 +66,7 @@ INSERT INTO Reserva VALUES
 (7,'2021-02-20','2021-02-21',500,'no_aplica',0,1,1,3),
 (8,'2021-02-22','2021-02-23',600,'no_aplica',0,2,1,3),
 (9,'2021-02-24','2021-02-25',700,'no_aplica',0,2,1,1);
+
 INSERT INTO Factura VALUES
 (3,10,'2021-02-12',false,0,1,1),
 (4,20,'2021-02-12',false,0,1,1),

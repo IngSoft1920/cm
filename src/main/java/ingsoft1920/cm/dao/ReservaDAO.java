@@ -2,11 +2,10 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import ingsoft1920.cm.bean.Cliente;
-import ingsoft1920.cm.bean.Profesion;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -14,7 +13,12 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonObject;
+
+import ingsoft1920.cm.apiout.APIout;
+import ingsoft1920.cm.bean.Cliente;
 import ingsoft1920.cm.bean.Reserva;
+import ingsoft1920.cm.bean.Reserva.Regimen;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
@@ -41,8 +45,32 @@ public class ReservaDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		// Mandamos la reserva a dho
+		if( res != null ) {
+			
+			JsonObject json = new JsonObject();
+			  json.addProperty("reserva_id",res.intValue());
+			  json.addProperty("fecha_entrada",r.getFecha_entrada().toString());
+			  json.addProperty("fecha_salida",r.getFecha_salida().toString());
+			  json.addProperty("importe",r.getImporte());
+			  json.addProperty("cliente_id",r.getCliente_id());
+			  json.addProperty("numero_acompanantes",r.getNumero_acompanantes());
+			  json.addProperty("hotel_id", r.getHotel_id());
+			  json.addProperty("tipo_hab_id", r.getTipo_hab_id());
+			  
+			APIout.enviar(json.toString(),7001, "/recibirReserva");
+		}
+		
 
 		return (res != null ? res.intValue() : -1);
+	}
+	
+	public static void main(String[] args) {
+		ReservaDAO dao = new ReservaDAO();
+		Reserva r = new Reserva(-1,Date.valueOf("2020-10-01"),Date.valueOf("2020-10-10"), 1000, Regimen.media_pension, 3, 5, 1, 1);
+	
+		dao.anadir(r);
 	}
 
 	public List<Reserva> reservasDeUnCliente(int cliente_id) {

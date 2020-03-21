@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Profesion;
+import ingsoft1920.cm.bean.auxiliares.Servicio_Profesion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
@@ -24,16 +25,28 @@ public class ProfesionDAO {
 	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 	
-	public int anadir(Profesion s) {
+	public int anadir(Profesion s, List<Servicio_Profesion> servicios) {
+		// Primero añadimos el hotel mismamente
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-		String queryH = "INSERT INTO Profesion (nombre) VALUES (?);";
+		String queryH = "INSERT INTO Profesion " + "(nombre) "
+				+ "VALUES (?);";
+		
+		String querySer = "INSERT INTO Servicio_Profesion " + "(profesion_id,servicio_id) " + "VALUES (?,?)";
 
-		try (Connection conn = conector.getConn()) 
-		{
+		List<Object[]> batch;
+		try (Connection conn = conector.getConn()) {
 			res = runner.insert(conn, queryH, handler, s.getNombre());
 			
-		} catch (Exception e) { e.printStackTrace(); }
+			batch = new ArrayList<>();
+			for (Servicio_Profesion ser : servicios) {
+				batch.add(new Object[] { res.intValue(), ser.getServicio_id() });
+			}
+			runner.batch(conn, querySer, batch.toArray(new Object[servicios.size()][]));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return (res != null ? res.intValue() : -1);
 	}

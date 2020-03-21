@@ -21,7 +21,7 @@ CREATE TABLE `Hotel`(
 
 CREATE TABLE `Tipo_Habitacion` (
 	`id` INT AUTO_INCREMENT,
-	`nombre_tipo` VARCHAR(100) NOT NULL,
+	`nombre` VARCHAR(100) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE `Precio_Habitacion` (
 	`fecha` DATE NOT NULL,
 	`hotel_id` INT NOT NULL,
 	`tipo_hab_id` INT NOT NULL,
-    `precio` INT NOT NULL,
+    `precio_por_noche` INT NOT NULL,
     FOREIGN KEY (`hotel_id`,`tipo_hab_id`) REFERENCES `Hotel_Tipo_Habitacion` (`hotel_id`,`tipo_hab_id`) ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (`hotel_id`,`tipo_hab_id`,`fecha`)
 );
@@ -197,7 +197,7 @@ CREATE TABLE `Cliente` (
     `DNI` VARCHAR(15),
     `nacionalidad` VARCHAR(20),    /*Está en país: España, México, etc*/
     `telefono` VARCHAR(15),
-    `email` VARCHAR(100),
+    `email` VARCHAR(100) UNIQUE,
     `password` VARCHAR(100),
     PRIMARY KEY (id)
 );
@@ -262,7 +262,8 @@ CREATE TABLE `Factura` (
 CREATE TABLE `Peticion` (
     `id`INT AUTO_INCREMENT,
     `ciudad` VARCHAR(100) NOT NULL,
-    `fecha` DATE NOT NULL,
+    `fecha_CI` DATE NOT NULL,
+    `fecha_CO` DATE NOT NULL,
     `tipo_hab_id` INT NOT NULL,
     `estado` BOOLEAN NOT NULL,
     PRIMARY KEY (`id`),
@@ -271,8 +272,8 @@ CREATE TABLE `Peticion` (
 
 CREATE TABLE `Datos_Precio` (
     `id` INT AUTO_INCREMENT,
-    `precio` DOUBLE NOT NULL,
-    `puntuacion` DOUBLE NOT NULL,
+    `precio` VARCHAR(30) NOT NULL,
+    `puntuacion` VARCHAR(30) NOT NULL,
     `estado` BOOLEAN NOT NULL,
     `peticion_id` INT NOT NULL,
     PRIMARY KEY (`id`),
