@@ -20,145 +20,127 @@ import ingsoft1920.cm.conector.ConectorBBDD;
 @Component
 public class AusenciaDAO {
 
-    @Autowired
-    private QueryRunner runner = new QueryRunner();
+	@Autowired
+	private QueryRunner runner = new QueryRunner();
 
-    private ConectorBBDD conector = new ConectorBBDD();
+	private ConectorBBDD conector = new ConectorBBDD();
 
-    public List<Ausencia> ausencias() {
+	public List<Ausencia> ausencias() {
 
-        BeanListHandler<Ausencia> beanListHandler = new BeanListHandler<>(Ausencia.class);
-        QueryRunner runner = new QueryRunner();
+		BeanListHandler<Ausencia> beanListHandler = new BeanListHandler<>(Ausencia.class);
+		QueryRunner runner = new QueryRunner();
 
-        String getAusencias = "SELECT * FROM Ausencia";
+		String getAusencias = "SELECT * FROM Ausencia";
 
-        List<Ausencia> ausencias = new LinkedList<>();
+		List<Ausencia> ausencias = new LinkedList<>();
 
-        try( Connection conn = conector.getConn() )
-        {
-            ausencias = runner.query(conn, getAusencias, beanListHandler);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        return ausencias;
-    }
-
-    public void resultadoAusencia(Ausencia a,Ausencia.Estado resolucion){
-
-        String cambiaEstado = "UPDATE Ausencia SET estado = ? WHERE id = ?";
-
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiaEstado, resolucion.name(), a.getId());
-        }
-        catch(Exception e) { e.printStackTrace(); }
-        
-        // Notificamos a em del resultado
-        JsonObject json = new JsonObject();
-          json.addProperty("id_ausencia",a.getId());
-          json.addProperty("resultado",resolucion.name());
-          json.addProperty("motivo",a.getMotivo());
-        APIout.enviar(json.toString(), 7002, "/resultadoAusencia");
-        
-    }
-    
-    public static void main(String[] args) {
-    	
-    	AusenciaDAO dao = new AusenciaDAO();
-    	Ausencia primera = dao.ausencias().get(0);
-    	dao.resultadoAusencia(primera, Ausencia.Estado.aprobada);
-    	
+		try (Connection conn = conector.getConn()) {
+			ausencias = runner.query(conn, getAusencias, beanListHandler);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ausencias;
 	}
 
-    public int anadir(Ausencia a){
-        BigInteger idGenerado = null;
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-        String query = "INSERT INTO Ausencia "
-        			  +"(id,motivo,fecha_inicio,fecha_fin,estado,empleado_id) "
-        			  +"VALUES (?,?,?,?,?,?)";
-        
-        
-        try( Connection conn = conector.getConn() )
-        {
-            idGenerado = runner.insert(conn, query, handler,
-            						   a.getId(),
-            						   a.getMotivo(),
-            						   a.getFecha_inicio(),
-            						   a.getFecha_fin(),
-            						   a.getEstado().name(),
-            						   a.getEmpleado_id()
-            						  );
-            
-        }
-        catch(Exception e) { e.printStackTrace(); }
+	public void resultadoAusencia(Ausencia a, Ausencia.Estado resolucion) {
 
-        return ( idGenerado != null ? idGenerado.intValue() : -1 );
-    }
-    
-    public void eliminarAusencia(Ausencia ausencia){
+		String cambiaEstado = "UPDATE Ausencia SET estado = ? WHERE id = ?";
 
-        String eliminarAusencia = "DELETE FROM Ausencia WHERE id = ?";
+		try (Connection conn = conector.getConn()) {
+			runner.update(conn, cambiaEstado, resolucion.name(), a.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		// Notificamos a em del resultado
+		JsonObject json = new JsonObject();
+		json.addProperty("id_ausencia", a.getId());
+		json.addProperty("resultado", resolucion.name());
+		json.addProperty("motivo", a.getMotivo());
+		APIout.enviar(json.toString(), 7002, "/resultadoAusencia");
 
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, eliminarAusencia, handler, ausencia.getId());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+	}
 
-    }
-    
-    public void cambiarMotivo(Ausencia ausencia, String nuevoMotivo){
+	public static void main(String[] args) {
 
-        String cambiarMotivo = "UPDATE Ausencia SET motivo = ? WHERE id = ?";
+		AusenciaDAO dao = new AusenciaDAO();
+		Ausencia primera = dao.ausencias().get(0);
+		dao.resultadoAusencia(primera, Ausencia.Estado.aprobada);
 
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+	}
 
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiarMotivo, handler, nuevoMotivo, ausencia.getId());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void cambiarFechaInicio(Ausencia ausencia, String nuevaFechaInicio){
+	public int anadir(Ausencia a) {
+		BigInteger idGenerado = null;
+		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		String query = "INSERT INTO Ausencia " + "(id,motivo,fecha_inicio,fecha_fin,estado,empleado_id) "
+				+ "VALUES (?,?,?,?,?,?)";
 
-        String cambiaFechaInicio = "UPDATE Ausencia SET fecha_inicio = ? WHERE id = ?";
+		try (Connection conn = conector.getConn()) {
+			idGenerado = runner.insert(conn, query, handler, a.getId(), a.getMotivo(), a.getFecha_inicio(),
+					a.getFecha_fin(), a.getEstado().name(), a.getEmpleado_id());
 
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiaFechaInicio, handler, nuevaFechaInicio, ausencia.getId());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+		return (idGenerado != null ? idGenerado.intValue() : -1);
+	}
 
-    }
-    
-    public void cambiarFechaFin(Ausencia ausencia, String nuevaFechaFin){
+	public void eliminarAusencia(Ausencia ausencia) {
 
-        String cambiaFechaFin = "UPDATE Ausencia SET fecha_fin = ? WHERE id = ?";
+		String eliminarAusencia = "DELETE FROM Ausencia WHERE id = ?";
 
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiaFechaFin, handler, nuevaFechaFin, ausencia.getId());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+		try (Connection conn = conector.getConn()) {
+			runner.update(conn, eliminarAusencia, handler, ausencia.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-    }
-    
-    // Se entiende que no interesa cambiar el empleado_id de una ausencia.
+	}
+
+	public void cambiarMotivo(Ausencia ausencia, String nuevoMotivo) {
+
+		String cambiarMotivo = "UPDATE Ausencia SET motivo = ? WHERE id = ?";
+
+		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+
+		try (Connection conn = conector.getConn()) {
+			runner.update(conn, cambiarMotivo, handler, nuevoMotivo, ausencia.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void cambiarFechaInicio(Ausencia ausencia, String nuevaFechaInicio) {
+
+		String cambiaFechaInicio = "UPDATE Ausencia SET fecha_inicio = ? WHERE id = ?";
+
+		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+
+		try (Connection conn = conector.getConn()) {
+			runner.update(conn, cambiaFechaInicio, handler, nuevaFechaInicio, ausencia.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void cambiarFechaFin(Ausencia ausencia, String nuevaFechaFin) {
+
+		String cambiaFechaFin = "UPDATE Ausencia SET fecha_fin = ? WHERE id = ?";
+
+		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+
+		try (Connection conn = conector.getConn()) {
+			runner.update(conn, cambiaFechaFin, handler, nuevaFechaFin, ausencia.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	// Se entiende que no interesa cambiar el empleado_id de una ausencia.
 
 }

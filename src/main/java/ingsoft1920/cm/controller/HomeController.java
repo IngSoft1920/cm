@@ -11,11 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
-
-import ingsoft1920.cm.bean.auxiliares.Hotel_Categoria;
-import ingsoft1920.cm.bean.auxiliares.Hotel_Servicio;
-import ingsoft1920.cm.bean.auxiliares.Hotel_Tipo_Habitacion;
-import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
 
@@ -137,7 +132,7 @@ public class HomeController {
 		return "corp-proveedor/proveedores.jsp";
 	}
 	
-<<<<<<< HEAD
+
 	@GetMapping("/hoteles/eliminar-hotel/{id}")
 	public ModelAndView eliminarForm(@PathVariable( name ="id") long id) {
 		
@@ -149,10 +144,10 @@ public class HomeController {
 
 	
 	
-=======
+
 	@PostMapping("/eliminar-empleado/{id}")//duda
 	public String eliminarEmpleadoForm(@PathVariable(name = "id") long id) {
->>>>>>> branch 'develop' of https://github.com/IngSoft1920/cm.git
+
 
 		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
 		empleadoDao.eliminarEmpleado(empleado);
