@@ -492,12 +492,6 @@ public class HotelDAO {
 
 	// La ocupación se devuelve en tanto porciento. Se devuelve
 	// todos los datos desde hoy hasta dentro de x dias
-
-	private static final int INVERVALO_DIAS = 3;
-
-	public Map<Date, Double> getOcupacionesHotel(int hotel_id) {
-		Map<Date, Double> res = new HashMap<>();
-
 	private static final int INVERVALO_DIAS = 30;
 
 	public Map<Date, Double> getOcupacionesHotel(int hotel_id) {
