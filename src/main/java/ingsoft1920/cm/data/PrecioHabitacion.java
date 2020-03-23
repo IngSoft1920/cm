@@ -30,12 +30,12 @@ public class PrecioHabitacion {
 	private int regimenComidas;
 	private int evento; // con recogida de datos de eventos con uipath mas adelante
 	private double puntuacion; //1-10
-	private int politica; // % max subidas/bajadas
+	private double politica; // % max subidas/bajadas
 	private ArrayList<DatosPrecio> dtPrecios; // datos de la competencia
 
 
 	public PrecioHabitacion(String ciudad, int tipoHabitacion, double ocupacion, int regimenComidas,
-			double puntuacion, int politica, ArrayList<DatosPrecio> dtPrecios) {
+			double puntuacion, double politica, ArrayList<DatosPrecio> dtPrecios) {
 		this.precio = 100; //Cuando este disponible, hay que cambiarlo por el coste
 		this.ciudad = ciudad;
 		this.tipoHabitacion = tipoHabitacion;
@@ -44,7 +44,7 @@ public class PrecioHabitacion {
 		//this.evento = evento;
 		this.puntuacion = puntuacion;
 		this.politica = politica;
-		if (politica == -1) politica = 50;
+		if (politica == -1) this.politica = 50;
 		this.dtPrecios = dtPrecios;
 	}
 
@@ -61,7 +61,7 @@ public class PrecioHabitacion {
 	public void precioCiudad() {
 		//Devuelve una subida o bajada de hasta politica% segun la diferencia entre el precio base y el precio de la competencia
 		double precioCompetencia = procesar(this.dtPrecios);
-		double variacion = 0.5 * this.politica * (1/100);
+		double variacion = 0.5 * this.politica * 0.01;
 		double mod = Math.atan((precioCompetencia - precio) / 50) * (2 / Math.PI) * variacion;
 		precio = precio * (1 + mod);
 	}
@@ -70,7 +70,7 @@ public class PrecioHabitacion {
 		if (this.ocupacion == -1) {
 			return;
 		}
-		double variacion = 0.4 * this.politica * (1/100);
+		double variacion = 0.4 * this.politica * 0.01;
 		precio = precio * (1 + ((this.ocupacion - 0.5) / 0.5) * variacion);
 	}
 
@@ -83,11 +83,15 @@ public class PrecioHabitacion {
 
 	public void precioEvento() {
 		if (this.evento == -1) return;
-		if (this.evento > 10) precio = precio*1.5;
+		if (this.evento > 10) precio = precio * 1.5;
 	}
 
 	public void precioTipoHabitacion() {
 		if (this.tipoHabitacion == 1) {
+			precio *= 1;
+		} else if (this.tipoHabitacion == 2) {
+			precio *= 1.25;
+		} else if (this.tipoHabitacion == 3) {
 			precio *= 1.5;
 		}
 	}
@@ -96,7 +100,7 @@ public class PrecioHabitacion {
 		if (this.puntuacion == -1) {
 			return;
 		}
-		double variacion = 0.1 * this.politica * (1/100);
+		double variacion = 0.1 * this.politica * 0.01;
 		precio = precio * (1 + ((this.puntuacion-5) / 5) * variacion);
 	}
 
@@ -116,7 +120,7 @@ public class PrecioHabitacion {
 				precio = Double.parseDouble(data.getPrecio().replaceAll("[^\\d.]", "")); //Elimina el simbolo euros
 				puntuacion = Double.parseDouble(data.getPuntuacion().replaceAll(",",".")); //Cambia , por .
 			} catch (Exception e){
-				System.out.println("precio: " + data.getPrecio() + "punt: " + data.getPuntuacion());
+				//System.out.println("precio: " + data.getPrecio() + " punt: " + data.getPuntuacion());
 				continue;
 			}
 			precios.add(precio);
@@ -131,7 +135,6 @@ public class PrecioHabitacion {
 			suma += puntuaciones.get(i);
 		}
 		media = media / suma;
-
 		return media;
 	}
 
@@ -151,7 +154,7 @@ public class PrecioHabitacion {
 		for (int i = 0; i < 30; i++) {
 			fechas[i] = LocalDate.now().plusDays(i);
 		}
-
+		
 		List<Properties> listaProperties = hotelDAO.getDataRM();
 		for (Properties dt : listaProperties) {
 
@@ -159,18 +162,18 @@ public class PrecioHabitacion {
 
 				int idPeticion = peticionDAO.add(new Peticion(0, (String) dt.get("ciudad"), false, Date.valueOf(fecha), 
 						Date.valueOf(fecha.plusDays(1)),  1));
-
+				
 				// En este momento el equipo de UIpath lee de Peticion, (cambia el estado de la peticion procesada) 
 				// y actualiza la tabla DatosPrecio
 
-				do {
+				/*do {
 					List<DatosPrecio> dataset = datosPrecioDAO.get(idPeticion);
 					for (DatosPrecio data : dataset) {
 						datosPrecio.add(data);
 					}
 				} while (datosPrecio.size() == 0); //Hasta que consiga los datos
 
-				for (Properties p_hab : (List<Properties>) dt.get("habitacion")) { //Para cada tipo de habitacion
+				for (Properties p_hab : (List<Properties>) dt.get("habitaciones")) { //Para cada tipo de habitacion
 
 					PrecioHabitacion hab = new PrecioHabitacion( (String) dt.get("ciudad"), (int) p_hab.get("id"), 
 							((Map<Date,Double>) dt.get("ocupacion")).get(Date.valueOf(fecha)),
@@ -179,7 +182,7 @@ public class PrecioHabitacion {
 					precio_HabitacionDAO.setPrecio(new Precio_Habitacion( (int) dt.get("id"), 
 							(int) p_hab.get("id"), Date.valueOf(fecha), hab.precioFinal()));
 				}
-				datosPrecio.clear();
+				datosPrecio.clear();*/
 			}	
 		}
 	}
