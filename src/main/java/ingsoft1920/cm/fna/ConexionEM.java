@@ -41,6 +41,7 @@ public class ConexionEM {
 					System.out.println("Hotel_id: "+id_hotel[i]+" , sueldo: "+sueldo[i]+", id_empleado: "+id_empleado[i]+", rol: "+rol[i]+", incentivo: "+incentivo[i]);
 					if(aux!=null) {
 						sueldoEmpleados = aux.getSueldoEmpleados().get(rol[i]);
+						aux.setTotal(aux.getTotal()-(sueldo[i]+incentivo[i]));
 						if(sueldoEmpleados!=null) {
 							//Ya hay una entrada creada para ese rol. Actualizar el value
 							aux.getSueldoEmpleados().replace(rol[i], sueldoEmpleados+sueldo[i]+incentivo[i]);
@@ -57,6 +58,7 @@ public class ConexionEM {
 						//Aun asi, por si acaso, creamos una nueva entrada en el map
 						aux=new BeneficiosGastosModel("",0);
 						aux.getSueldoEmpleados().put(rol[i], sueldo[i]+incentivo[i]);
+						aux.setTotal(aux.getTotal()-(sueldo[i]+incentivo[i]));
 						map.put(id_hotel[i], aux);
 					}
 				}
