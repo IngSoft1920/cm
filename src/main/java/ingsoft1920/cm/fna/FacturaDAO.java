@@ -107,6 +107,50 @@ public class FacturaDAO {
 		return map;
 	}
 
-
+	//Metodo que te recibe un map. Cada entrada simboliza un hotel distinto. En caso de que el hotel exista previamente, se actualizara el map 
+	//añadiendo el importe de los servicios. En caso de que no exista, se creara una nueva entrada y se añadira al map
+	public static HashMap<Integer, BeneficiosGastosModel> beneficiosServicios( HashMap<Integer, BeneficiosGastosModel> map) {
+		//key=hotel_id, value=Beneficios del hotel
+		String beneficiosServicios ="SELECT R.hotel_id,H.nombre,S.id, S.nombre, SUM(F.importe)\r\n" + 
+				"FROM Reserva AS R\r\n" + 
+				"JOIN Factura AS F ON R.id=F.reserva_id\r\n" + 
+				"JOIN Hotel AS H ON R.hotel_id=H.id\r\n" + 
+				"JOIN Servicio AS S ON F.servicio_is=S.id\r\n"+
+				"GROUP BY R.hotel_id, S.id;";
+		java.sql.Statement stmt= null;
+		ResultSet rs= null;
+		BeneficiosGastosModel aux;
+		try {
+			stmt=conector.getConn().createStatement();
+			rs=stmt.executeQuery(beneficiosServicios);
+			while(rs.next()) {
+				aux=map.get(rs.getInt("R.hotel_id"));
+				//añadimos beneficios de los servicios
+				if(aux!=null) {
+					Double servicio = aux.getSumaFacturas().get(rs.getString("S.nombre"));
+					if(servicio!=null) {
+						//Ya hay una entrada creada para ese servicio. Actualizar el value
+						aux.getSumaFacturas().replace(rs.getString("S.nombre"), rs.getDouble(" SUM(F.importe)"));
+					}
+					else {
+						//No hay una entrada creada, la creamos y añadimos los valores.
+						aux.getSumaFacturas().put(rs.getString("S.nombre"), rs.getDouble(" SUM(F.importe)"));
+					}
+				
+				}
+				else {
+					aux=new BeneficiosGastosModel(rs.getString("H.nombre"),0);
+					aux.getSumaFacturas().put(rs.getString("S.nombre"), rs.getDouble(" SUM(F.importe)"));
+					map.put(rs.getInt("R.hotel_id"), aux);
+				}
+			}
+		}catch (SQLException ex){ 
+			System.out.println("SQLException: " + ex.getMessage());
+		} finally { // it is a good idea to release resources in a finally block 
+			if (rs != null) { try { rs.close(); } catch (SQLException sqlEx) { } rs = null; } 
+			if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
+		}
+		return map;
+	}
  
 }
