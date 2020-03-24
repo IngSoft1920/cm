@@ -39,8 +39,8 @@ public class FacturaDAO {
 			stmt=conector.getConn().createStatement();
 			rs=stmt.executeQuery(beneficiosReservas);
 			while(rs.next()) {
-				aux=new BeneficiosGastosModel(rs.getString("H.nombre"),rs.getDouble("SUM(R.importe)"),0,0);
-				map.put(rs.getInt("R.hotel_id"), aux);
+				//aux=new BeneficiosGastosModel(rs.getString("H.nombre"),rs.getDouble("SUM(R.importe)"),0,0);
+				//map.put(rs.getInt("R.hotel_id"), aux);
 			}
 			rs.close();
 			rs=stmt.executeQuery(beneficiosServicios);
@@ -53,7 +53,7 @@ public class FacturaDAO {
 				//Sino existe creamos un nuevo hotel, teoricamente nunca se deberia meter en este else
 				//Porque no tiene sentido un hotel que no tiene clientes que alquilen habitaciones
 				else {
-					aux=new BeneficiosGastosModel(rs.getString("H.nombre"),0,rs.getDouble("SUM(F.importe)"),0);
+					//aux=new BeneficiosGastosModel(rs.getString("H.nombre"),0,rs.getDouble("SUM(F.importe)"),0);
 					map.put(rs.getInt("R.hotel_id"), aux);
 				}
 			}
@@ -94,7 +94,7 @@ public class FacturaDAO {
 				}
 				//En caso de no estarlo, añadir nueva entrada (Nombre del hotel, y costeAlimentos, el resto de valores los pondrias a 0)
 				else {
-					aux=new BeneficiosGastosModel(rs.getString("nombre"),0,0,rs.getDouble("cantidad")*rs.getDouble("precio"));
+					aux=new BeneficiosGastosModel(rs.getString("nombre"),rs.getDouble("cantidad")*rs.getDouble("precio"));
 					map.put(rs.getInt("hotel_id"), aux);	
 				}
 			}
