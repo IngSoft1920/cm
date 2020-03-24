@@ -13,7 +13,6 @@ import ingsoft1920.cm.fna.ConexionEM;
 public class BeneficioController {
 
 	private HashMap<Integer, BeneficiosGastosModel> beneficios_gastos = FacturaDAO.beneficioPorHotel();
-
 	@GetMapping("/beneficio")
 	public String beneficio(Model model) {
 		beneficios_gastos = FacturaDAO.gastosAlimentosPorHotel(beneficios_gastos);

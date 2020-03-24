@@ -12,13 +12,26 @@
 		<h1>Beneficios</h1>
 
 			<c:forEach items="${treasureMap}" var="entry">
-
-
+				   
 				   <b>Hotel:</b> ${entry.value.nombreHotel} <emsp><b>ID:</b> ${entry.key}<br>
-				   <b> Dinero de las reservas:</b> <vd> ${entry.value.sumaReservas}€</vd><br>
-				   <b> Suma de las facturas:</b> <vd> ${entry.value.sumaFacturas}€</vd><br>
-				   <b> Dinero Invertido en Empleados:</b><rj> ${entry.value.sueldoEmpleados}€</rj><br>
-				   <b> Dinero Invertido en Comida:</b><rj> ${entry.value.gastoComida}€</rj><br><br><br>
+				   <b>Ingresos por estancia en habitaciones:</b><br>
+				   <c:forEach items="${entry.value.sumaReservas}" var="serv">
+				   	      <emsp>${serv.key}: <vd> ${serv.value}</vd><br>
+				   </c:forEach>
+				   <b>Ingresos por servicios ofrecidos:</b><br>
+				   <c:forEach items="${entry.value.sumaFacturas}" var="fact">
+				   	      <emsp>${fact.key}: <vd> ${fact.value}</vd><br>
+				   </c:forEach>
+				   <c:forEach items="${entry.value.sueldoEmpleados}" var="suel">
+				   	      <b>Sueldos destinados a los empleados segun su rol:</b>
+				   	      <emsp>${suel.key}: <rj> ${suel.value}</rj><br>
+				   </c:forEach>
+				   <b>Gasto en productos alimenticios: </b><rj> ${entry.value.gastoComida}</rj>
+				   
+				   
+
+
+				   <br><br><br>
 
 			</c:forEach>
 	</body>
