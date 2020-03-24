@@ -12,11 +12,12 @@ import ingsoft1920.cm.fna.ConexionEM;
 @Controller
 public class BeneficioController {
 
-	private HashMap<Integer, BeneficiosGastosModel> beneficios_gastos = FacturaDAO.beneficioPorHotel();
+	private HashMap<Integer, BeneficiosGastosModel> beneficios_gastos = FacturaDAO.sumaReservas();
 	@GetMapping("/beneficio")
 	public String beneficio(Model model) {
 		beneficios_gastos = FacturaDAO.gastosAlimentosPorHotel(beneficios_gastos);
 		beneficios_gastos = ConexionEM.peticionSueldoEmpleados(beneficios_gastos);
+		beneficios_gastos = FacturaDAO.beneficiosServicios(beneficios_gastos);
 		model.addAttribute("treasureMap", beneficios_gastos);
 		return "fna/beneficio.jsp";
 	}
