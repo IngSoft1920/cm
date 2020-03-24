@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.gson.JsonArray;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -98,7 +99,6 @@ public class EmpleadoDAO {
         if( idGenerado != null ) {
         	ProfesionDAO pdao = new ProfesionDAO();
         	String nombreProfesion = pdao.getByID(empleado.getProfesion_id()).getNombre();
-        	        	
         	JsonObject json = new JsonObject();
         	  json.addProperty("id",idGenerado.intValue());
         	  json.addProperty("nombre",empleado.getNombre());
@@ -108,6 +108,11 @@ public class EmpleadoDAO {
         	  json.addProperty("valor",empleado.getSueldo());
         	  json.addProperty("id_hotel",hotelEmpleado.getHotel_id());
         	  json.addProperty("fecha_contratacion",hotelEmpleado.getFecha_contratacion().toString());
+        	  json.addProperty("contrasenia", "12345");
+
+        	  JsonArray dias = new JsonArray();
+        	  dias.add(3); dias.add(4); dias.add(5); dias.add(6);
+        	  json.add("dias_libres", dias);
         	  
         	APIout.enviar(json.toString(),7002,"/creaEmpleado");
         }
