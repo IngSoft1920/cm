@@ -1,20 +1,25 @@
 package ingsoft1920.cm.fna;
 
+import java.util.HashMap;
+
 public class BeneficiosGastosModel {
 
 	private String nombreHotel;
-	private double sumaReservas;
-	private double sumaFacturas;
-	private double sueldoEmpleados;
+	// key=tipo_habitacion, value= dinero total por tipo_habitacion
+	private HashMap <String, Double> sumaReservas;
+	// key=tipo_servicio, value= dinero total por tipo_servicio
+	private HashMap <String, Double> sumaFacturas;
+	// key=tipo_empleado (rol), value= dinero total por rol
+	private HashMap <String, Double> sueldoEmpleados;
 	private double gastoComida;
 	
-	public BeneficiosGastosModel(String nombreHotel, double sumaReservas, double sumaFacturas, double sueldoEmpleados,
+	public BeneficiosGastosModel(String nombreHotel, double sumaReservas, double sumaFacturas,
 			double gastoComida) {
 		this.nombreHotel = nombreHotel;
-		this.sumaReservas = sumaReservas;
-		this.sumaFacturas = sumaFacturas;
-		this.sueldoEmpleados = sueldoEmpleados;
+		this.sumaReservas = new HashMap <String, Double> ();
+		this.sumaFacturas = new HashMap <String, Double> ();
 		this.gastoComida = gastoComida;
+		this.sueldoEmpleados = new HashMap <String, Double> ();
 	}
 	public String getNombreHotel() {
 		return nombreHotel;
@@ -22,29 +27,30 @@ public class BeneficiosGastosModel {
 	public void setNombreHotel(String nombreHotel) {
 		this.nombreHotel = nombreHotel;
 	}
-	public double getSumaReservas() {
-		return sumaReservas;
-	}
-	public void setSumaReservas(double sumaReservas) {
-		this.sumaReservas = sumaReservas;
-	}
-	public double getSumaFacturas() {
-		return sumaFacturas;
-	}
-	public void setSumaFacturas(double sumaFacturas) {
-		this.sumaFacturas = sumaFacturas;
-	}
-	public double getSueldoEmpleados() {
-		return sueldoEmpleados;
-	}
-	public void setSueldoEmpleados(double sueldoEmpleados) {
-		this.sueldoEmpleados = sueldoEmpleados;
-	}
+
 	public double getGastoComida() {
 		return gastoComida;
 	}
 	public void setGastoComida(double gastoComida) {
 		this.gastoComida = gastoComida;
+	}
+	public HashMap<String, Double> getSueldoEmpleados() {
+		return sueldoEmpleados;
+	}
+	public void setSueldoEmpleados(HashMap<String, Double> sueldoEmpleados) {
+		this.sueldoEmpleados = sueldoEmpleados;
+	}
+	public HashMap<String, Double> getSumaReservas() {
+		return sumaReservas;
+	}
+	public void setSumaReservas(HashMap<String, Double> sumaReservas) {
+		this.sumaReservas = sumaReservas;
+	}
+	public HashMap<String, Double> getSumaFacturas() {
+		return sumaFacturas;
+	}
+	public void setSumaFacturas(HashMap<String, Double> sumaFacturas) {
+		this.sumaFacturas = sumaFacturas;
 	}
 	@Override
 	public String toString() {
@@ -52,6 +58,7 @@ public class BeneficiosGastosModel {
 				+ ", sumaFacturas=" + sumaFacturas + ", sueldoEmpleados=" + sueldoEmpleados + ", gastoComida="
 				+ gastoComida + "]";
 	}
+	
 	
 	
 

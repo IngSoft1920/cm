@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
 <html lang="en">
@@ -16,7 +15,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -46,7 +45,7 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="/css/form-validation.css" rel="stylesheet">
+    <link href="../css/form-validation.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -60,19 +59,19 @@
 
             <div class="col-md-18 order-md-1">
 
-                <form class="needs-validation" novalidate=""  method="POST">
+                <form class="needs-validation" novalidate="">
                     <div class="mb-3">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="" required="">
+                        <label for="firstName">Nombre</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="" required="">
                         <div class="invalid-feedback">
                             El nombre del hotel es obligatorio
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="continente">Continente</label>
+                        <label for="username">Continente</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="continente" name="continente" placeholder="Continente" required="">
+                            <input type="text" class="form-control" id="username" placeholder="Continente" required="">
                             <div class="invalid-feedback" style="width: 100%;">
                                 Your continente is required.
                             </div>
@@ -81,7 +80,7 @@
 
                     <div class="mb-3">
                         <label for="text">Pais </label>
-                        <input type="text" class="form-control" id="text" name="pais" placeholder="Pais">
+                        <input type="text" class="form-control" id="text" placeholder="Pais">
                         <div class="invalid-feedback">
                             Please enter a valid Pais.
                         </div>
@@ -89,7 +88,7 @@
 
                     <div class="mb-3">
                         <label for="address">Ciudad</label>
-                        <input type="text" class="form-control" id="address"  name="ciudad" placeholder="Calle/Avenida/..." required="">
+                        <input type="text" class="form-control" id="address" placeholder="Calle/Avenida/..." required="">
                         <div class="invalid-feedback">
                             Please enter your ciudad.
                         </div>
@@ -97,7 +96,7 @@
 
                     <div class="mb-3">
                         <label for="address2">Direccion<span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="address2"  name="direccion" placeholder="Apartment or suite">
+                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
                         <div class="invalid-feedback">
                             Please enter your Direccion.
                         </div>
@@ -113,53 +112,110 @@
                                     Restuaracion
                                 </label>
                             </div>
+                            
+
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Spa
+                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal">
+                                    Otros
                                 </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Piscina
-                                </label>
-                            </div>
-                            <!--<select class="custom-select d-block w-100" id="country" multiple required="">
 
-                                <option>Restuaracion</option>
-                                <option>Spa</option>
-                                <option>Piscina</option>
-                                <option>Otros</option>
+                                <!-- Modal para servicios -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Servicio
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Necesitas añadir otro servicio que no se encuentra en la lista?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <a class="btn btn-primary" href="anadir-servicios.html" role="button">Añadir</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                </select>-->
+                            </div>
+
                             <div class="invalid-feedback">
-                                Please select a valid country.
+                                Please select a valid servicio.
                             </div>
                         </div>
+                    </div>
 
-
-
-                        <div class="col-md-4 mb-3">
-                            <label for="state">Tipos de Habitacion.</label>
-                            <select class="custom-select d-block w-100" id="state" multiple required="">
-
-                                <option>Individual</option>
-                                <option>Doble</option>
-                                <option>Triple</option>
-                            </select>
+                    <div class="row">
+                        <div class="col-md-6 mb-6">
+                            <label for="zip">Habitaciones "tipo"</label>
+                            <input type="number" class="form-control" id="zip" placeholder="" required="">
                             <div class="invalid-feedback">
-                                Please provide a valid state.
+                                Numero de habitaciones "tipo"
                             </div>
                         </div>
-                        <div class="col-md-3 mb-3">
+                       
+                  
+
+                        <div class="col-md-5 mb-5">
                             <label for="zip">Estrellas</label>
-                            <input type="number" min="0" max="6" class="form-control" id="zip" name="estrellas" placeholder="" required="">
+                            <input type="number" min="0" max="6" class="form-control" id="zip" placeholder="" required="">
                             <div class="invalid-feedback">
                                 Numero de estrellas requeridas.
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="country">Categorias</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1">
+                                    Family
+                                </label>
+                            </div>
+                           
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal2">
+                                    Otros
+                                </label>
+
+                                <!-- Modal para categoria -->
+                                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Categoria
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Necesitas añadir otra categoria que no se encuentra en la lista?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <a class="btn btn-primary" href="/corp-hotel/anadir-categoria" role="button">Añadir</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="invalid-feedback">
+                                Please select a valid categoria.
+                            </div>
+                        </div>
+                    </div>
+
                     <hr class="mb-4">
 
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
@@ -182,16 +238,19 @@
                 <p class="float-right">
                     <a href="/inicio">Back to Home</a>
                 </p>
+                <p class="float-left">
+                    <a href="/hoteles">Back to Hoteles</a>
+                </p>
 
             </div>
         </footer>
     </div>
-    <script src="/js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="../js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
-    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
-    <script src="/js/form-validation.js"></script>
+    <script src="../js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <script src="../js/form-validation.js"></script>
 
 </body>
 

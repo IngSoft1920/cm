@@ -91,7 +91,7 @@
 				<div class="container d-flex align-content-start">
 					<a href="" class="navbar-brand "> <strong>Hoteles</strong>
 					</a> <a class="navbar-nav" href="/inicio">Inicio</a> <a
-						class="navbar-nav" href="/anadir-hotel">Añadir Hotel</a>
+						class="navbar-nav" href="/anadir-hotel"><strong>Añadir Hotel</strong></a>
 
 				</div>
 			</div>
@@ -158,7 +158,8 @@
 																<button type="button" class="btn btn-secondary"
 																	data-dismiss="modal">Cancelar</button>
 																<a class="btn btn-primary"
-													href="/hoteles/eliminar-hotel/${hotel.id}" role="button">Eliminar</a>
+																	href="/hoteles/eliminar-hotel/${hotel.id}"
+																	role="button">Eliminar</a>
 															</div>
 														</div>
 													</div>
