@@ -23,10 +23,11 @@
 				   	      <emsp>${fact.key}: <vd> ${fact.value}</vd><br>
 				   </c:forEach>
 				   <c:forEach items="${entry.value.sueldoEmpleados}" var="suel">
-				   	      <b>Sueldos destinados a los empleados segun su rol:</b>
+				   	      <b>Sueldos destinados a los empleados segun su rol:</b><br>
 				   	      <emsp>${suel.key}: <rj> ${suel.value}</rj><br>
 				   </c:forEach>
-				   <b>Gasto en productos alimenticios: </b><rj> ${entry.value.gastoComida}</rj>
+				   <b>Gasto en productos alimenticios: </b><rj> ${entry.value.gastoComida}</rj><br>
+				   <b>TOTAL: </b> ${entry.value.total}
 				   
 				   
 
