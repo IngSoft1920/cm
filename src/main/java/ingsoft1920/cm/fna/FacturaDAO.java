@@ -152,5 +152,57 @@ public class FacturaDAO {
 		}
 		return map;
 	}
+	
+	public static HashMap <Integer, BeneficiosGastosModel> sumaReservas() {
+		//key=hotel_id, value=Beneficios del hotel
+		//Consulta para obtener el gastos de los alimentos
+		HashMap <Integer, BeneficiosGastosModel> map = new HashMap <Integer, BeneficiosGastosModel>();
+		String sql = "SELECT R.hotel_id,H.nombre, TH.id, TH.nombre, SUM(R.importe)\r\n" + 
+				"FROM Reserva AS R\r\n" + 
+				"JOIN Hotel AS H ON R.hotel_id=H.id\r\n" + 
+				"JOIN Tipo_Habitacion AS TH ON" + 
+				"R.tipo_hab_id=TH.id\r\n" + 
+				"GROUP BY R.hotel_id, TH.id;";
+
+		java.sql.Statement stmt= null;
+		ResultSet rs= null;
+		BeneficiosGastosModel aux;
+		
+		try {
+			stmt=conector.getConn().createStatement();
+			rs=stmt.executeQuery(sql);
+			while(rs.next()) {
+				//Vemos si el hotel_id ya esta en el map
+				aux=map.get(rs.getInt("hotel_id"));
+				if(aux!=null) {
+					//En caso de estarlo, se actualizaria su value
+					Double reserva = aux.getSumaReservas().get(rs.getString("R.tipo_hab_id"));
+					if(reserva!=null) { 
+						//Existe una entrada. Actualizamos value
+						aux.getSumaReservas().replace(rs.getString("R.tipo_hab_id"), rs.getDouble("SUM(R.importe)"));
+					}
+				//Añadir nueva entrada 
+				else {
+					aux.getSumaReservas().put(rs.getString("R.tipo_hab_id"), rs.getDouble("SUM(R.importe)"));
+				}
+			
+		}else {
+			aux=new BeneficiosGastosModel(rs.getString("hotel_id"),0);
+			aux.getSumaReservas().put(rs.getString("R.tipo_hab_id"), rs.getDouble("SUM(R.importe)"));
+			map.put(rs.getInt("hotel_id"), aux);	
+		}
+				
+			}
+		}catch (SQLException ex){ 
+			System.out.println("SQLException: " + ex.getMessage());
+		} finally { // it is a good idea to release resources in a finally block 
+			if (rs != null) { try { rs.close(); } catch (SQLException sqlEx) { } rs = null; } 
+			if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
+		}
+		return map;
+
+
+ 
+}
  
 }
