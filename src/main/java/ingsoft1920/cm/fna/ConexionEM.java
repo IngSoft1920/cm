@@ -34,9 +34,9 @@ public class ConexionEM {
 				for(int i=0;i<id_HotelLista.size();i++) {
 					id_hotel[i]=id_HotelLista.get(i).getAsInt();
 					sueldo[i]=sueldoLista.get(i).getAsDouble();
-					id_empleado[i]=id_HotelLista.get(i).getAsInt();
-					rol[i]=sueldoLista.get(i).getAsString();
-					incentivo[i]=id_HotelLista.get(i).getAsDouble();
+					id_empleado[i]=id_empleadoLista.get(i).getAsInt();
+					rol[i]=rolLista.get(i).getAsString();
+					incentivo[i]=incentivoLista.get(i).getAsDouble();
 					aux=map.get(id_hotel[i]);
 					System.out.println("Hotel_id: "+id_hotel[i]+" , sueldo: "+sueldo[i]+", id_empleado: "+id_empleado[i]+", rol: "+rol[i]+", incentivo: "+incentivo[i]);
 					if(aux!=null) {
