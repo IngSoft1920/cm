@@ -110,7 +110,7 @@
                                                 <a class="btn btn-sm btn-outline-secondary" href="/ver-empleado/${empleado.id}" role="button">Ver</a>
                                                 <a class="btn btn-sm btn-outline-secondary" href="/editar-empleado/${empleado.id}" role="button">Editar</a>
                                                 <!-- Button trigger modal -->
-                                                <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" href="#" role="button">
+                                                <a class="btn btn-sm btn-outline-secondary" href="/eliminar-empleado/${empleado.id}" role="button">
                                                     Eliminar
                                                 </a>
                                                 <!-- Modal -->

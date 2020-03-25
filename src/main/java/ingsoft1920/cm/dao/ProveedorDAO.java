@@ -12,6 +12,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.bean.auxiliares.Proveedor_Producto;
 import ingsoft1920.cm.conector.ConectorBBDD;
@@ -49,6 +50,7 @@ public class ProveedorDAO {
 
 		return (res != null ? res.intValue() : -1);
 	}
+	
 	
 	public Proveedor proveedor(int id) {
 		Proveedor res=null;
