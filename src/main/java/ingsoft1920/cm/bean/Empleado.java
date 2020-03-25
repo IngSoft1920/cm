@@ -1,32 +1,38 @@
 package ingsoft1920.cm.bean;
-import org.springframework.stereotype.Component;
 
-@Component
+
 public class Empleado {
+	
 	private int id;
 	private String nombre;
 	private String apellidos;
 	private String email;
 	private String telefono;
-	private String ocupacion;
+	private double sueldo;
+	private int profesion_id;
 
-    public Empleado() {
-    }
+	public Empleado() {}
 
-    public Empleado(int id, String nombre, String apellidos, String email, String telefono, String ocupacion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
-        this.email = email;
-        this.telefono = telefono;
-        this.ocupacion = ocupacion;
-    }
+	public Empleado(int id, String nombre, String apellidos, String email, String telefono, double sueldo,
+			int profesion_id) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.email = email;
+		this.telefono = telefono;
+		this.sueldo = sueldo;
+		this.profesion_id = profesion_id;
+	}
 
-    public int getId() {
+
+
+
+	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int idGenerado) {
+		this.id = idGenerado;
 	}
 	public String getNombre() {
 		return nombre;
@@ -52,20 +58,25 @@ public class Empleado {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	public String getOcupacion() {
-		return ocupacion;
+	public double getSueldo() {
+		return sueldo;
 	}
-	public void setOcupacion(String ocupacion) {
-		this.ocupacion = ocupacion;
+	public void setSueldo(double sueldo) {
+		this.sueldo = sueldo;
 	}
+	public int getProfesion_id() {
+		return profesion_id;
+	}
+	public void setProfesion_id(int profesion_id) {
+		this.profesion_id = profesion_id;
+	}
+
 	@Override
 	public String toString() {
 		return "Empleado [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
-				+ ", telefono=" + telefono + ", ocupacion=" + ocupacion + "]";
+				+ ", telefono=" + telefono + ", sueldo=" + sueldo + ", profesion_id=" + profesion_id + "]";
 	}
-
-
-
-
+	
+	
 
 }

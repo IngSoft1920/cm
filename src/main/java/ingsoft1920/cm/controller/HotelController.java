@@ -1,94 +1,137 @@
 package ingsoft1920.cm.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Date;
+import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import ingsoft1920.cm.bean.Habitaciones;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.dao.HotelDAO;
+import ingsoft1920.cm.model.Disponibles;
 
 @Controller
-@RequestMapping("/hotel")
 public class HotelController {
 
 	@Autowired
-	FakeDB fake;
-	
-	private HotelDAO hotelDao = new HotelDAO();
+	HotelDAO dao = new HotelDAO();
 
-	@GetMapping
-	public String homeHotel(Model m) {
-		m.addAttribute("hoteles", hotelDao.hoteles());
-		return "/corp-hotel/home.jsp";
+	@GetMapping("/hotel/ge")
+	@ResponseBody
+	public String hotelesGE() {
+		Gson jsonMaker = new Gson();
+		JsonArray res = new JsonArray();
+		List<Hotel> hoteles = dao.hoteles();
+
+		JsonObject hotelJson;
+		for (Hotel h : hoteles) {
+
+			hotelJson = jsonMaker.toJsonTree(h, Hotel.class).getAsJsonObject();
+			hotelJson.add("categorias", jsonMaker.toJsonTree(dao.categoriasHotel(h.getId())));
+
+			res.add(hotelJson);
+		}
+
+		return res.toString();
 	}
 
-	@GetMapping("/anadir")
-	public String formAnadirHotel() {
-		return "corp-hotel/anadir.jsp";
+	@GetMapping("/hotel/servicios/{hotel_id}")
+	@ResponseBody
+	public String serviciosHotel(@PathVariable int hotel_id) {
+
+		/*
+		 * Cada Properties es así (todo se refiere al servicio): id : int / nombre :
+		 * String precio : int unidad : String
+		 */
+		List<Properties> servicios = dao.serviciosHotelGE(hotel_id);
+
+		if (servicios == null) {
+			JsonObject error = new JsonObject();
+			error.addProperty("error", "Ha habido un problema buscando los servicios");
+			return error.toString();
+		}
+
+		JsonArray res = new JsonArray();
+		JsonObject elem;
+		for (Properties serv : servicios) {
+			elem = new JsonObject();
+
+			elem.addProperty("id", (int) serv.get("id"));
+			elem.addProperty("nombre", (String) serv.get("nombre"));
+
+			// Precio y unidad podrían ser campos a null
+
+			elem.addProperty("precio", serv.get("precio") != null ? (int) serv.get("precio") : null);
+
+			elem.addProperty("unidad", serv.get("unidad") != null ? (String) serv.get("unidad") : null);
+
+			res.add(elem);
+		}
+		return res.toString();
 	}
 
-	@PostMapping("/anadir")
-	public String formAnadirHotel(String nombre,String continente,String pais,
-								  String ciudad, String direccion,int numNormales,
-								  int numPremium)
-	{
-		
-		Map<Habitaciones.Tipo,Integer> habs = new HashMap<>();
-		  habs.put(Habitaciones.Tipo.normal,numNormales);
-		  habs.put(Habitaciones.Tipo.premium,numPremium);
-		
-		hotelDao.anadirHotel(nombre, continente, pais, ciudad, direccion, habs);
-		return "redirect:/hotel";
-	}
+	@GetMapping("/hotel/disponibles")
+	@ResponseBody
+	public String disponibles(@RequestParam Date fecha_inicio, @RequestParam Date fecha_fin) {
 
-	@GetMapping("/editar/{hotel_id}")
-	public String formEditarHotel() {
-		return "/corp-hotel/editar.jsp";
-	}
+		List<Disponibles> disponibles = dao.disponibles(fecha_inicio, fecha_fin);
 
-	@PostMapping("/editar/{hotel_id}")
-	public String recibirInfoParaEditar(@PathVariable("hotel_id") int hotel_id,
-										String nombre)
-	{
-		
-		// TODO: cambiar. Lo que está ahora es provisional, que
-		// no dio tiempo a pedirles un getHotelByID. Además, habría
-		// que decirles que editar no cambia la ubicación del hotel, si acaso
-		// cambia el nombre y la denominación de las habitaciones
-		Hotel h = hotelDao
-					   .hoteles()
-					   .stream()
-					   .filter( hotel -> hotel.getId() == hotel_id )
-					   .findAny()
-					   .get();	
-		Map<Habitaciones.Tipo,Integer> habs = new HashMap<>();
-		  habs.put(Habitaciones.Tipo.normal,10);
-		  habs.put(Habitaciones.Tipo.premium,10);
-		  
-		hotelDao.editarHotel(hotel_id,
-							 nombre,
-							 h.getContinente(),
-							 h.getPais(),
-							 h.getCiudad(),
-							 h.getDireccion(),
-							 habs);
-		
-		return "redirect:/hotel";
-	}
+		JsonArray res = new JsonArray();
+		JsonArray habitaciones;
 
-	@GetMapping("/facturacion/{hotel_id}")
-	public String mostrarFacturacionHotel(@PathVariable("hotel_id") int hotel_id,
-										  Model m) {
-		m.addAttribute("facturas", hotelDao.facturacionHotel(hotel_id));
-		return "/corp-hotel/facturacion.jsp";
+		JsonObject elem;
+		JsonObject habitacion;
+
+		int id;
+
+		Disponibles disponible;
+
+		int i = 0;
+
+		while (i < disponibles.size()) {
+
+			disponible = disponibles.get(i);
+
+			elem = new JsonObject();
+			habitaciones = new JsonArray();
+
+			id = disponible.getHotel_id();
+			elem.addProperty("hotel_id", id);
+
+			while (disponible.getHotel_id() == id) {
+
+				habitacion = new JsonObject();
+
+				habitacion.addProperty("tipo_hab_id", disponible.getTipo_ha_id());
+				habitacion.addProperty("nombre", disponible.getNombre_tipo());
+				habitacion.addProperty("precio_total", disponible.getPrecio_total());
+
+				habitaciones.add(habitacion);
+
+				i++;
+				if (i < (disponibles.size())) {
+					disponible = disponibles.get(i);
+				} else {
+					break;
+				}
+			}
+
+			elem.add("habitaciones", habitaciones);
+
+			res.add(elem);
+
+		}
+
+		return res.toString();
 	}
 
 }

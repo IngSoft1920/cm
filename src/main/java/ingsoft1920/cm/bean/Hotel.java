@@ -1,30 +1,30 @@
 package ingsoft1920.cm.bean;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Hotel {
-
+	
 	private int id;
 	private String nombre;
 	private String continente;
 	private String pais;
 	private String ciudad;
 	private String direccion;
-
-    public Hotel() {
-    }
-
-    public Hotel(int id, String nombre, String continente, String pais, String ciudad, String direccion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.continente = continente;
-        this.pais = pais;
-        this.ciudad = ciudad;
-        this.direccion = direccion;
-    }
-
-    public int getId() {
+	private int estrellas;
+	private String descripcion;
+	
+	public Hotel() {}
+	
+	public Hotel(int id, String nombre, String continente, String pais, String ciudad, String direccion, int estrellas,
+			String descripcion) {
+		this.id = id;
+		this.nombre = nombre;
+		this.continente = continente;
+		this.pais = pais;
+		this.ciudad = ciudad;
+		this.direccion = direccion;
+		this.estrellas = estrellas;
+		this.descripcion = descripcion;
+	}
+	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
@@ -60,12 +60,23 @@ public class Hotel {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+	public int getEstrellas() {
+		return estrellas;
+	}
+	public void setEstrellas(int estrellas) {
+		this.estrellas = estrellas;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 	@Override
 	public String toString() {
 		return "Hotel [id=" + id + ", nombre=" + nombre + ", continente=" + continente + ", pais=" + pais + ", ciudad="
-				+ ciudad + ", direccion=" + direccion + "]";
+				+ ciudad + ", direccion=" + direccion + ", estrellas=" + estrellas + ", descripcion=" + descripcion
+				+ "]";
 	}
-
-
 
 }
