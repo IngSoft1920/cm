@@ -1,4 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
@@ -11,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Añadir Categoria</title>
+    <title>Añadir Producto</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
@@ -52,8 +55,8 @@
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Añadir Categoria</h2>
-            <p class="lead">Añadir categoria a la cadena.</p>
+            <h2>Añadir Producto</h2>
+            <p class="lead">Añadir producto a la cadena.</p>
         </div>
 
         <div class="row center">
@@ -62,10 +65,10 @@
 
                 <form class="needs-validation" novalidate="">
                     <div class="mb-3">
-                        <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre de la categoria" value="" required="">
+                        <label for="firstName">Prodcuto</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="Nombre del producto" value="" required="">
                         <div class="invalid-feedback">
-                            El nombre de la categoria es obligatorio
+                            El nombre del producto es obligatorio
                         </div>
                     </div>
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
@@ -78,10 +81,7 @@
             <p class="mb-1">© 2020 Company Name</p>
             <div class="container">
                 <p class="float-right">
-                    <a href="/index.html">Back to Home</a>
-                </p>
-                 <p class="float-left">
-                    <a href="/anadir-hotel">Back to Hotel</a>
+                    <a href="/anadir-proveedor">Back</a>
                 </p>
 
             </div>

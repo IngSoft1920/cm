@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
@@ -11,12 +12,12 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Añadir Categoria</title>
+    <title>Añadir Profesion</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -46,14 +47,14 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="../css/form-validation.css" rel="stylesheet">
+    <link href="/css/form-validation.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Añadir Categoria</h2>
-            <p class="lead">Añadir categoria a la cadena.</p>
+            <h2>Añadir Profesión</h2>
+            <p class="lead">Añadir profesión a la cadena.</p>
         </div>
 
         <div class="row center">
@@ -62,10 +63,10 @@
 
                 <form class="needs-validation" novalidate="">
                     <div class="mb-3">
-                        <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre de la categoria" value="" required="">
+                        <label for="profesion">Profesión</label>
+                        <input type="text" class="form-control" id="profesion" placeholder="Nombre de la profesión" value="" required="">
                         <div class="invalid-feedback">
-                            El nombre de la categoria es obligatorio
+                            El nombre de la profesión es obligatorio
                         </div>
                     </div>
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
@@ -78,21 +79,21 @@
             <p class="mb-1">© 2020 Company Name</p>
             <div class="container">
                 <p class="float-right">
-                    <a href="/index.html">Back to Home</a>
+                    <a href="/inicio">Back to Home</a>
                 </p>
-                 <p class="float-left">
-                    <a href="/anadir-hotel">Back to Hotel</a>
+                <p class="float-left">
+                    <a href="/anadir-empleado">Back to Empleado</a>
                 </p>
 
             </div>
         </footer>
     </div>
-    <script src="../js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="/js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
-    <script src="../js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
-    <script src="../js/form-validation.js"></script>
+    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <script src="/js/form-validation.js"></script>
 
 </body>
 

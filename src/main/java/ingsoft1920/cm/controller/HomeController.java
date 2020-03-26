@@ -11,8 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
+import ingsoft1920.cm.dao.ProveedorDAO;
 
 @Controller
 public class HomeController {
@@ -21,11 +23,10 @@ public class HomeController {
 	public HotelDAO hotelDao;
 	@Autowired
 	public EmpleadoDAO empleadoDao;
+	@Autowired
+	public ProveedorDAO proveedorDao;
 
-	// Controlador para DEMO del 16/03
-	// Pruebas para conectar vista-controlador
-
-	// index.html
+	// Pagina de inicio
 	@GetMapping("/inicio")
 	public String homeCorporativo() {
 		return "index.jsp";
@@ -46,10 +47,25 @@ public class HomeController {
 		return new ModelAndView("corp-hotel/hoteles.jsp", "hoteles", hoteles);
 	}
 
+	// anadir hotel
 	@GetMapping("/anadir-hotel")
 	public ModelAndView anadirForm() {
 
 		return new ModelAndView("corp-hotel/anadir-hotel.jsp");
+	}
+
+	// Anadir-categoria
+	@GetMapping("/anadir-hotel/anadir-categoria")
+	public ModelAndView anadirCategoriaForm() {
+
+		return new ModelAndView("corp-hotel/anadir-categoria.jsp");
+	}
+
+	// Anadir-servicio
+	@GetMapping("/anadir-hotel/anadir-servicios")
+	public ModelAndView anadirServicioForm() {
+
+		return new ModelAndView("corp-hotel/anadir-servicios.jsp");
 	}
 
 	// Hotel/Ver-hotel
@@ -77,6 +93,8 @@ public class HomeController {
 	// eliminar hotel
 	@GetMapping("/hoteles/eliminar-hotel/{id}")
 	public ModelAndView eliminarForm(@PathVariable(name = "id") long id) {
+
+		System.out.println("Recuperando datos del hotel: " + id);
 		hotelDao.eliminarHotelPorId(id);
 
 		return new ModelAndView("redirect:/hoteles");
@@ -91,13 +109,25 @@ public class HomeController {
 		return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
 	}
 
+	// Anadir empleado
+	@GetMapping("/anadir-empleado")
+	public ModelAndView anadirEmpleadosForm() {
+
+		return new ModelAndView("corp-empleado/anadir-empleado.jsp");
+	}
+
+	// Anadir profesion
+	@GetMapping("/anadir-empleado/anadir-profesion")
+	public ModelAndView anadirProfesionForm() {
+
+		return new ModelAndView("corp-empleado/anadir-profesion.jsp");
+	}
+
 	// ver empleado
 	@GetMapping("/ver-empleado/{id}")
 	public ModelAndView verEmpleadoForm(@PathVariable(name = "id") long id) {
 
-		System.out.println("Recuperando datos del empleado: " + id);
 		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
-		System.out.println("Recuperando datos del empleado: " + empleado);
 
 		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
 	}
@@ -106,10 +136,8 @@ public class HomeController {
 	@GetMapping("/editar-empleado/{id}")
 	public ModelAndView geditarEmpleadoForm(@PathVariable(name = "id") long id, String firstName) {
 
-		// System.out.println("Recuperando datos del empleado: " + id);
 		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
-		// sets
-		// System.out.println("Recuperando datos del empleado: " + empleado);
+
 		return new ModelAndView("corp-empleado/editar-empleado.jsp", "empleado", empleado);
 	}
 
@@ -118,25 +146,18 @@ public class HomeController {
 	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id, String firstName, String lastNames,
 			String email, String telefono, Double sueldo) {
 
-		// System.out.println("Recuperando datos del empleado: " + id);
-		System.out.println(sueldo);
 		Empleado empleado = new Empleado(id, firstName, lastNames, email, telefono, sueldo, 1);
-		System.out.println("antes");
 		empleadoDao.editar(empleado);
-		System.out.println("despues");
-		// empleado.setNombre(firstName);
-		// Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
-		// System.out.println("Recuperando datos del empleado: " + empleado);
 
 		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
 	}
-	
+
 	// Eliminar empleado
-	@GetMapping("/eliminar-empleado/{id}")
+	@GetMapping("/empleados/eliminar-empleado/{id}")
 	public ModelAndView eliminarEmpleadoForm(@PathVariable(name = "id") long id) {
 
-		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
-		empleadoDao.eliminarEmpleado(empleado);
+		// Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
+		empleadoDao.eliminarEmpleadoPorId(id);
 
 		return new ModelAndView("redirect:/empleados");
 
@@ -144,8 +165,73 @@ public class HomeController {
 
 	// Pagina de Proveedores
 	@GetMapping("/proveedores")
-	public String proveedoresForm() {
-		return "corp-proveedor/proveedores.jsp";
+	public ModelAndView proveedoresForm() {
+
+		List<Proveedor> proveedores = new ProveedorDAO().proveedores();
+
+		return new ModelAndView("corp-proveedor/proveedores.jsp", "proveedores", proveedores);
+		// return new ModelAndView("corp-proveedor/proveedores.jsp");
 	}
+
+	// Anadir proveedor
+	@GetMapping("/anadir-proveedor")
+	public String anadirProveedorForm() {
+
+		return "corp-proveedor/anadir-proveedor.jsp";
+	}
+
+	// Anadir producto
+	@GetMapping("/anadir-proveedor/anadir-producto")
+	public String anadirProductoForm() {
+
+		return "corp-proveedor/anadir-producto.jsp";
+	}
+
+	// ver proveedor
+	@GetMapping("/proveedores/ver-proveedor/{id}")
+	public ModelAndView verProveedorPorId(@PathVariable(name = "id") long id) {
+
+		Proveedor proveedor = new ProveedorDAO().obtenerProveedorPorId(id);
+
+		return new ModelAndView("corp-proveedor/ver-proveedor.jsp", "proveedor", proveedor);
+	}
+
+	// editar-proveedor GET
+	@GetMapping("/proveedores/editar-proveedor/{id}")
+	public ModelAndView geditarProveedorForm(@PathVariable(name = "id") long id, String empresa) {
+
+		Proveedor proveedor = new ProveedorDAO().obtenerProveedorPorId(id);
+
+		return new ModelAndView("corp-proveedor/editar-proveedor.jsp", "proveedor", proveedor);
+	}
+
+	// editar-proveedor POST
+	@PostMapping("/proveedores/editar-proveedor/{id}")
+	public ModelAndView editarProveedorForm(@PathVariable(name = "id") int id, String empresa, String CIF) {
+
+		Proveedor proveedor = new Proveedor(id, empresa, CIF);
+
+		proveedorDao.editar(proveedor);
+
+		return new ModelAndView("corp-proveedor/ver-proveedor.jsp", "proveedor", proveedor);
+	}
+
+	// Eliminar proveedor
+	@GetMapping("/proveedores/eliminar-proveedor/{id}")
+	public ModelAndView eliminarProveedorForm(@PathVariable(name = "id") long id) {
+
+		// Proveedor proveedor = new ProveedorDAO().obtenerProveedorPorId(id);
+		proveedorDao.eliminarProveedorPorId(id);
+
+		return new ModelAndView("redirect:/proveedores");
+
+	}
+	
+	
+	// Pagina de facturacion
+		@GetMapping("/facturacion")
+		public String facturacionForm() {
+			return "fna/beneficio.jsp";
+		}
 
 }

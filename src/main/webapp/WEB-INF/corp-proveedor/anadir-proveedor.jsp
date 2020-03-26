@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
@@ -12,12 +14,12 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Añadir Empleado</title>
+    <title>Añadir Proveedor</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -47,14 +49,14 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="/css/form-validation.css" rel="stylesheet">
+    <link href="../css/form-validation.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Añadir Empleado</h2>
-            <p class="lead">Añadir empleado a la cadena.</p>
+            <h2>Añadir Proveedor</h2>
+            <p class="lead">Añadir proveedor a la cadena.</p>
         </div>
 
         <div class="row center">
@@ -66,58 +68,44 @@
                         <label for="firstName">Nombre</label>
                         <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="" required="">
                         <div class="invalid-feedback">
-                            El nombre del empleado es obligatorio
+                            El nombre del empleado es obligatorio.
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="firstName">Apellidos</label>
+                        <label for="firstName">CIF</label>
                         <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="" required="">
                         <div class="invalid-feedback">
-                            El apellidos del empleado son obligatorio
+                            El CIF son obligatorio.
                         </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email">Email </label>
-                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                        <div class="invalid-feedback">
-                            Please enter a valid email address.
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="address2">Telefono<span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-
                     </div>
 
                     <div class="row">
 
                         <div class="col-md-5 mb-3">
-                            <label for="country">Profesion</label>
+                            <label for="country">Producto</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                                 <label class="form-check-label" for="defaultCheck1">
-                                    Camarero
+                                    Verdura
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                                 <label class="form-check-label" for="defaultCheck1">
-                                    Cocinero
+                                    Fruta
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                                 <label class="form-check-label" for="defaultCheck1">
-                                    Bartender
+                                    Cerveza
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                                 <label class="form-check-label" for="defaultCheck1">
-                                    Seguridad
+                                    Vino
                                 </label>
                             </div>
 
@@ -132,18 +120,18 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Profesion
+                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Producto
                                                 </h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Necesitas aÃ±adir otra profesion que no se encuentra en la lista?
+                                                Necesitas añadir otro producto que no se encuentre en la lista?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a class="btn btn-primary" href="/anadir-empleado/anadir-profesion" role="button">Añadir</a>
+                                                <a class="btn btn-primary" href="/anadir-proveedor/anadir-producto" role="button">Añadir</a>
                                             </div>
                                         </div>
                                     </div>
@@ -172,22 +160,22 @@
                 </li>
             </ul>
             <div class="container">
-                <p class="float-right">
-                    <a href="/inicio">Back to Home</a>
+                <p class="float-left">
+                    <a href="/proveedores/proveedores.html">Back to proveedores</a>
                 </p>
-                 <p class="float-left">
-                    <a href="/empleados">Back to Empleados</a>
+                <p class="float-right">
+                    <a href="/proveedores/proveedores.html">Back to Home</a>
                 </p>
 
             </div>
         </footer>
     </div>
-    <script src="/js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="../js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
-    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
-    <script src="/js/form-validation.js"></script>
+    <script src="../js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <script src="../js/form-validation.js"></script>
 
 </body>
 

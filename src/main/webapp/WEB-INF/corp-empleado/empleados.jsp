@@ -73,7 +73,7 @@
                         <strong>Empleados</strong>
                     </a>
                     <a class="navbar-nav" href="/inicio">Inicio</a>
-                    <a class="navbar-nav" href="anadir-empleado.html">Añadir Empleado</a>
+                    <a class="navbar-nav" href="/anadir-empleado">Añadir Empleado</a>
                 </div>
             </div>
         </header>
@@ -129,7 +129,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                                <a class="btn btn-primary" href="/eliminar-empleado/${empleado.id}" role="button">Eliminar</a>
+                                                                <a class="btn btn-primary" href="/empleados/eliminar-empleado/${empleado.id}" role="button">Eliminar</a>
                                                             </div>
                                                         </div>
                                                     </div>
