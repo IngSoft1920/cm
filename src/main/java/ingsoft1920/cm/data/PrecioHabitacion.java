@@ -164,7 +164,7 @@ public class PrecioHabitacion {
 				// y actualiza la tabla DatosPrecio
 
 				do {
-					List<DatosPrecio> dataset = datosPrecioDAO.get(idPeticion);
+					List<DatosPrecio> dataset = datosPrecioDAO.getByPeticionID(idPeticion);
 					for (DatosPrecio data : dataset) {
 						datosPrecio.add(data);
 					}
