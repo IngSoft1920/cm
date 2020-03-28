@@ -133,7 +133,7 @@ public class HotelDAO {
 				aux = new JsonObject();
 
 				aux.addProperty("id", hc.getCategoria_id());
-				aux.addProperty("nombre", catDAO.get(hc.getCategoria_id()).getNombre());
+				aux.addProperty("nombre", catDAO.getByID(hc.getCategoria_id()).getNombre());
 
 				cats.add(aux);
 			}
@@ -193,7 +193,7 @@ public class HotelDAO {
 				aux = new JsonObject();
 
 				aux.addProperty("id", hc.getCategoria_id());
-				aux.addProperty("nombre", catDAO.get(hc.getCategoria_id()).getNombre());
+				aux.addProperty("nombre", catDAO.getByID(hc.getCategoria_id()).getNombre());
 
 				cats.add(aux);
 			}
