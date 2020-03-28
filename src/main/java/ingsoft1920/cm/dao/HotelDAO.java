@@ -536,7 +536,7 @@ public class HotelDAO {
 		List<Properties> res = null;
 		List<Map<String, Object>> resConsulta = null;
 		MapListHandler handler = new MapListHandler();
-		String query = "SELECT th.id,th.nombre,hth.num_disponibles AS capacidad " + "FROM Hotel_Tipo_Habitacion hth "
+		String query = "SELECT th.id, th.nombre_tipo, hth.num_disponibles AS capacidad " + "FROM Hotel_Tipo_Habitacion hth "
 				+ "JOIN Tipo_Habitacion th ON hth.tipo_hab_id = th.id " + "WHERE hth.hotel_id = ?";
 
 		try (Connection conn = conector.getConn()) {
@@ -553,7 +553,7 @@ public class HotelDAO {
 				aux = new Properties();
 
 				aux.put("id", (int) fila.get("id"));
-				aux.put("nombre", (String) fila.get("nombre"));
+				aux.put("nombre", (String) fila.get("nombre_tipo"));
 				aux.put("capacidad", (int) fila.get("capacidad"));
 
 				res.add(aux);
