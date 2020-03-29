@@ -133,9 +133,9 @@
 
 												<!-- Button trigger modal -->
 												<!-- Opcion para eliminar hotel de la cadena -->
-												<button type="button"
+												<a type="button"
 													class="btn btn-sm btn-outline-secondary"
-													data-toggle="modal" data-target="#exampleModal">
+													href="/hoteles/eliminar-hotel/${hotel.id}" data-target="#exampleModal">
 													Eliminar</button>
 												<!-- Modal -->
 
@@ -152,7 +152,7 @@
 																	<span aria-hidden="true">&times;</span>
 																</button>
 															</div>
-															<div class="modal-body">Esta seguro que desea
+															<div class="modal-body">¿Está seguro que desea
 																eliminar el hotel?</div>
 															<div class="modal-footer">
 																<button type="button" class="btn btn-secondary"

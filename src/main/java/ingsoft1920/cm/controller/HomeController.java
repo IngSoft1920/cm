@@ -2,6 +2,8 @@ package ingsoft1920.cm.controller;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -11,16 +13,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.Proveedor;
+import ingsoft1920.cm.bean.Servicio;
+import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.ProfesionDAO;
 import ingsoft1920.cm.dao.ProveedorDAO;
+import ingsoft1920.cm.dao.ServicioDAO;
+import ingsoft1920.cm.dao.TipoHabitacionDAO;
 
 @Controller
 public class HomeController {
@@ -54,9 +59,83 @@ public class HomeController {
 	// anadir hotel
 	@GetMapping("/anadir-hotel")
 	public ModelAndView anadirForm() {
-
-		return new ModelAndView("corp-hotel/anadir-hotel.jsp");
+		ModelAndView mav = new ModelAndView("corp-hotel/anadir-hotel.jsp");
+		  mav.addObject("servicios", new ServicioDAO().servicios());
+		  mav.addObject("categorias", new CategoriaDAO().categorias());
+		  mav.addObject("habs", new TipoHabitacionDAO().tipos());
+		
+		return mav;
 	}
+	
+	
+	@PostMapping("/anadir-hotel")
+	public String recibirHotel(String nombre,
+							 String continente,
+							 String pais,
+							 String ciudad,
+							 String direccion,
+							 Integer estrellas,
+							 String descripcion,
+							 Integer[] categoriasIDs,
+							 Integer[] serviciosIDs,
+							 Integer[] habsIDs, // habsIDs y numDisponibles están mapeados
+							 Integer[] numDisponibles) 
+	{
+		
+		Hotel hotel = new Hotel();
+		  hotel.setNombre(nombre);
+		  hotel.setContinente(continente);
+		  hotel.setPais(pais);
+		  hotel.setCiudad(ciudad);
+		  hotel.setDireccion(direccion);
+		  hotel.setEstrellas(estrellas);
+		  hotel.setDescripcion(descripcion);	
+		  
+		Properties aux;  
+		  
+		List<Properties> cats = new ArrayList<>();
+		// Si es null entonces no se ha elegido ninguna
+		if( categoriasIDs != null ) {
+			for(Integer id : categoriasIDs) {
+				aux = new Properties();
+				  aux.put("categoria_id",id);
+				  
+				cats.add(aux);
+			}
+		}
+		
+		List<Properties> servs = new ArrayList<>();
+		if( serviciosIDs != null ) {
+			for(Integer id : serviciosIDs) {
+				aux = new Properties();
+				  aux.put("servicio_id",id);
+				  //TODO: agregar precio y unidad_medida
+				  
+				servs.add(aux);
+			}
+		}
+			
+		
+		List<Properties> habs = new ArrayList<>();
+		for(int i=0;i<numDisponibles.length;i++) {
+			
+			// Solo si se ha introducido un valor > 0 lo tomamos en cuenta:
+			if( numDisponibles[i] > 0 ) {
+				aux = new Properties();
+				  aux.put("tipo_hab_id",habsIDs[i]);
+				  aux.put("num_disponibles",numDisponibles[i]);
+				  
+				habs.add(aux);
+			}
+			
+		}
+		
+		hotelDao.anadir(hotel, habs, servs, cats);
+		
+		return "redirect:/hoteles";
+	}
+	
+	
 
 	// Anadir-categoria
 	@GetMapping("/anadir-hotel/anadir-categoria")
@@ -64,12 +143,21 @@ public class HomeController {
 
 		return new ModelAndView("corp-hotel/anadir-categoria.jsp");
 	}
-
-	// Anadir-servicio
+	
 	@GetMapping("/anadir-hotel/anadir-servicios")
 	public ModelAndView anadirServicioForm() {
-
 		return new ModelAndView("corp-hotel/anadir-servicios.jsp");
+	}
+
+	// Anadir-servicio
+	@PostMapping("/anadir-hotel/anadir-servicios")
+	public String recibirServicioForm(String nombre) {
+		Servicio s = new Servicio();
+		  s.setNombre(nombre);
+		
+		// TODO: Rellenar la lista de Properties
+		new ServicioDAO().anadir(s, new ArrayList<Properties>());
+		return "redirect:/hoteles";
 	}
 
 	// Hotel/Ver-hotel
@@ -155,7 +243,7 @@ public class HomeController {
 		  p.setNombre(profesion);
 		
 		new ProfesionDAO().anadir(p);
-		return "redirect:/anadir-empleado";
+		return "redirect:/empleados";
 	}
 
 	// ver empleado

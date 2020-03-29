@@ -28,11 +28,11 @@ public class TipoHabitacionDAO {
     public int anadir(Tipo_Habitacion tipoHabitacion){
         BigInteger idGenerado = null;
         ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-        String query = "INSERT INTO Tipo_Habitacion (nombre) VALUES (?)";
+        String query = "INSERT INTO Tipo_Habitacion (nombre_tipo) VALUES (?)";
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, query, handler, tipoHabitacion.getNombre());
+            idGenerado = runner.insert(conn, query, handler, tipoHabitacion.getNombre_tipo());
             
         }
         catch(Exception e) { e.printStackTrace(); }
