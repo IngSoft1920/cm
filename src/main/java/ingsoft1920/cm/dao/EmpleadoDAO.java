@@ -5,8 +5,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
-import com.google.gson.JsonArray;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -14,32 +14,24 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.JsonObject;
 
-import ingsoft1920.cm.apiout.APIout;
+import ingsoft1920.cm.apiout.APIem;
 import ingsoft1920.cm.bean.Empleado;
-import ingsoft1920.cm.bean.Hotel;
-import ingsoft1920.cm.bean.Profesion;
-import ingsoft1920.cm.bean.auxiliares.Hotel_Empleado;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
 public class EmpleadoDAO {
 
-
     @Autowired
     private QueryRunner runner = new QueryRunner();
 
+    @Autowired
     private ConectorBBDD conector = new ConectorBBDD();
 
-    public List<Empleado> getEmpleados() {
-
-        BeanListHandler<Empleado> beanListHandler = new BeanListHandler<>(Empleado.class);
-        QueryRunner runner = new QueryRunner();
-
-        String getEmpleados = "SELECT * FROM Empleado";
-
+    public List<Empleado> empleados() {
         List<Empleado> empleados = new LinkedList<>();
+        BeanListHandler<Empleado> beanListHandler = new BeanListHandler<>(Empleado.class);
+        String getEmpleados = "SELECT * FROM Empleado";
 
         try( Connection conn = conector.getConn() )
         {
@@ -49,36 +41,23 @@ public class EmpleadoDAO {
         return empleados;
     }
 
-    public void asignarSueldo(BigInteger id, int sueldo){
-
-        String asignaSueldo = "UPDATE Empleado SET sueldo = ? WHERE id = ?";
-
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, asignaSueldo, sueldo, id);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public int anadirEmpleado(Empleado empleado, Hotel_Empleado hotelEmpleado){
-
-        String anadeEmpleado = "INSERT INTO Empleado "
+    // *Properties
+    // -hotel_id: int
+    // -fecha_contratacion: Date
+    public int anadir(Empleado empleado,Properties hotelEmpleado){
+    	BigInteger idGenerado = null;
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+        String queryEmpleado = "INSERT INTO Empleado "
         					  +"(nombre,apellidos,email,telefono,sueldo,profesion_id) "
         					  +"VALUES (?, ?, ?, ?, ?, ?);";
         
-        String anadeEmpleadoaHotel = "INSERT INTO Hotel_Empleado "
-        						 	+"(empleado_id, hotel_id, fecha_contratacion) "
-        						 	+"VALUES (?, ?, ?)";
-
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-        BigInteger idGenerado = null;
+        String queryHotelEmpleado = "INSERT INTO Hotel_Empleado "
+        						   +"(empleado_id, hotel_id, fecha_contratacion) "
+        						   +"VALUES (?, ?, ?)";
 
         try( Connection conn = conector.getConn() )
         {
-            idGenerado = runner.insert(conn, anadeEmpleado, handler,
+            idGenerado = runner.insert(conn, queryEmpleado, handler,
             						   empleado.getNombre(),
             						   empleado.getApellidos(),
             						   empleado.getEmail(),
@@ -87,153 +66,81 @@ public class EmpleadoDAO {
             						   empleado.getProfesion_id()
             						  );
             
-            runner.insert(conn, anadeEmpleadoaHotel, handler,
+            runner.insert(conn, queryHotelEmpleado, handler,
             			  idGenerado,
-            			  hotelEmpleado.getHotel_id(),
-            			  hotelEmpleado.getFecha_contratacion()
+            			  hotelEmpleado.get("hotel_id"),
+            			  hotelEmpleado.get("fecha_contratacion")
             			 );
         }
         catch(Exception e) { e.printStackTrace(); }
         
         // Se ha insertado correctamente, lo mandamos a em
         if( idGenerado != null ) {
-        	ProfesionDAO pdao = new ProfesionDAO();
-        	String nombreProfesion = pdao.getByID(empleado.getProfesion_id()).getNombre();
-        	JsonObject json = new JsonObject();
-        	  json.addProperty("id",idGenerado.intValue());
-        	  json.addProperty("nombre",empleado.getNombre());
-        	  json.addProperty("telefono",empleado.getTelefono());
-        	  json.addProperty("email",empleado.getEmail());
-        	  json.addProperty("ocupacion",nombreProfesion);
-        	  json.addProperty("valor",empleado.getSueldo());
-        	  json.addProperty("id_hotel",hotelEmpleado.getHotel_id());
-        	  json.addProperty("fecha_contratacion",hotelEmpleado.getFecha_contratacion().toString());
-        	  json.addProperty("contrasenia", "12345");
-
-        	  JsonArray dias = new JsonArray();
-        	  dias.add(3); dias.add(4); dias.add(5); dias.add(6);
-        	  json.add("dias_libres", dias);
-        	  
-        	APIout.enviar(json.toString(),7002,"/creaEmpleado");
+        	empleado.setId( idGenerado.intValue() );
+        	APIem.enviarEmpleado(empleado,
+        						 (int) hotelEmpleado.get("hotel_id"),
+        						 (Date) hotelEmpleado.get("fecha_contratacion"));
         }
 
         return ( idGenerado != null ? idGenerado.intValue() : -1 );
     }
-    
-    public static void main(String[] args) {
-    	EmpleadoDAO dao = new EmpleadoDAO();
-    	   	
-		Empleado pepe = new Empleado(4, "Pepe", "Dominguez Perez", "pepe@gmail.com", "123456", 1500, 1);
-		//Hotel_Empleado he = new Hotel_Empleado(-1, 1, Date.valueOf("2020-02-01"));
-		//dao.cambiarNombre1(pepe, "juan");
-		//System.out.println( dao.anadirEmpleado(pepe,he) );
-    	
-		//dao.eliminarEmpleado( pepe );
-    	
-	}
-    
-	public Empleado obtenerEmpleadoPorId(long id) {
-		Empleado res = new Empleado();
-		BeanHandler<Empleado> handler = new BeanHandler<>(Empleado.class);
-		String query = "SELECT * FROM Empleado as e " + "WHERE e.id=?;";
-
-		try (Connection conn = conector.getConn()) {
-			res = runner.query(conn, query, handler, id);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return res;
-	}
 	
-    public void eliminarEmpleado(Empleado empleado){
-
-	    String eliminaEmpleado = "DELETE FROM Empleado WHERE id = ?";
+    public void eliminar(int empleadoID){
+	    String query = "DELETE FROM Empleado WHERE id = ?";
 	
 	    try( Connection conn = conector.getConn() )
 	    {
-	        runner.update(conn, eliminaEmpleado, empleado.getId());
+	        runner.update(conn, query, empleadoID);
+	        
 	    }
 	    catch(Exception e) { e.printStackTrace(); }
 	    
 	    // Avisamos a em del borrado del empleado:
-	    JsonObject json = new JsonObject();
-	      json.addProperty("id",empleado.getId());
-	      
-	    APIout.enviar(json.toString(), 7002, "/eliminarEmpleado");
+	    APIem.eliminarEmpleado(empleadoID);
     }
     
- 
-    public void cambiarNombre(Empleado empleado, String nombre){
-
-        String cambiaEmail = "UPDATE Empleado SET nombre = ? WHERE id = ?";
-
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-
+    // A la entrada de la base de datos con el empleado_id correspondiente
+    // le seteamos toda la información del bean
+    public void editar(Empleado info){
+        String query = "UPDATE Empleado SET "
+        			  +"nombre = ?, apellidos = ?, email = ?, telefono = ?, sueldo = ? "
+        			  +"WHERE id = ?";
+        
         try( Connection conn = conector.getConn() )
         {
-            runner.update(conn, cambiaEmail, handler, nombre, empleado.getId());
+        	runner.update(conn,query,
+        				  info.getNombre(),
+        				  info.getApellidos(),
+        				  info.getEmail(),
+        				  info.getTelefono(),
+        				  info.getSueldo(),
+        				  info.getId()
+        				 );
         }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+        catch(Exception e) { e.printStackTrace(); }
     }
     
-    public void cambiarApellidos(Empleado empleado, String nuevosApellidos) {
-        String cambiaApellidos = "UPDATE Empleado SET apellidos = ? WHERE email = ?";
+    // Not used yet
+   	public Empleado getByID(int id) {
+   		Empleado res = new Empleado();
+   		BeanHandler<Empleado> handler = new BeanHandler<>(Empleado.class);
+   		String query = "SELECT * FROM Empleado WHERE id=?;";
 
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+   		try (Connection conn = conector.getConn()) {
+   			res = runner.query(conn, query, handler, id);
 
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiaApellidos, handler, nuevosApellidos,
-            		empleado.getEmail());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
+   		} catch (Exception e) { e.printStackTrace(); }
+   		
+   		return res;
+   	}
     
-    public void cambiarProfesion(Empleado empleado, Profesion nuevaProfesion){
+    public static void main(String[] args) {
+    	Empleado test = new Empleado(-1, "Juan", "Perez", "juan@gmail.com", "600600600", 1500, 1);
+    	Properties resto = new Properties();
+    	  resto.put("hotel_id",1);
+    	  resto.put("fecha_contratacion",Date.valueOf("2020-02-01"));
 
-        String cambiaProfesion = "UPDATE Empleado SET profesion_id = ? WHERE email = ?";
-
-        ScalarHandler<Integer> handler = new ScalarHandler<>();
-
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiaProfesion, handler, nuevaProfesion, empleado.getEmail());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-    public void editar(Empleado empleado){
-        String cambiaEmail = "UPDATE Empleado SET nombre = ?, apellidos = ?, email = ?, telefono = ?, sueldo = ? WHERE id = ?";
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiaEmail, empleado.getNombre(),empleado.getApellidos(),empleado.getEmail(),empleado.getTelefono(),empleado.getSueldo(), empleado.getId());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public void cambiarNombre1(Empleado empleado, String nombre){
-
-        String cambiaEmail = "UPDATE Empleado SET nombre = ? WHERE id = ?";
-
-        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-
-        try( Connection conn = conector.getConn() )
-        {
-            runner.update(conn, cambiaEmail, nombre, empleado.getId());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    	new EmpleadoDAO().anadir(test, resto);
+	}
 
 }
