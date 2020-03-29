@@ -126,7 +126,6 @@
                                 <label class="form-check-label" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal">
                                     Otros
                                 </label>
-
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -139,7 +138,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Necesitas aÃ±adir otra profesion que no se encuentra en la lista?
+                                                Necesitas Anadir otra profesion que no se encuentra en la lista?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -148,8 +147,12 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+
+<<<<<<< Updated upstream
+                            </div>
+=======
+>>>>>>> Stashed changes
                         </div>
 
                     </div>

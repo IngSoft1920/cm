@@ -12,8 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Proveedor;
-import ingsoft1920.cm.dao.EmpleadoDAO;
-import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.ProveedorDAO;
 
 @Controller
@@ -107,12 +105,12 @@ public class HomeController {
 		return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
 	}
 
-	// Anadir empleado
-	@GetMapping("/anadir-empleado")
-	public ModelAndView anadirEmpleadosForm() {
-
-		return new ModelAndView("corp-empleado/anadir-empleado.jsp");
-	}
+//	// Anadir empleado
+//	@GetMapping("/anadir-empleado")
+//	public ModelAndView anadirEmpleadosForm() {
+//
+//		return new ModelAndView("corp-empleado/anadir-empleado.jsp");
+//	}
 
 	// Anadir profesion
 	@GetMapping("/anadir-empleado/anadir-profesion")
