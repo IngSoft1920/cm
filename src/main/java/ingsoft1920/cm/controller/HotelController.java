@@ -2,7 +2,6 @@ package ingsoft1920.cm.controller;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
