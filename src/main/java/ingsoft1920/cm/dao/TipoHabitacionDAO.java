@@ -4,10 +4,13 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -64,4 +67,38 @@ public class TipoHabitacionDAO {
 
         return res;
     }
+    
+    // Cada Properties será así:
+ 	// -id: int
+ 	// -nombre_tipo: String
+ 	// -num_disponibles: int
+    public List<Properties> habsHotel(int hotelID) {
+    	List<Map<String, Object>> resConsulta = null;
+		MapListHandler handler = new MapListHandler();
+		String query = "SELECT th.*,hth.num_disponibles "
+					  +"FROM Tipo_Habitacion th "
+					  +"JOIN Hotel_Tipo_Habitacion hth ON th.id = hth.tipo_hab_id "
+					  +"WHERE hth.hotel_id = ?";
+
+		try (Connection conn = conector.getConn()) {
+			resConsulta = runner.query(conn, query, handler,hotelID);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		List<Properties> res = new ArrayList<>();
+		Properties aux;
+		for( Map<String,Object> fila : resConsulta ) {
+			aux = new Properties();
+			aux.put("id", fila.get("id") );
+			aux.put("nombre_tipo", fila.get("nombre_tipo") );
+			aux.put("num_disponibles", fila.get("num_disponibles"));
+			
+			res.add(aux);
+		}
+		return res;
+    }
+    
+    public static void main(String[] args) {
+		new TipoHabitacionDAO().habsHotel(1).forEach( p -> System.out.println(p + "\n") );; 
+	}
 }
