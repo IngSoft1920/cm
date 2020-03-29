@@ -44,7 +44,7 @@ public class APIdho {
 		  json.add("categorias",jsonMaker.toJsonTree(new CategoriaDAO().categoriasHotel( h.getId() )));
 		
 		System.out.println( json.toString() );
-		//APIout.enviar(json.toString(), 7001, "/recibirHotel");
+		APIout.enviar(json.toString(), 7001, "/recibirHotel");
 
 	}
 
