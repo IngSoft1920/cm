@@ -270,7 +270,7 @@ public class HomeController {
 	}
 
 	// Pagina de facturacion
-	@GetMapping("/facturacion")
+	@GetMapping("/beneficio")
 	public String facturacionForm() {
 		return "fna/beneficio.jsp";
 	}
