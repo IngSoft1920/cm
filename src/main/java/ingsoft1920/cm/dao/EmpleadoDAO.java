@@ -120,7 +120,6 @@ public class EmpleadoDAO {
         catch(Exception e) { e.printStackTrace(); }
     }
     
-    // Not used yet
    	public Empleado getByID(int id) {
    		Empleado res = new Empleado();
    		BeanHandler<Empleado> handler = new BeanHandler<>(Empleado.class);
