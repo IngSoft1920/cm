@@ -27,8 +27,7 @@ public class ValoracionDAO {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 		String query = "INSERT INTO Valoracion "
-					  +"(cabecera,cuerpo,nota,"
-					  +"hotel_id,cliente_id) "
+					  +"(cabecera,cuerpo,nota,hotel_id,cliente_id) "
 					  +"VALUES (?,?,?,?,?);";
 		
 		try( Connection conn = conector.getConn() )
@@ -54,9 +53,8 @@ public class ValoracionDAO {
 		try (Connection conn = conector.getConn()) {
 			res = runner.query(conn, query, handler);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) { e.printStackTrace(); }
+		
 		return res;
 	}
 
