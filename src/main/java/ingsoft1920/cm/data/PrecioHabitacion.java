@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import ingsoft1920.cm.bean.DatosPrecio;
 import ingsoft1920.cm.bean.Peticion;
-import ingsoft1920.cm.bean.auxiliares.Precio_Habitacion;
+import ingsoft1920.cm.bean.Precio_Habitacion;
 import ingsoft1920.cm.dao.DatosPrecioDAO;
 import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.PeticionDAO;
@@ -156,7 +156,7 @@ public class PrecioHabitacion {
 			
 			for (LocalDate fecha : fechas) { 
 
-				idPeticion = peticionDAO.add(new Peticion(0, (String) dt.get("ciudad"), false, Date.valueOf(fecha), 
+				idPeticion = peticionDAO.anadir(new Peticion(0, (String) dt.get("ciudad"), false, Date.valueOf(fecha), 
 						Date.valueOf(fecha.plusDays(1)),  1));
 				//int idPeticion = n;
 				
@@ -164,7 +164,7 @@ public class PrecioHabitacion {
 				// y actualiza la tabla DatosPrecio
 
 				do {
-					List<DatosPrecio> dataset = datosPrecioDAO.get(idPeticion);
+					List<DatosPrecio> dataset = datosPrecioDAO.getByPeticionID(idPeticion);
 					for (DatosPrecio data : dataset) {
 						datosPrecio.add(data);
 					}

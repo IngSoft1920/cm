@@ -1,87 +1,83 @@
 package ingsoft1920.cm.dao;
 
-import ingsoft1920.cm.bean.DatosPrecio;
-import ingsoft1920.cm.conector.ConectorBBDD;
+import java.math.BigInteger;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.sql.Connection;
-import java.util.LinkedList;
-import java.util.List;
+import ingsoft1920.cm.bean.DatosPrecio;
+import ingsoft1920.cm.conector.ConectorBBDD;
 
 public class DatosPrecioDAO {
 
 	@Autowired
 	private QueryRunner runner = new QueryRunner();
+	
+	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 
 	public List<DatosPrecio> datosPrecios() {
-
-		BeanListHandler<DatosPrecio> beanListHandler = new BeanListHandler<>(DatosPrecio.class);
-		QueryRunner runner = new QueryRunner();
-
-		String getDatos = "SELECT * FROM Datos_Precio";
-
-		List<DatosPrecio> datosPrecio = new LinkedList<>();
-
-		try (Connection conn = conector.getConn()) {
-			datosPrecio = runner.query(conn, getDatos, beanListHandler);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return datosPrecio;
-	}
-
-	public List<DatosPrecio> get(int peticion_id) {
-
-		String selectQuery = "SELECT * FROM Datos_Precio WHERE peticion_id = ?";
-
+		List<DatosPrecio> res = new LinkedList<>();
 		BeanListHandler<DatosPrecio> handler = new BeanListHandler<>(DatosPrecio.class);
+		String query = "SELECT * FROM Datos_Precio";
 
-		List<DatosPrecio> res = null;
-
-		try (Connection conn = conector.getConn()) {
-			res = runner.query(conn, selectQuery, handler, peticion_id);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		try (Connection conn = conector.getConn()) 
+		{
+			res = runner.query(conn, query, handler);
+			
+		} catch (Exception e) { e.printStackTrace(); }
 
 		return res;
 	}
 
-	public int add(DatosPrecio datosPrecio) {
+	public List<DatosPrecio> getByPeticionID(int peticion_id) {
+		List<DatosPrecio> res = new ArrayList<>();
+		BeanListHandler<DatosPrecio> handler = new BeanListHandler<>(DatosPrecio.class);
+		String query = "SELECT * FROM Datos_Precio WHERE peticion_id = ?";
 
-		String add = "INSERT INTO Datos_Precio (estado, peticion_id, precio, puntuacion) VALUES (?, ?, ?, ?)";
-		ScalarHandler<Integer> handler = new ScalarHandler<>();
+		try (Connection conn = conector.getConn()) 
+		{
+			res = runner.query(conn, query, handler, peticion_id);
 
-		Integer idGenerado = null;
+		} catch (Exception e) { e.printStackTrace(); }
 
-		try (Connection conn = conector.getConn()) {
-			idGenerado = runner.insert(conn, add, handler, datosPrecio.getEstado(), datosPrecio.getPeticion_id(),
-					datosPrecio.getPrecio(), datosPrecio.getPuntuacion());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		datosPrecio.setId(idGenerado);
-
-		return idGenerado;
+		return res;
 	}
 
-	public void cambiaEstado(int id) {
+	public int anadir(DatosPrecio datosPrecio) {
+		BigInteger idGenerado = null;
+		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		String query = "INSERT INTO Datos_Precio (estado, peticion_id, precio, puntuacion) VALUES (?, ?, ?, ?)";
 
-		String cambiaEstado = "UPDATE Datos_Precio SET estado = TRUE WHERE id = ?";
 
-		try (Connection conn = conector.getConn()) {
-			runner.update(conn, cambiaEstado, id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		try (Connection conn = conector.getConn()) 
+		{
+			idGenerado = runner.insert(conn, query, handler, 
+									   datosPrecio.getEstado(),
+									   datosPrecio.getPeticion_id(),
+									   datosPrecio.getPrecio(),
+									   datosPrecio.getPuntuacion()
+									  );
+			
+		} catch (Exception e) { e.printStackTrace(); }
 
+		return idGenerado != null ? idGenerado.intValue() : -1;
+	}
+
+	public void cambiaEstado(int datosPrecioID) {
+		String query = "UPDATE Datos_Precio SET estado = TRUE WHERE id = ?";
+
+		try (Connection conn = conector.getConn()) 
+		{
+			runner.update(conn, query, datosPrecioID);
+			
+		} catch (Exception e) { e.printStackTrace(); }
 	}
 
 }
