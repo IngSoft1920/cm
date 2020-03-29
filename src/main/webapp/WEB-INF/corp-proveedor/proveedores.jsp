@@ -133,34 +133,10 @@
 													role="button">Editar</a>
 												<!-- Button trigger modal -->
 												<a class="btn btn-sm btn-outline-secondary"
-													data-toggle="modal" data-target="#exampleModal" href="#"
+													data-toggle="modal" data-target="#exampleModal" href="/proveedores/eliminar-proveedor/${proveedores.id}"
 													role="button"> Eliminar </a>
 												<!-- Modal -->
-												<div class="modal fade" id="exampleModal" tabindex="-1"
-													role="dialog" aria-labelledby="exampleModalLabel"
-													aria-hidden="true">
-													<div class="modal-dialog" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-																<h5 class="modal-title" id="exampleModalLabel">Eliminar
-																	proveedor</h5>
-																<button type="button" class="close" data-dismiss="modal"
-																	aria-label="Close">
-																	<span aria-hidden="true">&times;</span>
-																</button>
-															</div>
-															<div class="modal-body">Esta seguro que desea
-																eliminar el proveedor?</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-secondary"
-																	data-dismiss="modal">Cancelar</button>
-																<a class="btn btn-primary"
-																	href="/proveedores/eliminar-proveedor/${proveedores.id}"
-																	role="button">Eliminar</a>
-															</div>
-														</div>
-													</div>
-												</div>
+												
 										</td>
 									</tr>
 								</c:forEach>

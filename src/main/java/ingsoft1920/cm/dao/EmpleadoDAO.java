@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.gson.JsonArray;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -37,13 +38,99 @@ public class EmpleadoDAO {
 
 		List<Empleado> empleados = new LinkedList<>();
 
+
 		try (Connection conn = conector.getConn()) {
 			empleados = runner.query(conn, getEmpleados, beanListHandler);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return empleados;
-	}
+
+    }
+
+//    public void asignarSueldo(BigInteger id, int sueldo){
+//
+//        String asignaSueldo = "UPDATE Empleado SET sueldo = ? WHERE id = ?";
+//
+//        try( Connection conn = conector.getConn() )
+//        {
+//            runner.update(conn, asignaSueldo, sueldo, id);
+//        }
+//        catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
+
+//    public int anadirEmpleado(Empleado empleado, Hotel_Empleado hotelEmpleado){
+//
+//        String anadeEmpleado = "INSERT INTO Empleado "
+//        					  +"(nombre,apellidos,email,telefono,sueldo,profesion_id) "
+//        					  +"VALUES (?, ?, ?, ?, ?, ?);";
+//        
+//        String anadeEmpleadoaHotel = "INSERT INTO Hotel_Empleado "
+//        						 	+"(empleado_id, hotel_id, fecha_contratacion) "
+//        						 	+"VALUES (?, ?, ?)";
+//
+//        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+//        BigInteger idGenerado = null;
+//
+//        try( Connection conn = conector.getConn() )
+//        {
+//            idGenerado = runner.insert(conn, anadeEmpleado, handler,
+//            						   empleado.getNombre(),
+//            						   empleado.getApellidos(),
+//            						   empleado.getEmail(),
+//            						   empleado.getTelefono(),
+//            						   empleado.getSueldo(),
+//            						   empleado.getProfesion_id()
+//            						  );
+//            
+//            runner.insert(conn, anadeEmpleadoaHotel, handler,
+//            			  idGenerado,
+//            			  hotelEmpleado.getHotel_id(),
+//            			  hotelEmpleado.getFecha_contratacion()
+//            			 );
+//        }
+//        catch(Exception e) { e.printStackTrace(); }
+//        
+//        // Se ha insertado correctamente, lo mandamos a em
+//        if( idGenerado != null ) {
+//        	ProfesionDAO pdao = new ProfesionDAO();
+//        	String nombreProfesion = pdao.getByID(empleado.getProfesion_id()).getNombre();
+//        	JsonObject json = new JsonObject();
+//        	  json.addProperty("id",idGenerado.intValue());
+//        	  json.addProperty("nombre",empleado.getNombre());
+//        	  json.addProperty("telefono",empleado.getTelefono());
+//        	  json.addProperty("email",empleado.getEmail());
+//        	  json.addProperty("ocupacion",nombreProfesion);
+//        	  json.addProperty("valor",empleado.getSueldo());
+//        	  json.addProperty("id_hotel",hotelEmpleado.getHotel_id());
+//        	  json.addProperty("fecha_contratacion",hotelEmpleado.getFecha_contratacion().toString());
+//        	  json.addProperty("contrasenia", "12345");
+//
+//        	  JsonArray dias = new JsonArray();
+//        	  dias.add(3); dias.add(4); dias.add(5); dias.add(6);
+//        	  json.add("dias_libres", dias);
+//        	  
+//        	APIout.enviar(json.toString(),7002,"/creaEmpleado");
+//        }
+//
+//        return ( idGenerado != null ? idGenerado.intValue() : -1 );
+//    }
+    
+//    public static void main(String[] args) {
+//    	EmpleadoDAO dao = new EmpleadoDAO();
+//    	   	
+//		Empleado pepe = new Empleado(4, "Pepe", "Dominguez Perez", "pepe@gmail.com", "123456", 1500, 1);
+//		//Hotel_Empleado he = new Hotel_Empleado(-1, 1, Date.valueOf("2020-02-01"));
+//		//dao.cambiarNombre1(pepe, "juan");
+//		//System.out.println( dao.anadirEmpleado(pepe,he) );
+//    	
+//		//dao.eliminarEmpleado( pepe );
+//    	
+//>>>>>>> branch 'develop' of https://github.com/IngSoft1920/cm.git
+//	}
 
 	public void asignarSueldo(BigInteger id, int sueldo) {
 

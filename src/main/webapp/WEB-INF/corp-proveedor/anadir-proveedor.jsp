@@ -161,10 +161,10 @@
             </ul>
             <div class="container">
                 <p class="float-left">
-                    <a href="/proveedores/proveedores.html">Back to proveedores</a>
+                    <a href="/proveedores">Back to proveedores</a>
                 </p>
                 <p class="float-right">
-                    <a href="/proveedores/proveedores.html">Back to Home</a>
+                    <a href="/inicio">Back to Home</a>
                 </p>
 
             </div>

@@ -226,12 +226,11 @@ public class HomeController {
 		return new ModelAndView("redirect:/proveedores");
 
 	}
-	
-	
+
 	// Pagina de facturacion
-		@GetMapping("/facturacion")
-		public String facturacionForm() {
-			return "fna/beneficio.jsp";
-		}
+	@GetMapping("/facturacion")
+	public String facturacionForm() {
+		return "fna/beneficio.jsp";
+	}
 
 }

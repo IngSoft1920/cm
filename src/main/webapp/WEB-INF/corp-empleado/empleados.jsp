@@ -110,30 +110,11 @@
                                                 <a class="btn btn-sm btn-outline-secondary" href="/ver-empleado/${empleado.id}" role="button">Ver</a>
                                                 <a class="btn btn-sm btn-outline-secondary" href="/editar-empleado/${empleado.id}" role="button">Editar</a>
                                                 <!-- Button trigger modal -->
-                                                <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" href="#" role="button">
+                                                <a class="btn btn-sm btn-outline-secondary"  data-target="#exampleModal"  href="/empleados/eliminar-empleado/${empleado.id}" role="button">
                                                     Eliminar
                                                 </a>
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Eliminar Empleado
-                                                                </h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                Esta seguro que desea eliminar el empleado?
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                                <a class="btn btn-primary" href="/empleados/eliminar-empleado/${empleado.id}" role="button">Eliminar</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                
                                         </td>
                                     </tr>
                         </c:forEach>     
