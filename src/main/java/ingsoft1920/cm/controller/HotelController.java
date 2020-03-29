@@ -2,7 +2,6 @@ package ingsoft1920.cm.controller;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,32 +47,7 @@ public class HotelController {
 	@GetMapping("/hotel/servicios/{hotel_id}")
 	@ResponseBody
 	public String serviciosHotel(@PathVariable int hotel_id) {
-
-		/*
-		 * Cada Properties es así (todo se refiere al servicio): id : int / nombre :
-		 * String precio : int unidad : String
-		 */
-		List<Properties> servicios = new ServicioDAO().serviciosHotel(hotel_id);
-
-		if (servicios == null) {
-			JsonObject error = new JsonObject();
-			error.addProperty("error", "Ha habido un problema buscando los servicios");
-			return error.toString();
-		}
-
-		JsonArray res = new JsonArray();
-		JsonObject elem;
-		for (Properties serv : servicios) {
-			elem = new JsonObject();
-
-			elem.addProperty("id", (int) serv.get("id"));
-			elem.addProperty("nombre", (String) serv.get("nombre"));
-			elem.addProperty("precio", (String) serv.get("precio"));
-			elem.addProperty("unidad", (String) serv.get("unidad_medida"));
-
-			res.add(elem);
-		}
-		return res.toString();
+		return new Gson().toJsonTree( new ServicioDAO().serviciosHotel(hotel_id) ).toString();
 	}
 
 	@GetMapping("/hotel/disponibles")

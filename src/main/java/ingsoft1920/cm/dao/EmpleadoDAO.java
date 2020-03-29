@@ -122,7 +122,7 @@ public class EmpleadoDAO {
         catch(Exception e) { e.printStackTrace(); }
         
         // Notificamos a em
-    	APIem.editarEmpleado(info);
+    	//APIem.editarEmpleado(info);
     }
     
    	public Empleado getByID(int id) {

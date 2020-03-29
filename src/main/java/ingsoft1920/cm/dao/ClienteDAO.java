@@ -59,5 +59,32 @@ public class ClienteDAO {
 
 		return res;
 	}
+	
+	public Cliente getByEmail(String email) {
+		Cliente res = null;
+		BeanHandler<Cliente> handler = new BeanHandler<>(Cliente.class);
+		String query = "SELECT * FROM Cliente WHERE email=?;";
+
+		try (Connection conn = conector.getConn()) {
+			res = runner.query(conn, query, handler, email);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		return res;
+	}
+	
+	// Si email ya está en la base de datos devuelve el clienteID correspondiente
+	// y si no está registra el email y devuelve el id generado
+	public int getClienteIdAnonimo(String email) {
+		Cliente c = getByEmail(email);
+		if( c != null ) {
+			return c.getId();
+		} else {
+			c = new Cliente();
+			c.setEmail(email);
+			
+			return anadir(c);
+		}		
+	}
 
 }

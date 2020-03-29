@@ -26,11 +26,17 @@ public class ReservaController {
 	ReservaDAO dao = new ReservaDAO();
 
 	/*
-	 * Reserva NO ANÓNIMA { "fecha_entrada" : “2020-02-10”, "fecha_salida" :
-	 * “2020-02-15”, "importe" : 400, "regimen" : “no_aplica”, // Valores
-	 * posibles:"no_aplica","media_pension","pension_completa","todo_incluido"
-	 * "cliente_id" : 14, "hotel_id" : 11, "tipo_hab_id" : 9, "numero_acompanantes"
-	 * : 21 }
+	 * Reserva NO ANÓNIMA 
+	 * {
+	 * "fecha_entrada" : “2020-02-10”,
+	 * "fecha_salida" : “2020-02-15”, 
+	 * "importe" : 400,
+	 * "regimen" : “no_aplica”, // Valores posibles:"no_aplica","media_pension","pension_completa","todo_incluido"
+	 * "cliente_id" : 14,
+	 * "hotel_id" : 11,
+	 * "tipo_hab_id" : 9,
+	 * "numero_acompanantes": 21 
+	 * }
 	 */
 	@PostMapping("/reserva")
 	@ResponseBody
@@ -38,30 +44,36 @@ public class ReservaController {
 
 		JsonObject jsonO = JsonParser.parseString(json).getAsJsonObject();
 
-		Reserva r = new Reserva(-1, Date.valueOf(jsonO.get("fecha_entrada").getAsString()),
-				Date.valueOf(jsonO.get("fecha_salida").getAsString()), jsonO.get("importe").getAsInt(),
-				Reserva.Regimen.valueOf(jsonO.get("regimen").getAsString()),
-				jsonO.get("numero_acompanantes").getAsInt(), jsonO.get("hotel_id").getAsInt(),
-				jsonO.get("cliente_id").getAsInt(), jsonO.get("tipo_hab_id").getAsInt());
-
-		int id = dao.anadir(r);
+		Reserva reserva = new Reserva();
+		  reserva.setFecha_entrada( Date.valueOf(jsonO.get("fecha_entrada").getAsString()) );
+		  reserva.setFecha_salida( Date.valueOf(jsonO.get("fecha_salida").getAsString() ));
+		  reserva.setImporte( jsonO.get("importe").getAsInt() );
+		  reserva.setRegimen_comida( Reserva.Regimen.valueOf(jsonO.get("regimen").getAsString() ));
+		  reserva.setCliente_id( jsonO.get("cliente_id").getAsInt() );
+		  reserva.setHotel_id( jsonO.get("hotel_id").getAsInt() );
+		  reserva.setTipo_hab_id( jsonO.get("tipo_hab_id").getAsInt() );
+		  reserva.setNumero_acompanantes( jsonO.get("numero_acompanantes").getAsInt());
+		
+		int id = dao.anadir(reserva);
+		
 		JsonObject res = new JsonObject();
-		if (id == -1)
-			res.addProperty("error", "Se ha producido un error al añadir la reserva");
-		else {
-			res.addProperty("id", id);
-			APIout.enviar(json.toString(), 7001, "/recibirReserva");
-		}
+		  res.addProperty("id", id);
 
 		return res.toString();
 	}
 
 	/*
-	 * Reserva ANÓNIMA { "fecha_entrada" : “2020-02-10”, "fecha_salida" :
-	 * “2020-02-15”, "importe" : 400, "regimen" : “no_aplica”, // Valores
-	 * posibles:"no_aplica","media_pension","pension_completa","todo_incluido"
-	 * "email_cliente" : "pepe@gmail.com", "hotel_id" : 11, "tipo_hab_id" : 9,
-	 * "numero_acompanantes" : 21 }
+	 * Reserva ANÓNIMA:
+	 * {
+	 * "fecha_entrada" : “2020-02-10”,
+	 * "fecha_salida" : “2020-02-15”,
+	 * "importe" : 400,
+	 * "regimen" : “no_aplica”, // Valores posibles:"no_aplica","media_pension","pension_completa","todo_incluido"
+	 * "email_cliente" : "pepe@gmail.com",
+	 * "hotel_id" : 11,
+	 * "tipo_hab_id" : 9,
+	 * "numero_acompanantes" : 21
+	 * }
 	 */
 	@PostMapping("/reserva/anonima")
 	@ResponseBody
@@ -69,29 +81,27 @@ public class ReservaController {
 
 		JsonObject jsonO = JsonParser.parseString(json).getAsJsonObject();
 
-		// Primero cogemos el email y registramos al usuario anónimo:
-		Cliente anonimo = new Cliente();
-		anonimo.setEmail(jsonO.get("email_cliente").getAsString());
-		int cliente_id = new ClienteDAO().anadir(anonimo);
+		// Primero cogemos el email y obtenemos el id del cliente correspondiente
+		// (si ya está registrado el email se coge el id sino se añade y se coge el id generado)
+		int cliente_id = new ClienteDAO()
+								.getClienteIdAnonimo(jsonO.get("email_cliente").getAsString());
 
 		// Luego añadimos la reserva:
-		Reserva r = new Reserva(-1, Date.valueOf(jsonO.get("fecha_entrada").getAsString()),
-				Date.valueOf(jsonO.get("fecha_salida").getAsString()), jsonO.get("importe").getAsInt(),
-				Reserva.Regimen.valueOf(jsonO.get("regimen").getAsString()),
-				jsonO.get("numero_acompanantes").getAsInt(), jsonO.get("hotel_id").getAsInt(), cliente_id,
-				jsonO.get("tipo_hab_id").getAsInt());
+		Reserva reserva = new Reserva();
+		  reserva.setFecha_entrada( Date.valueOf(jsonO.get("fecha_entrada").getAsString()) );
+		  reserva.setFecha_salida( Date.valueOf(jsonO.get("fecha_salida").getAsString() ));
+		  reserva.setImporte( jsonO.get("importe").getAsInt() );
+		  reserva.setRegimen_comida( Reserva.Regimen.valueOf(jsonO.get("regimen").getAsString() ));
+		  reserva.setCliente_id( cliente_id );
+		  reserva.setHotel_id( jsonO.get("hotel_id").getAsInt() );
+		  reserva.setTipo_hab_id( jsonO.get("tipo_hab_id").getAsInt() );
+		  reserva.setNumero_acompanantes( jsonO.get("numero_acompanantes").getAsInt());
 
-		int id = dao.anadir(r);
+		int id = dao.anadir(reserva);
 
 		JsonObject res = new JsonObject();
-		if (id == -1 || cliente_id == -1) {
-			res.addProperty("error", "Se ha producido un error al añadir la reserva");
-		} else {
-			res.addProperty("id_reserva", id);
-			res.addProperty("cliente_id", cliente_id);
-			jsonO.addProperty("cliente_id", cliente_id);
-			APIout.enviar(jsonO.toString(), 7001, "/recibirReserva");
-		}
+		  res.addProperty("id_reserva", id);
+		  res.addProperty("cliente_id", cliente_id);
 
 		return res.toString();
 	}

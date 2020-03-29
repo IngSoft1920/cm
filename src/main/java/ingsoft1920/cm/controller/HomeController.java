@@ -135,6 +135,7 @@ public class HomeController {
 		  em.setEmail(email);
 		  em.setTelefono(telefono);
 		  em.setSueldo(sueldo);
+		  em.setProfesion_id(1);
 		  
 		new EmpleadoDAO().editar(em);
 
