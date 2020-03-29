@@ -85,20 +85,20 @@ public class PedidoDAO {
 		return res;
 	}
 	
-	public static void main(String[] args) {
-		Pedido p = new Pedido(-1, Date.valueOf("2020-02-02"), 1);
-		
-		Properties prod1 = new Properties();
-		  prod1.put("producto_id",1);
-		  prod1.put("cantidad",100);
-		  
-		Properties prod2 = new Properties();
-		  prod2.put("producto_id",2);
-		  prod2.put("cantidad",50);
-		
-		List<Properties> info = List.of(prod1,prod2);
-		
-		new PedidoDAO().anadir(p, info);
-	}
+//	public static void main(String[] args) {
+//		Pedido p = new Pedido(-1, Date.valueOf("2020-02-02"), 1);
+//		
+//		Properties prod1 = new Properties();
+//		  prod1.put("producto_id",1);
+//		  prod1.put("cantidad",100);
+//		  
+//		Properties prod2 = new Properties();
+//		  prod2.put("producto_id",2);
+//		  prod2.put("cantidad",50);
+//		
+//		List<Properties> info = List.of(prod1,prod2);
+//		
+//		new PedidoDAO().anadir(p, info);
+//	}
 
 }
