@@ -1,12 +1,16 @@
 package ingsoft1920.cm.dao;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,59 +21,71 @@ public class CategoriaDAO {
 
 	@Autowired
 	private QueryRunner runner = new QueryRunner();
+	
+	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 
 	public int anadir(Categoria categoria) {
-
-		String anadirQuery = "INSERT INTO Categoria (nombre) VALUES (?)";
-
-		ScalarHandler<Integer> handler = new ScalarHandler<>();
-
-		Integer idGenerado = null;
+		BigInteger idGenerado = null;
+		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		String query = "INSERT INTO Categoria (nombre) VALUES (?)";
 
 		try (Connection conn = conector.getConn()) {
-			idGenerado = runner.insert(conn, anadirQuery, handler, categoria.getNombre());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			
+			idGenerado = runner.insert(conn, query, handler, categoria.getNombre());
+			
+		} catch (Exception e) { e.printStackTrace(); }
 
-		categoria.setId(idGenerado);
-
-		return idGenerado;
+		return idGenerado != null ? idGenerado.intValue() : -1;
 	}
 
-	public Categoria get(int id) {
-
-		String selectQuery = "SELECT * FROM Categoria WHERE id = ?";
-
-		BeanHandler<Categoria> handler = new BeanHandler<>(Categoria.class);
-
+	public Categoria getByID(int id) {
 		Categoria res = null;
+		BeanHandler<Categoria> handler = new BeanHandler<>(Categoria.class);
+		String query = "SELECT * FROM Categoria WHERE id = ?";
 
-		try (Connection conn = conector.getConn()) {
-			res = runner.query(conn, selectQuery, handler, id);
+		try (Connection conn = conector.getConn()) 
+		{
+			res = runner.query(conn, query, handler, id);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) { e.printStackTrace(); }
 
 		return res;
 	}
 
 	public List<Categoria> categorias() {
 		List<Categoria> res = new ArrayList<>();
-
 		BeanListHandler<Categoria> handler = new BeanListHandler<>(Categoria.class);
-
 		String query = "SELECT * FROM Categoria";
 
-		try (Connection conn = conector.getConn()) {
+		try (Connection conn = conector.getConn())
+		{
 			res = runner.query(conn, query, handler);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) { e.printStackTrace(); }
 
 		return res;
 	}
+	
+	public List<Categoria> categoriasHotel(int hotelID) {
+		List<Categoria> res = new ArrayList<>();
+		BeanListHandler<Categoria> handler = new BeanListHandler<>(Categoria.class);
+		String query = "SELECT * "
+				  	  +"FROM Categoria c "
+				  	  +"JOIN Hotel_Categoria hc ON c.id = hc.categoria_id "
+				  	  +"WHERE hc.hotel_id = ?";
+
+		try (Connection conn = conector.getConn())
+		{
+			res = runner.query(conn, query, handler,hotelID);
+
+		} catch (Exception e) { e.printStackTrace(); }
+
+		return res;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println( new CategoriaDAO().categoriasHotel(1) );
+	}
+
 }

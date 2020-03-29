@@ -70,10 +70,10 @@ public class HomeController {
 
 	// Hotel/Ver-hotel
 	@GetMapping("/ver-hotel/{id}")
-	public ModelAndView verHotelForm(@PathVariable(name = "id") long id) {
+	public ModelAndView verHotelForm(@PathVariable(name = "id") int id) {
 
 		System.out.println("Recuperando datos del hotel: " + id);
-		Hotel hotel = hotelDao.obtenerHotelPorId(id);
+		Hotel hotel = hotelDao.getByID(id);
 		System.out.println("Recuperando datos del hotel: " + hotel);
 
 		return new ModelAndView("corp-hotel/ver-hotel.jsp", "hotel", hotel);
@@ -81,10 +81,10 @@ public class HomeController {
 
 	// Hotel/editar-hotel
 	@GetMapping("/editar-hotel/{id}")
-	public ModelAndView editarHotelForm(@PathVariable(name = "id") long id) {
+	public ModelAndView editarHotelForm(@PathVariable(name = "id") int id) {
 
 		System.out.println("Recuperando datos del hotel: " + id);
-		Hotel hotel = hotelDao.obtenerHotelPorId(id);
+		Hotel hotel = hotelDao.getByID(id);
 		System.out.println("Recuperando datos del hotel: " + hotel);
 
 		return new ModelAndView("corp-hotel/editar-hotel.jsp", "hotel", hotel);
@@ -92,10 +92,8 @@ public class HomeController {
 
 	// eliminar hotel
 	@GetMapping("/hoteles/eliminar-hotel/{id}")
-	public ModelAndView eliminarForm(@PathVariable(name = "id") long id) {
-
-		System.out.println("Recuperando datos del hotel: " + id);
-		hotelDao.eliminarHotelPorId(id);
+	public ModelAndView eliminarForm(@PathVariable(name = "id") int id) {
+		hotelDao.eliminar(id);
 
 		return new ModelAndView("redirect:/hoteles");
 	}
@@ -104,7 +102,7 @@ public class HomeController {
 	@GetMapping("/empleados")
 	public ModelAndView empleadosForm() {
 
-		List<Empleado> empleados = new EmpleadoDAO().getEmpleados();
+		List<Empleado> empleados = new EmpleadoDAO().empleados();
 
 		return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
 	}
@@ -125,19 +123,23 @@ public class HomeController {
 
 	// ver empleado
 	@GetMapping("/ver-empleado/{id}")
-	public ModelAndView verEmpleadoForm(@PathVariable(name = "id") long id) {
+	public ModelAndView verEmpleadoForm(@PathVariable(name = "id") int id) {
 
-		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
+		System.out.println("Recuperando datos del empleado: " + id);
+		Empleado empleado = new EmpleadoDAO().getByID(id);
+		System.out.println("Recuperando datos del empleado: " + empleado);
 
 		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
 	}
 
 	// editar-empleado GET
 	@GetMapping("/editar-empleado/{id}")
-	public ModelAndView geditarEmpleadoForm(@PathVariable(name = "id") long id, String firstName) {
+	public ModelAndView geditarEmpleadoForm(@PathVariable(name = "id") int id, String firstName) {
 
-		Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
-
+		// System.out.println("Recuperando datos del empleado: " + id);
+		Empleado empleado = new EmpleadoDAO().getByID(id);
+		// sets
+		// System.out.println("Recuperando datos del empleado: " + empleado);
 		return new ModelAndView("corp-empleado/editar-empleado.jsp", "empleado", empleado);
 	}
 
@@ -146,19 +148,34 @@ public class HomeController {
 	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id, String firstName, String lastNames,
 			String email, String telefono, Double sueldo) {
 
-		Empleado empleado = new Empleado(id, firstName, lastNames, email, telefono, sueldo, 1);
-		empleadoDao.editar(empleado);
+		// System.out.println("Recuperando datos del empleado: " + id);
+//		System.out.println(sueldo);
+//		Empleado empleado = new Empleado(id, firstName, lastNames, email, telefono, sueldo, 1);
+//		System.out.println("antes");
+//		empleadoDao.editar(empleado);
+//		System.out.println("despues");
+//		// empleado.setNombre(firstName);
+//		// Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
+//		// System.out.println("Recuperando datos del empleado: " + empleado);
+		
+		Empleado em = new Empleado();
+		  em.setId((int) id);
+		  em.setNombre(firstName);
+		  em.setApellidos(lastNames);
+		  em.setEmail(email);
+		  em.setTelefono(telefono);
+		  em.setSueldo(sueldo);
+		  em.setProfesion_id(1);
+		  
+		new EmpleadoDAO().editar(em);
 
-		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
+		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", em);
 	}
 
 	// Eliminar empleado
-	@GetMapping("/empleados/eliminar-empleado/{id}")
-	public ModelAndView eliminarEmpleadoForm(@PathVariable(name = "id") long id) {
-
-		// Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
-		empleadoDao.eliminarEmpleadoPorId(id);
-
+	@GetMapping("/eliminar-empleado/{id}")
+	public ModelAndView eliminarEmpleadoForm(@PathVariable(name = "id") int id) {
+		empleadoDao.eliminar(id);
 		return new ModelAndView("redirect:/empleados");
 
 	}

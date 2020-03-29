@@ -1,7 +1,5 @@
 package ingsoft1920.cm.controller;
 
-import java.time.LocalDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +19,13 @@ public class ValoracionController {
 	ValoracionDAO dao;
 
 	/*
-	 * { "cliente_id" :1, "hotel_id" : 2, "cabecera" : “Muy bueno”, "cuerpo" :
-	 * “Maravilloso…”, "nota" : 5 }
+	 * {
+	 * "cliente_id" :1,
+	 * "hotel_id" : 2,
+	 * "cabecera" : “Muy bueno”,
+	 * "cuerpo" : “Maravilloso…”,
+	 * "nota" : 5
+	 * }
 	 */
 	@PostMapping("/valoracion")
 	@ResponseBody
@@ -30,12 +33,14 @@ public class ValoracionController {
 
 		JsonObject jsonO = JsonParser.parseString(json).getAsJsonObject();
 
-		Valoracion v = new Valoracion(-1, jsonO.get("cabecera").getAsString(), jsonO.get("cuerpo").getAsString(),
-				jsonO.get("nota").getAsInt(), jsonO.get("cliente_id").getAsInt(), jsonO.get("hotel_id").getAsInt());
-	}
-
-	public static void main(String[] args) {
-		System.out.println(LocalDateTime.now().getHour());
+		Valoracion val = new Valoracion();
+			val.setCliente_id( jsonO.get("cliente_id").getAsInt() );
+			val.setHotel_id( jsonO.get("hotel_id").getAsInt() );
+			val.setCabecera( jsonO.get("cabecera").getAsString() );
+			val.setCuerpo( jsonO.get("cuerpo").getAsString() );
+			val.setNota( jsonO.get("nota").getAsInt() );
+			
+		dao.anadir(val);
 	}
 
 }

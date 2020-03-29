@@ -22,43 +22,52 @@ public class ClienteController {
 	ClienteDAO dao;
 
 	/*
-	 * { "nombre" : "Juan", "apellidos" : "Rodríguez López", "DNI" : "51265703F",
-	 * "email" : "juan@gmail.com", “telefono” : “1234567”, “nacionalidad” :
-	 * “España”, "password" : "patata" }
+	 * {
+	 * "nombre" : "Juan",
+	 * "apellidos" : "Rodríguez López",
+	 * "DNI" : "51265703F",
+	 * "email" : "juan@gmail.com",
+	 * “telefono” : “1234567”,
+	 * “nacionalidad” : “España”,
+	 * "password" : "patata" }
 	 */
 	@PostMapping("/cliente")
 	@ResponseBody
 	public String recibirCliente(@RequestBody String json) {
 		JsonObject jsonO = JsonParser.parseString(json).getAsJsonObject();
-		Cliente c = new Cliente(-1, jsonO.get("nombre").getAsString(), jsonO.get("apellidos").getAsString(),
-				jsonO.get("DNI").getAsString(), jsonO.get("nacionalidad").getAsString(),
-				jsonO.get("password").getAsString(), jsonO.get("email").getAsString(),
-				jsonO.get("password").getAsString());
+		
+		System.out.println(jsonO.toString());
+		
+		Cliente cliente = new Cliente();
+		  cliente.setNombre( jsonO.get("nombre").getAsString() );
+		  cliente.setApellidos( jsonO.get("apellidos").getAsString() );
+		  cliente.setDNI( jsonO.get("DNI").getAsString() );
+		  cliente.setEmail( jsonO.get("email").getAsString() );
+		  cliente.setTelefono( jsonO.get("telefono").getAsString() );
+		  cliente.setNacionalidad( jsonO.get("nacionalidad").getAsString() );
+		  cliente.setPassword( jsonO.get("password").getAsString() );
 
-		int id = dao.anadir(c);
+		int id = dao.anadir(cliente);
 
 		JsonObject res = new JsonObject();
-
-		if (id == -1)
-			res.addProperty("error", "Se ha producido un error al registrar al usuario");
-		else
-			res.addProperty("id", id);
+		  res.addProperty("id", id);
 
 		return res.toString();
 	}
 
 	/*
-	 * { "email" : "juan@gmail.com", "password" : "patata" }
+	 * {
+	 * "email" : "juan@gmail.com",
+	 * "password" : "patata"
+	 * }
 	 */
 	@PostMapping("/cliente/login")
 	@ResponseBody
 	public String login(@RequestBody String json) {
 		JsonObject jsonO = JsonParser.parseString(json).getAsJsonObject();
 
-		String email = jsonO.get("email").getAsString();
-		String password = jsonO.get("password").getAsString();
-
-		Cliente cliente = dao.login(email, password);
+		Cliente cliente = dao.login(jsonO.get("email").getAsString(),
+									jsonO.get("password").getAsString());
 		if (cliente == null) {
 			JsonObject res = new JsonObject();
 			res.addProperty("error", "No se ha podido iniciar sesión");

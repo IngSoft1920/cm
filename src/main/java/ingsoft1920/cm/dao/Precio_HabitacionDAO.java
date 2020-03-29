@@ -6,7 +6,7 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ingsoft1920.cm.bean.auxiliares.Precio_Habitacion;
+import ingsoft1920.cm.bean.Precio_Habitacion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 public class Precio_HabitacionDAO {
@@ -14,6 +14,7 @@ public class Precio_HabitacionDAO {
     @Autowired
     private QueryRunner runner = new QueryRunner();
 
+    @Autowired
     private ConectorBBDD conector = new ConectorBBDD();
     
     // Si no está añade y si está edita
@@ -46,11 +47,10 @@ public class Precio_HabitacionDAO {
     }
     
     private boolean existe(Precio_Habitacion ph) {
+    	Long num = null;
     	ScalarHandler<Long> handler = new ScalarHandler<>();
     	String query = "SELECT COUNT(*) FROM Precio_Habitacion "
     				  +"WHERE hotel_id=? AND tipo_hab_id=? AND fecha=?";
-    	
-    	Long num = null;
     	
     	try( Connection conn = conector.getConn() )
     	{
