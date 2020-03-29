@@ -275,7 +275,7 @@ public class HomeController {
 	}
 
 	// Pagina de facturacion
-	@GetMapping("/facturacion")
+	@GetMapping("/beneficio")
 	public String beneficio(Model model) {
 		HashMap <Integer, BeneficiosGastosModel> beneficios_gastos = new HashMap <Integer, BeneficiosGastosModel> ();
 		beneficios_gastos = FacturaDAO.sumaReservas();
