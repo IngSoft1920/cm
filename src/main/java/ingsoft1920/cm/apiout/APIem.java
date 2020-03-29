@@ -7,6 +7,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import ingsoft1920.cm.bean.Empleado;
+import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.ProfesionDAO;
 
 public class APIem {
@@ -56,6 +57,13 @@ public class APIem {
 		  json.addProperty("id",empleadoID);
 	      
 	    APIout.enviar(json.toString(), PUERTO, "/eliminarEmpleado");
+	}
+	
+	public static void editarEmpleado(Empleado em)
+	{
+		eliminarEmpleado(em.getId());
+		Properties hotelDondeTrabaja = new EmpleadoDAO().hotelDondeTrabaja(em.getId());
+		enviarEmpleado(em, (int) hotelDondeTrabaja.get("hotel_id"), (Date) hotelDondeTrabaja.get("fecha_contratacion"));
 	}
 
 }

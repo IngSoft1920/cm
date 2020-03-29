@@ -5,15 +5,16 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 
 import ingsoft1920.cm.apiout.APIem;
 import ingsoft1920.cm.bean.Empleado;
@@ -117,7 +118,11 @@ public class EmpleadoDAO {
         				  info.getId()
         				 );
         }
+        
         catch(Exception e) { e.printStackTrace(); }
+        
+        // Notificamos a em
+    	APIem.editarEmpleado(info);
     }
     
    	public Empleado getByID(int id) {
@@ -132,14 +137,41 @@ public class EmpleadoDAO {
    		
    		return res;
    	}
+   	
+   	// TODO: Considerar que un empleado puede trabajar en varios hoteles
+   	// (devolvería un List<Properties>
+   	// El Properties tendrá:
+   	// -hotel_id: int
+   	// -fecha_contratacion: Date
+   	public Properties hotelDondeTrabaja(int empleadoID) {
+   		Properties res = null;
+   		List<Map<String,Object>> resConsulta = null;
+   		MapListHandler handler = new MapListHandler();
+   		String query = "SELECT * FROM Hotel_Empleado WHERE empleado_id = ?";
+   		
+   		try( Connection conn = conector.getConn() )
+   		{
+   			resConsulta = runner.query(conn,query,handler,empleadoID);
+   			
+   		} catch(Exception e) { e.printStackTrace(); }
+   		
+   		if( resConsulta != null ) {
+   			res = new Properties();
+   			res.put("hotel_id",resConsulta.get(0).get("hotel_id"));
+   			res.put("fecha_contratacion",resConsulta.get(0).get("fecha_contratacion"));
+   		}
+   		return res;
+   	}
     
-    public static void main(String[] args) {
-    	Empleado test = new Empleado(-1, "Juan", "Perez", "juan@gmail.com", "600600600", 1500, 1);
-    	Properties resto = new Properties();
-    	  resto.put("hotel_id",1);
-    	  resto.put("fecha_contratacion",Date.valueOf("2020-02-01"));
 
-    	new EmpleadoDAO().anadir(test, resto);
-	}
+    public static void main(String[] args) {
+    	Empleado test = new Empleado(8, "Pepe", "Gonzalez", "pepe@gmail.com", "600600600", 1500, 1);
+    	Properties hotel = new Properties();
+    	  hotel.put("hotel_id",1);
+    	  hotel.put("fecha_contratacion",Date.valueOf("2020-02-01"));
+    	
+    	//new EmpleadoDAO().anadir(test,hotel);
+    	new EmpleadoDAO().editar(test);
+    }
 
 }
