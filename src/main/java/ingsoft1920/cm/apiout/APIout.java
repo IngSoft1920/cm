@@ -15,6 +15,10 @@ public class APIout {
 
 	private static final String SERVIDOR = "http://piedrafita.ls.fi.upm.es";
 
+//	public static void enviar(String json,int puerto,String endpoint) {
+//		new Thread( () -> send(json,puerto,endpoint) );  
+//	}
+	
 	public static void enviar(String json, int puerto, String endpoint) {
 		String destino = SERVIDOR + ":" + puerto + endpoint;
 		

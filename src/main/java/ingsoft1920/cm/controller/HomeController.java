@@ -1,23 +1,24 @@
 package ingsoft1920.cm.controller;
 
-import java.util.Arrays;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Profesion;
+import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.ProfesionDAO;
-import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.dao.ProveedorDAO;
 
 @Controller
@@ -103,9 +104,7 @@ public class HomeController {
 	// Pagina de empleados
 	@GetMapping("/empleados")
 	public ModelAndView empleadosForm() {
-
 		List<Empleado> empleados = new EmpleadoDAO().empleados();
-
 		return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
 	}
 	
@@ -117,20 +116,28 @@ public class HomeController {
 	}
 	
 	@PostMapping("/anadir-empleado")
-	public ModelAndView recibirEmpleado(String firstName,
-										String lastName,
+	public String recibirEmpleado(String firstName,
+										String lastNames,
 										String email,
 										String telefono,
-										Integer[] profesion) {
+										Integer sueldo,
+										Integer profesionID) {
 		
-		System.out.println(firstName);
-		System.out.println(lastName);
-		System.out.println(email);
-		System.out.println(telefono);
-		System.out.println( Arrays.toString(profesion) );
-		
-		List<Profesion> profesiones = new ProfesionDAO().profesiones();
-		return new ModelAndView("corp-empleado/anadir-empleado.jsp","profesiones",profesiones);
+		Empleado em = new Empleado();
+		  em.setNombre(firstName);
+		  em.setApellidos(lastNames);
+		  em.setEmail(email);
+		  em.setTelefono(telefono);
+		  em.setSueldo(sueldo);
+		  em.setProfesion_id(profesionID);
+		  
+		Properties info = new Properties();
+		  info.put("fecha_contratacion",Date.valueOf( LocalDate.now() ));
+		  //TODO: cambiar esto
+		  info.put("hotel_id", 1);
+		   
+		empleadoDao.anadir(em, info);		
+		return "redirect:/empleados";
 	}
 
 //	// Anadir empleado
