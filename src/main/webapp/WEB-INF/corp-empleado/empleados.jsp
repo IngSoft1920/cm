@@ -73,7 +73,7 @@
                         <strong>Empleados</strong>
                     </a>
                     <a class="navbar-nav" href="/inicio">Inicio</a>
-                    <a class="navbar-nav" href="anadir-empleado.html">Añadir Empleado</a>
+                    <a class="navbar-nav" href="/anadir-empleado">Añadir Empleado</a>
                 </div>
             </div>
         </header>
@@ -104,7 +104,7 @@
                                         <td>${empleado.nombre}</td>
                                         <td>${empleado.apellidos}</td>
                                         <td>${empleado.email}</td>
-                                        <td>${empleado.sueldo}$</td>
+                                        <td>${empleado.sueldo}€</td>
                                         <td>
                                             <div class="btn-group">
                                                 <a class="btn btn-sm btn-outline-secondary" href="/ver-empleado/${empleado.id}" role="button">Ver</a>

@@ -1,5 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
-<!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
 <html lang="en">
 
 <head>
@@ -53,74 +55,59 @@
             <h2>Añadir Empleado</h2>
             <p class="lead">Añadir empleado a la cadena.</p>
         </div>
-
         <div class="row center">
 
             <div class="col-md-18 order-md-1">
 
-                <form class="needs-validation" novalidate="">
+                <form class="needs-validation" novalidate="" method="POST">
                     <div class="mb-3">
                         <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="" required="">
+                        <input type="text" class="form-control" name="firstName" placeholder="Nombre" required="">
                         <div class="invalid-feedback">
                             El nombre del empleado es obligatorio
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="firstName">Apellidos</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="" required="">
+                        <label for="LastName">Apellidos</label>
+                        <input type="text" class="form-control" name="lastName" placeholder="Nombre" required="">
                         <div class="invalid-feedback">
-                            El apellidos del empleado son obligatorio
+                            Los apellidos del empleado son obligatorios
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="email">Email </label>
-                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                        <input type="email" class="form-control" name="email" placeholder="you@example.com">
                         <div class="invalid-feedback">
-                            Please enter a valid email address.
+                            Por favor introduce un email válido
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address2">Telefono<span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                        <label for="telefono">Telefono<span class="text-muted">(Optional)</span></label>
+                        <input type="text" class="form-control" name="telefono" placeholder="600600600">
 
                     </div>
 
                     <div class="row">
-
                         <div class="col-md-5 mb-3">
-                            <label for="country">Profesion</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Camarero
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Cocinero
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Bartender
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Seguridad
-                                </label>
-                            </div>
+                        <label for="empleado">Profesion</label>
+
+                            <c:forEach var="profesion" items="${profesiones}">  
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="${profesion.id}" name="profesion">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        ${profesion.nombre}
+                                    </label>
+                                </div>
+
+                            </c:forEach>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal">
+                                <input class="form-check-input" type="checkbox" value="" name="">
+                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal">
                                     Otros
                                 </label>
 
@@ -140,13 +127,13 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a class="btn btn-primary" href="anadir-profesion.html" role="button">Añadir</a>
+                                                <button class="btn btn-primary" type="submit" role="button">Añadir</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                            </div>
+                            </div>              
                         </div>
 
                     </div>

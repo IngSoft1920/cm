@@ -1,5 +1,6 @@
 package ingsoft1920.cm.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
+import ingsoft1920.cm.dao.ProfesionDAO;
 
 @Controller
 public class HomeController {
@@ -40,9 +44,7 @@ public class HomeController {
 	// Pagina de Hoteles
 	@GetMapping("/hoteles")
 	public ModelAndView HotelForm() {
-
 		List<Hotel> hoteles = hotelDao.hoteles();
-
 		return new ModelAndView("corp-hotel/hoteles.jsp", "hoteles", hoteles);
 	}
 
@@ -90,6 +92,30 @@ public class HomeController {
 
 		return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
 	}
+	
+	// Pagina de añadir empleados
+	@GetMapping("/anadir-empleado")
+	public ModelAndView anadirEmpleadoForm() {
+		List<Profesion> profesiones = new ProfesionDAO().profesiones();
+		return new ModelAndView("corp-empleado/anadir-empleado.jsp","profesiones",profesiones);
+	}
+	
+	@PostMapping("/anadir-empleado")
+	public ModelAndView recibirEmpleado(String firstName,
+										String lastName,
+										String email,
+										String telefono,
+										Integer[] profesion) {
+		
+		System.out.println(firstName);
+		System.out.println(lastName);
+		System.out.println(email);
+		System.out.println(telefono);
+		System.out.println( Arrays.toString(profesion) );
+		
+		List<Profesion> profesiones = new ProfesionDAO().profesiones();
+		return new ModelAndView("corp-empleado/anadir-empleado.jsp","profesiones",profesiones);
+	}
 
 	// ver empleado
 	@GetMapping("/ver-empleado/{id}")
@@ -135,6 +161,7 @@ public class HomeController {
 		  em.setEmail(email);
 		  em.setTelefono(telefono);
 		  em.setSueldo(sueldo);
+		  em.setProfesion_id(1);
 		  
 		new EmpleadoDAO().editar(em);
 
@@ -146,7 +173,6 @@ public class HomeController {
 	public ModelAndView eliminarEmpleadoForm(@PathVariable(name = "id") int id) {
 		empleadoDao.eliminar(id);
 		return new ModelAndView("redirect:/empleados");
-
 	}
 
 	// Pagina de Proveedores
