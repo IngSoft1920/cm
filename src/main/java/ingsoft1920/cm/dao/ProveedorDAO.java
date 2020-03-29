@@ -84,5 +84,19 @@ public class ProveedorDAO {
 		return res;
 	}
 	
+	public static void main(String[] args) {
+		Proveedor prov = new Proveedor(-1, "Almacenes Juan", "123456");
+		
+		Properties prod1 = new Properties();
+		  prod1.put("producto_id",1);
+		  
+		Properties prod2 = new Properties();
+		  prod2.put("producto_id",2);
+		  
+		List<Properties> info = List.of(prod1,prod2);
+		
+		new ProveedorDAO().anadir(prov, info);
+	}
+	
 
 }
