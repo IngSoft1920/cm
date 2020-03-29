@@ -179,20 +179,20 @@ public class FacturaDAO {
 				aux=map.get(rs.getInt("hotel_id"));
 				if(aux!=null) {
 					//En caso de estarlo, se actualizaria su value
-					Double reserva = aux.getSumaReservas().get(rs.getString("TH.nombre"));
+					Double reserva = aux.getSumaReservas().get(rs.getString("TH.nombre_tipo"));
 					aux.setTotal(aux.getTotal()+(rs.getDouble("SUM(R.importe)")));
 					if(reserva!=null) { 
 						//Existe una entrada. Actualizamos value
-						aux.getSumaReservas().replace(rs.getString("TH.nombre"), rs.getDouble("SUM(R.importe)"));
+						aux.getSumaReservas().replace(rs.getString("TH.nombre_tipo"), rs.getDouble("SUM(R.importe)"));
 					}
 					//Añadir nueva entrada 
 					else {
-						aux.getSumaReservas().put(rs.getString("TH.nombre"), rs.getDouble("SUM(R.importe)"));
+						aux.getSumaReservas().put(rs.getString("TH.nombre_tipo"), rs.getDouble("SUM(R.importe)"));
 					}
 
 				}else {
 					aux=new BeneficiosGastosModel(rs.getString("H.nombre"),0);
-					aux.getSumaReservas().put(rs.getString("TH.nombre"), rs.getDouble("SUM(R.importe)"));
+					aux.getSumaReservas().put(rs.getString("TH.nombre_tipo"), rs.getDouble("SUM(R.importe)"));
 					aux.setTotal(aux.getTotal()+(rs.getDouble("SUM(R.importe)")));
 					map.put(rs.getInt("R.hotel_id"), aux);	
 				}
