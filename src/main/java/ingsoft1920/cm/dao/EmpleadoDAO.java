@@ -19,6 +19,8 @@ import ingsoft1920.cm.apiout.APIem;
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
+import java.sql.Date;
+
 @Component
 public class EmpleadoDAO {
 

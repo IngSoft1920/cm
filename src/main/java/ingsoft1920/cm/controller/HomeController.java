@@ -206,18 +206,18 @@ public class HomeController {
 
 	// ver proveedor
 	@GetMapping("/proveedores/ver-proveedor/{id}")
-	public ModelAndView verProveedorPorId(@PathVariable(name = "id") long id) {
+	public ModelAndView verProveedorPorId(@PathVariable(name = "id") int id) {
 
-		Proveedor proveedor = new ProveedorDAO().obtenerProveedorPorId(id);
+		Proveedor proveedor = new ProveedorDAO().getByID(id);
 
 		return new ModelAndView("corp-proveedor/ver-proveedor.jsp", "proveedor", proveedor);
 	}
 
 	// editar-proveedor GET
 	@GetMapping("/proveedores/editar-proveedor/{id}")
-	public ModelAndView geditarProveedorForm(@PathVariable(name = "id") long id, String empresa) {
+	public ModelAndView geditarProveedorForm(@PathVariable(name = "id") int id, String empresa) {
 
-		Proveedor proveedor = new ProveedorDAO().obtenerProveedorPorId(id);
+		Proveedor proveedor = new ProveedorDAO().getByID(id);
 
 		return new ModelAndView("corp-proveedor/editar-proveedor.jsp", "proveedor", proveedor);
 	}
@@ -235,10 +235,10 @@ public class HomeController {
 
 	// Eliminar proveedor
 	@GetMapping("/proveedores/eliminar-proveedor/{id}")
-	public ModelAndView eliminarProveedorForm(@PathVariable(name = "id") long id) {
+	public ModelAndView eliminarProveedorForm(@PathVariable(name = "id") int id) {
 
 		// Proveedor proveedor = new ProveedorDAO().obtenerProveedorPorId(id);
-		proveedorDao.eliminarProveedorPorId(id);
+		new ProveedorDAO().eliminar(id);
 
 		return new ModelAndView("redirect:/proveedores");
 

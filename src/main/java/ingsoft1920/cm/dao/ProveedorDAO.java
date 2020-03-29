@@ -3,21 +3,14 @@ package ingsoft1920.cm.dao;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.google.gson.JsonObject;
-
-import ingsoft1920.cm.apiout.APIout;
-import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
@@ -79,16 +72,14 @@ public class ProveedorDAO {
 	// Lista de proveedores
 	public List<Proveedor> proveedores() {
 
-		// List<Proveedor> res = new ArrayList<>();
-
-		List<Proveedor> proveedores = new LinkedList<>();
+		List<Proveedor> res = new ArrayList<>();
 
 		BeanListHandler<Proveedor> handler = new BeanListHandler<>(Proveedor.class);
 
 		String query = "SELECT * FROM Proveedor";
 
 		try (Connection conn = conector.getConn()) {
-			proveedores = runner.query(conn, query, handler);
+			res = runner.query(conn, query, handler);
 
 		} catch (Exception e) { e.printStackTrace(); }
 		
@@ -108,21 +99,14 @@ public class ProveedorDAO {
 	}
 
 	// Eliminar empleado
-	public void eliminarProveedor(Proveedor proveedor) {
+	public void eliminar(int proveedorID) {
 
 		String eliminarProveedor = "DELETE FROM Proveedor WHERE id = ?";
 
 		try (Connection conn = conector.getConn()) {
-			runner.update(conn, eliminarProveedor, proveedor.getId());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// Avisamos a en del borrado del proveedor:
-		JsonObject json = new JsonObject();
-		json.addProperty("id", proveedor.getId());
-
-		APIout.enviar(json.toString(), 7002, "/eliminar-proveedor");
+			runner.update(conn, eliminarProveedor, proveedorID);
+			
+		} catch (Exception e) { e.printStackTrace(); }
 	}
 	
 //	public static void main(String[] args) {
@@ -140,16 +124,6 @@ public class ProveedorDAO {
 //	}
 	
 
-		String query = "DELETE FROM Proveedor WHERE id = ?";
-
-		try (Connection conn = conector.getConn()) {
-			runner.update(conn, query, id);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 	
 	
 
