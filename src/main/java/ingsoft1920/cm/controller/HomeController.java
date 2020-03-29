@@ -140,18 +140,21 @@ public class HomeController {
 		return "redirect:/empleados";
 	}
 
-//	// Anadir empleado
-//	@GetMapping("/anadir-empleado")
-//	public ModelAndView anadirEmpleadosForm() {
-//
-//		return new ModelAndView("corp-empleado/anadir-empleado.jsp");
-//	}
 
 	// Anadir profesion
 	@GetMapping("/anadir-empleado/anadir-profesion")
 	public ModelAndView anadirProfesionForm() {
-
 		return new ModelAndView("corp-empleado/anadir-profesion.jsp");
+	}
+	
+	// Anadir profesion
+	@PostMapping("/anadir-empleado/anadir-profesion")
+	public String recibirProfesionForm(String profesion) {
+		Profesion p = new Profesion();
+		  p.setNombre(profesion);
+		
+		new ProfesionDAO().anadir(p);
+		return "redirect:/anadir-empleado";
 	}
 
 	// ver empleado
