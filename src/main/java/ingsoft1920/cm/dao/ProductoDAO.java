@@ -25,32 +25,14 @@ public class ProductoDAO {
 	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 
-	// Cada Properties da la info del proveedor
-	// -proveedor_id: int
-	public int anadir(Producto p, List<Properties> info) {
+	public int anadir(Producto p) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		String query = "INSERT INTO Producto (nombre) VALUES (?);";
 
-		String queryProd = "INSERT INTO Producto "
-						  +"(nombre) "
-						  +"VALUES (?);";
-		
-		String queryProv = "INSERT INTO Proveedor_Producto "
-						  +"(producto_id,proveedor_id) "
-						  +"VALUES (?,?)";
-
-		List<Object[]> batch;
-		try (Connection conn = conector.getConn()) {
-			res = runner.insert(conn, queryProd, handler, p.getNombre());
-	
-			batch = new ArrayList<>();
-			for (Properties prov : info) {
-				batch.add(new Object[] { 
-										res.intValue(),
-										prov.get("proveedor_id") 
-									   });
-			}
-			runner.batch(conn, queryProv, batch.toArray(new Object[info.size()][]));
+		try (Connection conn = conector.getConn()) 
+		{
+			res = runner.insert(conn, query, handler, p.getNombre());
 
 		} catch (Exception e) { e.printStackTrace(); }
 
@@ -86,16 +68,7 @@ public class ProductoDAO {
 	
 	public static void main(String[] args) {
 		Producto prod = new Producto(-1, "Bananas");
-		
-		Properties prov1 = new Properties();
-		  prov1.put("proveedor_id", 1);
-		  
-		Properties prov2 = new Properties();
-		prov2.put("proveedor_id", 2);
-		
-		List<Properties> info = List.of(prov1,prov2);
-		
-		new ProductoDAO().anadir(prod, info);
+		new ProductoDAO().anadir(prod);
 	}
 	
 

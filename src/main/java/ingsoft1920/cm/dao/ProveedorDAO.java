@@ -25,7 +25,10 @@ public class ProveedorDAO {
 	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 
-	public int anadir(Proveedor p, List<Proveedor_Producto> productos) {
+	
+	// Cada Properties da la info de cada producto
+	// -proveedor_id: int
+	public int anadir(Proveedor p, List<Properties> productos) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
