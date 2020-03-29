@@ -18,8 +18,6 @@ import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.ProfesionDAO;
 import ingsoft1920.cm.bean.Proveedor;
-import ingsoft1920.cm.dao.EmpleadoDAO;
-import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.ProveedorDAO;
 
 @Controller
@@ -135,12 +133,12 @@ public class HomeController {
 		return new ModelAndView("corp-empleado/anadir-empleado.jsp","profesiones",profesiones);
 	}
 
-	// Anadir empleado
-	@GetMapping("/anadir-empleado")
-	public ModelAndView anadirEmpleadosForm() {
-
-		return new ModelAndView("corp-empleado/anadir-empleado.jsp");
-	}
+//	// Anadir empleado
+//	@GetMapping("/anadir-empleado")
+//	public ModelAndView anadirEmpleadosForm() {
+//
+//		return new ModelAndView("corp-empleado/anadir-empleado.jsp");
+//	}
 
 	// Anadir profesion
 	@GetMapping("/anadir-empleado/anadir-profesion")
