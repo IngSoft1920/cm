@@ -1,10 +1,12 @@
 package ingsoft1920.cm.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,9 @@ import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.ProfesionDAO;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.dao.ProveedorDAO;
+import ingsoft1920.cm.fna.BeneficiosGastosModel;
+import ingsoft1920.cm.fna.ConexionEM;
+import ingsoft1920.cm.fna.FacturaDAO;
 
 @Controller
 public class HomeController {
@@ -270,8 +275,14 @@ public class HomeController {
 	}
 
 	// Pagina de facturacion
-	@GetMapping("/beneficio")
-	public String facturacionForm() {
+	@GetMapping("/facturacion")
+	public String beneficio(Model model) {
+		HashMap <Integer, BeneficiosGastosModel> beneficios_gastos = new HashMap <Integer, BeneficiosGastosModel> ();
+		beneficios_gastos = FacturaDAO.sumaReservas();
+		beneficios_gastos = FacturaDAO.gastosAlimentosPorHotel(beneficios_gastos);
+		beneficios_gastos = ConexionEM.peticionSueldoEmpleados(beneficios_gastos);
+		beneficios_gastos = FacturaDAO.beneficiosServicios(beneficios_gastos);
+		model.addAttribute("treasureMap", beneficios_gastos);
 		return "fna/beneficio.jsp";
 	}
 
