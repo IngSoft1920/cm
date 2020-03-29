@@ -1,4 +1,4 @@
-package ingsoft1920.cm.bean.auxiliares;
+package ingsoft1920.cm.bean;
 
 import java.sql.Date;
 
