@@ -107,7 +107,7 @@
                     
                     <hr class="mb-4">
 
-                    <button class="btn btn-primary btn-lg " type="submit">Guardar cambios</button>
+                    <button class="btn btn-primary btn-lg " type="submit" >Guardar cambios</button>
                     <a class="btn btn-secondary btn-lg" href="/empleados" role="button">Cancelar</a>
                 </form>
             </div>
