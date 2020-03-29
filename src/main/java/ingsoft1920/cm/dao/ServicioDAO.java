@@ -4,11 +4,13 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -82,5 +84,43 @@ public class ServicioDAO {
 		
 		return res;
 	}	
+	
+	// Cada Properties será así:
+	// -id: int
+	// -nombre: String
+	// -precio: Integer
+	// -unidad_medida: String
+	public List<Properties> serviciosHotel(int hotelID) {
+		List<Map<String, Object>> resConsulta = null;
+		MapListHandler handler = new MapListHandler();
+		String query = "SELECT s.*,hs.precio,hs.unidad_medida "
+					  +"FROM Servicio s "
+					  +"JOIN Hotel_Servicio hs ON s.id = hs.servicio_id "
+					  +"WHERE hs.hotel_id = ?";
+
+		try (Connection conn = conector.getConn()) {
+			resConsulta = runner.query(conn, query, handler,hotelID);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		List<Properties> res = new ArrayList<>();
+		Properties aux;
+		for( Map<String,Object> fila : resConsulta ) {
+			aux = new Properties();
+			aux.put("id", fila.get("id") );
+			aux.put("nombre", fila.get("nombre") );
+			
+			// Estos dos campos podrían ser null
+			if( fila.get("precio") != null ) aux.put("precio", fila.get("precio") );
+			if( fila.get("unidad_medida") != null ) aux.put("unidad_medida", fila.get("unidad_medida") );
+			
+			res.add(aux);
+		}
+		return res;
+	}	
+	
+	public static void main(String[] args) {
+		new ServicioDAO().serviciosHotel(1).forEach( p -> System.out.println(p + "\n") );; 
+	}
 
 }
