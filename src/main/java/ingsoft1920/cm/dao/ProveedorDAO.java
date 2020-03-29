@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Proveedor;
-import ingsoft1920.cm.bean.auxiliares.Proveedor_Producto;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
@@ -27,43 +27,47 @@ public class ProveedorDAO {
 
 	
 	// Cada Properties da la info de cada producto
-	// -proveedor_id: int
-	public int anadir(Proveedor p, List<Properties> productos) {
+	// -producto_id: int
+	public int anadir(Proveedor p, List<Properties> info) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 
-		String queryP = "INSERT INTO Proveedor " + "(empresa, CIF) " + "VALUES (?,?);";
-
-		String queryPro = "INSERT INTO Proveedor_Producto " + "(proveedor_id,producto_id) " + "VALUES (?,?)";
+		String queryProv = "INSERT INTO Proveedor "
+						  +"(empresa, CIF) "
+						  +"VALUES (?,?);";
+		
+		String queryPro = "INSERT INTO Proveedor_Producto "
+						 +"(proveedor_id,producto_id) "
+						 +"VALUES (?,?)";
 
 		List<Object[]> batch;
 		try (Connection conn = conector.getConn()) {
-			res = runner.insert(conn, queryP, handler, p.getEmpresa(),p.getCIF());
+			res = runner.insert(conn, queryProv, handler, p.getEmpresa(),p.getCIF());
 	
 			batch = new ArrayList<>();
-			for (Proveedor_Producto pro : productos) {
-				batch.add(new Object[] { res.intValue(), pro.getProducto_id() });
+			for (Properties prod : info) {
+				batch.add(new Object[] { res.intValue(),
+										 prod.get("producto_id")
+									   });
 			}
-			runner.batch(conn, queryPro, batch.toArray(new Object[productos.size()][]));
+			runner.batch(conn, queryPro, batch.toArray(new Object[info.size()][]));
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) { e.printStackTrace(); }
 
 		return (res != null ? res.intValue() : -1);
 	}
 	
-	public Proveedor proveedor(int id) {
+	// Not used yet
+	public Proveedor getByID(int proveedorID) {
 		Proveedor res=null;
 		BeanHandler<Proveedor> handler = new BeanHandler<>(Proveedor.class);
-		String query = "SELECT * FROM Proveedor WHERE Proveedor.id == "+ id;
+		String query = "SELECT * FROM Proveedor WHERE Proveedor.id=?";
 
 		try (Connection conn = conector.getConn()) {
-			res = runner.query(conn, query, handler);
+			res = runner.query(conn, query, handler,proveedorID);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) { e.printStackTrace(); }
+		
 		return res;
 	}
 
@@ -75,9 +79,8 @@ public class ProveedorDAO {
 		try (Connection conn = conector.getConn()) {
 			res = runner.query(conn, query, handler);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) { e.printStackTrace(); }
+		
 		return res;
 	}
 	
