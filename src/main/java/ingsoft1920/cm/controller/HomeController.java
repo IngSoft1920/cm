@@ -1,23 +1,25 @@
 package ingsoft1920.cm.controller;
 
-import java.util.Arrays;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Profesion;
+import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.ProfesionDAO;
-import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.dao.ProveedorDAO;
 
 @Controller
@@ -103,9 +105,7 @@ public class HomeController {
 	// Pagina de empleados
 	@GetMapping("/empleados")
 	public ModelAndView empleadosForm() {
-
 		List<Empleado> empleados = new EmpleadoDAO().empleados();
-
 		return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
 	}
 	
@@ -117,85 +117,97 @@ public class HomeController {
 	}
 	
 	@PostMapping("/anadir-empleado")
-	public ModelAndView recibirEmpleado(String firstName,
-										String lastName,
+	public String recibirEmpleado(String firstName,
+										String lastNames,
 										String email,
 										String telefono,
-										Integer[] profesion) {
-		
-		System.out.println(firstName);
-		System.out.println(lastName);
-		System.out.println(email);
-		System.out.println(telefono);
-		System.out.println( Arrays.toString(profesion) );
-		
-		List<Profesion> profesiones = new ProfesionDAO().profesiones();
-		return new ModelAndView("corp-empleado/anadir-empleado.jsp","profesiones",profesiones);
-	}
-
-//	// Anadir empleado
-//	@GetMapping("/anadir-empleado")
-//	public ModelAndView anadirEmpleadosForm() {
-//
-//		return new ModelAndView("corp-empleado/anadir-empleado.jsp");
-//	}
-
-	// Anadir profesion
-	@GetMapping("/anadir-empleado/anadir-profesion")
-	public ModelAndView anadirProfesionForm() {
-
-		return new ModelAndView("corp-empleado/anadir-profesion.jsp");
-	}
-
-	// ver empleado
-	@GetMapping("/ver-empleado/{id}")
-	public ModelAndView verEmpleadoForm(@PathVariable(name = "id") int id) {
-
-		System.out.println("Recuperando datos del empleado: " + id);
-		Empleado empleado = new EmpleadoDAO().getByID(id);
-		System.out.println("Recuperando datos del empleado: " + empleado);
-
-		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
-	}
-
-	// editar-empleado GET
-	@GetMapping("/editar-empleado/{id}")
-	public ModelAndView geditarEmpleadoForm(@PathVariable(name = "id") int id, String firstName) {
-
-		// System.out.println("Recuperando datos del empleado: " + id);
-		Empleado empleado = new EmpleadoDAO().getByID(id);
-		// sets
-		// System.out.println("Recuperando datos del empleado: " + empleado);
-		return new ModelAndView("corp-empleado/editar-empleado.jsp", "empleado", empleado);
-	}
-
-	// editar-empleado POST
-	@PostMapping("/editar-empleado/{id}")
-	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id, String firstName, String lastNames,
-			String email, String telefono, Double sueldo) {
-
-		// System.out.println("Recuperando datos del empleado: " + id);
-//		System.out.println(sueldo);
-//		Empleado empleado = new Empleado(id, firstName, lastNames, email, telefono, sueldo, 1);
-//		System.out.println("antes");
-//		empleadoDao.editar(empleado);
-//		System.out.println("despues");
-//		// empleado.setNombre(firstName);
-//		// Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
-//		// System.out.println("Recuperando datos del empleado: " + empleado);
+										Integer sueldo,
+										Integer profesionID) {
 		
 		Empleado em = new Empleado();
-		  em.setId((int) id);
 		  em.setNombre(firstName);
 		  em.setApellidos(lastNames);
 		  em.setEmail(email);
 		  em.setTelefono(telefono);
 		  em.setSueldo(sueldo);
-		  em.setProfesion_id(1);
+		  em.setProfesion_id(profesionID);
+		  
+		Properties info = new Properties();
+		  info.put("fecha_contratacion",Date.valueOf( LocalDate.now() ));
+		  //TODO: cambiar esto
+		  info.put("hotel_id", 1);
+		   
+		empleadoDao.anadir(em, info);		
+		return "redirect:/empleados";
+	}
+
+
+	// Anadir profesion
+	@GetMapping("/anadir-empleado/anadir-profesion")
+	public ModelAndView anadirProfesionForm() {
+		return new ModelAndView("corp-empleado/anadir-profesion.jsp");
+	}
+	
+	// Anadir profesion
+	@PostMapping("/anadir-empleado/anadir-profesion")
+	public String recibirProfesionForm(String profesion) {
+		Profesion p = new Profesion();
+		  p.setNombre(profesion);
+		
+		new ProfesionDAO().anadir(p);
+		return "redirect:/anadir-empleado";
+	}
+
+	// ver empleado
+	@GetMapping("/ver-empleado/{id}")
+	public ModelAndView verEmpleadoForm(@PathVariable(name = "id") int id) {
+		Empleado empleado = new EmpleadoDAO().getByID(id);
+		String nombreProfesion = new ProfesionDAO().getByID(empleado.getProfesion_id()).getNombre();
+		
+		ModelAndView mav = new ModelAndView("corp-empleado/ver-empleado.jsp");
+		  mav.addObject("empleado", empleado);
+		  mav.addObject("nombreProf",nombreProfesion);
+
+		return mav;
+	}
+
+	// editar-empleado GET
+	@GetMapping("/editar-empleado/{id}")
+	public ModelAndView geditarEmpleadoForm(@PathVariable(name = "id") int id, String firstName) {
+		
+		ModelAndView mav = new ModelAndView("corp-empleado/editar-empleado.jsp");
+		  mav.addObject("empleado", new EmpleadoDAO().getByID(id));
+		  mav.addObject("profesiones",new ProfesionDAO().profesiones());
+		
+		return mav;
+	}
+
+	// editar-empleado POST
+	@PostMapping("/editar-empleado/{id}")
+	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id,
+										   String firstName,
+										   String lastNames,
+										   String email,
+										   String telefono, 
+										   Double sueldo,
+										   Integer profesionID) {
+	
+		Empleado em = new Empleado();
+		  em.setId(id);
+		  em.setNombre(firstName);
+		  em.setApellidos(lastNames);
+		  em.setEmail(email);
+		  em.setTelefono(telefono);
+		  em.setSueldo(sueldo);
+		  em.setProfesion_id(profesionID);
 		  
 		new EmpleadoDAO().editar(em);
+		
+		ModelAndView mav = new ModelAndView("corp-empleado/ver-empleado.jsp");
+		  mav.addObject("empleado", em);
+		  mav.addObject("nombreProf",new ProfesionDAO().getByID(profesionID).getNombre());
 
-		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", em);
+		return mav;
 	}
 
 	// Eliminar empleado

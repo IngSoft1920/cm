@@ -12,11 +12,7 @@
 		<h1>Beneficios</h1>
 
 			<c:forEach items="${treasureMap}" var="entry">
-<<<<<<< HEAD
 
-=======
-				   
->>>>>>> branch 'develop' of https://github.com/IngSoft1920/cm.git
 				   <b>Hotel:</b> ${entry.value.nombreHotel} <emsp><b>ID:</b> ${entry.key}<br>
 				   <b>Ingresos por estancia en habitaciones:</b><br>
 				   <c:forEach items="${entry.value.sumaReservas}" var="serv">

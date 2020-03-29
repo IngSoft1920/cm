@@ -105,7 +105,8 @@ public class EmpleadoDAO {
     // le seteamos toda la información del bean
     public void editar(Empleado info){
         String query = "UPDATE Empleado SET "
-        			  +"nombre = ?, apellidos = ?, email = ?, telefono = ?, sueldo = ? "
+        			  +"nombre = ?, apellidos = ?, email = ?,"
+        			  +"telefono = ?, sueldo = ?, profesion_id = ? "
         			  +"WHERE id = ?";
         
         try( Connection conn = conector.getConn() )
@@ -116,6 +117,7 @@ public class EmpleadoDAO {
         				  info.getEmail(),
         				  info.getTelefono(),
         				  info.getSueldo(),
+        				  info.getProfesion_id(),
         				  info.getId()
         				 );
         }

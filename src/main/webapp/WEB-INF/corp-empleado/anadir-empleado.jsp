@@ -70,7 +70,7 @@
 
                     <div class="mb-3">
                         <label for="LastName">Apellidos</label>
-                        <input type="text" class="form-control" name="lastName" placeholder="Nombre" required="">
+                        <input type="text" class="form-control" name="lastNames" placeholder="Apellidos" required="">
                         <div class="invalid-feedback">
                             Los apellidos del empleado son obligatorios
                         </div>
@@ -78,16 +78,26 @@
 
                     <div class="mb-3">
                         <label for="email">Email </label>
-                        <input type="email" class="form-control" name="email" placeholder="you@example.com">
+                        <input type="email" class="form-control" name="email" placeholder="you@ejemplo.com" required="">
                         <div class="invalid-feedback">
                             Por favor introduce un email válido
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="telefono">Telefono<span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" name="telefono" placeholder="600600600">
+                        <label for="telefono">Teléfono </label>
+                        <input type="telefono" class="form-control" name="telefono" placeholder="600600600" required="">
+                        <div class="invalid-feedback">
+                            Por favor introduce un teléfono válido
+                        </div>
+                    </div>
 
+                    <div class="mb-3">
+                        <label for="sueldo">Sueldo </label>
+                        <input type="number" class="form-control" name="sueldo" placeholder="Sueldo" required="">
+                        <div class="invalid-feedback">
+                            Por favor introduce una cantidad válida
+                        </div>
                     </div>
 
                     <div class="row">
@@ -97,7 +107,7 @@
                             <c:forEach var="profesion" items="${profesiones}">  
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${profesion.id}" name="profesion">
+                                    <input class="form-check-input" type="radio" value="${profesion.id}" name="profesionID" required="">
                                     <label class="form-check-label" for="defaultCheck1">
                                         ${profesion.nombre}
                                     </label>
@@ -106,8 +116,7 @@
                             </c:forEach>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" name="">
-                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal">
+                                <label class="form-check-input" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal">
                                     Otros
                                 </label>
                                 <!-- Modal -->
@@ -122,7 +131,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Necesitas Anadir otra profesion que no se encuentra en la lista?
+                                                ¿Necesitas Anadir otra profesion que no se encuentra en la lista?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
