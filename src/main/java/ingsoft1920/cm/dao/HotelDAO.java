@@ -119,7 +119,7 @@ public class HotelDAO {
 				aux = new JsonObject();
 
 				aux.addProperty("id", hth.getTipo_hab_id());
-				aux.addProperty("nombre", thDAO.get(hth.getTipo_hab_id()).getNombre());
+				aux.addProperty("nombre", thDAO.getByID(hth.getTipo_hab_id()).getNombre());
 				aux.addProperty("num_disponibles", hth.getNum_disponibles());
 
 				habitaciones.add(aux);
@@ -146,7 +146,7 @@ public class HotelDAO {
 				aux = new JsonObject();
 
 				aux.addProperty("id", hs.getServicio_id());
-				aux.addProperty("nombre", servDAO.get(hs.getServicio_id()).getNombre());
+				aux.addProperty("nombre", servDAO.getByID(hs.getServicio_id()).getNombre());
 				aux.addProperty("precio", hs.getPrecio());
 				aux.addProperty("unidad", hs.getUnidad_medida());
 
@@ -179,7 +179,7 @@ public class HotelDAO {
 				aux = new JsonObject();
 
 				aux.addProperty("id", hth.getTipo_hab_id());
-				aux.addProperty("nombre", thDAO.get(hth.getTipo_hab_id()).getNombre());
+				aux.addProperty("nombre", thDAO.getByID(hth.getTipo_hab_id()).getNombre());
 				aux.addProperty("num_disponibles", hth.getNum_disponibles());
 
 				habitaciones.add(aux);
@@ -206,7 +206,7 @@ public class HotelDAO {
 				aux = new JsonObject();
 
 				aux.addProperty("id", hs.getServicio_id());
-				aux.addProperty("nombre", servDAO.get(hs.getServicio_id()).getNombre());
+				aux.addProperty("nombre", servDAO.getByID(hs.getServicio_id()).getNombre());
 				aux.addProperty("precio", hs.getPrecio());
 				aux.addProperty("unidad", hs.getUnidad_medida());
 
