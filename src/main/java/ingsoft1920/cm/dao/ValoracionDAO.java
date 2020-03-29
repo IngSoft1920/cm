@@ -1,5 +1,6 @@
 package ingsoft1920.cm.dao;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -56,6 +57,22 @@ public class ValoracionDAO {
 		} catch (Exception e) { e.printStackTrace(); }
 		
 		return res;
+	}
+	
+	// Es la media de las valoraciones del hotel
+	public double getNotaHotel(int hotel_id) {
+		BigDecimal res = null;
+		ScalarHandler<BigDecimal> handler = new ScalarHandler<>();
+		String query = "SELECT AVG(nota) "
+					  +"FROM Valoracion "
+					  +"WHERE hotel_id=?;";
+
+		try (Connection conn = conector.getConn()) {
+			res = runner.query(conn, query, handler, hotel_id);
+
+		} catch (Exception e) { e.printStackTrace(); }
+
+		return (res != null ? res.doubleValue() : -1);
 	}
 
 }

@@ -54,10 +54,10 @@ public class HomeController {
 
 	// Hotel/Ver-hotel
 	@GetMapping("/ver-hotel/{id}")
-	public ModelAndView verHotelForm(@PathVariable(name = "id") long id) {
+	public ModelAndView verHotelForm(@PathVariable(name = "id") int id) {
 
 		System.out.println("Recuperando datos del hotel: " + id);
-		Hotel hotel = hotelDao.obtenerHotelPorId(id);
+		Hotel hotel = hotelDao.getByID(id);
 		System.out.println("Recuperando datos del hotel: " + hotel);
 
 		return new ModelAndView("corp-hotel/ver-hotel.jsp", "hotel", hotel);
@@ -65,10 +65,10 @@ public class HomeController {
 
 	// Hotel/editar-hotel
 	@GetMapping("/editar-hotel/{id}")
-	public ModelAndView editarHotelForm(@PathVariable(name = "id") long id) {
+	public ModelAndView editarHotelForm(@PathVariable(name = "id") int id) {
 
 		System.out.println("Recuperando datos del hotel: " + id);
-		Hotel hotel = hotelDao.obtenerHotelPorId(id);
+		Hotel hotel = hotelDao.getByID(id);
 		System.out.println("Recuperando datos del hotel: " + hotel);
 
 		return new ModelAndView("corp-hotel/editar-hotel.jsp", "hotel", hotel);
@@ -76,8 +76,8 @@ public class HomeController {
 
 	// eliminar hotel
 	@GetMapping("/hoteles/eliminar-hotel/{id}")
-	public ModelAndView eliminarForm(@PathVariable(name = "id") long id) {
-		hotelDao.eliminarHotelPorId(id);
+	public ModelAndView eliminarForm(@PathVariable(name = "id") int id) {
+		hotelDao.eliminar(id);
 
 		return new ModelAndView("redirect:/hoteles");
 	}

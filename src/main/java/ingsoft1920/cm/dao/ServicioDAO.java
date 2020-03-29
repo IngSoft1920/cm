@@ -111,8 +111,8 @@ public class ServicioDAO {
 			aux.put("nombre", fila.get("nombre") );
 			
 			// Estos dos campos podrían ser null
-			if( fila.get("precio") != null ) aux.put("precio", fila.get("precio") );
-			if( fila.get("unidad_medida") != null ) aux.put("unidad_medida", fila.get("unidad_medida") );
+			aux.put("precio", fila.get("precio") != null ? fila.get("precio") : "null" );
+			aux.put("unidad_medida", fila.get("unidad_medida") != null ? fila.get("unidad_medida") : "null" );
 			
 			res.add(aux);
 		}

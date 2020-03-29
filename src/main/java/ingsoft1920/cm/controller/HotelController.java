@@ -16,7 +16,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.HotelDAO;
+import ingsoft1920.cm.dao.ServicioDAO;
 import ingsoft1920.cm.model.Disponibles;
 
 @Controller
@@ -36,7 +38,7 @@ public class HotelController {
 		for (Hotel h : hoteles) {
 
 			hotelJson = jsonMaker.toJsonTree(h, Hotel.class).getAsJsonObject();
-			hotelJson.add("categorias", jsonMaker.toJsonTree(dao.categoriasHotel(h.getId())));
+			hotelJson.add("categorias", jsonMaker.toJsonTree(new CategoriaDAO().categoriasHotel(h.getId())));
 
 			res.add(hotelJson);
 		}
@@ -52,7 +54,7 @@ public class HotelController {
 		 * Cada Properties es así (todo se refiere al servicio): id : int / nombre :
 		 * String precio : int unidad : String
 		 */
-		List<Properties> servicios = dao.serviciosHotelGE(hotel_id);
+		List<Properties> servicios = new ServicioDAO().serviciosHotel(hotel_id);
 
 		if (servicios == null) {
 			JsonObject error = new JsonObject();
@@ -67,12 +69,8 @@ public class HotelController {
 
 			elem.addProperty("id", (int) serv.get("id"));
 			elem.addProperty("nombre", (String) serv.get("nombre"));
-
-			// Precio y unidad podrían ser campos a null
-
-			elem.addProperty("precio", serv.get("precio") != null ? (int) serv.get("precio") : null);
-
-			elem.addProperty("unidad", serv.get("unidad") != null ? (String) serv.get("unidad") : null);
+			elem.addProperty("precio", (String) serv.get("precio"));
+			elem.addProperty("unidad", (String) serv.get("unidad_medida"));
 
 			res.add(elem);
 		}
