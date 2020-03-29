@@ -5,14 +5,12 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
@@ -71,9 +69,13 @@ public class ProveedorDAO {
 		return res;
 	}
 
+	// Lista de proveedores
 	public List<Proveedor> proveedores() {
+
 		List<Proveedor> res = new ArrayList<>();
+
 		BeanListHandler<Proveedor> handler = new BeanListHandler<>(Proveedor.class);
+
 		String query = "SELECT * FROM Proveedor";
 
 		try (Connection conn = conector.getConn()) {
@@ -82,6 +84,29 @@ public class ProveedorDAO {
 		} catch (Exception e) { e.printStackTrace(); }
 		
 		return res;
+
+	}
+
+	// Editar proveedor
+	public void editar(Proveedor proveedor) {
+		String editarProveedor = "UPDATE Proveedor SET empresa = ?, CIF = ? WHERE id = ?";
+
+		try (Connection conn = conector.getConn()) {
+			runner.update(conn, editarProveedor, proveedor.getEmpresa(), proveedor.getCIF());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Eliminar empleado
+	public void eliminar(int proveedorID) {
+
+		String eliminarProveedor = "DELETE FROM Proveedor WHERE id = ?";
+
+		try (Connection conn = conector.getConn()) {
+			runner.update(conn, eliminarProveedor, proveedorID);
+			
+		} catch (Exception e) { e.printStackTrace(); }
 	}
 	
 //	public static void main(String[] args) {
@@ -97,6 +122,9 @@ public class ProveedorDAO {
 //		
 //		new ProveedorDAO().anadir(prov, info);
 //	}
+	
+
+	
 	
 
 }

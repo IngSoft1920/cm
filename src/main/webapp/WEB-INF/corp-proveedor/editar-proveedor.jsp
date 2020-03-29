@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
+<!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
 <html lang="en">
 
 <head>
@@ -11,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Añadir Empleado</title>
+    <title>Editar Empleados</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
@@ -52,97 +53,100 @@
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Añadir Empleado</h2>
-            <p class="lead">Añadir empleado a la cadena.</p>
+            <h2>Editar Empleados</h2>
+            <p class="lead">Modificar los datos del empleado</p>
         </div>
+
         <div class="row center">
 
             <div class="col-md-18 order-md-1">
 
-                <form class="needs-validation" novalidate="" method="POST">
+                <form class="needs-validation" novalidate="">
                     <div class="mb-3">
                         <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" name="firstName" placeholder="Nombre" required="">
+                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="${proveedor.empresa}" required="">
                         <div class="invalid-feedback">
-                            El nombre del empleado es obligatorio
+                            El nombre de la empresa es obligatorio
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="LastName">Apellidos</label>
-                        <input type="text" class="form-control" name="lastName" placeholder="Nombre" required="">
-                        <div class="invalid-feedback">
-                            Los apellidos del empleado son obligatorios
+                        <label for="cif">CIF</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cif" value="${proveedor.CIF}" placeholder="Proveedor.cif">
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="email">Email </label>
-                        <input type="email" class="form-control" name="email" placeholder="you@example.com">
-                        <div class="invalid-feedback">
-                            Por favor introduce un email válido
+
+                    <div class="col-md-5 mb-3">
+                        <label for="country">Producto</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Verdura
+                            </label>
                         </div>
-                    </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Fruta
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Cerveza
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Vino
+                            </label>
+                        </div>
 
-                    <div class="mb-3">
-                        <label for="telefono">Telefono<span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" name="telefono" placeholder="600600600">
 
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-5 mb-3">
-                        <label for="empleado">Profesion</label>
-
-                            <c:forEach var="profesion" items="${profesiones}">  
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${profesion.id}" name="profesion">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        ${profesion.nombre}
-                                    </label>
-                                </div>
-
-                            </c:forEach>
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" name="">
-                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal">
                                     Otros
                                 </label>
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Profesion
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Añadir Producto
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Necesitas aÃ±adir otra profesion que no se encuentra en la lista?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a class="btn btn-primary" href="/anadir-empleado/anadir-profesion" role="button">Añadir</a>
-                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            Necesitas añadir otro producto que no se encuentre en la lista?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            <a class="btn btn-primary" href="anadir-producto.html" role="button">Añadir</a>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                            </div>              
                         </div>
 
                     </div>
-                    <hr class="mb-4">
 
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
-                </form>
             </div>
         </div>
+
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg " type="submit">Guardar cambios</button>
+        <a class="btn btn-secondary btn-lg" href="/proveedores" role="button">Cancelar</a>
+        </form>
+
+
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
@@ -159,10 +163,6 @@
                 <p class="float-right">
                     <a href="/inicio">Back to Home</a>
                 </p>
-                 <p class="float-left">
-                    <a href="/empleados">Back to Empleados</a>
-                </p>
-
             </div>
         </footer>
     </div>

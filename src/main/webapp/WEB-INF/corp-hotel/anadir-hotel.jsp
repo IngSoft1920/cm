@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
 <html lang="en">
@@ -61,17 +63,17 @@
 
                 <form class="needs-validation" novalidate="">
                     <div class="mb-3">
-                        <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="" required="">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="Nombre" value="${modeloHotel.hotel.nombre}" required="">
                         <div class="invalid-feedback">
                             El nombre del hotel es obligatorio
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="username">Continente</label>
+                        <label for="continente">Continente</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="username" placeholder="Continente" required="">
+                            <input type="text" class="form-control" id="continente" placeholder="Continente" value="${modeloHotel.hotel.continente}" required="">
                             <div class="invalid-feedback" style="width: 100%;">
                                 Your continente is required.
                             </div>
@@ -79,39 +81,44 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="text">Pais </label>
-                        <input type="text" class="form-control" id="text" placeholder="Pais">
+                        <label for="pais">Pais </label>
+                        <input type="text" class="form-control" id="pais" placeholder="Pais" value="${modeloHotel.hotel.pais}">
                         <div class="invalid-feedback">
                             Please enter a valid Pais.
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address">Ciudad</label>
-                        <input type="text" class="form-control" id="address" placeholder="Calle/Avenida/..." required="">
+                        <label for="ciudad">Ciudad</label>
+                        <input type="text" class="form-control" id="ciudad" placeholder="" required="" value="${modeloHotel.hotel.ciudad}">
                         <div class="invalid-feedback">
-                            Please enter your ciudad.
+                            Please enter your city.
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address2">Direccion<span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                        <label for="direccion">Direccion<span class="text-muted">(Optional)</span></label>
+                        <input type="text" class="form-control" id="direccion" placeholder="Calle/Avenida" value="${modeloHotel.hotel.direccion}">
                         <div class="invalid-feedback">
                             Please enter your Direccion.
                         </div>
                     </div>
 
                     <div class="row">
+                    
+                    <!-- Rellenar los servicios desde bd con un for -->
 
                         <div class="col-md-5 mb-3">
                             <label for="country">Servicios</label>
+                            
+                            <c:forEach var="servicios" items="${modeloHotel.hotel_servicio.servicio_id}">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                                 <label class="form-check-label" for="defaultCheck1">
                                     Restuaracion
                                 </label>
                             </div>
+                            </c:forEach>
                             
 
                             <div class="form-check">
@@ -136,7 +143,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a class="btn btn-primary" href="anadir-servicios.html" role="button">Añadir</a>
+                                                <a class="btn btn-primary" href="/anadir-hotel/anadir-servicios" role="button">Añadir</a>
                                             </div>
                                         </div>
                                     </div>
@@ -202,7 +209,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a class="btn btn-primary" href="/corp-hotel/anadir-categoria" role="button">Añadir</a>
+                                                <a class="btn btn-primary" href="/anadir-hotel/anadir-categoria" role="button">Añadir</a>
                                             </div>
                                         </div>
                                     </div>
