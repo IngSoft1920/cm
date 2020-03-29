@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
@@ -160,52 +161,53 @@ public class HomeController {
 	// ver empleado
 	@GetMapping("/ver-empleado/{id}")
 	public ModelAndView verEmpleadoForm(@PathVariable(name = "id") int id) {
-
-		System.out.println("Recuperando datos del empleado: " + id);
 		Empleado empleado = new EmpleadoDAO().getByID(id);
-		System.out.println("Recuperando datos del empleado: " + empleado);
+		String nombreProfesion = new ProfesionDAO().getByID(empleado.getProfesion_id()).getNombre();
+		
+		ModelAndView mav = new ModelAndView("corp-empleado/ver-empleado.jsp");
+		  mav.addObject("empleado", empleado);
+		  mav.addObject("nombreProf",nombreProfesion);
 
-		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", empleado);
+		return mav;
 	}
 
 	// editar-empleado GET
 	@GetMapping("/editar-empleado/{id}")
 	public ModelAndView geditarEmpleadoForm(@PathVariable(name = "id") int id, String firstName) {
-
-		// System.out.println("Recuperando datos del empleado: " + id);
-		Empleado empleado = new EmpleadoDAO().getByID(id);
-		// sets
-		// System.out.println("Recuperando datos del empleado: " + empleado);
-		return new ModelAndView("corp-empleado/editar-empleado.jsp", "empleado", empleado);
+		
+		ModelAndView mav = new ModelAndView("corp-empleado/editar-empleado.jsp");
+		  mav.addObject("empleado", new EmpleadoDAO().getByID(id));
+		  mav.addObject("profesiones",new ProfesionDAO().profesiones());
+		
+		return mav;
 	}
 
 	// editar-empleado POST
 	@PostMapping("/editar-empleado/{id}")
-	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id, String firstName, String lastNames,
-			String email, String telefono, Double sueldo) {
-
-		// System.out.println("Recuperando datos del empleado: " + id);
-//		System.out.println(sueldo);
-//		Empleado empleado = new Empleado(id, firstName, lastNames, email, telefono, sueldo, 1);
-//		System.out.println("antes");
-//		empleadoDao.editar(empleado);
-//		System.out.println("despues");
-//		// empleado.setNombre(firstName);
-//		// Empleado empleado = new EmpleadoDAO().obtenerEmpleadoPorId(id);
-//		// System.out.println("Recuperando datos del empleado: " + empleado);
-		
+	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id,
+										   String firstName,
+										   String lastNames,
+										   String email,
+										   String telefono, 
+										   Double sueldo,
+										   Integer profesionID) {
+	
 		Empleado em = new Empleado();
-		  em.setId((int) id);
+		  em.setId(id);
 		  em.setNombre(firstName);
 		  em.setApellidos(lastNames);
 		  em.setEmail(email);
 		  em.setTelefono(telefono);
 		  em.setSueldo(sueldo);
-		  em.setProfesion_id(1);
+		  em.setProfesion_id(profesionID);
 		  
 		new EmpleadoDAO().editar(em);
+		
+		ModelAndView mav = new ModelAndView("corp-empleado/ver-empleado.jsp");
+		  mav.addObject("empleado", em);
+		  mav.addObject("nombreProf",new ProfesionDAO().getByID(profesionID).getNombre());
 
-		return new ModelAndView("corp-empleado/ver-empleado.jsp", "empleado", em);
+		return mav;
 	}
 
 	// Eliminar empleado

@@ -97,13 +97,56 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="sueldo">Sueldo<span class="text-muted">(Optional)</span></label>
+                        <label for="sueldo">Sueldo</label>
                         <input type="number" class="form-control" name="sueldo" placeholder="Sueldo"  value="${empleado.sueldo}">
                         <div class="invalid-feedback">
                             Required field.
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                        <label for="empleado">Profesion</label>
+
+                            <c:forEach var="profesion" items="${profesiones}">  
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="${profesion.id}" name="profesionID" required="" <c:if test="${profesion.id == empleado.profesion_id}">checked="true"</c:if> >
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        ${profesion.nombre}
+                                    </label>
+                                </div>
+
+                            </c:forEach>
+
+                            <div class="form-check">
+                                <label class="form-check-input" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal">
+                                    Otros
+                                </label>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Profesion
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Necesitas Anadir otra profesion que no se encuentra en la lista?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <a class="btn btn-primary" href="/anadir-empleado/anadir-profesion" role="button">Añadir</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <hr class="mb-4">
 

@@ -65,25 +65,30 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="username">Apellidos</label>
+                    <label for="lastNames">Apellidos</label>
                     <div class="input-group">
                         <input type="text" class="form-control" id="lastNames" readonly  value="${empleado.apellidos}">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="text">Email </label>
+                    <label for="email">Email </label>
                     <input type="text" class="form-control" id="email" readonly value="${empleado.email}">
                 </div>
 
                 <div class="mb-3">
-                    <label for="address">Teléfono</label>
+                    <label for="telefono">Teléfono</label>
                     <input type="text" class="form-control" id="telefono" readonly value="${empleado.telefono}">
                 </div>
 
                 <div class="mb-3">
-                    <label for="address2">Sueldo<span class="text-muted">(Optional)</span></label>
+                    <label for="sueldo">Sueldo</label>
                     <input type="text" class="form-control" id="sueldo" readonly value="${empleado.sueldo}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="profesion">Profesión</label>
+                    <input type="text" class="form-control" id="profesion" readonly value="${nombreProf}">
                 </div>
 
                 <div class="row">
