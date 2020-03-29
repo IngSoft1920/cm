@@ -7,14 +7,15 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,6 @@ import org.springframework.stereotype.Component;
 import ingsoft1920.cm.apiout.APIdho;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.conector.ConectorBBDD;
-import ingsoft1920.cm.model.Disponibles;
 
 @Component
 public class HotelDAO {
@@ -163,36 +163,62 @@ public class HotelDAO {
 		} catch (Exception e) { e.printStackTrace(); }
 
 	}
-
-	// TODO cambiar esto
-	public List<Disponibles> disponibles(Date fecha_entrada, Date fecha_salida) {
-
-		BeanListHandler<Disponibles> beanListHandler = new BeanListHandler<>(Disponibles.class);
-		QueryRunner runner = new QueryRunner();
-
-		String disponiblesQuery = "SELECT Hotel_Tipo_Habitacion.hotel_id, Hotel_Tipo_Habitacion.tipo_hab_id, Tipo_Habitacion.nombre_tipo, Hotel_Tipo_Habitacion.num_disponibles, SUM(Precio_Habitacion.precio) AS precio_total "
-				+ "FROM Hotel_Tipo_Habitacion " + "JOIN Precio_Habitacion "
-				+ "ON Precio_Habitacion.hotel_id = Hotel_Tipo_Habitacion.hotel_id AND Precio_Habitacion.tipo_hab_id = Hotel_Tipo_Habitacion.tipo_hab_id AND Precio_Habitacion.fecha >= ? AND Precio_Habitacion.fecha < ? "
-				+ "JOIN Tipo_Habitacion " + "ON Hotel_Tipo_Habitacion.tipo_hab_id = Tipo_Habitacion.id "
-				+ "LEFT JOIN (SELECT Reserva.hotel_id, Reserva.tipo_hab_id, COUNT(*) AS num_reservadas "
-				+ "FROM Reserva " + "WHERE Reserva.fecha_entrada <= ? AND Reserva.fecha_salida >= ? "
-				+ "GROUP BY Reserva.hotel_id, Reserva.tipo_hab_id) AS reservadas "
-				+ "ON reservadas.hotel_id = Hotel_Tipo_Habitacion.hotel_id AND reservadas.tipo_hab_id = Hotel_Tipo_Habitacion.tipo_hab_id AND Hotel_Tipo_Habitacion.num_disponibles < reservadas.num_reservadas "
-				+ "WHERE reservadas.hotel_id IS NULL OR reservadas.tipo_hab_id IS NULL "
-				+ "GROUP BY Hotel_Tipo_Habitacion.hotel_id, Hotel_Tipo_Habitacion.tipo_hab_id;";
-
-		List<Disponibles> disponibles = new LinkedList<>();
-
-		try (Connection conn = conector.getConn()) {
-			disponibles = runner.query(conn, disponiblesQuery, beanListHandler, fecha_entrada, fecha_salida,
-					fecha_salida, fecha_entrada);
-		} catch (Exception e) {
-			e.printStackTrace();
+	
+	// TODO: Re-hacer la query criminal
+	// Cada Properties tendrá lo siguiente:
+	// -hotel_id: int
+	// -habs: List<Properties>, siendo cada Properties a su vez:
+	// 					-tipo_hab_id: int
+	//					-nombre: String
+	//					-precio_total: int
+	public List<Properties> disponibles(Date fecha_entrada, Date fecha_salida) {
+		List<Properties> res = null;
+		List<Map<String, Object>> resConsulta = null;
+		MapListHandler handler = new MapListHandler();
+		String query = "SELECT h.id, GROUP_CONCAT(hth.tipo_hab_id) AS habIDs, GROUP_CONCAT(th.nombre_tipo) AS habNombres "
+					  +" FROM Hotel h "
+					  +" JOIN Hotel_Tipo_Habitacion hth ON h.id = hth.hotel_id "
+					  +" JOIN Tipo_Habitacion th ON hth.tipo_hab_id = th.id "
+					  +"GROUP BY h.id";
+		
+		try( Connection conn = conector.getConn() )
+		{
+			resConsulta = runner.query(conn,query,handler);
+			
+		} catch( Exception e ) { e.printStackTrace(); }
+		
+		if( resConsulta != null ) {
+			res = new ArrayList<>();
+			
+			List<Properties> habs;
+			Properties hotel, aux;
+			String[] habIDs, habNombres;
+			for( Map<String,Object> fila : resConsulta ) {
+				hotel = new Properties();
+				hotel.put("hotel_id", fila.get("id") );
+				
+				habs = new ArrayList<>();
+				
+				// Tienen el mismo num de elementos pues matchean
+				habIDs = ((String)fila.get("habIDs")).split(",");
+				habNombres = ((String)fila.get("habNombres")).split(",");
+				
+				for(int i=0;i<habIDs.length;i++) {
+					aux = new Properties();
+					aux.put("tipo_hab_id",habIDs[i]);
+					aux.put("nombre",habNombres[i]);
+					aux.put("precio_total",new Random().nextInt(100)+50);	
+					
+					habs.add(aux);
+				}
+				hotel.put("habitaciones",habs);
+				
+				res.add(hotel);
+			}
 		}
-
-		return disponibles;
-
+		return res;
 	}
+	
 
 	/*
 	 * Cada Properties de la lista tiene los siguientes atributos:
@@ -357,7 +383,7 @@ public class HotelDAO {
  		
 		dao.anadir(h, habs, servs, cats);*/
 		
-		new HotelDAO().getDataRM().forEach( p -> System.out.println(p + "\n") );
+		new HotelDAO().disponibles(null,null).forEach( p -> System.out.println(p + "\n") );
 	}	
 
 }

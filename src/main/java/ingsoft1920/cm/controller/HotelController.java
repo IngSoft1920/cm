@@ -19,7 +19,6 @@ import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.ServicioDAO;
-import ingsoft1920.cm.model.Disponibles;
 
 @Controller
 public class HotelController {
@@ -79,57 +78,9 @@ public class HotelController {
 
 	@GetMapping("/hotel/disponibles")
 	@ResponseBody
-	public String disponibles(@RequestParam Date fecha_inicio, @RequestParam Date fecha_fin) {
-
-		List<Disponibles> disponibles = dao.disponibles(fecha_inicio, fecha_fin);
-
-		JsonArray res = new JsonArray();
-		JsonArray habitaciones;
-
-		JsonObject elem;
-		JsonObject habitacion;
-
-		int id;
-
-		Disponibles disponible;
-
-		int i = 0;
-
-		while (i < disponibles.size()) {
-
-			disponible = disponibles.get(i);
-
-			elem = new JsonObject();
-			habitaciones = new JsonArray();
-
-			id = disponible.getHotel_id();
-			elem.addProperty("hotel_id", id);
-
-			while (disponible.getHotel_id() == id) {
-
-				habitacion = new JsonObject();
-
-				habitacion.addProperty("tipo_hab_id", disponible.getTipo_ha_id());
-				habitacion.addProperty("nombre", disponible.getNombre_tipo());
-				habitacion.addProperty("precio_total", disponible.getPrecio_total());
-
-				habitaciones.add(habitacion);
-
-				i++;
-				if (i < (disponibles.size())) {
-					disponible = disponibles.get(i);
-				} else {
-					break;
-				}
-			}
-
-			elem.add("habitaciones", habitaciones);
-
-			res.add(elem);
-
-		}
-
-		return res.toString();
+	public String disponibles(@RequestParam Date fecha_inicio, @RequestParam Date fecha_fin) {		
+		return new Gson().toJsonTree( dao.disponibles(fecha_inicio, fecha_fin) ).toString();
 	}
+	
 
 }
