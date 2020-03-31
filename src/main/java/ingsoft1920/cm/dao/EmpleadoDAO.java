@@ -1,200 +1,180 @@
 package ingsoft1920.cm.dao;
 
-import ingsoft1920.cm.bean.Empleado;
-import ingsoft1920.cm.conector.conectorBBDD;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.math.BigInteger;
+import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import ingsoft1920.cm.apiout.APIem;
+import ingsoft1920.cm.bean.Empleado;
+import ingsoft1920.cm.conector.ConectorBBDD;
+
+import java.sql.Date;
+
+@Component
 public class EmpleadoDAO {
 
-    private static conectorBBDD conector = new conectorBBDD();
+    @Autowired
+    private QueryRunner runner = new QueryRunner();
 
-    private int anadirEmpleadoEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion){
-
-        String anadirEmpleado = "INSERT INTO empleado (nombre, apellido1, email, telefono, ocupacion) VALUES (?,?,?,?,?)";
-
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
-        int id = -1;
-
-        try {
-            stmt = conector.getConn().prepareStatement(anadirEmpleado,Statement.RETURN_GENERATED_KEYS);
-
-            stmt.setString(1, nombre);
-            stmt.setString(2, apellidos);
-            stmt.setString(3, email);
-            stmt.setString(4, telefono);
-            stmt.setString(5, ocupacion);
-
-            stmt.execute();
-            rs = stmt.getGeneratedKeys();
-
-            if (rs.next()) {
-                id = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return id;
-    }
-
-    private void anadirEmpleadoHotel (int hotel_id, int empleado_id){
-
-        String anadirEmpleadoHotel = "INSERT INTO hotel_empleados (hotel_id, empleados_id) VALUES (?, ?)";
-
-        PreparedStatement stmt = null;
-        int id=-1;
-
-        try {
-            stmt = conector.getConn().prepareStatement(anadirEmpleadoHotel);
-
-            stmt.setInt(1, hotel_id);
-            stmt.setInt(2, empleado_id);
-
-            stmt.execute();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public int anadirEmpleado(String nombre, String apellidos, String email, String telefono, String ocupacion, int hotel_id){
-
-        if (! conector.isConnected()){
-            conector.conectar();
-        }
-
-        int id = anadirEmpleadoEmpleado(nombre, apellidos, email, telefono, ocupacion);
-        anadirEmpleadoHotel(hotel_id, id );
-
-        conector.closeConn();
-        return id;
-    }
-
-    private void borrarEmpleadoEmpleado(int id){
-        String borrarEmpleadoEmpleado = "DELETE FROM empleado WHERE id = ?";
-
-        if (! conector.isConnected()){
-            conector.conectar();
-        }
-
-        PreparedStatement stmt;
-
-        try {
-            stmt = conector.getConn().prepareStatement(borrarEmpleadoEmpleado);
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void borrarEmpleadoHotel (int id){
-        String borrarEmpleadoEmpleado = "DELETE FROM hotel_empleados WHERE empleados_id = ?";
-
-        if (! conector.isConnected()){
-            conector.conectar();
-        }
-
-        PreparedStatement stmt;
-
-        try {
-            stmt = conector.getConn().prepareStatement(borrarEmpleadoEmpleado);
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void borrarEmpleado(int id){
-
-        if (! conector.isConnected()){
-            conector.conectar();
-        }
-
-        borrarEmpleadoEmpleado(id);
-        borrarEmpleadoHotel(id);
-
-        conector.closeConn();
-    }
+    @Autowired
+    private ConectorBBDD conector = new ConectorBBDD();
 
     public List<Empleado> empleados() {
-
-        if (! conector.isConnected()){
-            conector.conectar();
-        }
-
-        String getEmpleados = "SELECT * FROM empleado";
-
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
         List<Empleado> empleados = new LinkedList<>();
-        Empleado empleado;
+        BeanListHandler<Empleado> beanListHandler = new BeanListHandler<>(Empleado.class);
+        String getEmpleados = "SELECT * FROM Empleado";
 
-        try {
-            stmt = conector.getConn().prepareStatement(getEmpleados);
-            rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				empleado = new Empleado(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido1"),
-						rs.getString("email"), rs.getString("telefono"), rs.getString("ocupacion"));
-				empleados.add(empleado);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
+        try( Connection conn = conector.getConn() )
+        {
+            empleados = runner.query(conn, getEmpleados, beanListHandler);
+        }
+        catch(Exception e) { e.printStackTrace(); }
         return empleados;
     }
 
-    public List<Empleado> empleadosDeUnHotel(int hotel_id){
-    	
-    	if (! conector.isConnected()){
-            conector.conectar();
+    // *Properties
+    // -hotel_id: int
+    // -fecha_contratacion: Date
+    public int anadir(Empleado empleado,Properties hotelEmpleado){
+    	BigInteger idGenerado = null;
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+        String queryEmpleado = "INSERT INTO Empleado "
+        					  +"(nombre,apellidos,email,telefono,sueldo,profesion_id) "
+        					  +"VALUES (?, ?, ?, ?, ?, ?);";
+        
+        String queryHotelEmpleado = "INSERT INTO Hotel_Empleado "
+        						   +"(empleado_id, hotel_id, fecha_contratacion) "
+        						   +"VALUES (?, ?, ?)";
+
+        try( Connection conn = conector.getConn() )
+        {
+            idGenerado = runner.insert(conn, queryEmpleado, handler,
+            						   empleado.getNombre(),
+            						   empleado.getApellidos(),
+            						   empleado.getEmail(),
+            						   empleado.getTelefono(),
+            						   empleado.getSueldo(),
+            						   empleado.getProfesion_id()
+            						  );
+            
+            runner.insert(conn, queryHotelEmpleado, handler,
+            			  idGenerado,
+            			  hotelEmpleado.get("hotel_id"),
+            			  hotelEmpleado.get("fecha_contratacion")
+            			 );
         }
-    	
-    	String getEmpleadosDeUnHotel = "SELECT empleado.* "+
-    							   	   "FROM empleado "+
-    							   	   "JOIN hotel_empleados ON empleado.id=hotel_empleados.empleados_id "+
-    							   	   "WHERE hotel_empleados.hotel_id=?";
-  
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
-        List<Empleado> empleados = new LinkedList<>();
-
-        try {
-            stmt = conector.getConn().prepareStatement(getEmpleadosDeUnHotel);
-            stmt.setInt(1, hotel_id);
-
-            rs = stmt.executeQuery();
-
-            while (rs.next()){
-                Empleado empleado = new Empleado();
-
-                empleado.setId(rs.getInt("id"));
-                empleado.setNombre(rs.getString("nombre"));
-                empleado.setApellidos(rs.getString("apellido1"));
-                empleado.setEmail(rs.getString("email"));
-                empleado.setTelefono(rs.getString("telefono"));
-                empleado.setOcupacion(rs.getString("ocupacion"));
-
-                empleados.add(empleado);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        catch(Exception e) { e.printStackTrace(); }
+        
+        // Se ha insertado correctamente, lo mandamos a em
+        if( idGenerado != null ) {
+        	empleado.setId( idGenerado.intValue() );
+        	APIem.enviarEmpleado(empleado,
+        						 (int) hotelEmpleado.get("hotel_id"),
+        						 (Date) hotelEmpleado.get("fecha_contratacion"));
         }
 
-        return empleados;
+        return ( idGenerado != null ? idGenerado.intValue() : -1 );
+    }
+	
+    public void eliminar(int empleadoID){
+	    String query = "DELETE FROM Empleado WHERE id = ?";
+	
+	    try( Connection conn = conector.getConn() )
+	    {
+	        runner.update(conn, query, empleadoID);
+	        
+	    }
+	    catch(Exception e) { e.printStackTrace(); }
+	    
+	    // Avisamos a em del borrado del empleado:
+	    APIem.eliminarEmpleado(empleadoID);
     }
     
+    // A la entrada de la base de datos con el empleado_id correspondiente
+    // le seteamos toda la información del bean
+    public void editar(Empleado info){
+        String query = "UPDATE Empleado SET "
+        			  +"nombre = ?, apellidos = ?, email = ?,"
+        			  +"telefono = ?, sueldo = ?, profesion_id = ? "
+        			  +"WHERE id = ?";
+        
+        try( Connection conn = conector.getConn() )
+        {
+        	runner.update(conn,query,
+        				  info.getNombre(),
+        				  info.getApellidos(),
+        				  info.getEmail(),
+        				  info.getTelefono(),
+        				  info.getSueldo(),
+        				  info.getProfesion_id(),
+        				  info.getId()
+        				 );
+        }
+        
+        catch(Exception e) { e.printStackTrace(); }
+        
+        // Notificamos a em
+    	//APIem.editarEmpleado(info);
+    }
+    
+   	public Empleado getByID(int id) {
+   		Empleado res = new Empleado();
+   		BeanHandler<Empleado> handler = new BeanHandler<>(Empleado.class);
+   		String query = "SELECT * FROM Empleado WHERE id=?;";
+
+   		try (Connection conn = conector.getConn()) {
+   			res = runner.query(conn, query, handler, id);
+
+   		} catch (Exception e) { e.printStackTrace(); }
+   		
+   		return res;
+   	}
+   	
+   	// TODO: Considerar que un empleado puede trabajar en varios hoteles
+   	// (devolvería un List<Properties>
+   	// El Properties tendrá:
+   	// -hotel_id: int
+   	// -fecha_contratacion: Date
+   	public Properties hotelDondeTrabaja(int empleadoID) {
+   		Properties res = null;
+   		List<Map<String,Object>> resConsulta = null;
+   		MapListHandler handler = new MapListHandler();
+   		String query = "SELECT * FROM Hotel_Empleado WHERE empleado_id = ?";
+   		
+   		try( Connection conn = conector.getConn() )
+   		{
+   			resConsulta = runner.query(conn,query,handler,empleadoID);
+   			
+   		} catch(Exception e) { e.printStackTrace(); }
+   		
+   		if( resConsulta != null ) {
+   			res = new Properties();
+   			res.put("hotel_id",resConsulta.get(0).get("hotel_id"));
+   			res.put("fecha_contratacion",resConsulta.get(0).get("fecha_contratacion"));
+   		}
+   		return res;
+   	}
+    
+
+    public static void main(String[] args) {
+    	Empleado test = new Empleado(8, "Pepe", "Gonzalez", "pepe@gmail.com", "600600600", 1500, 1);
+    	Properties hotel = new Properties();
+    	  hotel.put("hotel_id",1);
+    	  hotel.put("fecha_contratacion",Date.valueOf("2020-02-01"));
+    	
+    	//new EmpleadoDAO().anadir(test,hotel);
+    	new EmpleadoDAO().editar(test);
+    }
 
 }
