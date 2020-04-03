@@ -162,6 +162,7 @@ CREATE TABLE `Empleado` (
     `telefono` VARCHAR(15) NOT NULL,
     `sueldo` DOUBLE,
     `profesion_id` INT,
+    `dias_libres` JSON,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`profesion_id`) REFERENCES `Profesion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );

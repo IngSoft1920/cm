@@ -2,6 +2,7 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -50,8 +51,8 @@ public class EmpleadoDAO {
     	BigInteger idGenerado = null;
         ScalarHandler<BigInteger> handler = new ScalarHandler<>();
         String queryEmpleado = "INSERT INTO Empleado "
-        					  +"(nombre,apellidos,email,telefono,sueldo,profesion_id) "
-        					  +"VALUES (?, ?, ?, ?, ?, ?);";
+        					  +"(nombre,apellidos,email,telefono,sueldo,profesion_id,dias_libres) "
+        					  +"VALUES (?, ?, ?, ?, ?, ?, ?);";
         
         String queryHotelEmpleado = "INSERT INTO Hotel_Empleado "
         						   +"(empleado_id, hotel_id, fecha_contratacion) "
@@ -65,7 +66,8 @@ public class EmpleadoDAO {
             						   empleado.getEmail(),
             						   empleado.getTelefono(),
             						   empleado.getSueldo(),
-            						   empleado.getProfesion_id()
+            						   empleado.getProfesion_id(),
+            						   Arrays.toString(empleado.getDias_libres())
             						  );
             
             runner.insert(conn, queryHotelEmpleado, handler,
@@ -106,7 +108,8 @@ public class EmpleadoDAO {
     public void editar(Empleado info){
         String query = "UPDATE Empleado SET "
         			  +"nombre = ?, apellidos = ?, email = ?,"
-        			  +"telefono = ?, sueldo = ?, profesion_id = ? "
+        			  +"telefono = ?, sueldo = ?, profesion_id = ?,"
+        			  +"dias_libres=? "
         			  +"WHERE id = ?";
         
         try( Connection conn = conector.getConn() )
@@ -118,6 +121,7 @@ public class EmpleadoDAO {
         				  info.getTelefono(),
         				  info.getSueldo(),
         				  info.getProfesion_id(),
+        				  info.getDias_libres(),
         				  info.getId()
         				 );
         }
@@ -125,7 +129,7 @@ public class EmpleadoDAO {
         catch(Exception e) { e.printStackTrace(); }
         
         // Notificamos a em
-    	//APIem.editarEmpleado(info);
+    	APIem.editarEmpleado(info);
     }
     
    	public Empleado getByID(int id) {
@@ -168,13 +172,13 @@ public class EmpleadoDAO {
     
 
     public static void main(String[] args) {
-    	Empleado test = new Empleado(8, "Pepe", "Gonzalez", "pepe@gmail.com", "600600600", 1500, 1);
+    	Empleado test = new Empleado(8, "Pepe", "Gonzalez", "pepe@gmail.com", "600600600", 1500, 1,new Integer[] {5,6});
     	Properties hotel = new Properties();
     	  hotel.put("hotel_id",1);
     	  hotel.put("fecha_contratacion",Date.valueOf("2020-02-01"));
     	
-    	//new EmpleadoDAO().anadir(test,hotel);
-    	new EmpleadoDAO().editar(test);
+    	new EmpleadoDAO().anadir(test,hotel);
+    	//new EmpleadoDAO().editar(test);
     }
 
 }

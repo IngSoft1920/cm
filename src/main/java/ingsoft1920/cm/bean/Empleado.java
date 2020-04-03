@@ -1,5 +1,6 @@
 package ingsoft1920.cm.bean;
 
+import java.util.Arrays;
 
 public class Empleado {
 	
@@ -10,11 +11,12 @@ public class Empleado {
 	private String telefono;
 	private double sueldo;
 	private int profesion_id;
+	private Integer[] dias_libres; //->0-Lunes,1-Martes,...,6-Domingo
 
 	public Empleado() {}
 
 	public Empleado(int id, String nombre, String apellidos, String email, String telefono, double sueldo,
-			int profesion_id) {
+			int profesion_id, Integer[] dias_libres) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -23,10 +25,8 @@ public class Empleado {
 		this.telefono = telefono;
 		this.sueldo = sueldo;
 		this.profesion_id = profesion_id;
+		this.dias_libres = dias_libres;
 	}
-
-
-
 
 	public int getId() {
 		return id;
@@ -71,12 +71,19 @@ public class Empleado {
 		this.profesion_id = profesion_id;
 	}
 
+	public Integer[] getDias_libres() {
+		return dias_libres;
+	}
+
+	public void setDias_libres(Integer[] dias_libres) {
+		this.dias_libres = dias_libres;
+	}
+
 	@Override
 	public String toString() {
 		return "Empleado [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
-				+ ", telefono=" + telefono + ", sueldo=" + sueldo + ", profesion_id=" + profesion_id + "]";
-	}
-	
-	
+				+ ", telefono=" + telefono + ", sueldo=" + sueldo + ", profesion_id=" + profesion_id + ", dias_libres="
+				+ Arrays.toString(dias_libres) + "]";
+	}	
 
 }

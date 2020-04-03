@@ -206,11 +206,11 @@ public class HomeController {
 	
 	@PostMapping("/anadir-empleado")
 	public String recibirEmpleado(String firstName,
-										String lastNames,
-										String email,
-										String telefono,
-										Integer sueldo,
-										Integer profesionID) {
+								  String lastNames,
+								  String email,
+								  String telefono,
+								  Integer sueldo,
+								  Integer profesionID) {
 		
 		Empleado em = new Empleado();
 		  em.setNombre(firstName);
@@ -219,6 +219,8 @@ public class HomeController {
 		  em.setTelefono(telefono);
 		  em.setSueldo(sueldo);
 		  em.setProfesion_id(profesionID);
+		  //TODO: cambiar esto
+		  em.setDias_libres(new Integer[] {7,8});
 		  
 		Properties info = new Properties();
 		  info.put("fecha_contratacion",Date.valueOf( LocalDate.now() ));
