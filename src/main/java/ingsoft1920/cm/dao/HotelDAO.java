@@ -41,6 +41,7 @@ public class HotelDAO {
 	// -servicio_id: int
 	// -precio: Integer
 	// -unidad_medida: String
+	// -num_instalaciones: int
 	
 	// *En cats cada Properties tendrá:
 	// -categoria_id: int
@@ -62,8 +63,8 @@ public class HotelDAO {
 						  +"VALUES (?,?,?)";
 
 		String queryServs = "INSERT INTO Hotel_Servicio "
-						   +"(hotel_id,servicio_id,precio,unidad_medida) "
-						   +"VALUES (?,?,?,?)";
+						   +"(hotel_id,servicio_id,precio,unidad_medida,num_instalaciones) "
+						   +"VALUES (?,?,?,?,?)";
 
 		String queryCats = "INSERT INTO Hotel_Categoria "
 						  +"(hotel_id,categoria_id) "
@@ -100,7 +101,8 @@ public class HotelDAO {
 				batch.add(new Object[] { idGenerado.intValue(),
 										 serv.get("servicio_id"),
 										 serv.get("precio"),
-										 serv.get("unidad_medida")
+										 serv.get("unidad_medida"),
+										 serv.get("num_instalaciones")
 									   });
 			}
 			runner.batch(conn, queryServs, batch.toArray(new Object[servs.size()][]));
@@ -294,95 +296,37 @@ public class HotelDAO {
 		} catch (Exception e) { e.printStackTrace(); }
 		return res != null ? res.doubleValue() : 0;
 	}
+	
+	
+	public static void main(String[] args) {
+		
+		HotelDAO dao = new HotelDAO();
+		Hotel h = new Hotel(-1, "Hotel New Japón","Asia", "Japón", "Tokyo", "Calle Luna,12", 5, "Oriental");
+		
+		Properties hab1 = new Properties();
+		  hab1.put("tipo_hab_id", 1);
+		  hab1.put("num_disponibles", 30);
+		Properties hab2 = new Properties();
+		  hab2.put("tipo_hab_id", 2);
+		  hab2.put("num_disponibles", 15);
+		List<Properties> habs = List.of(hab1,hab2);
+		
+		
+		Properties serv1 = new Properties();
+		  serv1.put("servicio_id",1);
+		  serv1.put("precio",100);
+		  serv1.put("unidad_medida",2);
+		  serv1.put("num_instalaciones",2);
+		List<Properties> servs = List.of(serv1);
+		
+		
+		Properties cat1 = new Properties();
+		  cat1.put("categoria_id",1);
+		List<Properties> cats = List.of(cat1);
 
-	
-//	/**
-//	 * Metodo para anadir un hotel a BD
-//	 * 
-//	 * @param h
-//	 * @param habs
-//	 * @param servicios
-//	 * @param categorias Creado por Luis(Front)
-//	 */
-//	public void anadirHotel(Hotel h, List<Hotel_Tipo_Habitacion> habs, List<Hotel_Servicio> servicios,
-//			List<Hotel_Categoria> categorias) {
-//		// Primero añadimos el hotel mismamente
-//		BigInteger res = null;
-//		ScalarHandler<BigInteger> handlerH = new ScalarHandler<>();
-//		String queryH = "INSERT INTO Hotel " + "(nombre,continente,pais,ciudad,direccion,estrellas,descripcion) "
-//				+ "VALUES (?,?,?,?,?,?,?);";
-//
-//		String queryHabs = "INSERT INTO Hotel_Tipo_Habitacion " + "(hotel_id,tipo_hab_id,num_disponibles) "
-//				+ "VALUES (?,?,?)";
-//
-//		String queryServ = "INSERT INTO Hotel_Servicio " + "(hotel_id,servicio_id,precio,unidad_medida) "
-//				+ "VALUES (?,?,?,?)";
-//
-//		String queryCat = "INSERT INTO Hotel_Categoria " + "(hotel_id,categoria_id) " + "VALUES (?,?)";
-//
-//		List<Object[]> batch;
-//		try (Connection conn = conector.getConn()) {
-//			res = runner.insert(conn, queryH, handlerH, h.getNombre(), h.getContinente(), h.getPais(), h.getCiudad(),
-//					h.getDireccion(), h.getEstrellas(), h.getDescripcion());
-//
-//			// Enlazamos con los tipo de habitaciones:
-//			batch = new ArrayList<>();
-//			for (Hotel_Tipo_Habitacion hab : habs) {
-//				batch.add(new Object[] { res.intValue(), hab.getTipo_hab_id(), hab.getNum_disponibles() });
-//			}
-//			runner.batch(conn, queryHabs, batch.toArray(new Object[habs.size()][]));
-//
-//			// Enlazamos con los servicios
-//			batch = new ArrayList<>();
-//			for (Hotel_Servicio srv : servicios) {
-//				batch.add(
-//						new Object[] { res.intValue(), srv.getServicio_id(), srv.getPrecio(), srv.getUnidad_medida() });
-//			}
-//			runner.batch(conn, queryServ, batch.toArray(new Object[servicios.size()][]));
-//
-//			// Enlazamos con las categorias
-//			batch = new ArrayList<>();
-//			for (Hotel_Categoria cat : categorias) {
-//				batch.add(new Object[] { res.intValue(), cat.getCategoria_id() });
-//			}
-//			runner.batch(conn, queryCat, batch.toArray(new Object[categorias.size()][]));
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		//return ( res != null ? res.intValue() : -1 );
-//	}
-	
-	
-//	public static void main(String[] args) {
-//		
-//		HotelDAO dao = new HotelDAO();
-//		Hotel h = new Hotel(-1, "Hotel New Japón","Asia", "Japón", "Tokyo", "Calle Luna,12", 5, "Oriental");
-//		
-//		Properties hab1 = new Properties();
-//		  hab1.put("tipo_hab_id", 1);
-//		  hab1.put("num_disponibles", 30);
-//		Properties hab2 = new Properties();
-//		  hab2.put("tipo_hab_id", 2);
-//		  hab2.put("num_disponibles", 15);
-//		List<Properties> habs = List.of(hab1,hab2);
-//		
-//		
-//		Properties serv1 = new Properties();
-//		  serv1.put("servicio_id",1);
-//		  serv1.put("precio",100);
-//		  serv1.put("unidad_medida",2);
-//		List<Properties> servs = List.of(serv1);
-//		
-//		
-//		Properties cat1 = new Properties();
-//		  cat1.put("categoria_id",1);
-//		List<Properties> cats = List.of(cat1);
-//
-// 		
-//		dao.anadir(h, habs, servs, cats);
-//		
-//	}	
+ 		
+		dao.anadir(h, habs, servs, cats);
+		
+	}	
 
 }

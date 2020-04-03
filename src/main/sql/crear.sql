@@ -21,7 +21,7 @@ CREATE TABLE `Hotel`(
 
 CREATE TABLE `Tipo_Habitacion` (
 	`id` INT AUTO_INCREMENT,
-	`nombre` VARCHAR(100) NOT NULL,
+	`nombre_tipo` VARCHAR(100) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -145,6 +145,7 @@ CREATE TABLE `Hotel_Servicio` (
     `servicio_id` INT,
     `precio` INT,
     `unidad_medida` VARCHAR(40),
+    `num_instalaciones` INT,
     FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`servicio_id`) REFERENCES `Servicio` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (`hotel_id`,`servicio_id`)

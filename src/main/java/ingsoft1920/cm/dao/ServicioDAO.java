@@ -90,10 +90,11 @@ public class ServicioDAO {
 	// -nombre: String
 	// -precio: Integer
 	// -unidad_medida: String
+	// -num_instalaciones: int
 	public List<Properties> serviciosHotel(int hotelID) {
 		List<Map<String, Object>> resConsulta = null;
 		MapListHandler handler = new MapListHandler();
-		String query = "SELECT s.*,hs.precio,hs.unidad_medida "
+		String query = "SELECT s.*,hs.precio,hs.unidad_medida,hs.num_instalaciones "
 					  +"FROM Servicio s "
 					  +"JOIN Hotel_Servicio hs ON s.id = hs.servicio_id "
 					  +"WHERE hs.hotel_id = ?";
@@ -113,6 +114,8 @@ public class ServicioDAO {
 			// Estos dos campos podrían ser null
 			aux.put("precio", fila.get("precio") != null ? fila.get("precio") : "null" );
 			aux.put("unidad_medida", fila.get("unidad_medida") != null ? fila.get("unidad_medida") : "null" );
+			
+			aux.put("num_instalaciones",fila.get("num_instalaciones"));
 			
 			res.add(aux);
 		}
