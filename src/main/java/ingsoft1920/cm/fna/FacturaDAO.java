@@ -161,7 +161,7 @@ public class FacturaDAO {
 		//key=hotel_id, value=Beneficios del hotel
 		//Consulta para obtener el gastos de los alimentos
 		HashMap <Integer, BeneficiosGastosModel> map = new HashMap <Integer, BeneficiosGastosModel>();
-		String sql = "SELECT R.hotel_id,H.nombre,TH.id,TH.nombre,sum(R.importe)\n" + 
+		String sql = "SELECT R.hotel_id,H.nombre,TH.id,TH.nombre_tipo,sum(R.importe)\n" + 
 				"FROM Reserva AS R\n" + 
 				"JOIN Hotel AS H ON R.hotel_id=H.id\n" + 
 				"JOIN Tipo_Habitacion AS TH ON R.tipo_hab_id=TH.id\n" + 
@@ -179,20 +179,20 @@ public class FacturaDAO {
 				aux=map.get(rs.getInt("hotel_id"));
 				if(aux!=null) {
 					//En caso de estarlo, se actualizaria su value
-					Double reserva = aux.getSumaReservas().get(rs.getString("TH.nombre"));
+					Double reserva = aux.getSumaReservas().get(rs.getString("TH.nombre_tipo"));
 					aux.setTotal(aux.getTotal()+(rs.getDouble("SUM(R.importe)")));
 					if(reserva!=null) { 
 						//Existe una entrada. Actualizamos value
-						aux.getSumaReservas().replace(rs.getString("TH.nombre"), rs.getDouble("SUM(R.importe)"));
+						aux.getSumaReservas().replace(rs.getString("TH.nombre_tipo"), rs.getDouble("SUM(R.importe)"));
 					}
 					//Añadir nueva entrada 
 					else {
-						aux.getSumaReservas().put(rs.getString("TH.nombre"), rs.getDouble("SUM(R.importe)"));
+						aux.getSumaReservas().put(rs.getString("TH.nombre_tipo"), rs.getDouble("SUM(R.importe)"));
 					}
 
 				}else {
 					aux=new BeneficiosGastosModel(rs.getString("H.nombre"),0);
-					aux.getSumaReservas().put(rs.getString("TH.nombre"), rs.getDouble("SUM(R.importe)"));
+					aux.getSumaReservas().put(rs.getString("TH.nombre_tipo"), rs.getDouble("SUM(R.importe)"));
 					aux.setTotal(aux.getTotal()+(rs.getDouble("SUM(R.importe)")));
 					map.put(rs.getInt("R.hotel_id"), aux);	
 				}
