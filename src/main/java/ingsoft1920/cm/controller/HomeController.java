@@ -42,7 +42,9 @@ public class HomeController {
 	@Autowired
 	public TipoHabitacionDAO habsDao;
 	@Autowired
-	public CategoriaDAO catDao;
+	public CategoriaDAO categoriaDao;
+	@Autowired
+	public ProfesionDAO profesionDao;
 
 	// Pagina de inicio
 	@GetMapping("/inicio")
@@ -182,7 +184,7 @@ public class HomeController {
 		Hotel hotel = hotelDao.getByID(id);
 		List<Properties> servicios = servicioDao.serviciosHotel(id);
 		List<Properties> habs = habsDao.habsHotel(id);
-		List<Categoria> cats = catDao.categoriasHotel(id);
+		List<Categoria> cats = categoriaDao.categoriasHotel(id);
 		
 		ModelAndView mav = new ModelAndView("corp-hotel/ver-hotel.jsp");
 		  mav.addObject("hotel", hotel);
@@ -200,7 +202,7 @@ public class HomeController {
 		Hotel hotel = hotelDao.getByID(id);
 		List<Properties> servicios = servicioDao.serviciosHotel(id);
 		List<Properties> habs = habsDao.habsHotel(id);
-		List<Categoria> cats = catDao.categoriasHotel(id);
+		List<Categoria> cats = categoriaDao.categoriasHotel(id);
 		
 		ModelAndView mav = new ModelAndView("corp-hotel/editar-hotel.jsp");
 		  mav.addObject("hotel", hotel);

@@ -91,12 +91,12 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-5 mb-3">
-                            <label>Profesion</label>
+                        <div class="col-md-5">
+                            <label>Profesión</label>
                             <c:forEach var="profesion" items="${profesiones}">  
                                 <div class="form-check">
                                     <input type="radio" class="form-check-input" name="profesionID" value="${profesion.id}" required>
-                                    <label class="form-check-label" for="defaultCheck1">${profesion.nombre}</label>
+                                    <label>${profesion.nombre}</label>
                                 </div>
                             </c:forEach> 
                         </div>

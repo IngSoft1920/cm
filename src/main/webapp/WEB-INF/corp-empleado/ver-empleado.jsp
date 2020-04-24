@@ -53,49 +53,42 @@
     <div class="container">
         <div class="py-5 text-center">
             <h2>Visualizar Empleado</h2>
-            <p class="lead">Ver los datos del empleado</p>
         </div>
 
         <div class="row center">
-  
             <div class="col-md-18 order-md-1">
+
                 <div class="mb-3">
-                    <label for="firstName">Nombre</label>
-                    <input type="text" class="form-control" id="firstName" readonly value="${empleado.nombre}" >
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" value="${empleado.nombre}" readonly>
                 </div>
 
                 <div class="mb-3">
-                    <label for="lastNames">Apellidos</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="lastNames" readonly  value="${empleado.apellidos}">
-                    </div>
+                    <label>Apellidos</label>
+                    <input type="text" class="form-control" value="${empleado.apellidos}" readonly>
                 </div>
 
                 <div class="mb-3">
-                    <label for="email">Email </label>
-                    <input type="text" class="form-control" id="email" readonly value="${empleado.email}">
+                    <label>Email</label>
+                    <input type="text" class="form-control" value="${empleado.email}" readonly>
                 </div>
 
                 <div class="mb-3">
-                    <label for="telefono">Teléfono</label>
-                    <input type="text" class="form-control" id="telefono" readonly value="${empleado.telefono}">
+                    <label>Teléfono</label>
+                    <input type="text" class="form-control" value="${empleado.telefono}" readonly>
                 </div>
 
                 <div class="mb-3">
-                    <label for="sueldo">Sueldo</label>
-                    <input type="text" class="form-control" id="sueldo" readonly value="${empleado.sueldo}">
+                    <label>Sueldo</label>
+                    <input type="text" class="form-control" value="${empleado.sueldo}€" readonly>
                 </div>
 
                 <div class="mb-3">
-                    <label for="profesion">Profesión</label>
-                    <input type="text" class="form-control" id="profesion" readonly value="${nombreProf}">
+                    <label>Profesión</label>
+                    <input type="text" class="form-control" value="${nombreProf}" readonly>
                 </div>
 
-                <div class="row">
                 
-                <!-- Para mostrar los servicios del hotel, hacer un for each -->
-                    
-                </div>
                 <hr class="mb-4">
                 <a class="btn btn-primary btn-lg btn-block" href="/empleados" role="button">Volver a Empleados</a>
             </div>
@@ -103,18 +96,10 @@
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">© 2020 Company Name</p>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Privacy</a>
-                </li>
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Terms</a>
-                </li>
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Support</a>
-                </li>
-            </ul>
+            <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
                 <p class="float-right">
-                    <a href="/inicio">Back to Home</a>
+                    <a href="/inicio">Volver a inicio</a>
                 </p>
 
             </div>

@@ -163,8 +163,8 @@ public class EmpleadoDAO {
    		
    		if( resConsulta != null ) {
    			res = new Properties();
-   			res.put("hotel_id",resConsulta.get(0).get("hotel_id"));
-   			res.put("fecha_contratacion",resConsulta.get(0).get("fecha_contratacion"));
+   			res.put("hotel_id",1/*resConsulta.get(0).get("hotel_id")*/);
+   			res.put("fecha_contratacion",Date.valueOf("2020-01-01")/*resConsulta.get(0).get("fecha_contratacion")*/);
    		}
    		return res;
    	}
