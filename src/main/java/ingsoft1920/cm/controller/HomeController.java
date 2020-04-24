@@ -79,8 +79,7 @@ public class HomeController {
 							 String descripcion,
 							 Integer[] categoriasIDs,
 							 Integer[] serviciosIDs,
-							 Integer[] habsIDs, // habsIDs y numDisponibles están mapeados
-							 Integer[] numDisponibles) 
+							 Integer[] habsIDs, Integer[] numDisponibles) // están mapeados 
 	{
 		
 		Hotel hotel = new Hotel();
@@ -117,7 +116,7 @@ public class HomeController {
 		}
 			
 		
-		List<Properties> habs = new ArrayList<>();
+		List<Properties> habs = new ArrayList<>();		
 		for(int i=0;i<numDisponibles.length;i++) {
 			
 			// Solo si se ha introducido un valor > 0 lo tomamos en cuenta:
@@ -139,14 +138,13 @@ public class HomeController {
 	
 
 	// Anadir-categoria
-	@GetMapping("/anadir-hotel/anadir-categoria")
+	@GetMapping("/anadir-categoria")
 	public ModelAndView anadirCategoriaForm() {
-
 		return new ModelAndView("corp-hotel/anadir-categoria.jsp");
 	}
 	
 	// Anadir-servicio
-	@PostMapping("/anadir-hotel/anadir-categoria")
+	@PostMapping("/anadir-categoria")
 	public String recibirCategoriaForm(String nombre) {
 		Categoria c = new Categoria();
 		  c.setNombre(nombre);
@@ -173,7 +171,7 @@ public class HomeController {
 
 	// Hotel/Ver-hotel
 	@GetMapping("/ver-hotel/{id}")
-	public ModelAndView verHotelForm(@PathVariable(name = "id") int id) {
+	public ModelAndView verHotel(@PathVariable(name = "id") int id) {
 
 		System.out.println("Recuperando datos del hotel: " + id);
 		Hotel hotel = hotelDao.getByID(id);
@@ -386,6 +384,11 @@ public class HomeController {
 	@GetMapping("/facturacion")
 	public String facturacionForm() {
 		return "fna/beneficio.jsp";
+	}
+	
+	@GetMapping("/configuracion")
+	public String paginaConf() {
+		return "config.jsp";
 	}
 
 }

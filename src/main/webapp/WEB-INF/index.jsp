@@ -19,13 +19,12 @@
         </div>
         <nav>
             <ul class="nav-links">
-                <li><a class="nav-link" href="/hoteles">Hoteles</a>
-                </li>
-                <li><a class="nav-link" href="/empleados">Empleados</a>
-                </li>
-                <li><a class="nav-link" href="/proveedores">Proveedores</a>
-                </li>
+                <li><a class="nav-link" href="/hoteles">Hoteles</a></li>
+                <li><a class="nav-link" href="/empleados">Empleados</a></li>
+                <li><a class="nav-link" href="/proveedores">Proveedores</a></li>
                 <li><a class="nav-link" href="/beneficio">Facturación</a></li>
+                <li><a class="nav-link" href="/configuracion"> Configuración </a></li>
+
             </ul>
         </nav>
         <div class="login">

@@ -92,12 +92,13 @@
                     <div class="col-md-5 mb-3">
                         <label for="country">Servicios</label>
                         <!-- Hacer bucle para mostrar los servicios del hotel(id) -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" disabled>
-                            <label class="form-check-label" for="defaultCheck1">
-                                Restuaracion
-                            </label>
-                        </div>
+                        
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" disabled>
+                                <label class="form-check-label" for="defaultCheck1">
+                                        
+                                </label>
+                            </div>
                         
                     </div>
                 </div>

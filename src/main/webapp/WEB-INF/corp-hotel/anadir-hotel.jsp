@@ -159,7 +159,7 @@
                                     </div>
                                 </div>
 
-                            </div>
+                            </div>  
 
                             <div class="invalid-feedback">
                                 Please select a valid servicio.
@@ -203,7 +203,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a class="btn btn-primary" href="/anadir-hotel/anadir-categoria" role="button">Añadir</a>
+                                                <a class="btn btn-primary" href="/anadir-categoria" role="button">Añadir</a>
                                             </div>
                                         </div>
                                     </div>
