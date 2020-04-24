@@ -229,7 +229,7 @@ public class HomeController {
 		  em.setSueldo(sueldo);
 		  em.setProfesion_id(profesionID);
 		  //TODO: cambiar esto
-		  em.setDias_libres(new Integer[] {7,8});
+		  em.setDias_libres("[7,8]");
 		  
 		Properties info = new Properties();
 		  info.put("fecha_contratacion",Date.valueOf( LocalDate.now() ));
