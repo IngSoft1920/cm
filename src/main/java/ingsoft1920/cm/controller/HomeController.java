@@ -19,6 +19,7 @@ import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.bean.Servicio;
+import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
@@ -167,7 +168,7 @@ public class HomeController {
 	}
 
 	// Anadir-servicio
-	@PostMapping("/anadir-hotel/anadir-servicios")
+	@PostMapping("/anadir-servicios")
 	public String recibirServicioForm(String nombre) {
 		Servicio s = new Servicio();
 		  s.setNombre(nombre);
@@ -200,9 +201,9 @@ public class HomeController {
 	public ModelAndView editarHotelForm(@PathVariable(name = "id") int id) {
 
 		Hotel hotel = hotelDao.getByID(id);
-		List<Properties> servicios = servicioDao.serviciosHotel(id);
-		List<Properties> habs = habsDao.habsHotel(id);
-		List<Categoria> cats = categoriaDao.categoriasHotel(id);
+		List<Servicio> servicios = servicioDao.servicios();
+		List<Tipo_Habitacion> habs = habsDao.tipos();
+		List<Categoria> cats = categoriaDao.categorias();
 		
 		ModelAndView mav = new ModelAndView("corp-hotel/editar-hotel.jsp");
 		  mav.addObject("hotel", hotel);
@@ -211,6 +212,25 @@ public class HomeController {
 		  mav.addObject("categorias",cats);
 
 		return mav;
+	}
+	
+	@PostMapping("/editar-hotel/{id}")
+	public String recibirHotelEditar(@PathVariable(name = "id") int id,
+									 String nombre,
+							 		 String continente,
+							 		 String pais,
+							 		 String ciudad,
+							 		 String direccion,
+							 		 Integer estrellas,
+							 		 String descripcion,
+							 		 Integer[] categoriasIDs,
+							 		 Integer[] serviciosIDs,
+							 		 Integer[] habsIDs, Integer[] numDisponibles) // están mapeados 
+	{
+		// De momento es la manera más fácil de hacerlo:
+		hotelDao.eliminar(id);
+		recibirHotel(nombre, continente, pais, ciudad, direccion, estrellas, descripcion, categoriasIDs, serviciosIDs, habsIDs, numDisponibles);
+		return "redirect:/hoteles";
 	}
 
 	// eliminar hotel
