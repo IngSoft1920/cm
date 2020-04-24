@@ -119,28 +119,11 @@
                 <div class="row">
                     <div class="col-md-5 mb-3">
                         <label for="country">Categorias</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" checked disabled value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                Family
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" disabled value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                Adult only
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" disabled value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                Se permiten mascotas
-                            </label>
-                        </div>
-
+                        <c:forEach var="categoria" items="${categorias}">
+                            <div class="form-check">${categoria.nombre}</div>
+                        </c:forEach>
                     </div>
                 </div>
-
 
                 <hr class="mb-4">
                 <a class="btn btn-primary btn-lg btn-block" href="/hoteles" role="button">Volver a Hoteles</a>

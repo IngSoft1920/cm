@@ -4,19 +4,18 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
+@Component
 public class CategoriaDAO {
 
 	@Autowired

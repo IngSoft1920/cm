@@ -41,6 +41,8 @@ public class HomeController {
 	public ServicioDAO servicioDao;
 	@Autowired
 	public TipoHabitacionDAO habsDao;
+	@Autowired
+	public CategoriaDAO catDao;
 
 	// Pagina de inicio
 	@GetMapping("/inicio")
@@ -180,11 +182,13 @@ public class HomeController {
 		Hotel hotel = hotelDao.getByID(id);
 		List<Properties> servicios = servicioDao.serviciosHotel(id);
 		List<Properties> habs = habsDao.habsHotel(id);
+		List<Categoria> cats = catDao.categoriasHotel(id);
 		
 		ModelAndView mav = new ModelAndView("corp-hotel/ver-hotel.jsp");
 		  mav.addObject("hotel", hotel);
 		  mav.addObject("servicios",servicios);
 		  mav.addObject("habs",habs);
+		  mav.addObject("categorias",cats);
 		
 		return mav;
 	}
@@ -193,11 +197,18 @@ public class HomeController {
 	@GetMapping("/editar-hotel/{id}")
 	public ModelAndView editarHotelForm(@PathVariable(name = "id") int id) {
 
-		System.out.println("Recuperando datos del hotel: " + id);
 		Hotel hotel = hotelDao.getByID(id);
-		System.out.println("Recuperando datos del hotel: " + hotel);
+		List<Properties> servicios = servicioDao.serviciosHotel(id);
+		List<Properties> habs = habsDao.habsHotel(id);
+		List<Categoria> cats = catDao.categoriasHotel(id);
+		
+		ModelAndView mav = new ModelAndView("corp-hotel/editar-hotel.jsp");
+		  mav.addObject("hotel", hotel);
+		  mav.addObject("servicios",servicios);
+		  mav.addObject("habs",habs);
+		  mav.addObject("categorias",cats);
 
-		return new ModelAndView("corp-hotel/editar-hotel.jsp", "hotel", hotel);
+		return mav;
 	}
 
 	// eliminar hotel

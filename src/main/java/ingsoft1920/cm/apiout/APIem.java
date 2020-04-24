@@ -42,7 +42,7 @@ public class APIem {
   	      json.addProperty("valor",em.getSueldo());
   	      json.addProperty("id_hotel", hotel_id);
   	      json.addProperty("fecha_contratacion",fecha_contratacion.toString());
-  	      json.addProperty("dias_libres",Arrays.toString( em.getDias_libres() ));  
+  	      json.addProperty("dias_libres",em.getDias_libres());  
   	      
   	      // Esto habría que cambiarlo (o no)
   	      json.addProperty("contrasenia", "12345");

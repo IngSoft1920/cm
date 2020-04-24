@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -47,124 +47,193 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="/css/form-validation.css" rel="stylesheet">
+    <link href="../css/form-validation.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Editar Hotel</h2>
-            <p class="lead">Modificar los datos del hotel</p>
+            <h2>Añadir Hotel</h2>
+            <p class="lead">Añadir hotel a la cadena.</p>
         </div>
 
         <div class="row center">
 
             <div class="col-md-18 order-md-1">
 
-                <form class="needs-validation" novalidate="">
+                <form class="needs-validation" novalidate="" method="POST">
                     <div class="mb-3">
-                        <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="${hotel.nombre}" required="">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="Nombre" required="" value="${hotel.nombre}">
                         <div class="invalid-feedback">
                             El nombre del hotel es obligatorio
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="username">Continente</label>
+                        <label for="continente">Continente</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="username" placeholder="Continente" value="${hotel.continente}" required="">
+                            <input type="text" class="form-control" name="continente" placeholder="Continente" required="" value="${hotel.continente}">
                             <div class="invalid-feedback" style="width: 100%;">
-                                Your continente is required.
+                                Obligatorio
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="text">Pais </label>
-                        <input type="text" class="form-control" id="text" value="${hotel.pais}" placeholder="Pais">
+                        <label for="pais">Pais </label>
+                        <input type="text" class="form-control" name="pais" placeholder="Pais" required="" value="${hotel.pais}">
                         <div class="invalid-feedback">
-                            Please enter a valid Pais.
+                            Obligatorio
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address">Ciudad</label>
-                        <input type="text" class="form-control" id="address" placeholder="Calle/Avenida/..."  value="${hotel.ciudad}" required="">
+                        <label for="ciudad">Ciudad</label>
+                        <input type="text" class="form-control" name="ciudad" placeholder="" required="" value="${hotel.ciudad}">
                         <div class="invalid-feedback">
-                            Please enter your ciudad.
+                            Obligatorio
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="address2">Direccion<span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite"  value="${hotel.direccion}">
+                        <label for="direccion">Direccion</label>
+                        <input type="text" class="form-control" name="direccion" placeholder="Calle/Avenida" value="${hotel.direccion}">
                         <div class="invalid-feedback">
-                            Please enter your Direccion.
+                            Obligatorio
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="zip">Estrellas</label>
+                        <input type="number" min="0" max="6" class="form-control" name="estrellas" placeholder="" required="" value="${hotel.estrellas}">
+                        <div class="invalid-feedback">
+                            No válido
+                        </div>
+                    </div>
+
+                    <div class="mb">
+                        <label for="direccion">Descripción</label>
+                        <textarea type="text" class="form-control" name="descripcion">${hotel.descripcion}</textarea>
+                        <div class="invalid-feedback">
+                            Obligatorio
                         </div>
                     </div>
 
                     <div class="row">
-
                         <div class="col-md-5 mb-3">
                             <label for="country">Servicios</label>
+                            <c:forEach var="servicio" items="${servicios}">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="${servicio.id}" name="serviciosIDs">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        ${servicio.nombre}
+                                    </label>
+                                </div>
+                            </c:forEach>
+                            
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" checked id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Restuaracion
+                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal">
+                                    Otros
                                 </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Spa
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Piscina
-                                </label>
-                            </div>
-                            <!--<select class="custom-select d-block w-100" id="country" multiple required="">
 
-                                <option>Restuaracion</option>
-                                <option>Spa</option>
-                                <option>Piscina</option>
-                                <option>Otros</option>
+                                <!-- Modal para servicios -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Servicio
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ¿Necesitas añadir otro servicio que no se encuentra en la lista?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <a class="btn btn-primary" href="/anadir-servicios" role="button">Añadir</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                </select>-->
+                            </div>  
+
                             <div class="invalid-feedback">
                                 Please select a valid servicio.
                             </div>
                         </div>
+                    </div>
 
+                    <div class="row">
+                        <div class="col-md-18 mb-3">
+                            <label for="country">Categorias</label>
 
+                            <c:forEach var="categoria" items="${categorias}">
 
-                        <div class="col-md-4 mb-3">
-                            <label for="state">Tipos de Habitacion.</label>
-                            <select class="custom-select d-block w-100" id="state" multiple required="">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="${categoria.id}" name="categoriasIDs">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        ${categoria.nombre}
+                                    </label>
+                                </div>
 
-                                <option>Individual</option>
-                                <option>Doble</option>
-                                <option>Triple</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Please provide a valid state.
+                            </c:forEach>
+                           
+                            <div class="form-check">
+                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal2">
+                                    Otros
+                                </label>
+
+                                <!-- Modal para categoria -->
+                                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Categoria
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Necesitas añadir otra categoria que no se encuentra en la lista?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                <a class="btn btn-primary" href="/anadir-categoria" role="button">Añadir</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="zip">Estrellas</label>
-                            <input type="number" min="0" max="6" class="form-control" id="zip" placeholder="" required="">
+
                             <div class="invalid-feedback">
-                                Numero de estrellas requeridas.
+                                Please select a valid categoria.
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-18">
+                            <label>Habitaciones</label>
+                            <c:forEach var="hab" items="${habs}">
+
+                                <div class="col-md-6 mb-6">
+                                    <label for="habs">${hab.nombre_tipo}</label>
+                                    <input type="number" class="form-control" name="numDisponibles">
+                                    <input type="hidden" name="habsIDs" value="${hab.id}">
+                                </div>
+                            </c:forEach>
+                        </div>        
+                    </div>
+
                     <hr class="mb-4">
 
-                    <button class="btn btn-primary btn-lg " type="submit">Guardar cambios</button>
-                    <a class="btn btn-secondary btn-lg" href="/hoteles" role="button">Cancelar</a>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
                 </form>
             </div>
         </div>
@@ -184,16 +253,20 @@
                 <p class="float-right">
                     <a href="/inicio">Back to Home</a>
                 </p>
+                <p class="float-left">
+                    <a href="/hoteles">Back to Hoteles</a>
+                </p>
 
             </div>
         </footer>
     </div>
-    <script src="/js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="../js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script>
-        window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
+        window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>');
+        document.getElementsByName('numDisponibles').forEach( elem => elem.setAttribute("value","0") );
     </script>
-    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
-    <script src="/js/form-validation.js"></script>
+    <script src="../js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <script src="../js/form-validation.js"></script>
 
 </body>
 
