@@ -60,10 +60,10 @@
 
             <div class="col-md-18 order-md-1">
 
-                <form class="needs-validation" novalidate="">
+                <form class="needs-validation" novalidate="" method="POST">
                     <div class="mb-3">
                         <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre de la categoria" value="" required="">
+                        <input type="text" class="form-control" name="nombre" placeholder="Nombre de la categoria" value="" required="">
                         <div class="invalid-feedback">
                             El nombre de la categoria es obligatorio
                         </div>

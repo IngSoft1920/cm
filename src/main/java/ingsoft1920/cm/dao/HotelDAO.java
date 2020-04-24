@@ -300,32 +300,32 @@ public class HotelDAO {
 	
 	public static void main(String[] args) {
 		
-		HotelDAO dao = new HotelDAO();
-		Hotel h = new Hotel(-1, "Hotel New Japón","Asia", "Japón", "Tokyo", "Calle Luna,12", 5, "Oriental");
-		
-		Properties hab1 = new Properties();
-		  hab1.put("tipo_hab_id", 1);
-		  hab1.put("num_disponibles", 30);
-		Properties hab2 = new Properties();
-		  hab2.put("tipo_hab_id", 2);
-		  hab2.put("num_disponibles", 15);
-		List<Properties> habs = List.of(hab1,hab2);
-		
-		
-		Properties serv1 = new Properties();
-		  serv1.put("servicio_id",1);
-		  serv1.put("precio",100);
-		  serv1.put("unidad_medida",2);
-		  serv1.put("num_instalaciones",2);
-		List<Properties> servs = List.of(serv1);
-		
-		
-		Properties cat1 = new Properties();
-		  cat1.put("categoria_id",1);
-		List<Properties> cats = List.of(cat1);
-
- 		
-		dao.anadir(h, habs, servs, cats);
+//		HotelDAO dao = new HotelDAO();
+//		Hotel h = new Hotel(-1, "Hotel New Japón","Asia", "Japón", "Tokyo", "Calle Luna,12", 5, "Oriental");
+//		
+//		Properties hab1 = new Properties();
+//		  hab1.put("tipo_hab_id", 1);
+//		  hab1.put("num_disponibles", 30);
+//		Properties hab2 = new Properties();
+//		  hab2.put("tipo_hab_id", 2);
+//		  hab2.put("num_disponibles", 15);
+//		List<Properties> habs = List.of(hab1,hab2);
+//		
+//		
+//		Properties serv1 = new Properties();
+//		  serv1.put("servicio_id",1);
+//		  serv1.put("precio",100);
+//		  serv1.put("unidad_medida",2);
+//		  serv1.put("num_instalaciones",2);
+//		List<Properties> servs = List.of(serv1);
+//		
+//		
+//		Properties cat1 = new Properties();
+//		  cat1.put("categoria_id",1);
+//		List<Properties> cats = List.of(cat1);
+//
+// 		
+//		dao.anadir(h, habs, servs, cats);
 		
 	}	
 

@@ -3,7 +3,6 @@ package ingsoft1920.cm.controller;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Profesion;
@@ -27,6 +27,7 @@ import ingsoft1920.cm.dao.ProveedorDAO;
 import ingsoft1920.cm.dao.ServicioDAO;
 import ingsoft1920.cm.dao.TipoHabitacionDAO;
 
+// Controlador del FE
 @Controller
 public class HomeController {
 
@@ -144,6 +145,16 @@ public class HomeController {
 		return new ModelAndView("corp-hotel/anadir-categoria.jsp");
 	}
 	
+	// Anadir-servicio
+	@PostMapping("/anadir-hotel/anadir-categoria")
+	public String recibirCategoriaForm(String nombre) {
+		Categoria c = new Categoria();
+		  c.setNombre(nombre);
+		
+		new CategoriaDAO().anadir(c);
+		return "redirect:/hoteles";
+	}
+
 	@GetMapping("/anadir-hotel/anadir-servicios")
 	public ModelAndView anadirServicioForm() {
 		return new ModelAndView("corp-hotel/anadir-servicios.jsp");
