@@ -112,67 +112,34 @@
 										<text x="50%" y="50%" fill="#eceeef" dy=".3em">${hotel.ciudad}</text>
 									</svg>
 									   
-								<div class="card-body">
-									<p class="card-text">${hotel.nombre}</p>
-									<div class="d-flex justify-content-between align-items-center">
-										<div class="btn-group">
-											<a class="btn btn-sm btn-outline-secondary"
-												href="/ver-hotel/${hotel.id}" role="button">Ver</a> 
-												
-											<a class="btn btn-sm btn-outline-secondary"
-												href="/editar-hotel/${hotel.id}" role="button">Editar</a>
+									<div class="card-body">
+										<p class="card-text">${hotel.nombre}</p>
+										<div class="d-flex justify-content-between align-items-center">
+											<div class="btn-group">
+												<a class="btn btn-sm btn-outline-secondary"
+													href="/ver-hotel/${hotel.id}" role="button">Ver</a> 
+													
+												<a class="btn btn-sm btn-outline-secondary"
+													href="/editar-hotel/${hotel.id}" role="button">Editar</a>
 
-											<a type="button" class="btn btn-sm btn-outline-secondary"
-													href="/hoteles/eliminar-hotel/${hotel.id}" data-target="#exampleModal">
-													Eliminar</button>
-												<!-- Modal -->
+												<a class="btn btn-sm btn-outline-secondary"
+													href="/hoteles/eliminar-hotel/${hotel.id}" role="button">Eliminar</a>
 
-												<div class="modal fade" id="exampleModal" tabindex="-1"
-													role="dialog" aria-labelledby="exampleModalLabel"
-													aria-hidden="true">
-													<div class="modal-dialog" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-																<h5 class="modal-title" id="exampleModalLabel">Eliminar
-																	Hotel</h5>
-																<button type="button" class="close" data-dismiss="modal"
-																	aria-label="Close">
-																	<span aria-hidden="true">&times;</span>
-																</button>
-															</div>
-															<div class="modal-body">¿Está seguro que desea
-																eliminar el hotel?</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-secondary"
-																	data-dismiss="modal">Cancelar</button>
-																<a class="btn btn-primary"
-																	href="/hoteles/eliminar-hotel/${hotel.id}"
-																	role="button">Eliminar</a>
-															</div>
-														</div>
-													</div>
-												</div>
 											</div>
-											<!-- Se podria anadir el momento en que fue creado el Hotel -->
-											<!--  <small class="text-muted">9 meses</small> -->
 										</div>
 									</div>
 								</div>
 							</div>
-
 						</c:forEach>
-						<!-- Fin del forEach -->
-
 					</div>
 				</div>
 			</div>
-
 		</main>
 
 		<footer class="text-muted">
 			<div class="container">
 				<p class="float-right">
-					<a href="">Back to top</a>
+					<a href="">Volver arriba</a>
 				</p>
 				<p>Lista de Hoteles de nuestra Cadena.</p>
 			</div>
@@ -188,11 +155,6 @@
 		<script src="/js/bootstrap.bundle.min.js"
 			integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
 			crossorigin="anonymous"></script>
-
-
 	</div>
-
 </body>
-
-
 </html>
