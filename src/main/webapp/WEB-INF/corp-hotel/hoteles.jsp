@@ -83,58 +83,46 @@
 
 <body>
 	<div class="conteiner">
-
-
 		<header>
-
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<a href="" class="navbar-brand "> <strong>Hoteles</strong>
-					</a> <a class="navbar-nav" href="/inicio">Inicio</a> <a
-						class="navbar-nav" href="/anadir-hotel"><strong>Añadir Hotel</strong></a>
-
+					<strong class="navbar-brand">Hoteles</strong>
+					<a class="navbar-nav" href="/inicio">Inicio</a> 
+					<a class="navbar-nav" href="/anadir-hotel"><strong>Añadir Hotel</strong></a>
 				</div>
 			</div>
 		</header>
 
-
 		<main role="main">
-
 			<!--Estilo de cajas para listas-->
-
 			<div class="album py-5 bg-light">
 				<div class="container">
-
 					<div class="row">
 						<!-- For Each para devolver lista de hoteles -->
-
-						<c:forEach var="hotel" items="${hoteles}">
-
+						<c:forEach var="hotel" items="${hoteles}">	
 							<div class="col-md-4">
 								<div class="card mb-4 shadow-sm">
 									<svg class="bd-placeholder-img card-img-top" width="100%"
 										height="225" xmlns="http://www.w3.org/2000/svg"
 										preserveAspectRatio="xMidYMid slice" focusable="false"
 										role="img" aria-label="Placeholder: Thumbnail">
-                                    <title>${hotel.nombre}</title>
-                                    <rect width="100%" height="100%"
-											fill="#55595c"></rect>
+										
+										<title>${hotel.nombre}</title>
+                                    	<rect width="100%" height="100%" fill="#55595c"></rect>
 										<text x="50%" y="50%" fill="#eceeef" dy=".3em">${hotel.ciudad}</text>
-                                </svg>
-									<div class="card-body">
-										<!--Este texto lo utilizaremos como descripcion del Hotel-->
-										<p class="card-text">${hotel.nombre}</p>
-										<div class="d-flex justify-content-between align-items-center">
-											<div class="btn-group">
-												<a class="btn btn-sm btn-outline-secondary"
-													href="/ver-hotel/${hotel.id}" role="button">Ver</a> <a
-													class="btn btn-sm btn-outline-secondary"
-													href="/editar-hotel/${hotel.id}" role="button">Editar</a>
+									</svg>
+									   
+								<div class="card-body">
+									<p class="card-text">${hotel.nombre}</p>
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="btn-group">
+											<a class="btn btn-sm btn-outline-secondary"
+												href="/ver-hotel/${hotel.id}" role="button">Ver</a> 
+												
+											<a class="btn btn-sm btn-outline-secondary"
+												href="/editar-hotel/${hotel.id}" role="button">Editar</a>
 
-												<!-- Button trigger modal -->
-												<!-- Opcion para eliminar hotel de la cadena -->
-												<a type="button"
-													class="btn btn-sm btn-outline-secondary"
+											<a type="button" class="btn btn-sm btn-outline-secondary"
 													href="/hoteles/eliminar-hotel/${hotel.id}" data-target="#exampleModal">
 													Eliminar</button>
 												<!-- Modal -->
