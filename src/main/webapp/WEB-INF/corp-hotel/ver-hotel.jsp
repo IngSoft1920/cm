@@ -88,29 +88,23 @@
                 </div>
 
                 <div class="row">
-
                     <div class="col-md-5 mb-3">
                         <label for="country">Servicios</label>
-                        <!-- Hacer bucle para mostrar los servicios del hotel(id) -->
-                        
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" disabled>
-                                <label class="form-check-label" for="defaultCheck1">
-                                        
-                                </label>
-                            </div>
-                        
+                        <c:forEach var="servicio" items="${servicios}">
+                            <div class="form-check">${servicio.nombre}</div>
+                        </c:forEach>
                     </div>
                 </div>
 
                 <div class="row">
-                 <!-- Hacer bucle para mostrar los tipo-habitaciones del hotel(id) -->
                     <div class="col-md-5 mb-5">
-                        <label for="zip">Habitaciones "tipo"</label>
-                        <input type="number" class="form-control" id="zip" disabled placeholder="50" required="">
-                        <div class="invalid-feedback">
-                            Numero de habitaciones "tipo"
-                        </div>
+                        <label for="zip">Habitaciones</label>
+                        <c:forEach var="hab" items="${habs}">
+                            <p>
+                                ${hab.nombre_tipo}
+                                <input type="number" class="form-control" id="zip" disabled placeholder="${hab.num_disponibles}" required="">
+                            </p>
+                        </c:forEach>
                     </div>
                     
                 </div>

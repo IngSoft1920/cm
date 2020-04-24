@@ -153,7 +153,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a class="btn btn-primary" href="/anadir-hotel/anadir-servicios" role="button">Añadir</a>
+                                                <a class="btn btn-primary" href="/anadir-servicios" role="button">Añadir</a>
                                             </div>
                                         </div>
                                     </div>

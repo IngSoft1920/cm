@@ -115,7 +115,7 @@ public class ServicioDAO {
 			aux.put("precio", fila.get("precio") != null ? fila.get("precio") : "null" );
 			aux.put("unidad_medida", fila.get("unidad_medida") != null ? fila.get("unidad_medida") : "null" );
 			
-			aux.put("num_instalaciones",fila.get("num_instalaciones"));
+			//aux.put("num_instalaciones",fila.get("num_instalaciones"));
 			
 			res.add(aux);
 		}

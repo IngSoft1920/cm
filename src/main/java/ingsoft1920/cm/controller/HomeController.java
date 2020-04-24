@@ -37,6 +37,10 @@ public class HomeController {
 	public EmpleadoDAO empleadoDao;
 	@Autowired
 	public ProveedorDAO proveedorDao;
+	@Autowired
+	public ServicioDAO servicioDao;
+	@Autowired
+	public TipoHabitacionDAO habsDao;
 
 	// Pagina de inicio
 	@GetMapping("/inicio")
@@ -173,11 +177,16 @@ public class HomeController {
 	@GetMapping("/ver-hotel/{id}")
 	public ModelAndView verHotel(@PathVariable(name = "id") int id) {
 
-		System.out.println("Recuperando datos del hotel: " + id);
 		Hotel hotel = hotelDao.getByID(id);
-		System.out.println("Recuperando datos del hotel: " + hotel);
-
-		return new ModelAndView("corp-hotel/ver-hotel.jsp", "hotel", hotel);
+		List<Properties> servicios = servicioDao.serviciosHotel(id);
+		List<Properties> habs = habsDao.habsHotel(id);
+		
+		ModelAndView mav = new ModelAndView("corp-hotel/ver-hotel.jsp");
+		  mav.addObject("hotel", hotel);
+		  mav.addObject("servicios",servicios);
+		  mav.addObject("habs",habs);
+		
+		return mav;
 	}
 
 	// Hotel/editar-hotel

@@ -13,10 +13,12 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
+@Component
 public class TipoHabitacionDAO {
 
     @Autowired
