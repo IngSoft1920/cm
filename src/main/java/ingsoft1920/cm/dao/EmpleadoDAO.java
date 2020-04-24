@@ -1,8 +1,7 @@
 package ingsoft1920.cm.dao;
 
-import java.math.BigInteger;
+import java.math.BigInteger;	
 import java.sql.Connection;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +66,7 @@ public class EmpleadoDAO {
             						   empleado.getTelefono(),
             						   empleado.getSueldo(),
             						   empleado.getProfesion_id(),
-            						   Arrays.toString(empleado.getDias_libres())
+            						   empleado.getDias_libres()
             						  );
             
             runner.insert(conn, queryHotelEmpleado, handler,
@@ -172,13 +171,13 @@ public class EmpleadoDAO {
     
 
     public static void main(String[] args) {
-    	Empleado test = new Empleado(8, "Pepe", "Gonzalez", "pepe@gmail.com", "600600600", 1500, 1,new Integer[] {5,6});
-    	Properties hotel = new Properties();
-    	  hotel.put("hotel_id",1);
-    	  hotel.put("fecha_contratacion",Date.valueOf("2020-02-01"));
-    	
-    	new EmpleadoDAO().anadir(test,hotel);
-    	//new EmpleadoDAO().editar(test);
+//    	Empleado test = new Empleado(8, "Pepe", "Gonzalez", "pepe@gmail.com", "600600600", 1500, 1,new Integer[] {5,6});
+//    	Properties hotel = new Properties();
+//    	  hotel.put("hotel_id",1);
+//    	  hotel.put("fecha_contratacion",Date.valueOf("2020-02-01"));
+//    	
+//    	new EmpleadoDAO().anadir(test,hotel);
+//    	//new EmpleadoDAO().editar(test);
     }
 
 }

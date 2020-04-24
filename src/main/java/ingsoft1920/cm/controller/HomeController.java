@@ -153,7 +153,7 @@ public class HomeController {
 		return "redirect:/hoteles";
 	}
 
-	@GetMapping("/anadir-hotel/anadir-servicios")
+	@GetMapping("/anadir-servicios")
 	public ModelAndView anadirServicioForm() {
 		return new ModelAndView("corp-hotel/anadir-servicios.jsp");
 	}
