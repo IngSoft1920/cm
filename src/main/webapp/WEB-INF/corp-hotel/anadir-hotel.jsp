@@ -54,176 +54,84 @@
     <div class="container">
         <div class="py-5 text-center">
             <h2>Añadir Hotel</h2>
-            <p class="lead">Añadir hotel a la cadena.</p>
+            <p class="lead">Añadir hotel a la cadena</p>
         </div>
 
         <div class="row center">
-
             <div class="col-md-18 order-md-1">
+                <form class="needs-validation" method="POST" novalidate>
 
-                <form class="needs-validation" novalidate="" method="POST">
                     <div class="mb-3">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="Nombre" required="">
-                        <div class="invalid-feedback">
-                            El nombre del hotel es obligatorio
-                        </div>
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="Costa Brava" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="continente">Continente</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="continente" placeholder="Continente" required="">
-                            <div class="invalid-feedback" style="width: 100%;">
-                                Obligatorio
-                            </div>
-                        </div>
+                        <label>Continente</label>
+                        <input type="text" class="form-control" name="continente" placeholder="América" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="pais">Pais </label>
-                        <input type="text" class="form-control" name="pais" placeholder="Pais" required="">
-                        <div class="invalid-feedback">
-                            Obligatorio
-                        </div>
+                        <label>País</label>
+                        <input type="text" class="form-control" name="pais" placeholder="Puerto Rico" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="ciudad">Ciudad</label>
-                        <input type="text" class="form-control" name="ciudad" placeholder="" required="">
-                        <div class="invalid-feedback">
-                            Obligatorio
-                        </div>
+                        <label>Ciudad</label>
+                        <input type="text" class="form-control" name="ciudad" placeholder="San Juan" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="direccion">Direccion</label>
-                        <input type="text" class="form-control" name="direccion" placeholder="Calle/Avenida">
-                        <div class="invalid-feedback">
-                            Obligatorio
-                        </div>
+                        <label>Direccion</label>
+                        <input type="text" class="form-control" name="direccion" placeholder="Calle/Avenida" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="zip">Estrellas</label>
-                        <input type="number" min="0" max="6" class="form-control" name="estrellas" placeholder="" required="">
-                        <div class="invalid-feedback">
-                            No válido
-                        </div>
+                        <label>Estrellas</label>
+                        <input type="number" min="0" max="6" class="form-control" name="estrellas" placeholder="5" required>
+                        <div class="invalid-feedback">No válido</div>
                     </div>
 
-                    <div class="mb">
-                        <label for="direccion">Descripción</label>
-                        <textarea type="text" class="form-control" name="descripcion"></textarea>
-                        <div class="invalid-feedback">
-                            Obligatorio
+                    <div class="mb-3">
+                        <label>Descripción</label>
+                        <textarea type="text" class="form-control" name="descripcion" placeholder="Una experiencia única"></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label>Servicios</label>
+                            <c:forEach var="servicio" items="${servicios}">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="${servicio.id}" name="serviciosIDs">
+                                    <label class="form-check-label" for="defaultCheck1">${servicio.nombre}</label>
+                                </div>
+                            </c:forEach>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-5 mb-3">
-                            <label for="country">Servicios</label>
-                            <c:forEach var="servicio" items="${servicios}">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${servicio.id}" name="serviciosIDs">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        ${servicio.nombre}
-                                    </label>
-                                </div>
-                            </c:forEach>
-                            
-                            <div class="form-check">
-                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal">
-                                    Otros
-                                </label>
-
-                                <!-- Modal para servicios -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Servicio
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                ¿Necesitas añadir otro servicio que no se encuentra en la lista?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a class="btn btn-primary" href="/anadir-servicios" role="button">Añadir</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>  
-
-                            <div class="invalid-feedback">
-                                Please select a valid servicio.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-18 mb-3">
-                            <label for="country">Categorias</label>
-
+                            <label>Categorias</label>
                             <c:forEach var="categoria" items="${categorias}">
-
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="${categoria.id}" name="categoriasIDs">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        ${categoria.nombre}
-                                    </label>
+                                    <label class="form-check-label" for="defaultCheck1">${categoria.nombre}</label>
                                 </div>
-
                             </c:forEach>
-                           
-                            <div class="form-check">
-                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal2">
-                                    Otros
-                                </label>
-
-                                <!-- Modal para categoria -->
-                                <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Categoria
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Necesitas añadir otra categoria que no se encuentra en la lista?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a class="btn btn-primary" href="/anadir-categoria" role="button">Añadir</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="invalid-feedback">
-                                Please select a valid categoria.
-                            </div>
                         </div>
                     </div>
-
+                   
                     <div class="row">
                         <div class="col-md-18">
                             <label>Habitaciones</label>
                             <c:forEach var="hab" items="${habs}">
-
-                                <div class="col-md-6 mb-6">
-                                    <label for="habs">${hab.nombre_tipo}</label>
+                                <div class="form-check">
+                                    <label>${hab.nombre_tipo}</label>
                                     <input type="number" class="form-control" name="numDisponibles">
                                     <input type="hidden" name="habsIDs" value="${hab.id}">
                                 </div>
@@ -231,8 +139,8 @@
                         </div>        
                     </div>
 
+                    
                     <hr class="mb-4">
-
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
                 </form>
             </div>
@@ -240,23 +148,14 @@
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">© 2020 Company Name</p>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Privacy</a>
-                </li>
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Terms</a>
-                </li>
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Support</a>
-                </li>
-            </ul>
+            <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
-                <p class="float-right">
-                    <a href="/inicio">Back to Home</a>
-                </p>
                 <p class="float-left">
-                    <a href="/hoteles">Back to Hoteles</a>
+                    <a href="/hoteles">Volver a hoteles</a>
                 </p>
-
+                <p class="float-right">
+                    <a href="/inicio">Volver a inicio</a>
+                </p>
             </div>
         </footer>
     </div>
