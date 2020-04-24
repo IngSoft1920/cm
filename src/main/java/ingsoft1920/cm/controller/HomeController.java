@@ -47,18 +47,13 @@ public class HomeController {
 	@Autowired
 	public ProfesionDAO profesionDao;
 
-	// Pagina de inicio
 	@GetMapping("/inicio")
 	public String homeCorporativo() {
 		return "index.jsp";
 	}
 
-	// login
-	@GetMapping("/login-corp")
-	public String loginForm() {
-		return "login.jsp";
-	}
-
+	// -------------------HOTELES-----------------------
+	
 	// Pagina de Hoteles
 	@GetMapping("/hoteles")
 	public ModelAndView HotelForm() {
@@ -240,6 +235,8 @@ public class HomeController {
 
 		return new ModelAndView("redirect:/hoteles");
 	}
+	
+	// -------------------EMPLEADOS-----------------------
 
 	// Pagina de empleados
 	@GetMapping("/empleados")
@@ -357,6 +354,8 @@ public class HomeController {
 		empleadoDao.eliminar(id);
 		return new ModelAndView("redirect:/empleados");
 	}
+	
+	// -------------------PROVEEDOR-----------------------
 
 	// Pagina de Proveedores
 	@GetMapping("/proveedores")
@@ -381,7 +380,7 @@ public class HomeController {
 
 		return "corp-proveedor/anadir-producto.jsp";
 	}
-
+	
 	// ver proveedor
 	@GetMapping("/proveedores/ver-proveedor/{id}")
 	public ModelAndView verProveedorPorId(@PathVariable(name = "id") int id) {
@@ -421,6 +420,8 @@ public class HomeController {
 		return new ModelAndView("redirect:/proveedores");
 
 	}
+	
+	// -------------------FACTURACIÓN-------------------------
 
 	// Pagina de facturacion
 	@GetMapping("/facturacion")
@@ -428,9 +429,10 @@ public class HomeController {
 		return "fna/beneficio.jsp";
 	}
 	
+	// -------------------CONFIGURACIÓN-----------------------
 	@GetMapping("/configuracion")
 	public String paginaConf() {
-		return "config.jsp";
+		return "conf/config.jsp";
 	}
 
 }
