@@ -1,4 +1,4 @@
-package ingsoft1920.cm.bean.auxiliares;
+package ingsoft1920.cm.bean;
 
 public class Hotel_Proveedor_Producto {
 	private int hotel_id;
