@@ -77,7 +77,18 @@ public class ProveedorDAO {
 		
 		return res;
 	}
+	public Proveedor getByCIF(String proveedorCIF) {
+		Proveedor res=null;
+		BeanHandler<Proveedor> handler = new BeanHandler<>(Proveedor.class);
+		String query = "SELECT * FROM Proveedor WHERE Proveedor.CIF=?";
 
+		try (Connection conn = conector.getConn()) {
+			res = runner.query(conn, query, handler,proveedorCIF);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		return res;
+	}
 	// Lista de proveedores
 	public List<Proveedor> proveedores() {
 

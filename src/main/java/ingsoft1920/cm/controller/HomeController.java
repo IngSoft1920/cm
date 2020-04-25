@@ -25,6 +25,7 @@ import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.bean.Servicio;
 import ingsoft1920.cm.bean.Tipo_Habitacion;
+import ingsoft1920.cm.bean.Hotel_Proveedor_Producto;
 import ingsoft1920.cm.dao.AusenciaDAO;
 import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.EmpleadoDAO;
@@ -379,13 +380,30 @@ public class HomeController {
 			Proveedor proveedor = proveedorDao.getByID(proveedorId);
 			
 			ModelAndView modelAndView = new ModelAndView("corp-proveedor/asignar-proveedor-hotel.jsp");
-			modelAndView.addObject("productos", productos);
+        	modelAndView.addObject("productos", productos);
 			modelAndView.addObject("proveedor", proveedor);
 			modelAndView.addObject("hotel.id", hotelId);
 			
 			return modelAndView;
 		}
 	
+		@PostMapping("/asignar-proveedor-hotel/{proveedor_id}/{hotel.id}")
+		public String asignarProveedorPost(String empresa,
+				String CIF, Integer [] productosIDs, Integer [] precio, String [] unidadMedida,
+				@PathVariable(name = "proveedor_id") int proveedorId,
+				@PathVariable(name = "hotel.id")int hotelId) {
+//			Proveedor proveedor= proveedorDao.getByCIF(CIF);
+//			int provID=proveedor.getId();
+			int i;
+			for(i=0;i<productosIDs.length;i++) {
+				if(productosIDs[i]!=null && precio[i]!=null && !unidadMedida[i].equals("")) {
+			Hotel_Proveedor_Producto d = new Hotel_Proveedor_Producto(hotelId,productosIDs[i],proveedorId,precio[i], unidadMedida[i]);
+			hppDao.anadir(d);
+				}
+			}
+			
+			return "redirect:/proveedores";
+		}
 		
 		
 
