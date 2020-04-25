@@ -57,7 +57,7 @@ public class HomeController {
 	}
 
 	// -------------------HOTELES-----------------------
-	
+
 	// Pagina de Hoteles
 	@GetMapping("/hoteles")
 	public ModelAndView HotelForm() {
@@ -69,77 +69,68 @@ public class HomeController {
 	@GetMapping("/anadir-hotel")
 	public ModelAndView anadirForm() {
 		ModelAndView mav = new ModelAndView("corp-hotel/anadir-hotel.jsp");
-		  mav.addObject("servicios", new ServicioDAO().servicios());
-		  mav.addObject("categorias", new CategoriaDAO().categorias());
-		  mav.addObject("habs", new TipoHabitacionDAO().tipos());
-		
+		mav.addObject("servicios", new ServicioDAO().servicios());
+		mav.addObject("categorias", new CategoriaDAO().categorias());
+		mav.addObject("habs", new TipoHabitacionDAO().tipos());
+
 		return mav;
 	}
-	
-	
+
 	@PostMapping("/anadir-hotel")
-	public String recibirHotel(String nombre,
-							 String continente,
-							 String pais,
-							 String ciudad,
-							 String direccion,
-							 Integer estrellas,
-							 String descripcion,
-							 Integer[] categoriasIDs,
-							 Integer[] serviciosIDs,
-							 Integer[] habsIDs, Integer[] numDisponibles) // están mapeados 
+	public String recibirHotel(String nombre, String continente, String pais, String ciudad, String direccion,
+			Integer estrellas, String descripcion, Integer[] categoriasIDs, Integer[] serviciosIDs, Integer[] habsIDs,
+			Integer[] numDisponibles) // están mapeados
 	{
-		
+
 		Hotel hotel = new Hotel();
-		  hotel.setNombre(nombre);
-		  hotel.setContinente(continente);
-		  hotel.setPais(pais);
-		  hotel.setCiudad(ciudad);
-		  hotel.setDireccion(direccion);
-		  hotel.setEstrellas(estrellas);
-		  hotel.setDescripcion(descripcion);	
-		  
-		Properties aux;  
-		  
+		hotel.setNombre(nombre);
+		hotel.setContinente(continente);
+		hotel.setPais(pais);
+		hotel.setCiudad(ciudad);
+		hotel.setDireccion(direccion);
+		hotel.setEstrellas(estrellas);
+		hotel.setDescripcion(descripcion);
+
+		Properties aux;
+
 		List<Properties> cats = new ArrayList<>();
 		// Si es null entonces no se ha elegido ninguna
-		if( categoriasIDs != null ) {
-			for(Integer id : categoriasIDs) {
+		if (categoriasIDs != null) {
+			for (Integer id : categoriasIDs) {
 				aux = new Properties();
-				  aux.put("categoria_id",id);
-				  
+				aux.put("categoria_id", id);
+
 				cats.add(aux);
 			}
 		}
-		
+
 		List<Properties> servs = new ArrayList<>();
-		if( serviciosIDs != null ) {
-			for(Integer id : serviciosIDs) {
+		if (serviciosIDs != null) {
+			for (Integer id : serviciosIDs) {
 				aux = new Properties();
-				  aux.put("servicio_id",id);
-				  //TODO: agregar precio y unidad_medida
-				  
+				aux.put("servicio_id", id);
+				// TODO: agregar precio y unidad_medida
+
 				servs.add(aux);
 			}
 		}
-			
-		
-		List<Properties> habs = new ArrayList<>();		
-		for(int i=0;i<numDisponibles.length;i++) {
-			
+
+		List<Properties> habs = new ArrayList<>();
+		for (int i = 0; i < numDisponibles.length; i++) {
+
 			// Solo si se ha introducido un valor > 0 lo tomamos en cuenta:
-			if( numDisponibles[i] > 0 ) {
+			if (numDisponibles[i] > 0) {
 				aux = new Properties();
-				  aux.put("tipo_hab_id",habsIDs[i]);
-				  aux.put("num_disponibles",numDisponibles[i]);
-				  
+				aux.put("tipo_hab_id", habsIDs[i]);
+				aux.put("num_disponibles", numDisponibles[i]);
+
 				habs.add(aux);
 			}
-			
+
 		}
-		
+
 		hotelDao.anadir(hotel, habs, servs, cats);
-		
+
 		return "redirect:/hoteles";
 	}
 
@@ -151,13 +142,13 @@ public class HomeController {
 		List<Properties> servicios = servicioDao.serviciosHotel(id);
 		List<Properties> habs = habsDao.habsHotel(id);
 		List<Categoria> cats = categoriaDao.categoriasHotel(id);
-		
+
 		ModelAndView mav = new ModelAndView("corp-hotel/ver-hotel.jsp");
-		  mav.addObject("hotel", hotel);
-		  mav.addObject("servicios",servicios);
-		  mav.addObject("habs",habs);
-		  mav.addObject("categorias",cats);
-		
+		mav.addObject("hotel", hotel);
+		mav.addObject("servicios", servicios);
+		mav.addObject("habs", habs);
+		mav.addObject("categorias", cats);
+
 		return mav;
 	}
 
@@ -169,32 +160,25 @@ public class HomeController {
 		List<Servicio> servicios = servicioDao.servicios();
 		List<Tipo_Habitacion> habs = habsDao.tipos();
 		List<Categoria> cats = categoriaDao.categorias();
-		
+
 		ModelAndView mav = new ModelAndView("corp-hotel/editar-hotel.jsp");
-		  mav.addObject("hotel", hotel);
-		  mav.addObject("servicios",servicios);
-		  mav.addObject("habs",habs);
-		  mav.addObject("categorias",cats);
+		mav.addObject("hotel", hotel);
+		mav.addObject("servicios", servicios);
+		mav.addObject("habs", habs);
+		mav.addObject("categorias", cats);
 
 		return mav;
 	}
-	
+
 	@PostMapping("/editar-hotel/{id}")
-	public String recibirHotelEditar(@PathVariable(name = "id") int id,
-									 String nombre,
-							 		 String continente,
-							 		 String pais,
-							 		 String ciudad,
-							 		 String direccion,
-							 		 Integer estrellas,
-							 		 String descripcion,
-							 		 Integer[] categoriasIDs,
-							 		 Integer[] serviciosIDs,
-							 		 Integer[] habsIDs, Integer[] numDisponibles) // están mapeados 
+	public String recibirHotelEditar(@PathVariable(name = "id") int id, String nombre, String continente, String pais,
+			String ciudad, String direccion, Integer estrellas, String descripcion, Integer[] categoriasIDs,
+			Integer[] serviciosIDs, Integer[] habsIDs, Integer[] numDisponibles) // están mapeados
 	{
 		// De momento es la manera más fácil de hacerlo:
 		hotelDao.eliminar(id);
-		recibirHotel(nombre, continente, pais, ciudad, direccion, estrellas, descripcion, categoriasIDs, serviciosIDs, habsIDs, numDisponibles);
+		recibirHotel(nombre, continente, pais, ciudad, direccion, estrellas, descripcion, categoriasIDs, serviciosIDs,
+				habsIDs, numDisponibles);
 		return "redirect:/hoteles";
 	}
 
@@ -205,77 +189,70 @@ public class HomeController {
 
 		return new ModelAndView("redirect:/hoteles");
 	}
-	
+
 	// -------------------EMPLEADOS-----------------------
-	//Pagina para selecionar hotel
+	// Pagina para selecionar hotel
 	@GetMapping("/select-hoteles")
 	public ModelAndView selectHotelForm() {
 		List<Hotel> hoteles = hotelDao.hoteles();
 		return new ModelAndView("corp-hotel/select-hoteles.jsp", "hoteles", hoteles);
 	}
 
-	
 	@GetMapping("/corp-proveedor/select-hoteles-prov/{id}")
 	public ModelAndView selectHotelFormProv(@PathVariable(name = "id") int id) {
 		List<Hotel> hoteles = hotelDao.hoteles();
 		return new ModelAndView("corp-proveedor/select-hoteles-prov.jsp", "hoteles", hoteles);
 	}
 
-		
-	//Pagina para selecionar hotel
+	// Pagina para selecionar hotel
 	@GetMapping("/select/empleados/{id}")
 	public ModelAndView selectEmpleadosForm(@PathVariable(name = "id") int id) {
-		
+
 		List<Empleado> empleados = new EmpleadoDAO().empleadosPorHotel(id);
-		
+
 		ModelAndView modelAndView = new ModelAndView("corp-empleado/empleados.jsp");
-		
+
 		modelAndView.addObject("empleados", empleados);
 		modelAndView.addObject("id", id);
-		
+
 		return modelAndView;
 	}
-	
+
 	@GetMapping("/select/proveedores/{id}")
 	public ModelAndView selectProveedoresForm(@PathVariable(name = "id") int id) {
-		
+
 		List<Proveedor> proveedores = new ProveedorDAO().proveedoresPorHotel(id);
-		
+
 		return new ModelAndView("corp-proveedor/proveedores.jsp", "proveedores", proveedores);
 	}
-	
 
 	// Pagina de añadir empleados
 	@GetMapping("/anadir-empleado/{id}")
 	public ModelAndView anadirEmpleadoForm() {
 		List<Profesion> profesiones = new ProfesionDAO().profesiones();
-		return new ModelAndView("corp-empleado/anadir-empleado.jsp","profesiones",profesiones);
+		return new ModelAndView("corp-empleado/anadir-empleado.jsp", "profesiones", profesiones);
 	}
-	
+
 	@PostMapping("/anadir-empleado/{id}")
-	public String recibirEmpleado(String firstName,
-								  String lastNames,
-								  String email,
-								  String telefono,
-								  Integer sueldo,
-								  Integer profesionID, @PathVariable(name = "id") int id) {
-		
+	public String recibirEmpleado(String firstName, String lastNames, String email, String telefono, Integer sueldo,
+			Integer profesionID, @PathVariable(name = "id") int id) {
+
 		Empleado em = new Empleado();
-		  em.setNombre(firstName);
-		  em.setApellidos(lastNames);
-		  em.setEmail(email);
-		  em.setTelefono(telefono);
-		  em.setSueldo(sueldo);
-		  em.setProfesion_id(profesionID);
-		  //TODO: cambiar esto
-		  em.setDias_libres("[7,8]");
-		  
+		em.setNombre(firstName);
+		em.setApellidos(lastNames);
+		em.setEmail(email);
+		em.setTelefono(telefono);
+		em.setSueldo(sueldo);
+		em.setProfesion_id(profesionID);
+		// TODO: cambiar esto
+		em.setDias_libres("[7,8]");
+
 		Properties info = new Properties();
-		  info.put("fecha_contratacion",Date.valueOf( LocalDate.now() ));
-		  //TODO: cambiar esto
-		  info.put("hotel_id", id);
-		   
-		empleadoDao.anadir(em, info);		
+		info.put("fecha_contratacion", Date.valueOf(LocalDate.now()));
+		// TODO: cambiar esto
+		info.put("hotel_id", id);
+
+		empleadoDao.anadir(em, info);
 		return "redirect:/select/empleados/" + id;
 	}
 
@@ -284,10 +261,10 @@ public class HomeController {
 	public ModelAndView verEmpleadoForm(@PathVariable(name = "id") int id) {
 		Empleado empleado = new EmpleadoDAO().getByID(id);
 		String nombreProfesion = new ProfesionDAO().getByID(empleado.getProfesion_id()).getNombre();
-		
+
 		ModelAndView mav = new ModelAndView("corp-empleado/ver-empleado.jsp");
-		  mav.addObject("empleado", empleado);
-		  mav.addObject("nombreProf",nombreProfesion);
+		mav.addObject("empleado", empleado);
+		mav.addObject("nombreProf", nombreProfesion);
 
 		return mav;
 	}
@@ -295,38 +272,33 @@ public class HomeController {
 	// editar-empleado GET
 	@GetMapping("/editar-empleado/{id}")
 	public ModelAndView geditarEmpleadoForm(@PathVariable(name = "id") int id, String firstName) {
-		
+
 		ModelAndView mav = new ModelAndView("corp-empleado/editar-empleado.jsp");
-		  mav.addObject("empleado", new EmpleadoDAO().getByID(id));
-		  mav.addObject("profesiones",new ProfesionDAO().profesiones());
-		
+		mav.addObject("empleado", new EmpleadoDAO().getByID(id));
+		mav.addObject("profesiones", new ProfesionDAO().profesiones());
+
 		return mav;
 	}
 
 	// editar-empleado POST
 	@PostMapping("/editar-empleado/{id}")
-	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id,
-										   String firstName,
-										   String lastNames,
-										   String email,
-										   String telefono, 
-										   Double sueldo,
-										   Integer profesionID) {
-	
+	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id, String firstName, String lastNames,
+			String email, String telefono, Double sueldo, Integer profesionID) {
+
 		Empleado em = new Empleado();
-		  em.setId(id);
-		  em.setNombre(firstName);
-		  em.setApellidos(lastNames);
-		  em.setEmail(email);
-		  em.setTelefono(telefono);
-		  em.setSueldo(sueldo);
-		  em.setProfesion_id(profesionID);
-		  
+		em.setId(id);
+		em.setNombre(firstName);
+		em.setApellidos(lastNames);
+		em.setEmail(email);
+		em.setTelefono(telefono);
+		em.setSueldo(sueldo);
+		em.setProfesion_id(profesionID);
+
 		new EmpleadoDAO().editar(em);
-		
+
 		ModelAndView mav = new ModelAndView("corp-empleado/ver-empleado.jsp");
-		  mav.addObject("empleado", em);
-		  mav.addObject("nombreProf",new ProfesionDAO().getByID(profesionID).getNombre());
+		mav.addObject("empleado", em);
+		mav.addObject("nombreProf", new ProfesionDAO().getByID(profesionID).getNombre());
 
 		return mav;
 	}
@@ -337,7 +309,7 @@ public class HomeController {
 		empleadoDao.eliminar(id);
 		return new ModelAndView("redirect:/empleados");
 	}
-	
+
 	// -------------------PROVEEDOR-----------------------
 
 	// Pagina de Proveedores
@@ -351,45 +323,43 @@ public class HomeController {
 	@GetMapping("/anadir-proveedor")
 	public ModelAndView anadirProveedorForm() {
 		List<Producto> productos = productoDao.productos();
-		return new ModelAndView("corp-proveedor/anadir-proveedor.jsp","productos",productos);
+		return new ModelAndView("corp-proveedor/anadir-proveedor.jsp", "productos", productos);
 	}
-	
+
 	@PostMapping("/anadir-proveedor")
-	public String recibirProveedorForm(String empresa,
-									   String cif,
-									   Integer[] productosIDs) {
-		
+	public String recibirProveedorForm(String empresa, String cif, Integer[] productosIDs) {
+
 		Proveedor p = new Proveedor();
-		  p.setEmpresa(empresa);
-		  p.setCIF(cif);
-		  
+		p.setEmpresa(empresa);
+		p.setCIF(cif);
+
 		List<Properties> info = new ArrayList<>();
-		
+
 		// Si productosIDs es null es que no se
 		// ha seleccionado ninguno
-		if( productosIDs != null ) {
+		if (productosIDs != null) {
 			Properties aux;
-			for(Integer id:productosIDs) {
+			for (Integer id : productosIDs) {
 				aux = new Properties();
-				  aux.put("producto_id",id);
-				  
+				aux.put("producto_id", id);
+
 				info.add(aux);
 			}
 		}
 		proveedorDao.anadir(p, info);
 		return "redirect:/proveedores";
 	}
-	
+
 	// ver proveedor
 	@GetMapping("/proveedores/ver-proveedor/{id}")
 	public ModelAndView verProveedorPorId(@PathVariable(name = "id") int id) {
 		Proveedor proveedor = new ProveedorDAO().getByID(id);
 		List<Producto> productos = productoDao.productosProveedor(id);
-		
+
 		ModelAndView mav = new ModelAndView("corp-proveedor/ver-proveedor.jsp");
-		  mav.addObject("proveedor",proveedor);
-		  mav.addObject("productos",productos);
-		 
+		mav.addObject("proveedor", proveedor);
+		mav.addObject("productos", productos);
+
 		return mav;
 	}
 
@@ -398,20 +368,18 @@ public class HomeController {
 	public ModelAndView editarProveedorForm(@PathVariable(name = "id") int id) {
 		Proveedor proveedor = new ProveedorDAO().getByID(id);
 		List<Producto> productos = productoDao.productos();
-		
+
 		ModelAndView mav = new ModelAndView("corp-proveedor/editar-proveedor.jsp");
-		  mav.addObject("proveedor",proveedor);
-		  mav.addObject("productos",productos);
-		 
+		mav.addObject("proveedor", proveedor);
+		mav.addObject("productos", productos);
+
 		return mav;
 	}
 
 	// editar-proveedor POST
 	@PostMapping("/proveedores/editar-proveedor/{id}")
-	public String recibirEditarProveedorForm(@PathVariable(name = "id") int id,
-													String empresa,
-													String cif,
-													Integer[] productosIDs) {
+	public String recibirEditarProveedorForm(@PathVariable(name = "id") int id, String empresa, String cif,
+			Integer[] productosIDs) {
 
 		proveedorDao.eliminar(id);
 		recibirProveedorForm(empresa, cif, productosIDs);
@@ -424,7 +392,14 @@ public class HomeController {
 		proveedorDao.eliminar(id);
 		return new ModelAndView("redirect:/proveedores");
 	}
-	
+
+	// Asignar proveedor a hotel
+	@GetMapping("/asignar-proveedor-hotel")
+	public ModelAndView asignarProveedorHotelForm() {
+		List<Producto> productos = productoDao.productos();
+		return new ModelAndView("corp-proveedor/asignar-proveedor-hotel.jsp", "productos", productos);
+	}
+
 	// -------------------FACTURACIÓN-------------------------
 
 	// Pagina de facturacion
@@ -432,28 +407,28 @@ public class HomeController {
 	public String facturacionForm() {
 		return "fna/beneficio.jsp";
 	}
-	
+
 	// -------------------CONFIGURACIÓN-----------------------
 	@GetMapping("/configuracion")
 	public String paginaConf() {
 		return "conf/config.jsp";
 	}
-	
+
 	// CATEGORIAS
 	@GetMapping("/anadir-categoria")
 	public ModelAndView anadirCategoriaForm() {
 		return new ModelAndView("conf/anadir-categoria.jsp");
 	}
-	
+
 	@PostMapping("/anadir-categoria")
 	public String recibirCategoriaForm(String nombre) {
 		Categoria c = new Categoria();
-		  c.setNombre(nombre);
-		
+		c.setNombre(nombre);
+
 		categoriaDao.anadir(c);
 		return "redirect:/configuracion";
 	}
-	
+
 	// SERVICIOS
 	@GetMapping("/anadir-servicios")
 	public ModelAndView anadirServicioForm() {
@@ -463,56 +438,54 @@ public class HomeController {
 	@PostMapping("/anadir-servicios")
 	public String recibirServicioForm(String nombre) {
 		Servicio s = new Servicio();
-		  s.setNombre(nombre);
-		
+		s.setNombre(nombre);
+
 		// TODO: Rellenar la lista de Properties
 		servicioDao.anadir(s, new ArrayList<Properties>());
 		return "redirect:/configuracion";
 	}
-	
+
 	// PROFESIONES
 	@GetMapping("/anadir-profesion")
 	public ModelAndView anadirProfesionForm() {
 		return new ModelAndView("conf/anadir-profesion.jsp");
 	}
-	
+
 	@PostMapping("/anadir-profesion")
 	public String recibirProfesionForm(String profesion) {
 		Profesion p = new Profesion();
-		  p.setNombre(profesion);
-		
+		p.setNombre(profesion);
+
 		profesionDao.anadir(p);
 		return "redirect:/configuracion";
 	}
-	
+
 	// PRODUCTOS
 	@GetMapping("/anadir-producto")
 	public String anadirProductoForm() {
 		return "conf/anadir-producto.jsp";
 	}
-	
+
 	@PostMapping("/anadir-producto")
 	public String recibirProductoForm(String nombre) {
 		Producto p = new Producto();
-		  p.setNombre(nombre);
-		
+		p.setNombre(nombre);
+
 		productoDao.anadir(p);
 		return "redirect:/configuracion";
 	}
-	
-	
-	
+
 	// TIPOS DE HABITACIÓN
 	@GetMapping("/anadir-tipos-hab")
 	public String anadirTipoHabForm() {
 		return "conf/anadir-tipos-hab.jsp";
 	}
-	
+
 	@PostMapping("/anadir-tipos-hab")
 	public String recibirTipoHabForm(String nombre) {
 		Tipo_Habitacion th = new Tipo_Habitacion();
-		  th.setNombre_tipo(nombre);
-		
+		th.setNombre_tipo(nombre);
+
 		habsDao.anadir(th);
 		return "redirect:/configuracion";
 	}
