@@ -1,10 +1,11 @@
 package ingsoft1920.cm.dao;
 
-import java.math.BigInteger;	
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -12,8 +13,6 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ingsoft1920.cm.apiout.APIem;
-import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.conector.ConectorBBDD;
 

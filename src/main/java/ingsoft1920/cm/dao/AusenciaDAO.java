@@ -134,10 +134,10 @@ public class AusenciaDAO {
 
 	}
 
-	public static void main(String[] args) {
-		AusenciaDAO dao = new AusenciaDAO();
-		Ausencia primera = dao.ausencias().get(0);
-		dao.resultadoAusencia(primera, Ausencia.Estado.aprobada);
-	}
+//	public static void main(String[] args) {
+//		AusenciaDAO dao = new AusenciaDAO();
+//		Ausencia primera = dao.ausencias().get(0);
+//		dao.resultadoAusencia(primera, Ausencia.Estado.aprobada);
+//	}
 	
 }
