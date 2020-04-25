@@ -219,10 +219,13 @@ public class HomeController {
 	}
 
 	
-	@GetMapping("/corp-proveedor/select-hoteles-prov/{id}")
-	public ModelAndView selectHotelFormProv(@PathVariable(name = "id") int id) {
+	@GetMapping("/corp-proveedor/select-hoteles-prov/{proveedor_id}")
+	public ModelAndView selectHotelFormProv(@PathVariable(name = "proveedor_id") int proveedorId) {
 		List<Hotel> hoteles = hotelDao.hoteles();
-		return new ModelAndView("corp-proveedor/select-hoteles-prov.jsp", "hoteles", hoteles);
+		ModelAndView modelAndView = new ModelAndView("corp-proveedor/select-hoteles-prov.jsp");
+		modelAndView.addObject("hoteles", hoteles);
+		modelAndView.addObject("proveedor_id", proveedorId);
+		return modelAndView;
 	}
 
 		
@@ -358,11 +361,22 @@ public class HomeController {
 	
 	
 	// Asignar proveedor-hotel
-		@GetMapping("/asignar-proveedor-hotel")
-		public ModelAndView asignarProveedorHotel() {
-			List<Producto> productos = productoDao.productos();
-			return new ModelAndView("corp-proveedor/asignar-proveedor-hotel.jsp","productos",productos);
+		@GetMapping("/asignar-proveedor-hotel/{proveedor_id}/{hotel.id}")
+		public ModelAndView asignarProveedorHotel(@PathVariable(name = "hotel.id")int hotelId, @PathVariable(name = "proveedor_id") int proveedorId) {
+			
+			List<Producto> productos = productoDao.productosProveedor(proveedorId);
+			Proveedor proveedor = proveedorDao.getByID(proveedorId);
+			
+			ModelAndView modelAndView = new ModelAndView("corp-proveedor/asignar-proveedor-hotel.jsp");
+			modelAndView.addObject("productos", productos);
+			modelAndView.addObject("proveedor", proveedor);
+			modelAndView.addObject("hotel.id", hotelId);
+			
+			return modelAndView;
 		}
+	
+		
+		
 
 	// Anadir proveedor
 	@GetMapping("/anadir-proveedor")

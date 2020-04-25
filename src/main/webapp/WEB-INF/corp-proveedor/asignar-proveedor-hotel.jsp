@@ -19,7 +19,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -49,7 +49,7 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="../css/form-validation.css" rel="stylesheet">
+    <link href="/css/form-validation.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -97,7 +97,7 @@
 
                         <div class="col-md-4 mb-4">
                             <label for="zip">Unidad de Medida</label>
-                            <input type="number" class="form-control" id="zip" placeholder="" name="unidadMedida" required="">
+                            <input type="text" class="form-control" id="zip" placeholder="" name="unidadMedida" required="">
 
                         </div>
                         
@@ -129,12 +129,12 @@
             </div>
         </footer>
     </div>
-    <script src="../js/jquery-3.4.1.slim.min.js"></script>
+    <script src="/js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
-    <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="../js/form-validation.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/form-validation.js"></script>
 
 </body>
 
