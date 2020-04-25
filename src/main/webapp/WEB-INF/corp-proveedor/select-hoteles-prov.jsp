@@ -115,7 +115,7 @@
 										<div class="d-flex justify-content-between align-items-center">
 											<div class="btn-group">
 												<a class="btn btn-sm btn-outline-primary"
-													href="/select/proveedores/${hotel.id}" role="button">Seleccionar</a> 
+													href="/asignar-proveedor-hotel/${proveedor_id}/${hotel.id}" role="button">Seleccionar</a> 
 													
 											</div>
 										</div>

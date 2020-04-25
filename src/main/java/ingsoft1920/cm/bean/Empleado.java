@@ -1,7 +1,5 @@
 package ingsoft1920.cm.bean;
 
-import java.util.Arrays;
-
 public class Empleado {
 	
 	private int id;
@@ -78,6 +76,7 @@ public class Empleado {
 	public void setDias_libres(String dias_libres) {
 		this.dias_libres = dias_libres;
 	}
+	
 
 	@Override
 	public String toString() {
