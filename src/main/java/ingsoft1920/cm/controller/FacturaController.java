@@ -21,8 +21,16 @@ public class FacturaController {
 	FacturaDAO dao;
 
 	/*
-	 * Recibe .. [ { "importe" : 10, "fecha" : "2020-04-15", "pagado" : true,
-	 * "cantidad_consumidad" : 12, "servicio_id" : 1, "reserva_id" : 1, }, {
+	 * Recibe .. 
+	 * [ 
+	 * { "importe" : 10, 
+	 *   "fecha" : "2020-04-15", 
+	 *   "pagado" : true,
+	 *   "cantidad_consumidad" : 12, 
+	 *   "servicio_id" : 1,
+	 *   "reserva_id" : 1,
+	 * },
+	 *  {
 	 * "importe" : 10, "fecha" : "2020-04-15", "pagado" : false,
 	 * "cantidad_consumidad" : 3, "servicio_id" : 2, "reserva_id" : 83, }, ]
 	 */
