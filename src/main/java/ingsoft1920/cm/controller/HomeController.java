@@ -29,6 +29,7 @@ import ingsoft1920.cm.dao.ProfesionDAO;
 import ingsoft1920.cm.dao.ProveedorDAO;
 import ingsoft1920.cm.dao.ServicioDAO;
 import ingsoft1920.cm.dao.TipoHabitacionDAO;
+import ingsoft1920.cm.dao.Hotel_Proveedor_ProductoDAO;
 
 // Controlador del FE
 @Controller
@@ -50,6 +51,8 @@ public class HomeController {
 	public ProfesionDAO profesionDao;
 	@Autowired
 	public ProductoDAO productoDao;
+	@Autowired
+	public Hotel_Proveedor_ProductoDAO hppDao;
 
 	@GetMapping("/inicio")
 	public String homeCorporativo() {
