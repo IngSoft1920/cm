@@ -50,12 +50,11 @@ public class EmpleadoDAO {
     public List<Empleado> empleadosPorHotel(int id) {
         List<Empleado> empleados = new LinkedList<>();
         BeanListHandler<Empleado> beanListHandler = new BeanListHandler<>(Empleado.class);
-       
         String getEmpleados = "SELECT e.* FROM Empleado e JOIN Hotel_Empleado he ON e.id=he.empleado_id JOIN Hotel h ON he.hotel_id=h.id WHERE h.id=? ";
 
         try( Connection conn = conector.getConn() )
         {
-            empleados = runner.query(conn, getEmpleados, beanListHandler);
+            empleados = runner.query(conn, getEmpleados, beanListHandler,id);
         }
         catch(Exception e) { e.printStackTrace(); }
         return empleados;
