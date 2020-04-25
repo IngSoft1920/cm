@@ -473,23 +473,37 @@ public class HomeController {
 		Servicio s = new Servicio();
 		  s.setNombre(nombre);
 		
-		// TODO: Rellenar la lista de Properties
-		servicioDao.anadir(s, new ArrayList<Properties>());
+		servicioDao.anadir(s);
 		return "redirect:/configuracion";
 	}
 	
 	// PROFESIONES
 	@GetMapping("/anadir-profesion")
 	public ModelAndView anadirProfesionForm() {
-		return new ModelAndView("conf/anadir-profesion.jsp");
+		return new ModelAndView("conf/anadir-profesion.jsp","servicios",servicioDao.servicios());
 	}
 	
 	@PostMapping("/anadir-profesion")
-	public String recibirProfesionForm(String profesion) {
+	public String recibirProfesionForm(String profesion,
+									   Integer[] serviciosIDs) {
 		Profesion p = new Profesion();
 		  p.setNombre(profesion);
+		  
+		List<Properties> infoServs = new ArrayList<>();
 		
-		profesionDao.anadir(p);
+		// Si serviciosIDs es null es que no se ha 
+		// seleccionado ninguno en el formulario
+		if( serviciosIDs != null ) {
+			Properties aux;
+			for(Integer id : serviciosIDs) {
+				aux = new Properties();
+				  aux.put("servicio_id",id);
+				  
+				infoServs.add(aux);
+			}
+		}
+		
+		profesionDao.anadir(p,infoServs);
 		return "redirect:/configuracion";
 	}
 	

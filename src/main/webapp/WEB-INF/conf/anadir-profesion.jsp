@@ -65,6 +65,18 @@
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-10 mb-1">
+                            <label>Servicios a los que sirve</label>
+                            <c:forEach var="servicio" items="${servicios}">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="${servicio.id}" name="serviciosIDs">
+                                    <label class="form-check-label">${servicio.nombre}</label>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
                 </form>

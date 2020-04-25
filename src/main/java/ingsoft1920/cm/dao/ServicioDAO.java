@@ -1,6 +1,6 @@
 package ingsoft1920.cm.dao;
 
-import java.math.BigInteger;	
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,32 +27,15 @@ public class ServicioDAO {
 	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 
-	// Cada Properties nos da info de las profesiones que atienden
-	// a dicho servicio:
-	// -profesion_id: int
-	public int anadir(Servicio s, List<Properties> info) {
+	public int anadir(Servicio s) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		String query = "INSERT INTO Servicio "
+					  +"(nombre) "
+					  +"VALUES (?);";
 
-		String queryServ = "INSERT INTO Servicio "
-						  +"(nombre) "
-						  +"VALUES (?);";
-
-		String queryProfs = "INSERT INTO Servicio_Profesion "
-						   +"(servicio_id,profesion_id) "
-						   +"VALUES (?,?)";
-
-		List<Object[]> batch;
 		try (Connection conn = conector.getConn()) {
-			res = runner.insert(conn, queryServ, handler, s.getNombre());
-	
-			batch = new ArrayList<>();
-			for (Properties prof : info) {
-				batch.add(new Object[] { res.intValue(),
-										 prof.get("profesion_id") 
-									   });
-			}
-			runner.batch(conn, queryProfs, batch.toArray(new Object[info.size()][]));
+			res = runner.insert(conn, query, handler, s.getNombre());
 
 		} catch (Exception e) { e.printStackTrace(); }
 
