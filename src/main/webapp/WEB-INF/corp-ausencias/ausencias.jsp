@@ -159,7 +159,7 @@
                                         <th scope="col">Estado</th>
                                         <th scope="col">Inicio</th>
                                         <th scope="col">Fin</th>
-                                        <th scope="col"></th>
+                                        <th scope="col">Empleado</th>
                                     </tr>
                                 </thead>
 
