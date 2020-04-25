@@ -23,6 +23,7 @@
                 <li><a class="nav-link" href="/select-hoteles">Empleados</a></li>
                 <li><a class="nav-link" href="/proveedores">Proveedores</a></li>
                 <li><a class="nav-link" href="/beneficio">Facturación</a></li>
+                <li><a class="nav-link" href="/ausencias-pendientes"> Ausencias </a></li>
                 <li><a class="nav-link" href="/configuracion"> Configuración </a></li>
 
             </ul>

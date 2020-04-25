@@ -21,6 +21,8 @@ import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.bean.Servicio;
 import ingsoft1920.cm.bean.Tipo_Habitacion;
+import ingsoft1920.cm.bean.Ausencia;
+import ingsoft1920.cm.bean.Ausencia.Estado;
 import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
@@ -29,6 +31,7 @@ import ingsoft1920.cm.dao.ProfesionDAO;
 import ingsoft1920.cm.dao.ProveedorDAO;
 import ingsoft1920.cm.dao.ServicioDAO;
 import ingsoft1920.cm.dao.TipoHabitacionDAO;
+import ingsoft1920.cm.dao.AusenciaDAO;
 
 // Controlador del FE
 @Controller
@@ -50,6 +53,8 @@ public class HomeController {
 	public ProfesionDAO profesionDao;
 	@Autowired
 	public ProductoDAO productoDao;
+	@Autowired
+	public AusenciaDAO ausenciaDao;
 
 	@GetMapping("/inicio")
 	public String homeCorporativo() {
@@ -517,4 +522,31 @@ public class HomeController {
 		return "redirect:/configuracion";
 	}
 
+	// Pagina de ausencias
+	@GetMapping("/ausencias-pendientes")
+	public ModelAndView ausenciasPendientes() {
+		List<Ausencia> ausencias = ausenciaDao.ausenciasPendientes();
+		return new ModelAndView("corp-ausencias/ausencias-pendientes.jsp", "ausencias", ausencias);
+	}
+	
+	@GetMapping("/ausencias-aceptar/{id}")
+	public String ausenciasAceptar(@PathVariable(name = "id") int id) {
+		Ausencia ausencia = ausenciaDao.getById(id);
+		ausenciaDao.resultadoAusencia(ausencia,Estado.aprobada);
+		
+		return "redirect:/ausencias";
+	}
+
+	@GetMapping("/ausencias-denegar/{id}")
+	public String ausenciasDenegar(@PathVariable(name = "id") int id) {
+		Ausencia ausencia = ausenciaDao.getById(id);
+		ausenciaDao.resultadoAusencia(ausencia,Estado.denegada);
+		
+		return "redirect:/ausencias";
+	}
+	@GetMapping("/ausencias")
+	public ModelAndView todasAusencias() {
+		List<Ausencia> ausencias = ausenciaDao.ausencias();
+		return new ModelAndView("corp-ausencias/ausencias.jsp", "ausencias", ausencias);
+	}
 }
