@@ -109,22 +109,18 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Empleado</th>
                                         <th scope="col">Motivo</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col">Inicio</th>
                                         <th scope="col">Fin</th>
                                         <th scope="col">Decision</th>
-                                        <th scope="col"></th>
+                                        <th scope="col">Empleado</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <c:forEach var="ausenciasPendientes" items="${ausenciasPendientes}">
                                         <tr>
-                                            <th scope="row">${ausenciasPendientes.id}</th>
-                                            <td>${ausenciasPendientes.empleado_id}</td>
                                             <td>${ausenciasPendientes.motivo}</td>
                                             <td>${ausenciasPendientes.estado}</td>
                                             <td>${ausenciasPendientes.fecha_inicio}</td>
@@ -157,21 +153,17 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Empleado</th>
                                         <th scope="col">Motivo</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col">Inicio</th>
                                         <th scope="col">Fin</th>
-                                        <th scope="col"></th>
+                                        <th scope="col">Empleado</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
                                     <c:forEach var="ausenciasTodas" items="${ausenciasTodas}">
                                         <tr>
-                                            <th scope="row">${ausenciasTodas.id}</th>
-                                            <td>${ausenciasTodas.empleado_id}</td>
                                             <td>${ausenciasTodas.motivo}</td>
                                             <td>${ausenciasTodas.estado}</td>
                                             <td>${ausenciasTodas.fecha_inicio}</td>
