@@ -456,12 +456,11 @@ public class HomeController {
 	// editar-proveedor GET
 	@GetMapping("/proveedores/editar-proveedor/{id}")
 	public ModelAndView editarProveedorForm(@PathVariable(name = "id") int id) {
-		Proveedor proveedor = new ProveedorDAO().getByID(id);
-		List<Producto> productos = productoDao.productos();
 		
 		ModelAndView mav = new ModelAndView("corp-proveedor/editar-proveedor.jsp");
-		  mav.addObject("proveedor",proveedor);
-		  mav.addObject("productos",productos);
+		  mav.addObject("proveedor",proveedorDao.getByID(id));
+		  mav.addObject("productos",productoDao.productos());
+		  mav.addObject("productosProveedor",productoDao.productosProveedor(id));
 		 
 		return mav;
 	}
