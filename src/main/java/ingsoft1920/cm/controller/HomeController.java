@@ -258,8 +258,8 @@ public class HomeController {
 	public ModelAndView anadirEmpleadoForm(@PathVariable(name = "id") int id) {
 		List<Profesion> profesiones = profesionDao.profesionesHotel(id);
 		ModelAndView modelAndView = new ModelAndView("corp-empleado/anadir-empleado.jsp");
-		modelAndView.addObject("profesiones", profesiones);
-		modelAndView.addObject("id", id);
+		  modelAndView.addObject("profesiones", profesiones);
+		  modelAndView.addObject("id", id);
 		return modelAndView;
 	}
 	

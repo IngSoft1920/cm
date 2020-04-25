@@ -114,11 +114,12 @@ public class ProfesionDAO {
 					+"FROM Profesion p "
 				    +"JOIN Servicio_Profesion sp ON p.id = sp.profesion_id "
 				    +"JOIN Servicio s ON sp.servicio_id=s.id "
-				    +"JOIN Hotel_Servicio hs ON s.id=hs.servicio_id ";
+				    +"JOIN Hotel_Servicio hs ON s.id=hs.servicio_id "
+				    +"WHERE hs.hotel_id=?;";
 		
 		try ( Connection conn = conector.getConn() )
 		{
-			res = runner.query(conn, queryProfsDependientes, handler);
+			res = runner.query(conn, queryProfsDependientes, handler,hotelId);
 			
 		} catch(Exception e) { e.printStackTrace(); }
 		
