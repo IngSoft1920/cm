@@ -57,6 +57,7 @@ public class HomeController {
 	public ProductoDAO productoDao;
 	@Autowired
 	public Hotel_Proveedor_ProductoDAO hppDao;
+	@Autowired
 	public AusenciaDAO ausenciaDao;
 
 	@GetMapping("/inicio")
