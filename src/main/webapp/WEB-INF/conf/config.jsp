@@ -58,16 +58,17 @@
 
         <a href="/anadir-categoria" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Categorias</a>
         <a href="/anadir-servicios" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Servicios</a>
+        <a href="/anadir-profesion" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Profesiones</a>
+        <a href="/anadir-producto" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Productos</a>
+
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
-                <p class="float-left">
-                    <a href="/hoteles">Volver a hoteles</a>
-                </p>
-                <p class="float-right">
-                    <a href="/inicio">Volver a inicio</a>
-                </p>
+                <div><a class="float" href="/inicio">Volver a inicio</a></div>
+                <div><a class="float" href="/hoteles">Ir a hoteles</a></div>
+                <div><a class="float" href="/empleados">Ir a empleados</a></div>
+                <div><a class="float" href="/proveedores">Ir a proveedores</a></div>
             </div>
         </footer>
     </div>

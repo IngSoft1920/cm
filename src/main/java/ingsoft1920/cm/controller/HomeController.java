@@ -138,40 +138,6 @@ public class HomeController {
 		
 		return "redirect:/hoteles";
 	}
-	
-	
-
-	// Anadir-categoria
-	@GetMapping("/anadir-categoria")
-	public ModelAndView anadirCategoriaForm() {
-		return new ModelAndView("corp-hotel/anadir-categoria.jsp");
-	}
-	
-	// Anadir-servicio
-	@PostMapping("/anadir-categoria")
-	public String recibirCategoriaForm(String nombre) {
-		Categoria c = new Categoria();
-		  c.setNombre(nombre);
-		
-		new CategoriaDAO().anadir(c);
-		return "redirect:/hoteles";
-	}
-
-	@GetMapping("/anadir-servicios")
-	public ModelAndView anadirServicioForm() {
-		return new ModelAndView("corp-hotel/anadir-servicios.jsp");
-	}
-
-	// Anadir-servicio
-	@PostMapping("/anadir-servicios")
-	public String recibirServicioForm(String nombre) {
-		Servicio s = new Servicio();
-		  s.setNombre(nombre);
-		
-		// TODO: Rellenar la lista de Properties
-		new ServicioDAO().anadir(s, new ArrayList<Properties>());
-		return "redirect:/hoteles";
-	}
 
 	// Hotel/Ver-hotel
 	@GetMapping("/ver-hotel/{id}")
@@ -279,23 +245,6 @@ public class HomeController {
 		return "redirect:/empleados";
 	}
 
-
-	// Anadir profesion
-	@GetMapping("/anadir-empleado/anadir-profesion")
-	public ModelAndView anadirProfesionForm() {
-		return new ModelAndView("corp-empleado/anadir-profesion.jsp");
-	}
-	
-	// Anadir profesion
-	@PostMapping("/anadir-empleado/anadir-profesion")
-	public String recibirProfesionForm(String profesion) {
-		Profesion p = new Profesion();
-		  p.setNombre(profesion);
-		
-		new ProfesionDAO().anadir(p);
-		return "redirect:/empleados";
-	}
-
 	// ver empleado
 	@GetMapping("/ver-empleado/{id}")
 	public ModelAndView verEmpleadoForm(@PathVariable(name = "id") int id) {
@@ -373,13 +322,6 @@ public class HomeController {
 
 		return "corp-proveedor/anadir-proveedor.jsp";
 	}
-
-	// Anadir producto
-	@GetMapping("/anadir-proveedor/anadir-producto")
-	public String anadirProductoForm() {
-
-		return "corp-proveedor/anadir-producto.jsp";
-	}
 	
 	// ver proveedor
 	@GetMapping("/proveedores/ver-proveedor/{id}")
@@ -433,6 +375,60 @@ public class HomeController {
 	@GetMapping("/configuracion")
 	public String paginaConf() {
 		return "conf/config.jsp";
+	}
+	
+	// CATEGORIAS
+	@GetMapping("/anadir-categoria")
+	public ModelAndView anadirCategoriaForm() {
+		return new ModelAndView("conf/anadir-categoria.jsp");
+	}
+	
+	@PostMapping("/anadir-categoria")
+	public String recibirCategoriaForm(String nombre) {
+		Categoria c = new Categoria();
+		  c.setNombre(nombre);
+		
+		categoriaDao.anadir(c);
+		return "redirect:/configuracion";
+	}
+	
+	// SERVICIOS
+	@GetMapping("/anadir-servicios")
+	public ModelAndView anadirServicioForm() {
+		return new ModelAndView("conf/anadir-servicios.jsp");
+	}
+
+	@PostMapping("/anadir-servicios")
+	public String recibirServicioForm(String nombre) {
+		Servicio s = new Servicio();
+		  s.setNombre(nombre);
+		
+		// TODO: Rellenar la lista de Properties
+		servicioDao.anadir(s, new ArrayList<Properties>());
+		return "redirect:/configuracion";
+	}
+	
+	// PROFESIONES
+	// Anadir profesion
+	@GetMapping("/anadir-profesion")
+	public ModelAndView anadirProfesionForm() {
+		return new ModelAndView("conf/anadir-profesion.jsp");
+	}
+	
+	@PostMapping("/anadir-profesion")
+	public String recibirProfesionForm(String profesion) {
+		Profesion p = new Profesion();
+		  p.setNombre(profesion);
+		
+		new ProfesionDAO().anadir(p);
+		return "redirect:/configuracion";
+	}
+	
+	// PRODUCTOS
+	// Anadir producto
+	@GetMapping("/anadir-producto")
+	public String anadirProductoForm() {
+		return "conf/anadir-producto.jsp";
 	}
 
 }
