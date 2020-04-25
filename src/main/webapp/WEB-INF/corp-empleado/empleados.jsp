@@ -70,7 +70,8 @@
                 <div class="container d-flex align-content-start">
                     <strong class="navbar-brand">Empleados</strong>
                     <a class="navbar-nav" href="/inicio">Inicio</a>
-                    <a class="navbar-nav" href="/anadir-empleado">Añadir Empleado</a>
+                    <a class="navbar-nav" href="/anadir-empleado/${id}">Añadir Empleado</a>
+                   
                 </div>
             </div>
         </header>
