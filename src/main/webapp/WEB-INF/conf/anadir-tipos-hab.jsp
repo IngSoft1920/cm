@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Configuración</title>
+    <title>Añadir Tipo de Habitación</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
@@ -52,24 +52,34 @@
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Configuración</h2>
-            <p class="lead">Añadir parámetros</p>
+            <h2>Añadir Tipo de Habitación</h2>
         </div>
 
-        <a href="/anadir-categoria" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Categorias</a>
-        <a href="/anadir-servicios" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Servicios</a>
-        <a href="/anadir-profesion" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Profesiones</a>
-        <a href="/anadir-producto" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Productos</a>
-        <a href="/anadir-tipos-hab" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Tipos de habitación</a>
+        <div class="row center">
+            <div class="col-md-18 order-md-1">
+                <form class="needs-validation" novalidate="" method="POST">
+                    <div class="mb-3">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="presidencial" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
+                </form>
+            </div>
+        </div>
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
-                <div><a class="float" href="/inicio">Volver a inicio</a></div>
-                <div><a class="float" href="/hoteles">Ir a hoteles</a></div>
-                <div><a class="float" href="/empleados">Ir a empleados</a></div>
-                <div><a class="float" href="/proveedores">Ir a proveedores</a></div>
+                <p class="float-left">
+                    <a href="/configuracion">Volver a configuración</a>
+                </p>
+                <p class="float-right">
+                    <a href="/inicio">Volver a inicio</a>
+                </p>
             </div>
         </footer>
     </div>

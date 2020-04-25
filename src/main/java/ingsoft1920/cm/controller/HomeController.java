@@ -413,7 +413,6 @@ public class HomeController {
 	}
 	
 	// PROFESIONES
-	// Anadir profesion
 	@GetMapping("/anadir-profesion")
 	public ModelAndView anadirProfesionForm() {
 		return new ModelAndView("conf/anadir-profesion.jsp");
@@ -429,7 +428,6 @@ public class HomeController {
 	}
 	
 	// PRODUCTOS
-	// Anadir producto
 	@GetMapping("/anadir-producto")
 	public String anadirProductoForm() {
 		return "conf/anadir-producto.jsp";
@@ -441,6 +439,23 @@ public class HomeController {
 		  p.setNombre(nombre);
 		
 		productoDao.anadir(p);
+		return "redirect:/configuracion";
+	}
+	
+	
+	
+	// TIPOS DE HABITACIÓN
+	@GetMapping("/anadir-tipos-hab")
+	public String anadirTipoHabForm() {
+		return "conf/anadir-tipos-hab.jsp";
+	}
+	
+	@PostMapping("/anadir-tipos-hab")
+	public String recibirTipoHabForm(String nombre) {
+		Tipo_Habitacion th = new Tipo_Habitacion();
+		  th.setNombre_tipo(nombre);
+		
+		habsDao.anadir(th);
 		return "redirect:/configuracion";
 	}
 
