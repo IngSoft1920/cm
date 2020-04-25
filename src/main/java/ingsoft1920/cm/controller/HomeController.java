@@ -348,10 +348,14 @@ public class HomeController {
 	// ver proveedor
 	@GetMapping("/proveedores/ver-proveedor/{id}")
 	public ModelAndView verProveedorPorId(@PathVariable(name = "id") int id) {
-
 		Proveedor proveedor = new ProveedorDAO().getByID(id);
-
-		return new ModelAndView("corp-proveedor/ver-proveedor.jsp", "proveedor", proveedor);
+		List<Producto> productos = productoDao.productosProveedor(id);
+		
+		ModelAndView mav = new ModelAndView("corp-proveedor/ver-proveedor.jsp");
+		  mav.addObject("proveedor",proveedor);
+		  mav.addObject("productos",productos);
+		 
+		return mav;
 	}
 
 	// editar-proveedor GET

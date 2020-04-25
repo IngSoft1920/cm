@@ -53,74 +53,43 @@
     <div class="container">
         <div class="py-5 text-center">
             <h2>Visualizar Proveedor</h2>
-            <p class="lead">Ver los datos del proveedor</p>
         </div>
 
         <div class="row center">
-
             <div class="col-md-18 order-md-1">
+
                 <div class="mb-3">
                     <label for="nombre">Empresa</label>
-                    <input type="text" class="form-control" id="nombre" readonly  value="${proveedor.empresa}" placeholder="Proveedor.empresa">
+                    <input type="text" class="form-control" value="${proveedor.empresa}" readonly>
                 </div>
 
                 <div class="mb-3">
-                    <label for="cif">CIF</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="cif" readonly value="${proveedor.CIF}" placeholder="Proveedor.cif">
+                    <label>CIF</label>
+                    <input type="text" class="form-control" value="${proveedor.CIF}" readonly>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <label>Productos</label>
+                        <c:forEach var="producto" items="${productos}">
+                            <div class="form-check">${producto.nombre}</div>
+                        </c:forEach>
                     </div>
                 </div>
 
-
-                <div class="col-md-5 mb-3">
-                    <label for="country">Producto</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" checked disabled value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Verdura
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" disabled value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Fruta
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" disabled value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Cerveza
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" disabled value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            Vino
-                        </label>
-                    </div>
-                </div>
 
                 <hr class="mb-4">
-                <a class="btn btn-primary btn-lg btn-block" href="/proveedores" role="button">Volver a
-                Proveedores</a>
+                <a class="btn btn-primary btn-lg btn-block" href="/proveedores" role="button">Volver a Proveedores</a>
             </div>
         </div>
     </div>
 
 
     <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">© 2020 Company Name</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Privacy</a>
-            </li>
-            <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Terms</a>
-            </li>
-            <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Support</a>
-            </li>
-        </ul>
+        <p class="mb-1">© 2020 Company Management - UPM</p>
         <div class="container">
             <p class="float-right">
-                <a href="/inicio">Back to Home</a>
+                <a href="/inicio">Volver a inicio</a>
             </p>
         </div>
     </footer>
