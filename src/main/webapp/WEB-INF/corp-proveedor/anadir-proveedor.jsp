@@ -60,89 +60,33 @@
         </div>
 
         <div class="row center">
-
             <div class="col-md-18 order-md-1">
-
-                <form class="needs-validation" novalidate="">
+                <form class="needs-validation" method="POST" novalidate>
                     <div class="mb-3">
-                        <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="" required="">
-                        <div class="invalid-feedback">
-                            El nombre del empleado es obligatorio.
-                        </div>
+                        <label>Empresa</label>
+                        <input type="text" class="form-control" name="empresa" placeholder="Licores SA" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="firstName">CIF</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="" required="">
-                        <div class="invalid-feedback">
-                            El CIF son obligatorio.
-                        </div>
+                        <input type="text" class="form-control" name="cif" placeholder="S0794867B" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
                     <div class="row">
-
-                        <div class="col-md-5 mb-3">
-                            <label for="country">Producto</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Verdura
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Fruta
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Cerveza
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Vino
-                                </label>
-                            </div>
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                <label class="form-check-label" for="defaultCheck1" data-toggle="modal" data-target="#exampleModal">
-                                    Otros
-                                </label>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Añadir Producto
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Necesitas añadir otro producto que no se encuentre en la lista?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <a class="btn btn-primary" href="/anadir-proveedor/anadir-producto" role="button">Añadir</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="col-md-5">
+                            <label>Productos</label>
+                            <c:forEach var="producto" items="${productos}">  
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" name="productosIDs" value="${producto.id}">
+                                    <label>${producto.nombre}</label>
                                 </div>
-
-                            </div>
+                            </c:forEach> 
                         </div>
-
                     </div>
+                    
                     <hr class="mb-4">
-
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
                 </form>
             </div>
@@ -150,23 +94,14 @@
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">© 2020 Company Name</p>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Privacy</a>
-                </li>
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Terms</a>
-                </li>
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Support</a>
-                </li>
-            </ul>
+            <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
                 <p class="float-left">
-                    <a href="/proveedores">Back to proveedores</a>
+                    <a href="/proveedores">Volver a proveedores</a>
                 </p>
                 <p class="float-right">
-                    <a href="/inicio">Back to Home</a>
+                    <a href="/inicio">Volver a inicio</a>
                 </p>
-
             </div>
         </footer>
     </div>

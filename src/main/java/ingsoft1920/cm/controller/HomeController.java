@@ -313,18 +313,36 @@ public class HomeController {
 	// Pagina de Proveedores
 	@GetMapping("/proveedores")
 	public ModelAndView proveedoresForm() {
-
 		List<Proveedor> proveedores = new ProveedorDAO().proveedores();
-
 		return new ModelAndView("corp-proveedor/proveedores.jsp", "proveedores", proveedores);
-		// return new ModelAndView("corp-proveedor/proveedores.jsp");
 	}
 
 	// Anadir proveedor
 	@GetMapping("/anadir-proveedor")
-	public String anadirProveedorForm() {
-
-		return "corp-proveedor/anadir-proveedor.jsp";
+	public ModelAndView anadirProveedorForm() {
+		List<Producto> productos = productoDao.productos();
+		return new ModelAndView("corp-proveedor/anadir-proveedor.jsp","productos",productos);
+	}
+	
+	@PostMapping("/anadir-proveedor")
+	public String recibirProveedorForm(String empresa,
+									   String cif,
+									   Integer[] productosIDs) {
+		
+		Proveedor p = new Proveedor();
+		  p.setEmpresa(empresa);
+		  p.setCIF(cif);
+		  
+		List<Properties> info = new ArrayList<>();
+		Properties aux;
+		for(Integer id:productosIDs) {
+			aux = new Properties();
+			  aux.put("producto_id",id);
+			  
+			info.add(aux);
+		}
+		proveedorDao.anadir(p, info);
+		return "redirect:/proveedores";
 	}
 	
 	// ver proveedor
@@ -357,14 +375,10 @@ public class HomeController {
 	}
 
 	// Eliminar proveedor
-	@GetMapping("/proveedores/eliminar-proveedor/{id}")
+	@GetMapping("/eliminar-proveedor/{id}")
 	public ModelAndView eliminarProveedorForm(@PathVariable(name = "id") int id) {
-
-		// Proveedor proveedor = new ProveedorDAO().obtenerProveedorPorId(id);
-		new ProveedorDAO().eliminar(id);
-
+		proveedorDao.eliminar(id);
 		return new ModelAndView("redirect:/proveedores");
-
 	}
 	
 	// -------------------FACTURACIÓN-------------------------

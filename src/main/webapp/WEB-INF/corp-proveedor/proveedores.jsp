@@ -59,9 +59,6 @@
 	content="/docs/4.4/assets/img/favicons/browserconfig.xml">
 <meta name="theme-color" content="#563d7c">
 
-
-
-
 <style>
 .bd-placeholder-img {
 	font-size: 1.125rem;
@@ -85,24 +82,19 @@
 
 <body>
 	<div class="conteiner">
-
-
 		<header>
-
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<a href="" class="navbar-brand "> <strong>Proveedores</strong>
-					</a> <a class="navbar-nav" href="/inicio">Inicio</a> <a
-						class="navbar-nav" href="/anadir-proveedor">Añadir Proveedor</a>
+					<strong class="navbar-brand">Proveedores</strong>
+					<a class="navbar-nav" href="/inicio">Inicio</a>
+					<a class="navbar-nav" href="/anadir-proveedor">Añadir Proveedor</a>
 				</div>
 			</div>
 		</header>
 
-
 		<main role="main">
 			<div class="album py- bg-light">
 				<div class="container">
-
 					<div class="row">
 						<table class="table table-striped">
 							<thead>
@@ -110,33 +102,28 @@
 									<th scope="col">#</th>
 									<th scope="col">Empresa</th>
 									<th scope="col">CIF</th>
-									<!-- <th scope="col">Productos</th> -->
 								</tr>
 							</thead>
+
 							<tbody>
-
 								<c:forEach var="proveedores" items="${proveedores}">
-
 									<tr>
 										<th scope="row">${proveedores.id}</th>
 										<td>${proveedores.empresa}</td>
 										<td>${proveedores.CIF}</td>
-										<!--  <td>Peras</td>  -->
-
 										<td>
 											<div class="btn-group">
 												<a class="btn btn-sm btn-outline-secondary"
-													href="/proveedores/ver-proveedor/${proveedores.id}"
-													role="button">Ver</a> <a
-													class="btn btn-sm btn-outline-secondary"
+												   href="/proveedores/ver-proveedor/${proveedores.id}"
+												   role="button">Ver</a>
+												
+												<a class="btn btn-sm btn-outline-secondary"
 													href="/proveedores/editar-proveedor/${proveedores.id}"
 													role="button">Editar</a>
-												<!-- Button trigger modal -->
+
 												<a class="btn btn-sm btn-outline-secondary"
-													data-toggle="modal" data-target="#exampleModal" href="/proveedores/eliminar-proveedor/${proveedores.id}"
-													role="button"> Eliminar </a>
-												<!-- Modal -->
-												
+												   href="/eliminar-proveedor/${proveedores.id}"
+												   role="button">Eliminar</a>	
 										</td>
 									</tr>
 								</c:forEach>
@@ -155,9 +142,9 @@
 		<footer class="text-muted">
 			<div class="container">
 				<p class="float-right">
-					<a href="">Back to top</a>
+					<a href="">Volver arriba</a>
 				</p>
-				<p>Lista de empleados que conforman nuestra cadena.</p>
+				<p>Lista de proveedores de nuestra cadena.</p>
 			</div>
 		</footer>
 		<script src="/js/jquery-3.4.1.slim.min.js"
