@@ -11,7 +11,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ingsoft1920.cm.bean.auxiliares.Hotel_Proveedor_Producto;
+import ingsoft1920.cm.bean.Hotel_Proveedor_Producto;
 
 import ingsoft1920.cm.conector.ConectorBBDD;
 
