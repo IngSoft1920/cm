@@ -2,7 +2,9 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,6 +15,11 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonObject;
+
+import ingsoft1920.cm.apiout.APIout;
+import ingsoft1920.cm.apiout.APIem;
+import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
@@ -115,9 +122,53 @@ public class ProveedorDAO {
 //		
 //		new ProveedorDAO().anadir(prov, info);
 //	}
-	
+	   public List<Proveedor> proveedoresPorHotel(int id) {
+	        List<Proveedor> proveedores = new LinkedList<>();
+	        BeanListHandler<Proveedor> beanListHandler = new BeanListHandler<>(Proveedor.class);
+	        String getProveedores = "SELECT p.* FROM Proveedor p JOIN Hotel_Proveedor_Producto hp ON p.id=hp.proveedor_id JOIN Hotel h ON hp.hotel_id=h.id WHERE h.id=? ";
 
+	        try( Connection conn = conector.getConn() )
+	        {
+	            proveedores = runner.query(conn, getProveedores, beanListHandler,id);
+	        }
+	        catch(Exception e) { e.printStackTrace(); }
+	        return proveedores;
+	    }
+
+		
+	   
 	
 	
+    public void actualizar(Proveedor p){
+
+        String actualiza = "UPDATE Proveedor SET empresa = ?, CIF = ? WHERE id = ?";
+
+        ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+
+        try( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, actualiza, handler, p.getEmpresa(),p.getCIF(), p.getId());
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void eliminarProveedor(Empleado empleado){
+
+	    String eliminaEmpleado = "DELETE FROM Proveedor WHERE id = ?";
+	
+	    try( Connection conn = conector.getConn() )
+	    {
+	        runner.update(conn, eliminaEmpleado, empleado.getId());
+	    }
+	    catch(Exception e) { e.printStackTrace(); }
+	    
+	    // Avisamos a em del borrado del empleado:
+	    JsonObject json = new JsonObject();
+	      json.addProperty("id",empleado.getId());
+	      
+	    APIout.enviar(json.toString(), 7002, "/eliminarEmpleado");
+    }
 
 }

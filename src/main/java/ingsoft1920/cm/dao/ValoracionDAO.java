@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 import ingsoft1920.cm.bean.Valoracion;
 import ingsoft1920.cm.conector.ConectorBBDD;
@@ -44,6 +46,20 @@ public class ValoracionDAO {
 		} catch(Exception e) { e.printStackTrace(); }
 		
 		return ( res != null ? res.intValue() : -1 );
+	}
+	
+	public Valoracion getByID(int id) {
+		Valoracion res=null;
+		BeanHandler<Valoracion> handler = new BeanHandler<>(Valoracion.class);
+		String query = "SELECT * FROM Valoracion WHERE id = ?;";
+
+		try (Connection conn = conector.getConn()) {
+			res = runner.query(conn, query, handler,id);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 	
 	public List<Valoracion> valoraciones() {

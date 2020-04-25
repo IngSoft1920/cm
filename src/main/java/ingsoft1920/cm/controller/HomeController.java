@@ -33,6 +33,7 @@ import ingsoft1920.cm.dao.ProfesionDAO;
 import ingsoft1920.cm.dao.ProveedorDAO;
 import ingsoft1920.cm.dao.ServicioDAO;
 import ingsoft1920.cm.dao.TipoHabitacionDAO;
+import ingsoft1920.cm.dao.Hotel_Proveedor_ProductoDAO;
 
 // Controlador del FE
 @Controller
@@ -54,6 +55,8 @@ public class HomeController {
 	public ProfesionDAO profesionDao;
 	@Autowired
 	public ProductoDAO productoDao;
+	@Autowired
+	public Hotel_Proveedor_ProductoDAO hppDao;
 
 	@GetMapping("/inicio")
 	public String homeCorporativo() {
@@ -219,6 +222,13 @@ public class HomeController {
 		return new ModelAndView("corp-hotel/select-hoteles.jsp", "hoteles", hoteles);
 	}
 
+	
+	@GetMapping("/corp-proveedor/select-hoteles-prov/{id}")
+	public ModelAndView selectHotelFormProv(@PathVariable(name = "id") int id) {
+		List<Hotel> hoteles = hotelDao.hoteles();
+		return new ModelAndView("corp-proveedor/select-hoteles-prov.jsp", "hoteles", hoteles);
+	}
+
 		
 	//Pagina para selecionar hotel
 	@GetMapping("/select/empleados/{id}")
@@ -226,31 +236,37 @@ public class HomeController {
 		
 		List<Empleado> empleados = new EmpleadoDAO().empleadosPorHotel(id);
 		
-		return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
+		ModelAndView modelAndView = new ModelAndView("corp-empleado/empleados.jsp");
+		
+		modelAndView.addObject("empleados", empleados);
+		modelAndView.addObject("id", id);
+		
+		return modelAndView;
+	}
+	
+	@GetMapping("/select/proveedores/{id}")
+	public ModelAndView selectProveedoresForm(@PathVariable(name = "id") int id) {
+		
+		List<Proveedor> proveedores = new ProveedorDAO().proveedoresPorHotel(id);
+		
+		return new ModelAndView("corp-proveedor/proveedores.jsp", "proveedores", proveedores);
 	}
 	
 
-	// Pagina de empleados
-	@GetMapping("/empleados")
-	public ModelAndView empleadosForm() {
-		List<Empleado> empleados = new EmpleadoDAO().empleados();
-		return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
-	}
-	
 	// Pagina de añadir empleados
-	@GetMapping("/anadir-empleado")
+	@GetMapping("/anadir-empleado/{id}")
 	public ModelAndView anadirEmpleadoForm() {
 		List<Profesion> profesiones = new ProfesionDAO().profesiones();
 		return new ModelAndView("corp-empleado/anadir-empleado.jsp","profesiones",profesiones);
 	}
 	
-	@PostMapping("/anadir-empleado")
+	@PostMapping("/anadir-empleado/{id}")
 	public String recibirEmpleado(String firstName,
 								  String lastNames,
 								  String email,
 								  String telefono,
 								  Integer sueldo,
-								  Integer profesionID) {
+								  Integer profesionID, @PathVariable(name = "id") int id) {
 		
 		Empleado em = new Empleado();
 		  em.setNombre(firstName);
@@ -265,10 +281,10 @@ public class HomeController {
 		Properties info = new Properties();
 		  info.put("fecha_contratacion",Date.valueOf( LocalDate.now() ));
 		  //TODO: cambiar esto
-		  info.put("hotel_id", 1);
+		  info.put("hotel_id", id);
 		   
 		empleadoDao.anadir(em, info);		
-		return "redirect:/empleados";
+		return "redirect:/select/empleados/" + id;
 	}
 
 	// ver empleado

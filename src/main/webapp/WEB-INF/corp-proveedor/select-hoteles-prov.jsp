@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
-
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -16,7 +14,7 @@
 	rel="stylesheet" />
 
 
-<title>Proveedores</title>
+<title>Seleccionar Hotel</title>
 
 
 
@@ -34,8 +32,7 @@
 	href="https://getbootstrap.com/docs/4.4/examples/album/">
 
 <!-- Bootstrap core CSS -->
-<link href="/css/bootstrap.min.css" rel="stylesheet"
-	>
+<link href="/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Favicons -->
 <link rel="apple-touch-icon"
@@ -57,6 +54,9 @@
 <meta name="msapplication-config"
 	content="/docs/4.4/assets/img/favicons/browserconfig.xml">
 <meta name="theme-color" content="#563d7c">
+
+
+
 
 <style>
 .bd-placeholder-img {
@@ -84,61 +84,48 @@
 		<header>
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<strong class="navbar-brand">Proveedores</strong>
-					<a class="navbar-nav" href="/inicio">Inicio</a>
-					<a class="navbar-nav" href="/anadir-proveedor">Añadir Proveedor</a>
+					<strong class="navbar-brand">Seleccionar Hotel</strong>
+					<a class="navbar-nav" href="/inicio">Inicio</a> 
+					
 				</div>
 			</div>
 		</header>
 
 		<main role="main">
-			<div class="album py- bg-light">
+			<!--Estilo de cajas para listas-->
+			<div class="album py-5 bg-light">
 				<div class="container">
 					<div class="row">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Empresa</th>
-									<th scope="col">CIF</th>
-								</tr>
-							</thead>
-
-							<tbody>
-								<c:forEach var="proveedores" items="${proveedores}">
-									<tr>
-										<th scope="row">${proveedores.id}</th>
-										<td>${proveedores.empresa}</td>
-										<td>${proveedores.CIF}</td>
-										<td>
+						<!-- For Each para devolver lista de hoteles -->
+						<c:forEach var="hotel" items="${hoteles}">	
+							<div class="col-md-4">
+								<div class="card mb-4 shadow-sm">
+									<svg class="bd-placeholder-img card-img-top" width="100%"
+										height="225" xmlns="http://www.w3.org/2000/svg"
+										preserveAspectRatio="xMidYMid slice" focusable="false"
+										role="img" aria-label="Placeholder: Thumbnail">
+										
+										<title>${hotel.nombre}</title>
+                                    	<rect width="100%" height="100%" fill="#55595c"></rect>
+										<text x="50%" y="50%" fill="#eceeef" dy=".3em">${hotel.ciudad}</text>
+									</svg>
+									   
+									<div class="card-body">
+										<p class="card-text">${hotel.nombre}</p>
+										<div class="d-flex justify-content-between align-items-center">
 											<div class="btn-group">
-												<a class="btn btn-sm btn-outline-secondary"
-												   href="/proveedores/ver-proveedor/${proveedores.id}"
-												   role="button">Ver</a>
-												
-												<a class="btn btn-sm btn-outline-secondary"
-													href="/proveedores/editar-proveedor/${proveedores.id}"
-													role="button">Editar</a>
-
-												<a class="btn btn-sm btn-outline-secondary"
-												   href="/eliminar-proveedor/${proveedores.id}"
-												   role="button">Eliminar</a>
-												<a class="btn btn-sm btn-outline-secondary"
-												href="/corp-proveedor/select-hoteles-prov/${proveedores.id}"
-												role="button">Asignar a Hotel</a>	
-										</td>
-									</tr>
-								</c:forEach>
-
-							</tbody>
-						</table>
-
-
+												<a class="btn btn-sm btn-outline-primary"
+													href="/select/proveedores/${hotel.id}" role="button">Seleccionar</a> 
+													
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
-
-
 		</main>
 
 		<footer class="text-muted">
@@ -146,7 +133,7 @@
 				<p class="float-right">
 					<a href="">Volver arriba</a>
 				</p>
-				<p>Lista de proveedores de nuestra cadena.</p>
+				<p>Lista de Hoteles de nuestra Cadena.</p>
 			</div>
 		</footer>
 		<script src="/js/jquery-3.4.1.slim.min.js"></script>
@@ -156,10 +143,6 @@
 							.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
 		</script>
 		<script src="/js/bootstrap.bundle.min.js"></script>
-
-
 	</div>
-
 </body>
-
 </html>
