@@ -251,10 +251,15 @@ public class HomeController {
 
 	// Pagina de añadir empleados
 	@GetMapping("/anadir-empleado/{id}")
-	public ModelAndView anadirEmpleadoForm() {
+	public ModelAndView anadirEmpleadoForm(@PathVariable(name = "id") int id) {
 		List<Profesion> profesiones = new ProfesionDAO().profesiones();
-		return new ModelAndView("corp-empleado/anadir-empleado.jsp","profesiones",profesiones);
+		ModelAndView modelAndView = new ModelAndView("corp-empleado/anadir-empleado.jsp");
+		modelAndView.addObject("profesiones", profesiones);
+		modelAndView.addObject("id", id);
+		return modelAndView;
 	}
+	
+	
 	
 	@PostMapping("/anadir-empleado/{id}")
 	public String recibirEmpleado(String firstName,
@@ -350,6 +355,14 @@ public class HomeController {
 		List<Proveedor> proveedores = new ProveedorDAO().proveedores();
 		return new ModelAndView("corp-proveedor/proveedores.jsp", "proveedores", proveedores);
 	}
+	
+	
+	// Asignar proveedor-hotel
+		@GetMapping("/asignar-proveedor-hotel")
+		public ModelAndView asignarProveedorHotel() {
+			List<Producto> productos = productoDao.productos();
+			return new ModelAndView("corp-proveedor/asignar-proveedor-hotel.jsp","productos",productos);
+		}
 
 	// Anadir proveedor
 	@GetMapping("/anadir-proveedor")

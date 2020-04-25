@@ -114,7 +114,7 @@
             <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
                 <p class="float-left">
-                    <a href="/empleados">Volver a empleados</a>
+                    <a href="/select/empleados/${id}">Volver a empleados</a>
                 </p>
                 <p class="float-right">
                     <a href="/inicio">Volver a inicio</a>
