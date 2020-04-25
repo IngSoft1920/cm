@@ -53,21 +53,18 @@
     <div class="container">
         <div class="py-5 text-center">
             <h2>Añadir Categoria</h2>
-            <p class="lead">Añadir categoria a la cadena.</p>
         </div>
 
         <div class="row center">
-
             <div class="col-md-18 order-md-1">
-
                 <form class="needs-validation" novalidate="" method="POST">
                     <div class="mb-3">
-                        <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="Nombre de la categoria" value="" required="">
-                        <div class="invalid-feedback">
-                            El nombre de la categoria es obligatorio
-                        </div>
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="vacacional" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
+
+                    <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
                 </form>
             </div>
@@ -75,15 +72,14 @@
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">© 2020 Company Name</p>
+            <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
+                <p class="float-left">
+                    <a href="/configuracion">Volver a configuración</a>
+                </p>
                 <p class="float-right">
-                    <a href="/index.html">Back to Home</a>
+                    <a href="/inicio">Volver a inicio</a>
                 </p>
-                 <p class="float-left">
-                    <a href="/anadir-hotel">Back to Hotel</a>
-                </p>
-
             </div>
         </footer>
     </div>

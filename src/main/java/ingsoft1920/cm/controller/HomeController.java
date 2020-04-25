@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.Producto;
 import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.bean.Servicio;
@@ -23,6 +24,7 @@ import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
+import ingsoft1920.cm.dao.ProductoDAO;
 import ingsoft1920.cm.dao.ProfesionDAO;
 import ingsoft1920.cm.dao.ProveedorDAO;
 import ingsoft1920.cm.dao.ServicioDAO;
@@ -46,6 +48,8 @@ public class HomeController {
 	public CategoriaDAO categoriaDao;
 	@Autowired
 	public ProfesionDAO profesionDao;
+	@Autowired
+	public ProductoDAO productoDao;
 
 	@GetMapping("/inicio")
 	public String homeCorporativo() {
@@ -420,7 +424,7 @@ public class HomeController {
 		Profesion p = new Profesion();
 		  p.setNombre(profesion);
 		
-		new ProfesionDAO().anadir(p);
+		profesionDao.anadir(p);
 		return "redirect:/configuracion";
 	}
 	
@@ -429,6 +433,15 @@ public class HomeController {
 	@GetMapping("/anadir-producto")
 	public String anadirProductoForm() {
 		return "conf/anadir-producto.jsp";
+	}
+	
+	@PostMapping("/anadir-producto")
+	public String recibirProductoForm(String nombre) {
+		Producto p = new Producto();
+		  p.setNombre(nombre);
+		
+		productoDao.anadir(p);
+		return "redirect:/configuracion";
 	}
 
 }
