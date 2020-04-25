@@ -59,7 +59,7 @@ public class PedidoDAO {
 		return (res != null ? res.intValue() : -1);
 	}
 	
-	public Pedido getByID(int pedidoID) {
+	public Pedido getByID(int id) {
 		Pedido res=null;
 		BeanHandler<Pedido> handler = new BeanHandler<>(Pedido.class);
 		String query = "SELECT * FROM Pedido WHERE id = ?";
