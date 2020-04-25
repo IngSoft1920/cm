@@ -10,10 +10,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 import ingsoft1920.cm.bean.Hotel_Proveedor_Producto;
 
 import ingsoft1920.cm.conector.ConectorBBDD;
