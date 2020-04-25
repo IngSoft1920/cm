@@ -256,7 +256,7 @@ public class HomeController {
 	// Pagina de añadir empleados
 	@GetMapping("/anadir-empleado/{id}")
 	public ModelAndView anadirEmpleadoForm(@PathVariable(name = "id") int id) {
-		List<Profesion> profesiones = new ProfesionDAO().profesiones();
+		List<Profesion> profesiones = profesionDao.profesionesHotel(id);
 		ModelAndView modelAndView = new ModelAndView("corp-empleado/anadir-empleado.jsp");
 		modelAndView.addObject("profesiones", profesiones);
 		modelAndView.addObject("id", id);
@@ -284,26 +284,27 @@ public class HomeController {
 		  em.setTelefono(telefono);
 		  em.setSueldo(sueldo);
 		  em.setProfesion_id(profesionID);
-		  em.setDias_libres(diasLibres != null?Arrays.toString(diasLibres):"[]");
+		  em.setDias_libres(diasLibres != null ? Arrays.toString(diasLibres) : "[]");
 		  
 		Properties info = new Properties();
 		  info.put("fecha_contratacion",Date.valueOf( LocalDate.now() ));
-		  //TODO: cambiar esto
 		  info.put("hotel_id", id);
 		   
 		empleadoDao.anadir(em, info);		
-		return "redirect:/select/empleados/" + id;
+		return "redirect:/select/empleados/"+id;
 	}
 
 	// ver empleado
-	@GetMapping("/ver-empleado/{id}")
-	public ModelAndView verEmpleadoForm(@PathVariable(name = "id") int id) {
-		Empleado empleado = new EmpleadoDAO().getByID(id);
+	@GetMapping("/ver-empleado/{empleado_id}")
+	public ModelAndView verEmpleadoForm(@PathVariable(name = "empleado_id") int empleado_id) {
+		Empleado empleado = new EmpleadoDAO().getByID(empleado_id);
 		String nombreProfesion = new ProfesionDAO().getByID(empleado.getProfesion_id()).getNombre();
 		
 		ModelAndView mav = new ModelAndView("corp-empleado/ver-empleado.jsp");
 		  mav.addObject("empleado", empleado);
 		  mav.addObject("nombreProf",nombreProfesion);
+		  mav.addObject("hotel_id",empleadoDao.hotelDondeTrabaja(empleado_id).get("hotel_id"));
+		  mav.addObject("diasLibres",empleado.getDiasLibresString());
 
 		return mav;
 	}
@@ -315,19 +316,21 @@ public class HomeController {
 		ModelAndView mav = new ModelAndView("corp-empleado/editar-empleado.jsp");
 		  mav.addObject("empleado", new EmpleadoDAO().getByID(id));
 		  mav.addObject("profesiones",new ProfesionDAO().profesiones());
+		  mav.addObject("hotel_id",empleadoDao.hotelDondeTrabaja(id).get("hotel_id"));	
 		
 		return mav;
 	}
 
 	// editar-empleado POST
 	@PostMapping("/editar-empleado/{id}")
-	public ModelAndView editarEmpleadoForm(@PathVariable(name = "id") int id,
+	public String editarEmpleadoForm(@PathVariable(name = "id") int id,
 										   String firstName,
 										   String lastNames,
 										   String email,
 										   String telefono, 
 										   Double sueldo,
-										   Integer profesionID) {
+										   Integer profesionID,
+										   Integer[] diasLibres) {
 	
 		Empleado em = new Empleado();
 		  em.setId(id);
@@ -337,21 +340,19 @@ public class HomeController {
 		  em.setTelefono(telefono);
 		  em.setSueldo(sueldo);
 		  em.setProfesion_id(profesionID);
+		  em.setDias_libres(diasLibres != null ? Arrays.toString(diasLibres) : "[]");
 		  
-		new EmpleadoDAO().editar(em);
+		empleadoDao.editar(em);
 		
-		ModelAndView mav = new ModelAndView("corp-empleado/ver-empleado.jsp");
-		  mav.addObject("empleado", em);
-		  mav.addObject("nombreProf",new ProfesionDAO().getByID(profesionID).getNombre());
-
-		return mav;
+		return "redirect:/select/empleados/"+empleadoDao.hotelDondeTrabaja(id).get("hotel_id");
 	}
 
 	// Eliminar empleado
 	@GetMapping("/eliminar-empleado/{id}")
-	public ModelAndView eliminarEmpleadoForm(@PathVariable(name = "id") int id) {
+	public String eliminarEmpleadoForm(@PathVariable(name = "id") int id) {
+		int hotelId = (int) empleadoDao.hotelDondeTrabaja(id).get("hotel_id");
 		empleadoDao.eliminar(id);
-		return new ModelAndView("redirect:/empleados");
+		return "redirect:/select/empleados/"+hotelId;
 	}
 	
 	// -------------------PROVEEDOR-----------------------

@@ -110,11 +110,11 @@ public class ProfesionDAO {
 		List<Profesion> res = new ArrayList<>();
 		BeanListHandler<Profesion> handler = new BeanListHandler<>(Profesion.class);
 		String queryProfsDependientes = 
-					 "SELECT p.* "
+					 "SELECT DISTINCT p.* "
 					+"FROM Profesion p "
 				    +"JOIN Servicio_Profesion sp ON p.id = sp.profesion_id "
 				    +"JOIN Servicio s ON sp.servicio_id=s.id "
-				    +"JOIN Hotel_Servicio hs ON s.id=servicio_id ";
+				    +"JOIN Hotel_Servicio hs ON s.id=hs.servicio_id ";
 		
 		try ( Connection conn = conector.getConn() )
 		{

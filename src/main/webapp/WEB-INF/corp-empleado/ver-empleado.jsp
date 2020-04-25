@@ -88,9 +88,21 @@
                     <input type="text" class="form-control" value="${nombreProf}" readonly>
                 </div>
 
+                <c:if test="${!empty diasLibres}">
+                    <div class="row">
+                        <div class="col-md-10 mb-3">
+                            <label>Días Libres</label>
+                            <c:forEach var="dia" items="${diasLibres}">
+                                <div class="form-check">${dia}</div>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:if>
+
+
                 
                 <hr class="mb-4">
-                <a class="btn btn-primary btn-lg btn-block" href="/empleados" role="button">Volver a Empleados</a>
+                <a class="btn btn-primary btn-lg btn-block" href="/select/empleados/${hotel_id}" role="button">Volver a Empleados</a>
             </div>
         </div>
 

@@ -1,5 +1,11 @@
 package ingsoft1920.cm.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+
 public class Empleado {
 	
 	private int id;
@@ -77,12 +83,51 @@ public class Empleado {
 		this.dias_libres = dias_libres;
 	}
 	
+	public List<String> getDiasLibresString() {
+		List<String> res = new ArrayList<>();
+		
+		JsonParser
+		  .parseString(dias_libres)
+		  .getAsJsonArray()
+		  .forEach(dia -> {
+			  String diaStr="";
+			  switch(dia.getAsInt()) {
+			  
+			  case 0:
+				  diaStr="Lunes";
+				  break;
+			  case 1:
+				  diaStr="Martes";
+				  break;
+			  case 2:
+				  diaStr="Miércoles";
+				  break;
+			  case 3:
+				  diaStr="Jueves";
+				  break;
+			  case 4:
+				  diaStr="Viernes";
+				  break;
+			  case 5:
+				  diaStr="Sábado";
+				  break;
+			  case 6:
+				  diaStr="Domingo";
+				  break;
+			  }
+			  res.add( diaStr );
+		  });
+		
+		return res;
+	}
+	
 
 	@Override
 	public String toString() {
 		return "Empleado [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
 				+ ", telefono=" + telefono + ", sueldo=" + sueldo + ", profesion_id=" + profesion_id + ", dias_libres="
 				+ dias_libres + "]";
-	}	
+	}
+	
 
 }

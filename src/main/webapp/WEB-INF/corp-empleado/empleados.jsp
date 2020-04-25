@@ -121,7 +121,7 @@
                 <p class="float-right">
                     <a href="">Volver arriba</a>
                 </p>
-                <p>Lista de empleados que conforman nuestra cadena.</p>
+                <p>Administración de empleados</p>
             </div>
         </footer>
         <script src="/js/jquery-3.4.1.slim.min.js"></script>

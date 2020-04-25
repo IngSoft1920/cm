@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
@@ -102,10 +103,51 @@
                             </c:forEach>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label>Días Libres</label>
+    
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="0" <c:if test="${fn:contains(empleado.dias_libres,'0')}">checked</c:if> >
+                                <label>Lunes</label>
+                            </div>
+                          
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="1" <c:if test="${fn:contains(empleado.dias_libres,'1')}">checked</c:if> >
+                                <label>Martes</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="2" <c:if test="${fn:contains(empleado.dias_libres,'2')}">checked</c:if> >
+                                <label>Miércoles</label>
+                            </div>
+
+                             <div class="form-check">
+                                 <input type="checkbox" class="form-check-input" name="diasLibres" value="3" <c:if test="${fn:contains(empleado.dias_libres,'3')}">checked</c:if> >
+                                 <label>Jueves</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="4" <c:if test="${fn:contains(empleado.dias_libres,'4')}">checked</c:if> >
+                                <label>Viernes</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="5" <c:if test="${fn:contains(empleado.dias_libres,'5')}">checked</c:if> >
+                                <label>Sábado</label>
+                            </div>
+                          
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="6" <c:if test="${fn:contains(empleado.dias_libres,'6')}">checked</c:if> >
+                                <label>Domingo</label>
+                            </div>
+                        </div>
+                    </div>
                     
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg " type="submit" >Guardar cambios</button>
-                    <a class="btn btn-secondary btn-lg" href="/empleados" role="button">Cancelar</a>
+                    <a class="btn btn-secondary btn-lg" href="/select/empleados/${hotel_id}" role="button">Cancelar</a>
                 </form>
             </div>
         </div>
