@@ -3,6 +3,7 @@ package ingsoft1920.cm.controller;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import ingsoft1920.cm.bean.Categoria;
@@ -86,9 +90,9 @@ public class HomeController {
 							 Integer estrellas,
 							 String descripcion,
 							 Integer[] categoriasIDs,
-							 Integer[] serviciosIDs,
+					 		 Integer[] serviciosIDs, Integer[] numInstalaciones, Integer[] precios, String[] unidadesMedida, // están mapeados
 							 Integer[] habsIDs, Integer[] numDisponibles) // están mapeados 
-	{
+	{		
 		
 		Hotel hotel = new Hotel();
 		  hotel.setNombre(nombre);
@@ -113,22 +117,23 @@ public class HomeController {
 		}
 		
 		List<Properties> servs = new ArrayList<>();
-		if( serviciosIDs != null ) {
-			for(Integer id : serviciosIDs) {
+		for(int i=0;i<serviciosIDs.length;i++) {
+			if( numInstalaciones[i] != null && numInstalaciones[i] > 0 ) {
 				aux = new Properties();
-				  aux.put("servicio_id",id);
-				  //TODO: agregar precio y unidad_medida
+				  aux.put("servicio_id",serviciosIDs[i]);
+				  aux.put("num_instalaciones",numInstalaciones[i]);
+				  if( precios[i] != null) aux.put("precio",precios[i]);
+				  if( !unidadesMedida[i].equals("") ) aux.put("unidad_medida",unidadesMedida[i]);
 				  
 				servs.add(aux);
 			}
-		}
-			
+		}	
 		
 		List<Properties> habs = new ArrayList<>();		
 		for(int i=0;i<numDisponibles.length;i++) {
 			
 			// Solo si se ha introducido un valor > 0 lo tomamos en cuenta:
-			if( numDisponibles[i] > 0 ) {
+			if( numDisponibles[i] != null && numDisponibles[i] > 0 ) {
 				aux = new Properties();
 				  aux.put("tipo_hab_id",habsIDs[i]);
 				  aux.put("num_disponibles",numDisponibles[i]);
@@ -189,12 +194,12 @@ public class HomeController {
 							 		 Integer estrellas,
 							 		 String descripcion,
 							 		 Integer[] categoriasIDs,
-							 		 Integer[] serviciosIDs,
+							 		 Integer[] serviciosIDs, Integer[] numInstalaciones, Integer[] precios, String[] unidadesMedida, // están mapeados
 							 		 Integer[] habsIDs, Integer[] numDisponibles) // están mapeados 
 	{
 		// De momento es la manera más fácil de hacerlo:
 		hotelDao.eliminar(id);
-		recibirHotel(nombre, continente, pais, ciudad, direccion, estrellas, descripcion, categoriasIDs, serviciosIDs, habsIDs, numDisponibles);
+		recibirHotel(nombre, continente, pais, ciudad, direccion, estrellas, descripcion, categoriasIDs, serviciosIDs, numInstalaciones, precios, unidadesMedida, habsIDs, numDisponibles);
 		return "redirect:/hoteles";
 	}
 
@@ -503,5 +508,6 @@ public class HomeController {
 		habsDao.anadir(th);
 		return "redirect:/configuracion";
 	}
+	
 
 }

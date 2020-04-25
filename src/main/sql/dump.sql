@@ -39,9 +39,9 @@ INSERT INTO Servicio(id,nombre) VALUES (2,'piscina');
 INSERT INTO Servicio_Profesion(servicio_id,profesion_id) VALUES (1,1);
 INSERT INTO Servicio_Profesion(servicio_id,profesion_id) VALUES (1,2);
 
-INSERT INTO Hotel_Servicio(hotel_id,servicio_id,precio,unidad_medida) VALUES (1,1,NULL,NULL);
-INSERT INTO Hotel_Servicio(hotel_id,servicio_id,precio,unidad_medida) VALUES (1,2,25,'por_hora');
-INSERT INTO Hotel_Servicio(hotel_id,servicio_id,precio,unidad_medida) VALUES (2,1,NULL,NULL);
+INSERT INTO Hotel_Servicio(hotel_id,servicio_id,precio,unidad_medida,num_instalaciones) VALUES (1,1,NULL,NULL,1);
+INSERT INTO Hotel_Servicio(hotel_id,servicio_id,precio,unidad_medida,num_instalaciones) VALUES (1,2,25,'por_hora',2);
+INSERT INTO Hotel_Servicio(hotel_id,servicio_id,precio,unidad_medida,num_instalaciones) VALUES (2,1,NULL,NULL,1);
 
 /*INSERT INTO Empleado(id,nombre,apellidos,email,telefono,sueldo) VALUES (1,'Pepe','Rodríguez López','pepe@gmail.com','300300300','1200');
 INSERT INTO Hotel_Empleado(empleado_id,hotel_id,fecha_contratacion) VALUES (1,1,'2020-10-30');
