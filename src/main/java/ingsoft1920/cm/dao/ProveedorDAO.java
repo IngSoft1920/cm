@@ -1,6 +1,6 @@
 package ingsoft1920.cm.dao;
 
-import java.math.BigInteger;
+import java.math.BigInteger;	
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,9 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import ingsoft1920.cm.apiout.APIem;
+import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
@@ -87,27 +90,18 @@ public class ProveedorDAO {
 
 	}
 
-	// Editar proveedor
-	public void editar(Proveedor proveedor) {
-		String editarProveedor = "UPDATE Proveedor SET empresa = ?, CIF = ? WHERE id = ?";
-
-		try (Connection conn = conector.getConn()) {
-			runner.update(conn, editarProveedor, proveedor.getEmpresa(), proveedor.getCIF());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	// Eliminar empleado
 	public void eliminar(int proveedorID) {
 
 		String eliminarProveedor = "DELETE FROM Proveedor WHERE id = ?";
 
-		try (Connection conn = conector.getConn()) {
+		try (Connection conn = conector.getConn()) 
+		{
 			runner.update(conn, eliminarProveedor, proveedorID);
 			
 		} catch (Exception e) { e.printStackTrace(); }
 	}
+	
 	
 //	public static void main(String[] args) {
 //		Proveedor prov = new Proveedor(-1, "Almacenes Juan", "123456");

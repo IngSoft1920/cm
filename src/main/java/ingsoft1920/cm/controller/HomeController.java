@@ -334,12 +334,17 @@ public class HomeController {
 		  p.setCIF(cif);
 		  
 		List<Properties> info = new ArrayList<>();
-		Properties aux;
-		for(Integer id:productosIDs) {
-			aux = new Properties();
-			  aux.put("producto_id",id);
-			  
-			info.add(aux);
+		
+		// Si productosIDs es null es que no se
+		// ha seleccionado ninguno
+		if( productosIDs != null ) {
+			Properties aux;
+			for(Integer id:productosIDs) {
+				aux = new Properties();
+				  aux.put("producto_id",id);
+				  
+				info.add(aux);
+			}
 		}
 		proveedorDao.anadir(p, info);
 		return "redirect:/proveedores";
@@ -360,22 +365,27 @@ public class HomeController {
 
 	// editar-proveedor GET
 	@GetMapping("/proveedores/editar-proveedor/{id}")
-	public ModelAndView geditarProveedorForm(@PathVariable(name = "id") int id, String empresa) {
-
+	public ModelAndView editarProveedorForm(@PathVariable(name = "id") int id) {
 		Proveedor proveedor = new ProveedorDAO().getByID(id);
-
-		return new ModelAndView("corp-proveedor/editar-proveedor.jsp", "proveedor", proveedor);
+		List<Producto> productos = productoDao.productos();
+		
+		ModelAndView mav = new ModelAndView("corp-proveedor/editar-proveedor.jsp");
+		  mav.addObject("proveedor",proveedor);
+		  mav.addObject("productos",productos);
+		 
+		return mav;
 	}
 
 	// editar-proveedor POST
 	@PostMapping("/proveedores/editar-proveedor/{id}")
-	public ModelAndView editarProveedorForm(@PathVariable(name = "id") int id, String empresa, String CIF) {
+	public String recibirEditarProveedorForm(@PathVariable(name = "id") int id,
+													String empresa,
+													String cif,
+													Integer[] productosIDs) {
 
-		Proveedor proveedor = new Proveedor(id, empresa, CIF);
-
-		proveedorDao.editar(proveedor);
-
-		return new ModelAndView("corp-proveedor/ver-proveedor.jsp", "proveedor", proveedor);
+		proveedorDao.eliminar(id);
+		recibirProveedorForm(empresa, cif, productosIDs);
+		return "redirect:/proveedores";
 	}
 
 	// Eliminar proveedor
