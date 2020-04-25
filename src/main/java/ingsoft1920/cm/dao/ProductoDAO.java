@@ -50,7 +50,7 @@ public class ProductoDAO {
 		return (res != null ? res.intValue() : -1);
 	}
 	
-	public Producto producto(int id) {
+	public Producto getByID(int id) {
 		Producto res=null;
 		BeanHandler<Producto> handler = new BeanHandler<>(Producto.class);
 		String query = "SELECT * FROM Producto WHERE id == "+ id;
