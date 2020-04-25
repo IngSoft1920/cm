@@ -9,6 +9,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
+    
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
     <title>Añadir Empleado</title>
@@ -100,6 +101,45 @@
                                 </div>
                             </c:forEach> 
                         </div>
+                    </div>
+                    
+                    <div class="row">
+                       <div class="col-md-5">
+                           <label>Días Libres</label>
+                    
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="diasLibres" value="0" >
+                            <label>Lunes</label>
+                          </div>
+                          
+                           <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="diasLibres" value="1" >
+                            <label>Martes</label>
+                          </div>
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="diasLibres" value="2" >
+                            <label>Miércoles</label>
+                          </div>
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="diasLibres" value="3" >
+                            <label>Jueves</label>
+                          </div>
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="diasLibres" value="4" >
+                            <label>Viernes</label>
+                          </div>
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="diasLibres" value="5" >
+                            <label>Sábado</label>
+                          </div>
+                          
+                          <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="diasLibres" value="6" >
+                            <label>Domingo</label>
+                          </div>
+                 
+                        </div>
+                    
                     </div>
 
 

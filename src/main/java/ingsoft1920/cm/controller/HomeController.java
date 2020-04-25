@@ -3,6 +3,7 @@ package ingsoft1920.cm.controller;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -270,7 +271,11 @@ public class HomeController {
 								  String email,
 								  String telefono,
 								  Integer sueldo,
-								  Integer profesionID, @PathVariable(name = "id") int id) {
+								  Integer profesionID, 
+								  @PathVariable(name = "id") int id,
+								  Integer[] diasLibres) {
+		
+		
 		
 		Empleado em = new Empleado();
 		  em.setNombre(firstName);
@@ -279,8 +284,7 @@ public class HomeController {
 		  em.setTelefono(telefono);
 		  em.setSueldo(sueldo);
 		  em.setProfesion_id(profesionID);
-		  //TODO: cambiar esto
-		  em.setDias_libres("[7,8]");
+		  em.setDias_libres(diasLibres != null?Arrays.toString(diasLibres):"[]");
 		  
 		Properties info = new Properties();
 		  info.put("fecha_contratacion",Date.valueOf( LocalDate.now() ));
