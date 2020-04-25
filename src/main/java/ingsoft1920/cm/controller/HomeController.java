@@ -214,6 +214,13 @@ public class HomeController {
 		return new ModelAndView("corp-hotel/select-hoteles.jsp", "hoteles", hoteles);
 	}
 
+	
+	@GetMapping("/corp-proveedor/select-hoteles-prov/{id}")
+	public ModelAndView selectHotelFormProv(@PathVariable(name = "id") int id) {
+		List<Hotel> hoteles = hotelDao.hoteles();
+		return new ModelAndView("corp-proveedor/select-hoteles-prov.jsp", "hoteles", hoteles);
+	}
+
 		
 	//Pagina para selecionar hotel
 	@GetMapping("/select/empleados/{id}")
@@ -228,6 +235,15 @@ public class HomeController {
 		
 		return modelAndView;
 	}
+	
+	@GetMapping("/select/proveedores/{id}")
+	public ModelAndView selectProveedoresForm(@PathVariable(name = "id") int id) {
+		
+		List<Proveedor> proveedores = new ProveedorDAO().proveedoresPorHotel(id);
+		
+		return new ModelAndView("corp-proveedor/proveedores.jsp", "proveedores", proveedores);
+	}
+	
 
 	// Pagina de añadir empleados
 	@GetMapping("/anadir-empleado/{id}")

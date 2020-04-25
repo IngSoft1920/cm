@@ -3,6 +3,7 @@ package ingsoft1920.cm.dao;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,6 +14,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
@@ -115,7 +117,18 @@ public class ProveedorDAO {
 //		
 //		new ProveedorDAO().anadir(prov, info);
 //	}
-	
+	   public List<Proveedor> proveedoresPorHotel(int id) {
+	        List<Proveedor> proveedores = new LinkedList<>();
+	        BeanListHandler<Proveedor> beanListHandler = new BeanListHandler<>(Proveedor.class);
+	        String getProveedores = "SELECT p.* FROM Proveedor p JOIN Hotel_Proveedor_Producto hp ON p.id=hp.proveedor_id JOIN Hotel h ON hp.hotel_id=h.id WHERE h.id=? ";
+
+	        try( Connection conn = conector.getConn() )
+	        {
+	            proveedores = runner.query(conn, getProveedores, beanListHandler,id);
+	        }
+	        catch(Exception e) { e.printStackTrace(); }
+	        return proveedores;
+	    }
 
 	
 	
