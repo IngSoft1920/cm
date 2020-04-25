@@ -172,7 +172,7 @@ public class AusenciaDAO {
 	public static void main(String[] args) {
 		
 		AusenciaDAO dao = new AusenciaDAO();
-		Ausencia primera = new Ausencia(3,"enfermedad",Date.valueOf("2020-02-03"),Date.valueOf("2020-04-03"),Estado.pendiente,1);
+		Ausencia primera = new Ausencia(4,"enfermedad",Date.valueOf("2020-02-03"),Date.valueOf("2020-04-03"),Estado.pendiente,1);
 		dao.anadir(primera);
 	}
 	

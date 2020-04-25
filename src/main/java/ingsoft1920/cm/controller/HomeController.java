@@ -522,12 +522,13 @@ public class HomeController {
 		return "redirect:/configuracion";
 	}
 
-	// Pagina de ausencias
-	@GetMapping("/ausencias-pendientes")
-	public ModelAndView ausenciasPendientes() {
-		List<Ausencia> ausencias = ausenciaDao.ausenciasPendientes();
-		return new ModelAndView("corp-ausencias/ausencias-pendientes.jsp", "ausencias", ausencias);
-	}
+//	// Pagina de ausencias
+//	@GetMapping("/ausencias-pendientes")
+//	public ModelAndView ausenciasPendientes() {
+//		List<Ausencia> ausencias = ausenciaDao.ausenciasPendientes();
+//		return new ModelAndView("corp-ausencias/ausencias-pendientes.jsp", "ausencias", ausencias);
+//	}
+	
 	
 	@GetMapping("/ausencias-aceptar/{id}")
 	public String ausenciasAceptar(@PathVariable(name = "id") int id) {
@@ -546,7 +547,13 @@ public class HomeController {
 	}
 	@GetMapping("/ausencias")
 	public ModelAndView todasAusencias() {
-		List<Ausencia> ausencias = ausenciaDao.ausencias();
-		return new ModelAndView("corp-ausencias/ausencias.jsp", "ausencias", ausencias);
+		List<Ausencia> ausenciasTodas = ausenciaDao.ausencias();
+		List<Ausencia> ausenciasPendientes = ausenciaDao.ausenciasPendientes();
+		List<Empleado> empleados = empleadoDao.empleados();
+		ModelAndView mav = new ModelAndView("corp-ausencias/ausencias.jsp", "ausenciasTodas", ausenciasTodas);
+		  mav.addObject("ausenciasPendientes",ausenciasPendientes);
+		  mav.addObject("empleados",empleados);
+		
+		return mav;
 	}
 }

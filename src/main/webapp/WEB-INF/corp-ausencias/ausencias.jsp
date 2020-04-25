@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -68,11 +69,11 @@
 	user-select: none;
 }
 
-@media (min-width: 1200px){
+/* @media (min-width: 1200px){
     .container, .container-lg, .container-md, .container-sm, .container-xl {
         max-width: inherit;
     }
-}
+} */
 
 
 @media ( min-width : 768px) {
@@ -93,7 +94,6 @@
 				<div class="container d-flex align-content-start">
 					<strong class="navbar-brand">Ausencias</strong>
 					<a class="navbar-nav" href="/inicio">Inicio</a>
-					<a class="navbar-nav" href="/ausencias-pendientes">Ausencias Pendientes</a>
 				</div>
 			</div>
 		</header>
@@ -102,37 +102,91 @@
 			<div class="album py- bg-light">
 				<div class="container">
 					<div class="row">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Motivo</th>
-									<th scope="col">Estado</th>
-								</tr>
-							</thead>
+                        <div class="tabla pendientes">
+                            <div class="container d-flex align-content-start">
+                                <strong class="navbar-brand">Ausencias Pendientes</strong>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Empleado</th>
+                                        <th scope="col">Motivo</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Inicio</th>
+                                        <th scope="col">Fin</th>
+                                        <th scope="col">Decision</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
 
-							<tbody>
-								<c:forEach var="ausencias" items="${ausencias}">
-									<tr>
-										<th scope="row">${ausencias.id}</th>
-										<td>${ausencias.motivo}</td>
-										<td>${ausencias.estado}</td>
-										<td>
-											<div class="btn-group">
-												<a class="btn btn-sm btn-outline-secondary"
-												   href="/ausencias-aceptar/${ausencias.id}"
-												   role="button">Aceptar</a>
-												
-												<a class="btn btn-sm btn-outline-secondary"
-													href="/ausencias-denegar/${ausencias.id}"
-													role="button">Denegar</a>
-										</td>
-									</tr>
-								</c:forEach>
+                                <tbody>
+                                    <c:forEach var="ausenciasPendientes" items="${ausenciasPendientes}">
+                                        <tr>
+                                            <th scope="row">${ausenciasPendientes.id}</th>
+                                            <td>${ausenciasPendientes.empleado_id}</td>
+                                            <td>${ausenciasPendientes.motivo}</td>
+                                            <td>${ausenciasPendientes.estado}</td>
+                                            <td>${ausenciasPendientes.fecha_inicio}</td>
+                                            <td>${ausenciasPendientes.fecha_fin}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a class="btn btn-sm btn-outline-secondary"
+                                                        href="/ausencias-aceptar/${ausenciasPendientes.id}"
+                                                        role="button">Aceptar</a>
+                                                    
+                                                    <a class="btn btn-sm btn-outline-secondary"
+                                                        href="/ausencias-denegar/${ausenciasPendientes.id}"
+                                                        role="button">Denegar</a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-secondary"
+                                                        href="/ver-empleado/${ausenciasPendientes.empleado_id}"
+                                                        role="button">Ver Empleado</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
 
-							</tbody>
-						</table>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="container d-flex align-content-start">
+                            <strong class="navbar-brand">Todas las ausencias</strong>
+                        </div>
+                        <div class = "tabla todas">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Empleado</th>
+                                        <th scope="col">Motivo</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Inicio</th>
+                                        <th scope="col">Fin</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
 
+                                <tbody>
+                                    <c:forEach var="ausenciasTodas" items="${ausenciasTodas}">
+                                        <tr>
+                                            <th scope="row">${ausenciasTodas.id}</th>
+                                            <td>${ausenciasTodas.empleado_id}</td>
+                                            <td>${ausenciasTodas.motivo}</td>
+                                            <td>${ausenciasTodas.estado}</td>
+                                            <td>${ausenciasTodas.fecha_inicio}</td>
+                                            <td>${ausenciasTodas.fecha_fin}</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-secondary"
+                                                        href="/ver-empleado/${ausenciasTodas.empleado_id}"
+                                                        role="button">Ver Empleado</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+
+                                </tbody>
+                            </table>
+                        </div>
 
 					</div>
 				</div>
