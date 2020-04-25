@@ -42,6 +42,24 @@ public class EmpleadoDAO {
         catch(Exception e) { e.printStackTrace(); }
         return empleados;
     }
+    
+    /**
+     * @param hotel.id
+     * @return List de empleados que pertenezcan al Hotel
+     */
+    public List<Empleado> empleadosPorHotel(int id) {
+        List<Empleado> empleados = new LinkedList<>();
+        BeanListHandler<Empleado> beanListHandler = new BeanListHandler<>(Empleado.class);
+       
+        String getEmpleados = "SELECT e.* FROM Empleado e JOIN Hotel_Empleado he ON e.id=he.empleado_id JOIN Hotel h ON he.hotel_id=h.id WHERE h.id=? ";
+
+        try( Connection conn = conector.getConn() )
+        {
+            empleados = runner.query(conn, getEmpleados, beanListHandler);
+        }
+        catch(Exception e) { e.printStackTrace(); }
+        return empleados;
+    }
 
     // *Properties
     // -hotel_id: int

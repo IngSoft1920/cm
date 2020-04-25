@@ -207,6 +207,23 @@ public class HomeController {
 	}
 	
 	// -------------------EMPLEADOS-----------------------
+	//Pagina para selecionar hotel
+	@GetMapping("/select-hoteles")
+	public ModelAndView selectHotelForm() {
+		List<Hotel> hoteles = hotelDao.hoteles();
+		return new ModelAndView("corp-hotel/select-hoteles.jsp", "hoteles", hoteles);
+	}
+
+		
+	//Pagina para selecionar hotel
+	@GetMapping("/select/empleados/{id}")
+	public ModelAndView selectEmpleadosForm(@PathVariable(name = "id") int id) {
+		
+		List<Empleado> empleados = new EmpleadoDAO().empleadosPorHotel(id);
+		
+		return new ModelAndView("corp-empleado/empleados.jsp", "empleados", empleados);
+	}
+	
 
 	// Pagina de empleados
 	@GetMapping("/empleados")

@@ -14,7 +14,7 @@
 	rel="stylesheet" />
 
 
-<title>Hoteles</title>
+<title>Seleccionar Hotel</title>
 
 
 
@@ -84,9 +84,9 @@
 		<header>
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<strong class="navbar-brand">Hoteles</strong>
+					<strong class="navbar-brand">Seleccionar Hotel</strong>
 					<a class="navbar-nav" href="/inicio">Inicio</a> 
-					<a class="navbar-nav" href="/anadir-hotel"><strong>Añadir Hotel</strong></a>
+					
 				</div>
 			</div>
 		</header>
@@ -114,15 +114,9 @@
 										<p class="card-text">${hotel.nombre}</p>
 										<div class="d-flex justify-content-between align-items-center">
 											<div class="btn-group">
-												<a class="btn btn-sm btn-outline-secondary"
-													href="/ver-hotel/${hotel.id}" role="button">Ver</a> 
+												<a class="btn btn-sm btn-outline-primary"
+													href="/select/empleados/${hotel.id}" role="button">Seleccionar</a> 
 													
-												<a class="btn btn-sm btn-outline-secondary"
-													href="/editar-hotel/${hotel.id}" role="button">Editar</a>
-												
-												<a class="btn btn-sm btn-outline-secondary"
-													href="/hoteles/eliminar-hotel/${hotel.id}" role="button">Eliminar</a>
-
 											</div>
 										</div>
 									</div>
