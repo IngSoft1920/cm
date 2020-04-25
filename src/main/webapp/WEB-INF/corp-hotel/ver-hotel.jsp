@@ -88,15 +88,26 @@
                     <label>Estrellas</label>
                     <input type="number" class="form-control" readonly value="${hotel.estrellas}">
                 </div>
-
+                
                 <div class="row">
-                    <div class="col-md-5 mb-3">
+                    <div class="col-md-18 mb-3">
                         <label>Servicios</label>
                         <c:forEach var="servicio" items="${servicios}">
-                            <div class="form-check">${servicio.nombre}</div>
+                            <div class="form-check mb-3"">
+                                <label>${servicio.nombre}</label>
+                                <input name="numInstalaciones" text="number" class="form-control" value="instalaciones: ${servicio.num_instalaciones}" readonly>
+
+                                <c:if test="${servicio.precio!=null}">
+                                    <input type="text" class="form-control" value="precio: ${servicio.precio}" readonly>
+                                </c:if>
+
+                                <c:if test="${servicio.unidad_medida!=null}">
+                                    <input type="text" class="form-control" value="unidad medida: ${servicio.unidad_medida}" readonly>
+                                </c:if>
+                            </div>
                         </c:forEach>
-                    </div>
-                </div>                
+                    </div>        
+                </div>
 
                 <div class="row">
                     <div class="col-md-5 mb-3">

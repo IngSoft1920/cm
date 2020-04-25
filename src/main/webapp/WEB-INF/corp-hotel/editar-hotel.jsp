@@ -103,15 +103,18 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-5 mb-3">
+                        <div class="col-md-18 mb-3">
                             <label>Servicios</label>
                             <c:forEach var="servicio" items="${servicios}">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${servicio.id}" name="serviciosIDs">
-                                    <label class="form-check-label" for="defaultCheck1">${servicio.nombre}</label>
+                                <div class="form-check mb-3"">
+                                    <label>${servicio.nombre}</label>
+                                    <input type="number" class="form-control" name="numInstalaciones" min="0" placeholder="número de instalaciones">
+                                    <input type="number" class="form-control" name="precios" min="0" placeholder="precio">
+                                    <input type="text" class="form-control" name="unidadesMedida" placeholder="unidad de medida">
+                                    <input type="hidden" name="serviciosIDs" value="${servicio.id}">
                                 </div>
                             </c:forEach>
-                        </div>
+                        </div>        
                     </div>
 
                     <div class="row">
