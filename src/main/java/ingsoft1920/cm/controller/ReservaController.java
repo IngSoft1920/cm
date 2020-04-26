@@ -17,8 +17,10 @@ import com.google.gson.JsonParser;
 
 import ingsoft1920.cm.bean.Cliente;
 import ingsoft1920.cm.bean.Reserva;
+import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.dao.ClienteDAO;
 import ingsoft1920.cm.dao.ReservaDAO;
+import ingsoft1920.cm.dao.TipoHabitacionDAO;
 
 @Controller
 public class ReservaController {
@@ -111,14 +113,18 @@ public class ReservaController {
 	public String reservasCliente(@PathVariable int cliente_id) {
 
 		List<Reserva> reservasCliente = dao.reservasDeUnCliente(cliente_id);
+		TipoHabitacionDAO habitacionDao = new TipoHabitacionDAO();
 
 		JsonArray res = new JsonArray();
 		JsonObject elem;
+		Tipo_Habitacion tipoHab = null;
+		
 		for (Reserva r : reservasCliente) {
 			elem = new JsonObject();
+			tipoHab = habitacionDao.getByID(r.getTipo_hab_id());
 			elem.addProperty("reserva_id", r.getId());
 			elem.addProperty("hotel_id", r.getHotel_id());
-			elem.addProperty("tipo_hab_id", r.getTipo_hab_id());
+			elem.addProperty("tipo_hab", tipoHab.getNombre_tipo());
 			elem.addProperty("regimen", r.getRegimen_comida().name());
 			elem.addProperty("importe", r.getImporte());
 			elem.addProperty("fecha_entrada", r.getFecha_entrada().toString());
