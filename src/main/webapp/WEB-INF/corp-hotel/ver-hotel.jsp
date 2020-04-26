@@ -39,6 +39,122 @@
             -ms-user-select: none;
             user-select: none;
         }
+        .cajas {
+            height: 670px;
+        }
+
+        .title {
+
+            position: relative;
+            left: 20px;
+            top: 20px;
+
+
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 23px;
+        /* identical to box height */
+        
+        letter-spacing: -0.05em;
+        font-feature-settings: 'ss05' on, 'ss04' on, 'ss03' on, 'ss01' on, 'liga' off;
+        
+        color: #313962;
+        }
+
+        .localizacion {
+position: relative;
+left: 550px;
+
+            width: 380px;
+            height: 200px;
+    
+    background: #FBFBFB;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 10px #F0F0F0;
+    border-radius: 40px;
+        }
+
+
+        .line-1 {
+            position: relative;
+            left: 15px;
+
+        }
+        .big-line {
+            position: relative;
+            right: 470px;
+        }
+        .bloque {
+            position: relative;
+            left: 20px;
+        }
+
+        .info{
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.05em;
+    
+    color: #616887;
+        }
+        .descripcion {
+position: relative;
+left: 50px;
+bottom: 200px;
+
+            width: 380px;
+            height: 200px;
+    
+    background: #FBFBFB;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 10px #F0F0F0;
+    border-radius: 40px;
+        }
+
+        .instalaciones{
+            position: relative;
+            left: 35px;
+            top:10px
+        }
+
+        .informacion {
+            position:relative;
+left: 550px;
+bottom: 500px;
+
+            width: 380px;
+
+    
+    background: #FBFBFB;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 10px #F0F0F0;
+    border-radius: 40px;
+        }
+        
+        .servicios {
+            position: relative;
+left: 50px;
+bottom: 150px;
+
+width: 380px;
+height: 347px;
+
+    
+    background: #FBFBFB;
+    border: 1px solid #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 10px #F0F0F0;
+    border-radius: 40px;
+
+        }
         
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
@@ -53,82 +169,111 @@
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Visualizar Hotel</h2>
-            <p class="lead">Ver los datos del hotel</p>
+            <h2>${hotel.nombre}</h2>
         </div>
+    <div class="cajas">
+        <div class="localizacion">
+            <p class="title">Localización</p>
+            <svg class="line-1" width="323" height="2" viewBox="0 0 323 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="1" y1="1" x2="322" y2="1" stroke="#313962" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class = "bloque">
+                <p class="info">País: ${hotel.pais}</p>
+                <p class="info">Ciudad: ${hotel.ciudad}</p>
+                <p class="info">Dirección: ${hotel.direccion}</p>
+            </div>
+        </div>
+        <div class="descripcion">
+            <p class="title">Calificación</p>
+            <svg class="line-1" width="323" height="2" viewBox="0 0 323 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="1" y1="1" x2="323" y2="1" stroke="#313962" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class = "bloque">
+                <p class="info">Estrellas: ${hotel.estrellas}</p>
+                <p class="info">Nota Media: ${nota}</p>
+            </div>
+        </div>
+        <div class="servicios">
+            <p class="title">Servicios</p>
+            <svg class="line-1" width="323" height="2" viewBox="0 0 323 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="1" y1="1" x2="323" y2="1" stroke="#313962" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
-                <div class="mb-3">
-                    <label>Nombre</label>
-                    <input type="text" class="form-control" readonly value="${hotel.nombre}">
-                </div>
+            <div class = "bloque">
+                <c:forEach var="servicio" items="${servicios}">
+                    <p class="title">${servicio.nombre}</p>
+                    <div class="instalaciones">
+                        <p class="info">Instalaciones: ${servicio.num_instalaciones}</p>
+                        <c:if test="${servicio.precio!=null}">
+                            <p class="info">Precio: ${servicio.precio}</p>
+                        </c:if>
+                        <c:if test="${servicio.unidad_medida!=null}">
+                            <p class="info">Precio: ${servicio.unidad_medida}</p>
+                        </c:if>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+        <div class="informacion">
+            <p class="title">Información</p>
+            <svg class="line-1" width="323" height="2" viewBox="0 0 323 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="1" y1="1" x2="323" y2="1" stroke="#313962" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
 
-                <div class="mb-3">
-                    <label>Continente</label>
-                    <input type="text" class="form-control" readonly value="${hotel.continente}">
-                </div>
-
-                <div class="mb-3">
-                    <label>Pais</label>
-                    <input type="text" class="form-control" readonly value="${hotel.pais}">
-                </div>
-
-                <div class="mb-3">
-                    <label>Ciudad</label>
-                    <input type="text" class="form-control" readonly value="${hotel.ciudad}">
-                </div>
-
-                <div class="mb-3">
-                    <label>Dirección</label>
-                    <input type="text" class="form-control" readonly value="${hotel.direccion}">
-                </div>
-
-                <div class="mb-3">
-                    <label>Estrellas</label>
-                    <input type="number" class="form-control" readonly value="${hotel.estrellas}">
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-18 mb-3">
-                        <label>Servicios</label>
-                        <c:forEach var="servicio" items="${servicios}">
-                            <div class="form-check mb-3"">
-                                <label>${servicio.nombre}</label>
-                                <input name="numInstalaciones" text="number" class="form-control" value="instalaciones: ${servicio.num_instalaciones}" readonly>
-
-                                <c:if test="${servicio.precio!=null}">
-                                    <input type="text" class="form-control" value="precio: ${servicio.precio}" readonly>
-                                </c:if>
-
-                                <c:if test="${servicio.unidad_medida!=null}">
-                                    <input type="text" class="form-control" value="unidad medida: ${servicio.unidad_medida}" readonly>
-                                </c:if>
-                            </div>
-                        </c:forEach>
-                    </div>        
-                </div>
-
-                <div class="row">
-                    <div class="col-md-5 mb-3">
-                        <label>Categorias</label>
+            <div class = "bloque">
+                    <p class="title">Categorias</p>
+                    <div class="instalaciones">
                         <c:forEach var="categoria" items="${categorias}">
-                            <div class="form-check">${categoria.nombre}</div>
+                            <p class="info">${categoria.nombre}</p>
                         </c:forEach>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-5 mb-3">
-                        <label>Habitaciones</label>
+                    <p class="title">Tipo Habitaciones</p>
+                    <div class="instalaciones">
                         <c:forEach var="hab" items="${habs}">
-                            <div class="form-check">
-                                ${hab.nombre_tipo}
-                                <input type="number" class="form-control" disabled placeholder="${hab.num_disponibles}">
-                            </div>
+                            <p class="info">${hab.nombre_tipo} : ${hab.num_disponibles}</p>
                         </c:forEach>
                     </div>
-                </div>
+            </div>
+        </div>
+    </div>
+        <div class ="proveedores">
+        <strong class="navbar-brand">Proveedores</strong>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Empresa</th>
+                    <th scope="col">CIF</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="proveedores" items="${proveedores}">
+                    <tr>
+                        <th scope="row">${proveedores.id}</th>
+                        <td>${proveedores.empresa}</td>
+                        <td>${proveedores.CIF}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-outline-secondary"
+                                   href="/proveedores/ver-proveedor/${proveedores.id}"
+                                   role="button">Ver</a>
+                                
+                                <a class="btn btn-sm btn-outline-secondary"
+                                    href="/proveedores/editar-proveedor/${proveedores.id}"
+                                    role="button">Editar</a>
+
+                                <a class="btn btn-sm btn-outline-secondary"
+                                   href="/eliminar-proveedor/${proveedores.id}"
+                                   role="button">Eliminar</a>
+	
+                        </td>
+                    </tr>
+                </c:forEach>
+
+            </tbody>
+        </table>
+        </div>
 
                 <!-- Esto es una línea separatoria -->
                 <hr class="mb-4">

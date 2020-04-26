@@ -34,6 +34,7 @@ import ingsoft1920.cm.dao.ProfesionDAO;
 import ingsoft1920.cm.dao.ProveedorDAO;
 import ingsoft1920.cm.dao.ServicioDAO;
 import ingsoft1920.cm.dao.TipoHabitacionDAO;
+import ingsoft1920.cm.dao.ValoracionDAO;
 
 // Controlador del FE
 @Controller
@@ -57,6 +58,10 @@ public class HomeController {
 	public ProductoDAO productoDao;
 	@Autowired
 	public AusenciaDAO ausenciaDao;
+	@Autowired
+	public ValoracionDAO valoracionDao;
+	
+	
 
 	@GetMapping("/inicio")
 	public String homeCorporativo() {
@@ -159,13 +164,16 @@ public class HomeController {
 		List<Properties> servicios = servicioDao.serviciosHotel(id);
 		List<Properties> habs = habsDao.habsHotel(id);
 		List<Categoria> cats = categoriaDao.categoriasHotel(id);
+		List<Proveedor> proveedores = proveedorDao.proveedoresPorHotel(id);
+		double nota = valoracionDao.getNotaHotel(id);
 		
 		ModelAndView mav = new ModelAndView("corp-hotel/ver-hotel.jsp");
 		  mav.addObject("hotel", hotel);
 		  mav.addObject("servicios",servicios);
 		  mav.addObject("habs",habs);
 		  mav.addObject("categorias",cats);
-		
+		  mav.addObject("proveedores",proveedores);
+		  mav.addObject("nota",nota);		
 		return mav;
 	}
 
