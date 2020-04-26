@@ -19,6 +19,7 @@ import ingsoft1920.cm.bean.Reserva;
 import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.dao.ClienteDAO;
 import ingsoft1920.cm.dao.HotelDAO;
+import ingsoft1920.cm.dao.Precio_HabitacionDAO;
 import ingsoft1920.cm.dao.ReservaDAO;
 import ingsoft1920.cm.dao.TipoHabitacionDAO;
 import ingsoft1920.cm.dao.ValoracionDAO;
@@ -114,6 +115,54 @@ public class ReservaController {
 
 		return res.toString();
 	}
+	
+	
+	/*
+	 * Reserva hecha desde el hotel
+	 * {
+	 * "fecha_entrada" : “2020-02-10”,
+	 * "fecha_salida" : “2020-02-15”, 
+	 * "regimen" : “no_aplica”, // Valores posibles:"no_aplica","media_pension","pension_completa","todo_incluido"
+	 * "cliente_id" : 14,
+	 * "hotel_id" : 11,
+	 * "tipo_hab_id" : 9,
+	 * "numero_acompanantes": 21,
+	 * "metodo_pago": "pagado" // Valores posible: "pagado","efectivo"
+	 * }
+	 */
+	@PostMapping("/reserva/dho")
+	@ResponseBody
+	public String recibirReservaDesdeHotel(@RequestBody String json) {
+
+		JsonObject jsonO = JsonParser.parseString(json).getAsJsonObject();
+		
+		int hotel_id = jsonO.get("hotel_id").getAsInt();
+		int tipo_hab_id = jsonO.get("tipo_hab_id").getAsInt();
+		Date fecha_entrada = Date.valueOf( jsonO.get("fecha_entrada").getAsString() );
+		Date fecha_salida = Date.valueOf( jsonO.get("fecha_salida").getAsString() );
+		int importe = new Precio_HabitacionDAO().getPrecioEntreFechas(hotel_id,
+																	  tipo_hab_id,
+																	  fecha_entrada,
+																	  fecha_salida);
+
+		Reserva reserva = new Reserva();
+		  reserva.setFecha_entrada( fecha_entrada );
+		  reserva.setFecha_salida( fecha_salida );
+		  reserva.setImporte( importe );
+		  reserva.setRegimen_comida( Reserva.Regimen.valueOf(jsonO.get("regimen").getAsString() ));
+		  reserva.setCliente_id( jsonO.get("cliente_id").getAsInt() );
+		  reserva.setHotel_id( hotel_id );
+		  reserva.setTipo_hab_id( tipo_hab_id );
+		  reserva.setNumero_acompanantes( jsonO.get("numero_acompanantes").getAsInt());
+		  reserva.setMetodo_pago( Reserva.Metodo_Pago.valueOf( jsonO.get("metodo_pago").getAsString() ) );
+		
+		int id = reservaDao.anadir(reserva);
+		
+		JsonObject res = new JsonObject();
+		  res.addProperty("id", id);
+
+		return res.toString();
+	}	
 
 	@GetMapping("/reserva/cliente/{cliente_id}")
 	@ResponseBody
