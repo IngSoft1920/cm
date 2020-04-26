@@ -2,14 +2,21 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import ingsoft1920.cm.bean.Ausencia;
 import ingsoft1920.cm.bean.Cliente;
+import ingsoft1920.cm.bean.Proveedor;
+import ingsoft1920.cm.bean.Ausencia.Estado;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
@@ -86,5 +93,45 @@ public class ClienteDAO {
 			return anadir(c);
 		}		
 	}
+	
+//	public List<Integer> getClientsId() {
+//		List<Integer> res = new ArrayList<>();
+//		
+//		BeanListHandler<Integer> handler = new BeanListHandler<>(Integer.class);
+//		String query = "SELECT Cliente.id FROM Cliente;";
+//
+//		try (Connection conn = conector.getConn()) 
+//		{
+//			res = runner.query(conn, query, handler);
+//
+//		} catch (Exception e) { e.printStackTrace(); }
+//		
+//		return res;
+//		
+//	}
+	
+	public List<Cliente> clientes() {
+
+		List<Cliente> res = new ArrayList<>();
+
+		BeanListHandler<Cliente> handler = new BeanListHandler<>(Cliente.class);
+
+		String query = "SELECT * FROM Cliente";
+
+		try (Connection conn = conector.getConn()) {
+			res = runner.query(conn, query, handler);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		return res;
+
+	}
+	
+//	public static void main(String[] args) {
+//		
+//		ClienteDAO dao = new ClienteDAO();
+//		System.out.println(dao.clientes());
+//	}
+	
 
 }
