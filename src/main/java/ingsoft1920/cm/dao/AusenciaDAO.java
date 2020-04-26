@@ -68,7 +68,6 @@ public class AusenciaDAO {
 
 		// Notificamos a em del resultado
 		
-		
 		APIem.resultadoAusencia(a.getId(),
 								resolucion.name(),
 								a.getMotivo());

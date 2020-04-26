@@ -3,7 +3,6 @@ package ingsoft1920.cm.controller;
 import java.sql.Date;
 import java.util.List;
 
-import ingsoft1920.cm.apiout.APIout;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,13 +16,20 @@ import com.google.gson.JsonParser;
 
 import ingsoft1920.cm.bean.Cliente;
 import ingsoft1920.cm.bean.Reserva;
+import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.dao.ClienteDAO;
+import ingsoft1920.cm.dao.HotelDAO;
 import ingsoft1920.cm.dao.ReservaDAO;
+import ingsoft1920.cm.dao.TipoHabitacionDAO;
+import ingsoft1920.cm.dao.ValoracionDAO;
 
 @Controller
 public class ReservaController {
 
-	ReservaDAO dao = new ReservaDAO();
+	ReservaDAO reservaDao = new ReservaDAO();
+	TipoHabitacionDAO tipoHabDao = new TipoHabitacionDAO();
+	HotelDAO hotelDao = new HotelDAO();
+	ValoracionDAO valoracionDao = new ValoracionDAO();
 
 	/*
 	 * Reserva NO ANÓNIMA 
@@ -35,7 +41,8 @@ public class ReservaController {
 	 * "cliente_id" : 14,
 	 * "hotel_id" : 11,
 	 * "tipo_hab_id" : 9,
-	 * "numero_acompanantes": 21 
+	 * "numero_acompanantes": 21,
+	 * "metodo_pago": "pagado" // Valores posible: "pagado","efectivo"
 	 * }
 	 */
 	@PostMapping("/reserva")
@@ -53,8 +60,9 @@ public class ReservaController {
 		  reserva.setHotel_id( jsonO.get("hotel_id").getAsInt() );
 		  reserva.setTipo_hab_id( jsonO.get("tipo_hab_id").getAsInt() );
 		  reserva.setNumero_acompanantes( jsonO.get("numero_acompanantes").getAsInt());
+		  reserva.setMetodo_pago( Reserva.Metodo_Pago.valueOf( jsonO.get("metodo_pago").getAsString() ) );
 		
-		int id = dao.anadir(reserva);
+		int id = reservaDao.anadir(reserva);
 		
 		JsonObject res = new JsonObject();
 		  res.addProperty("id", id);
@@ -96,8 +104,9 @@ public class ReservaController {
 		  reserva.setHotel_id( jsonO.get("hotel_id").getAsInt() );
 		  reserva.setTipo_hab_id( jsonO.get("tipo_hab_id").getAsInt() );
 		  reserva.setNumero_acompanantes( jsonO.get("numero_acompanantes").getAsInt());
+		  reserva.setMetodo_pago( Reserva.Metodo_Pago.valueOf( jsonO.get("metodo_pago").getAsString() ) );
 
-		int id = dao.anadir(reserva);
+		int id = reservaDao.anadir(reserva);
 
 		JsonObject res = new JsonObject();
 		  res.addProperty("id_reserva", id);
@@ -110,19 +119,25 @@ public class ReservaController {
 	@ResponseBody
 	public String reservasCliente(@PathVariable int cliente_id) {
 
-		List<Reserva> reservasCliente = dao.reservasDeUnCliente(cliente_id);
+		List<Reserva> reservasCliente = reservaDao.reservasDeUnCliente(cliente_id);
 
 		JsonArray res = new JsonArray();
 		JsonObject elem;
+		Tipo_Habitacion tipoHab = null;
+		
 		for (Reserva r : reservasCliente) {
 			elem = new JsonObject();
-			elem.addProperty("reserva_id", r.getId());
-			elem.addProperty("hotel_id", r.getHotel_id());
-			elem.addProperty("tipo_hab_id", r.getTipo_hab_id());
-			elem.addProperty("regimen", r.getRegimen_comida().name());
-			elem.addProperty("importe", r.getImporte());
-			elem.addProperty("fecha_entrada", r.getFecha_entrada().toString());
-			elem.addProperty("fecha_salida", r.getFecha_salida().toString());
+			  tipoHab = tipoHabDao.getByID(r.getTipo_hab_id());
+			  elem.addProperty("reserva_id", r.getId());
+			  elem.addProperty("hotel_id", r.getHotel_id());
+			  elem.addProperty("hotel_nombre",hotelDao.getByID(r.getHotel_id()).getNombre());
+			  elem.addProperty("tipo_hab_id", tipoHab.getId());
+			  elem.addProperty("tipo_hab_nombre", tipoHab.getNombre_tipo());
+			  elem.addProperty("regimen", r.getRegimen_comida().name());
+			  elem.addProperty("importe", r.getImporte());
+			  elem.addProperty("fecha_entrada", r.getFecha_entrada().toString());
+			  elem.addProperty("fecha_salida", r.getFecha_salida().toString());
+			  elem.addProperty("valoracion", valoracionDao.valoracionHotel(cliente_id, r.getHotel_id()) );
 
 			res.add(elem);
 		}
@@ -133,14 +148,14 @@ public class ReservaController {
 	@PostMapping("/reserva/eliminar/{reserva_id}")
 	@ResponseBody
 	public void eliminarReserva(@PathVariable int reserva_id) {
-		dao.eliminarReserva(reserva_id);
+		reservaDao.eliminarReserva(reserva_id);
 	}
 
 	@GetMapping("/reserva/getCliente/{reserva_id}")
 	@ResponseBody
 	public String clienteReserva(@PathVariable int reserva_id) {
 
-		Cliente cliente = dao.getCliente(reserva_id);
+		Cliente cliente = reservaDao.getCliente(reserva_id);
 
 		JsonObject res = new JsonObject();
 

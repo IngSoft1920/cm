@@ -1,11 +1,12 @@
 package ingsoft1920.cm.controller;
 
-import java.util.ArrayList;
+import java.util.ArrayList;	
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +17,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import ingsoft1920.cm.bean.Cliente;
-import ingsoft1920.cm.bean.Reserva;
 import ingsoft1920.cm.dao.ClienteDAO;
 
 // link api: https://github.com/IngSoft1920/cm/wiki/API-ge
@@ -118,6 +118,32 @@ public class ClienteController {
 		res.add(elem);
 
 		return res.toString();
+	}
+	
+	
+	@GetMapping("/preferencias/{cliente_id}")
+	@ResponseBody
+	public String preferenciasCliente(@PathVariable int cliente_id) {
+		JsonObject res = new JsonObject();
+		  res.addProperty("preferencias", dao.preferenciasCliente(cliente_id) );
+
+		return res.toString();
+	}
+	
+	@PostMapping("preferencias/{cliente_id}")
+	@ResponseBody
+	public String recibirPreferenciasCliente(@PathVariable int cliente_id,
+										   @RequestBody String json)
+	{
+		String nuevasPreferencias = JsonParser
+										.parseString(json)
+										.getAsJsonObject()
+										.get("preferencias")
+										.getAsString();
+		
+		dao.anadirPreferenciasCliente(cliente_id, nuevasPreferencias);
+		
+		return "ok";
 	}
 
 }

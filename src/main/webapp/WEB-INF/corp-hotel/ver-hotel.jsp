@@ -96,11 +96,9 @@
                             <div class="form-check mb-3"">
                                 <label>${servicio.nombre}</label>
                                 <input name="numInstalaciones" text="number" class="form-control" value="instalaciones: ${servicio.num_instalaciones}" readonly>
-
                                 <c:if test="${servicio.precio!=null}">
                                     <input type="text" class="form-control" value="precio: ${servicio.precio}" readonly>
                                 </c:if>
-
                                 <c:if test="${servicio.unidad_medida!=null}">
                                     <input type="text" class="form-control" value="unidad medida: ${servicio.unidad_medida}" readonly>
                                 </c:if>
@@ -108,7 +106,6 @@
                         </c:forEach>
                     </div>        
                 </div>
-
                 <div class="row">
                     <div class="col-md-5 mb-3">
                         <label>Categorias</label>
@@ -117,7 +114,6 @@
                         </c:forEach>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-5 mb-3">
                         <label>Habitaciones</label>
@@ -129,15 +125,11 @@
                         </c:forEach>
                     </div>
                 </div>
-
                 <!-- Esto es una línea separatoria -->
                 <hr class="mb-4">
                 <a class="btn btn-primary btn-lg btn-block" href="/hoteles" role="button">Volver a Hoteles</a>
             </div>
         </div>
-
-
-
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2020 Company Management - UPM</p>
             
@@ -148,15 +140,11 @@
             </div>
         </footer>
     </div>
-
     <script src="../js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/form-validation.js"></script>
-
-
 </body>
-
 </html>

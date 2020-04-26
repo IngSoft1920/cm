@@ -24,7 +24,9 @@ public class APIdho {
 		  json.addProperty("numero_acompanantes",r.getNumero_acompanantes());
 		  json.addProperty("hotel_id", r.getHotel_id());
 		  json.addProperty("tipo_hab_id", r.getTipo_hab_id());
+		  json.addProperty("metodo_pago",r.getMetodo_pago().toString());
 		  
+		System.out.println( json.toString() );
 		APIout.enviar(json.toString(),PUERTO, "/recibirReserva");
 	}
 	

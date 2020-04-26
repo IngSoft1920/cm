@@ -7,10 +7,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
-@Component
+
 public class FacturaDAO {	
 	@Autowired
 	private static ConectorBBDD conector = new ConectorBBDD();
@@ -69,7 +68,7 @@ public class FacturaDAO {
 	//Metodo que te recibe un map. Cada entrada simboliza un hotel distinto. En caso de que el hotel exista previamente, se actualizara el map 
 	//añadiendo el costeAlimentos. En caso de que no exista, se creara una nueva entrada y se añadira al map (en un principio no tendria sentido 
 	//añadir nuevas entradas al map, ya que un hotel deberia tener beneficios y ya se deberia haber añadido la entrada previamente)
-	public static HashMap<Integer, BeneficiosGastosModel> gastosAlimentosPorHotel(HashMap <Integer, BeneficiosGastosModel> map) {
+	/*public static HashMap<Integer, BeneficiosGastosModel> gastosAlimentosPorHotel(HashMap <Integer, BeneficiosGastosModel> map) {
 		//key=hotel_id, value=Beneficios del hotel
 		//Consulta para obtener el gastos de los alimentos
 		String consulta="SELECT P1.id AS Pedido ,PP.cantidad AS cantidad ,P2.id AS producto_id, HPP.precio AS precio,HPP.hotel_id AS hotel_id,H.nombre AS nombre\r\n" + 
@@ -107,7 +106,7 @@ public class FacturaDAO {
 			if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
 		}
 		return map;
-	}
+	}*/
 
 	//Metodo que te recibe un map. Cada entrada simboliza un hotel distinto. En caso de que el hotel exista previamente, se actualizara el map 
 	//añadiendo el importe de los servicios. En caso de que no exista, se creara una nueva entrada y se añadira al map

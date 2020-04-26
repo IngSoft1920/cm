@@ -96,7 +96,7 @@
                             <label>Profesión</label>
                             <c:forEach var="profesion" items="${profesiones}">  
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" name="profesionID" value="${profesion.id}" required>
+                                    <input type="radio" class="form-check-input" name="profesionID" value="${profesion.id}" checked>
                                     <label>${profesion.nombre}</label>
                                 </div>
                             </c:forEach> 
