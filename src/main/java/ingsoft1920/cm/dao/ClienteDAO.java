@@ -2,21 +2,19 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigInteger;
 import java.sql.Connection;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ingsoft1920.cm.bean.Ausencia;
 import ingsoft1920.cm.bean.Cliente;
-import ingsoft1920.cm.bean.Proveedor;
-import ingsoft1920.cm.bean.Ausencia.Estado;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
@@ -127,11 +125,45 @@ public class ClienteDAO {
 
 	}
 	
-//	public static void main(String[] args) {
-//		
-//		ClienteDAO dao = new ClienteDAO();
-//		System.out.println(dao.clientes());
-//	}
+	public String preferenciasCliente(int cliente_id) {
+		String res = null;
+		ScalarHandler<String> handler = new ScalarHandler<>();
+		String query = "SELECT preferencias FROM Cliente WHERE id=?";
+		
+		try (Connection conn = conector.getConn())
+		{
+			res = runner.query(conn,query,handler,cliente_id);
+			
+		} catch( Exception e ) { e.printStackTrace(); }
+		
+		return res;
+	}
+	
+	public void anadirPreferenciasCliente(int cliente_id,String nuevasPreferencias) {
+		
+		String preferenciasActuales = preferenciasCliente(cliente_id);
+		
+		if( preferenciasActuales != null ) 
+			nuevasPreferencias+=","+preferenciasActuales;
+				
+		String query = "UPDATE Cliente SET preferencias=? WHERE id=?";
+		
+		try( Connection conn = conector.getConn() )
+		{
+			runner.update(conn,query,nuevasPreferencias,cliente_id);
+			
+		} catch(Exception e) { e.printStackTrace(); }
+	}
+	
+	public static void main(String[] args) {
+		
+		ClienteDAO dao = new ClienteDAO();
+		System.out.println(dao.preferenciasCliente(1));
+		
+		dao.anadirPreferenciasCliente(1, "escuchar a Mozart");
+		
+		System.out.println( dao.preferenciasCliente(1) );
+	}
 	
 
 }
