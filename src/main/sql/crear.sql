@@ -110,6 +110,7 @@ CREATE TABLE `Pedido_Producto` (
 	`pedido_id` INT NOT NULL,
 	`producto_id` INT NOT NULL,
 	`cantidad` DOUBLE NOT NULL,
+	`especificaciones` VARCHAR(200),
 	FOREIGN KEY (`pedido_id`) REFERENCES `Pedido` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	PRIMARY KEY (`pedido_id`,`producto_id`)
@@ -201,6 +202,7 @@ CREATE TABLE `Cliente` (
     `telefono` VARCHAR(15),
     `email` VARCHAR(100) UNIQUE,
     `password` VARCHAR(100),
+    `preferencias` VARCHAR(200),
     PRIMARY KEY (id)
 );
 
@@ -227,6 +229,7 @@ CREATE TABLE `Reserva`	(
     `hotel_id` INT NOT NULL,
     `cliente_id` INT,
     `tipo_hab_id` INT NOT NULL,
+    `metodo_pago` ENUM('efectivo','pagado'),
     PRIMARY KEY (`id`),
     FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`tipo_hab_id`) REFERENCES `Tipo_Habitacion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
