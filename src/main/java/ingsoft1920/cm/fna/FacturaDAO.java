@@ -107,6 +107,53 @@ public class FacturaDAO {
 		}
 		return map;
 	}*/
+	public static HashMap<Integer, BeneficiosGastosModel> gastosProveedores( HashMap<Integer, BeneficiosGastosModel> map) {
+	String consulta ="SELECT P1.id AS Pedido ,PP.cantidad AS cantidad ,P2.id AS producto_id, P2.nombre AS nombre_producto,HPP.precio AS precio,HPP.hotel_id AS hotel_id, H.nombre AS nombre\n" + 
+			"FROM Pedido AS P1\n" + 
+			"JOIN Pedido_Producto AS PP ON P1.id = PP.pedido_id\n" + 
+			"JOIN Producto AS P2 ON PP.producto_id=P2.id\n" + 
+			"JOIN Hotel_Proveedor_Producto AS HPP ON P2.id=HPP.producto_id AND P1.hotel_id=HPP.hotel_id \n" + 
+			"JOIN Hotel AS H ON P1.hotel_id=H.id\n" + 
+			"ORDER BY P1.id;";
+	java.sql.Statement stmt= null;
+	ResultSet rs= null;
+	BeneficiosGastosModel aux;
+	Double aux2;
+	try {
+		stmt=conector.getConn().createStatement();
+		rs=stmt.executeQuery(consulta);
+		while(rs.next()) {
+			//Aqui iria el codigo para ver si el hotel_id esta ya en el map
+			aux=map.get(rs.getInt("hotel_id"));
+			if(aux!=null) {
+				//En caso de estarlo, hay que ver si ya existe el producto
+				aux2=aux.getGastoComida().get("nombre_producto");
+				aux.setTotal(aux.getTotal()-(rs.getDouble("cantidad")*rs.getDouble("precio")));
+				if(aux2!=null) {
+					//Ya hay una entrada creada para ese producto. Actualizar el value
+					aux.getGastoComida().replace(rs.getString("nombre_producto"),aux2+ rs.getDouble("cantidad")*rs.getDouble("precio"));
+				}
+				else {
+					//Crear entrada
+					aux.getGastoComida().put(rs.getString("nombre_producto"), rs.getDouble("cantidad")*rs.getDouble("precio"));
+				}
+			}
+			//En caso de no estarlo, añadir nueva entrada (Nombre del hotel, y costeAlimentos, el resto de valores los pondrias a 0)
+			else {
+				aux=new BeneficiosGastosModel(rs.getString("nombre"));
+				aux.getGastoComida().put(rs.getString("nombre_producto"), rs.getDouble("cantidad")*rs.getDouble("precio"));
+				aux.setTotal(aux.getTotal()-(rs.getDouble("cantidad")*rs.getDouble("precio")));
+				map.put(rs.getInt("hotel_id"), aux);	
+			}
+		}
+	}catch (SQLException ex){ 
+		System.out.println("SQLException: " + ex.getMessage());
+	} finally { // it is a good idea to release resources in a finally block 
+		if (rs != null) { try { rs.close(); } catch (SQLException sqlEx) { } rs = null; } 
+		if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
+	}
+	return map;
+	}
 
 	//Metodo que te recibe un map. Cada entrada simboliza un hotel distinto. En caso de que el hotel exista previamente, se actualizara el map 
 	//añadiendo el importe de los servicios. En caso de que no exista, se creara una nueva entrada y se añadira al map
@@ -141,7 +188,7 @@ public class FacturaDAO {
 
 				}
 				else {
-					aux=new BeneficiosGastosModel(rs.getString("H.nombre"),0);
+					aux=new BeneficiosGastosModel(rs.getString("H.nombre"));
 					aux.getSumaFacturas().put(rs.getString("S.nombre"), rs.getDouble("SUM(F.importe)"));
 					aux.setTotal(aux.getTotal()+(rs.getDouble("SUM(F.importe)")));
 					map.put(rs.getInt("R.hotel_id"), aux);
@@ -190,7 +237,7 @@ public class FacturaDAO {
 					}
 
 				}else {
-					aux=new BeneficiosGastosModel(rs.getString("H.nombre"),0);
+					aux=new BeneficiosGastosModel(rs.getString("H.nombre"));
 					aux.getSumaReservas().put(rs.getString("TH.nombre_tipo"), rs.getDouble("SUM(R.importe)"));
 					aux.setTotal(aux.getTotal()+(rs.getDouble("SUM(R.importe)")));
 					map.put(rs.getInt("R.hotel_id"), aux);	
