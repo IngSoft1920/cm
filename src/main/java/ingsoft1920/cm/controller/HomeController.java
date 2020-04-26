@@ -278,9 +278,7 @@ public class HomeController {
 								  Integer profesionID, 
 								  @PathVariable(name = "id") int id,
 								  Integer[] diasLibres) {
-		
-		
-		
+				
 		Empleado em = new Empleado();
 		  em.setNombre(firstName);
 		  em.setApellidos(lastNames);

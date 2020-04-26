@@ -13,6 +13,10 @@ INSERT INTO Proveedor_Producto (producto_id,proveedor_id) VALUES (1,1);
 
 INSERT INTO Profesion(id,nombre) VALUES (1,'camarero');
 INSERT INTO Profesion(id,nombre) VALUES (2,'chef');
+INSERT INTO Profesion(id,nombre) VALUES (3,'seguridad');
+INSERT INTO Profesion(id,nombre) VALUES (4,'recepcionista');
+INSERT INTO Profesion(id,nombre) VALUES (5,'personal-limpieza');
+INSERT INTO Profesion(id,nombre) VALUES (6,'mantenimiento');
 
 INSERT INTO Servicio(id,nombre) VALUES (1,'restaurante');
 INSERT INTO Servicio(id,nombre) VALUES (2,'piscina');
