@@ -123,9 +123,10 @@
 												<a class="btn btn-sm btn-outline-secondary"
 												   href="/eliminar-proveedor/${proveedores.id}"
 												   role="button">Eliminar</a>
+
 												<a class="btn btn-sm btn-outline-secondary"
-												href="/corp-proveedor/select-hoteles-prov/${proveedores.id}"
-												role="button">Asignar a Hotel</a>	
+													href="/corp-proveedor/select-hoteles-prov/${proveedores.id}"
+													role="button">Asignar a Hotel</a>	
 										</td>
 									</tr>
 								</c:forEach>
