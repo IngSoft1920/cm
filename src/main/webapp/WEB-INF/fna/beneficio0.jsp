@@ -6,17 +6,17 @@
    <body>
 	<h2>Seleccione la informacion a mostrar</h2>
 
-	 <form:form method = "POST" action = "beneficio0" modelAttribute=BeneficioBean>
+	 <form:form method = "POST" action = "beneficio0" modelAttribute="BeneficioBean">
          <table>
 
 
 	<tr>
-              <td> <form:checkbox path="reservas"/>Ingresos de Reservas </td>       
+              <td> <form:checkbox path="reserva"/>Ingresos de Reservas </td>       
             </tr>
 
 	
 	    <tr>
-               <td><form:checkbox path="servicios />Ingresos por Servicios</td>       
+               <td><form:checkbox path="servicios" />Ingresos por Servicios</td>       
             </tr>
 
 		<tr>
