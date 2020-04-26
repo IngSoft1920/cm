@@ -164,16 +164,12 @@ public class HomeController {
 		List<Properties> servicios = servicioDao.serviciosHotel(id);
 		List<Properties> habs = habsDao.habsHotel(id);
 		List<Categoria> cats = categoriaDao.categoriasHotel(id);
-		List<Proveedor> proveedores = proveedorDao.proveedoresPorHotel(id);
-		double nota = valoracionDao.getNotaHotel(id);
 		
 		ModelAndView mav = new ModelAndView("corp-hotel/ver-hotel.jsp");
 		  mav.addObject("hotel", hotel);
 		  mav.addObject("servicios",servicios);
 		  mav.addObject("habs",habs);
 		  mav.addObject("categorias",cats);
-		  mav.addObject("proveedores",proveedores);
-		  mav.addObject("nota",nota);		
 		return mav;
 	}
 
