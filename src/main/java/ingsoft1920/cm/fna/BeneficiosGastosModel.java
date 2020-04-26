@@ -22,6 +22,8 @@ public class BeneficiosGastosModel {
 		this.sueldoEmpleados = new HashMap <String, Double> ();
 		this.total=0;
 	}
+	
+	
 	public String getNombreHotel() {
 		return nombreHotel;
 	}
