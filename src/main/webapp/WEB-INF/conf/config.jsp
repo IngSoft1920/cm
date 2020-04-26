@@ -68,7 +68,7 @@
             <div class="container">
                 <div><a class="float" href="/inicio">Volver a inicio</a></div>
                 <div><a class="float" href="/hoteles">Ir a hoteles</a></div>
-                <div><a class="float" href="/empleados">Ir a empleados</a></div>
+                <div><a class="float" href="/select-hoteles">Ir a empleados</a></div>
                 <div><a class="float" href="/proveedores">Ir a proveedores</a></div>
             </div>
         </footer>
