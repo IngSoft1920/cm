@@ -213,6 +213,29 @@ public class HomeController {
 		recibirHotel(nombre, continente, pais, ciudad, direccion, estrellas, descripcion, categoriasIDs, serviciosIDs, numInstalaciones, precios, unidadesMedida, habsIDs, numDisponibles);
 		return "redirect:/hoteles";
 	}
+	
+	
+		/**
+		 * @param Hotel id
+		 * @return tarifas y ocupaciones del Hotel
+		 */
+		@GetMapping("/tarifas-ocupaciones/{id}")
+		public ModelAndView tarifasOcupacionesHotel(@PathVariable(name = "id") int id) {
+
+			Hotel hotel = hotelDao.getByID(id);
+			List<Tipo_Habitacion> habs = habsDao.tipos();
+			//tarifas
+			//ocupaciones
+			
+			
+			ModelAndView mav = new ModelAndView("corp-hotel/tarifas-ocupaciones.jsp");
+			  mav.addObject("hotel", hotel);
+			  mav.addObject("habs",habs);
+			 
+			 
+
+			return mav;
+		}
 
 	// eliminar hotel
 	@GetMapping("/hoteles/eliminar-hotel/{id}")
