@@ -11,14 +11,14 @@ public class BeneficiosGastosModel {
 	private HashMap <String, Double> sumaFacturas;
 	// key=tipo_empleado (rol), value= dinero total por rol
 	private HashMap <String, Double> sueldoEmpleados;
-	private double gastoComida;
+	private HashMap <String, Double> gastoComida;
 	private double total;
 	
 	public BeneficiosGastosModel(String nombreHotel, double gastoComida) {
 		this.nombreHotel = nombreHotel;
 		this.sumaReservas = new HashMap <String, Double> ();
 		this.sumaFacturas = new HashMap <String, Double> ();
-		this.gastoComida = gastoComida;
+		this.gastoComida = new HashMap <String, Double> ();
 		this.sueldoEmpleados = new HashMap <String, Double> ();
 		this.total=0;
 	}
@@ -29,10 +29,10 @@ public class BeneficiosGastosModel {
 		this.nombreHotel = nombreHotel;
 	}
 
-	public double getGastoComida() {
+	public HashMap<String, Double> getGastoComida() {
 		return gastoComida;
 	}
-	public void setGastoComida(double gastoComida) {
+	public void setGastoComida(HashMap<String, Double> gastoComida) {
 		this.gastoComida = gastoComida;
 	}
 	public HashMap<String, Double> getSueldoEmpleados() {

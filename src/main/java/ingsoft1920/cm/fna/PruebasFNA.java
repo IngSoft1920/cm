@@ -29,6 +29,14 @@ public class PruebasFNA {
 			System.out.println("Total");
 			System.out.println(elem.getTotal());
 		}
+		
+		HashMap<Integer, BeneficiosGastosModel> prueba2 = new HashMap <Integer, BeneficiosGastosModel> ();
+		prueba2=FacturaDAO.beneficiosServicios(prueba);
+		for(BeneficiosGastosModel elem: prueba2.values()) {
+			for (String aux: elem.getSumaFacturas().keySet()) {
+			    System.out.println(aux);
+			}
+		}
 	}
 
 }
