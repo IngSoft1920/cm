@@ -41,7 +41,7 @@ public class BeneficioController {
 		 BeneficioBean bg=new BeneficioBean();
 		
 		 m.addAttribute("BeneficioBean",bg);
-		 m.addAttribute("treasuremap",beneficios_gastos);
+		 m.addAttribute("treasureMap",beneficios_gastos);
 		 
 		  return "fna/beneficio0.jsp";
 	   }
@@ -64,18 +64,18 @@ public class BeneficioController {
 	this.sueldoEmpleados = new HashMap <String, Double> ();
 	this.total=0;
 	*/
-	@PostMapping("beneficio0")
-	public String showBeneficio (@ModelAttribute("command") BeneficioBean bg,
+	@PostMapping("/beneficio0")
+	public String showBeneficio (@ModelAttribute("BeneficioBean") BeneficioBean bg,
 			Model model) {
 		
 		
 		model.addAttribute("treasureMap", beneficios_gastos);
-		model.addAttribute("Hoteles", bg.getNombresHotel());
-		model.addAttribute("HabitacionTipo", bg.getTiposHabitacion());
-		model.addAttribute("Servicios", bg.getTiposServicio());
-		model.addAttribute("Comida", bg.getComida()); //boolean
-		model.addAttribute("Empleados", bg.getTiposEmpleados());
-		System.out.println(bg.getNombresHotel()); 
+		//model.addAttribute("Hoteles", bg.getNombresHotel());
+		model.addAttribute("reserva", bg.getIfReserva());
+		model.addAttribute("servicios", bg.getIfServicios());
+		model.addAttribute("empleados", bg.getIfComida()); //boolean
+		model.addAttribute("comida", bg.getIfEmpleados());
+		
 		return "fna/beneficios.jsp";
 	}
 	

@@ -6,38 +6,27 @@
    <body>
 	<h2>Seleccione la informacion a mostrar</h2>
 
-	 <form:form method = "POST" action = "beneficio0">
+	 <form:form method = "POST" action = "beneficio0" modelAttribute=BeneficioBean>
          <table>
-
-		<tr>
-               <td><form:label path = "nombresHotel">Hoteles</form:label></td>
-               <td>
-                  <form:select path = "nombresHotel" items = "${hotelesList}"
-                     multiple = "true" />
-               </td>
-            </tr>
 
 
 	<tr>
-               <td><form:label path = "tiposHabitacion"> Tipos de Habitacion </form:label></td>
-               <td><form:checkboxes items = "${habitacionesList}" path = "tiposHabitacion" /></td>       
+              <td> <form:checkbox path="reservas"/>Ingresos de Reservas </td>       
             </tr>
 
-
+	
 	    <tr>
-               <td><form:label path = "tiposServicio"> Tipos de Servicios </form:label></td>
-               <td><form:checkboxes items = "${serviciosList}" path = "tiposServicio" /></td>       
+               <td><form:checkbox path="servicios />Ingresos por Servicios</td>       
             </tr>
 
 		<tr>
-               <td><form:label path = "tiposEmpleados"> Roles de Empleados </form:label></td>
-               <td><form:checkboxes items = "${empleadosList}" path = "tiposEmpleados" /></td>       
+               <td><form:checkbox path="empleados"/>Dinero invertido en empleados</td>       
             </tr>
 	    		 
 
 		<tr>
-               <td><form:label path = "comida"> Comida </form:label></td>
-               <td><form:checkbox path = "comida" /></td>
+               <
+               <td><form:checkbox path = "comida" /> Dinero Invertido en Productos Alimenticios</td>
             </tr> 
 
 	    <tr>

@@ -12,56 +12,36 @@
 	
 	<c:forEach items="${treasureMap}" var="entry">
 		   			  <tr>
-						 <td>Ingresos por Hotel</td>
-           					  <td> 
-              					        <c: forEach items="${Hoteles}" var="h">
-								    <c:choose>
-									 <c:when test="${h == ${entry.value.nombreHotel}}">
-       									 	 <b>Hotel:</b> ${entry.value.nombreHotel} <emsp><b>ID:</b> ${entry.key}<br></td>
-										 <td>
-										  <c:forEach items="${entry.value.sumaReservas}" var="serv">
-										  <c:if test = "${${HabitacionTipo}.contains(${serv.key)}">
-										  <tr> <b> Ingresos por Tipo de Habitacion:</b> </tr>
-        									    <emsp>${serv.key}: <vd> ${serv.value}</vd><br>
-      										   </c:if>
-				   						   </c:forEach>
-										</td>
-										<td>
-										  <c:forEach items="${entry.value.sumaFacturas}" var="fact">
-										  <c:if test = "${${Servicios}.contains(${fact.key)}">
-										 <tr> <b>Ingresos por servicios ofrecidos:</b></tr>
-        									    <tr><emsp>${fact.key}: <vd> ${fact.value}</vd><br></tr>
-      										   </c:if>
-				   						   </c:forEach>
-										</td>
+					 < c:if test = "${BeneficioBean.reserva}">
+							 <td> <b>Ingresos por estancia en habitaciones:</b> </td>
+        							<c:forEach items="${entry.value.sumaReservas}" var="serv">
+				   	     				    <td>${serv.key}: <vd> ${serv.value}</vd><td>
+				 	      			   </c:forEach>
+      							 </c:if>
 
-										<td>
-										  <c:forEach items="${entry.value.sueldosEmpleados}" var="suel">
-										  <c:if test = "${${Empleados}.contains(${suel.key)}">
-										 <tr> <b>Sueldo de los Empleados por Rol:</b></tr>
-        									   <tr> <emsp>${suel.key}: <vd> ${suel.value}</vd>   </tr>
-      										   </c:if>
-				   						   </c:forEach>
-										</td>
+						<c:if test = "${BeneficioBean.servicios}">
+						 <td> <b>Ingresos por servicios ofrecidos:</b> </td>
+        					<c:forEach items="${entry.value.sumaFacturas}" var="fact">
+		       			    <td>${fact.key}: <vd> ${fact.value}</vd><td>
+				 	      	 </c:forEach>
+      					     </c:if>
 
-										<td>
-										 <c:if test = "${${Comida}}">
-										 <tr> <b>Gasto en productos alimenticios:</b></tr>
-        									   <tr> <emsp>${entry.value.gastoComida}: <vd> ${suel.value}</vd>   </tr>
-      										   </c:if>
-										</td>
-       									 
+					     <c:if test = "${BeneficioBean.empleados}">
+						 <td> <b>Dinero Invertido en Empleados:</b> </td>
+        					<c:forEach items="${entry.value.sueldoEmpleados}" var="sl">
+		       			    <td>${sl.key}: <vd> ${sl.value}</vd><td>
+				 	      	 </c:forEach>
+      					     </c:if>
 
-									   
-   									    </c:when>    
-   									     <c:otherwise>
-       									     
-        								      
-   									       </c:otherwise>
-									       </c:choose>
-									      </c:forEach>
-									  </tr>
-              						</c:forEach>
+					     <c:if test = "${BeneficioBean.comida}">
+						 <td> <b>Dinero Invertido en Productos Alimenticios:</b> </td>
+        					<c:forEach items="${entry.value.gastoComida}" var="fact">
+		       			    <td>${fact.key}: <vd> ${fact.value}</vd><td>
+				 	      	 </c:forEach>
+      					     </c:if>
+									     
+					</tr>
+              						
 
 							
 
@@ -70,3 +50,4 @@
 
 				 </body>
 				</html>
+			
