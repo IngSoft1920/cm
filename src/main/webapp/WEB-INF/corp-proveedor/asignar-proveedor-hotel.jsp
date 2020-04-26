@@ -65,12 +65,12 @@
                      <div class="mb-3">
                     <label for="nombre">Empresa</label>
                     <input type="text" class="form-control" value="${proveedor.empresa}" readonly>
-                </div>
+                    </div>
 
-                <div class="mb-3">
-                    <label>CIF</label>
-                    <input type="text" class="form-control" value="${proveedor.CIF}" readonly>
-                </div>
+                    <div class="mb-3">
+                        <label>CIF</label>
+                        <input type="text" class="form-control" value="${proveedor.CIF}" readonly>
+                    </div>
 
                      <div class="row">
                      
@@ -81,7 +81,7 @@
                             
                             
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="${producto.id}" name="productosIDs">
+                                <input class="form-check-input" type="hidden" value="${producto.id}" name="productosIDs">
                                 <label>
                                     ${producto.nombre}
                                 </label>
@@ -91,13 +91,13 @@
 
                         <div class="col-md-4 mb-4">
                             <label for="zip">Precio</label>
-                            <input type="number" class="form-control" id="zip" placeholder="" name="precio" required="">
+                            <input type="number" class="form-control" id="zip" placeholder="" name="precio">
 
                         </div>
 
                         <div class="col-md-4 mb-4">
                             <label for="zip">Unidad de Medida</label>
-                            <input type="text" class="form-control" id="zip" placeholder="" name="unidadMedida" required="">
+                            <input type="text" class="form-control" id="zip" placeholder="" name="unidadMedida">
 
                         </div>
                         

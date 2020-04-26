@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
@@ -77,7 +78,7 @@
                             <label>Productos</label>
                             <c:forEach var="producto" items="${productos}">  
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="productosIDs" value="${producto.id}">
+                                    <input type="checkbox" class="form-check-input" name="productosIDs" value="${producto.id}" <c:if test='${fn:contains(productosProveedor,producto.id)}'>checked</c:if> >
                                     <label>${producto.nombre}</label>
                                 </div>
                             </c:forEach> 

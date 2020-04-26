@@ -17,7 +17,7 @@
 	rel="stylesheet" />
 
 
-<title>Ausencias Pendientes</title>
+<title>Ausencias</title>
 
 
 
@@ -92,8 +92,7 @@
 		<header>
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<strong class="navbar-brand">Ausencias</strong>
-					<a class="navbar-nav" href="/inicio">Inicio</a>
+					<a class="navbar-nav mr-auto" href="/inicio">Inicio</a>
 				</div>
 			</div>
 		</header>
@@ -109,35 +108,37 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th scope="col">id</th>
                                         <th scope="col">Motivo</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col">Inicio</th>
                                         <th scope="col">Fin</th>
-                                        <th scope="col">Decision</th>
-                                        <th scope="col">Empleado</th>
+                                        <th scope="col">Acción</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <c:forEach var="ausenciasPendientes" items="${ausenciasPendientes}">
+                                    <c:forEach var="ausencia" items="${ausenciasPendientes}">
                                         <tr>
-                                            <td>${ausenciasPendientes.motivo}</td>
-                                            <td>${ausenciasPendientes.estado}</td>
-                                            <td>${ausenciasPendientes.fecha_inicio}</td>
-                                            <td>${ausenciasPendientes.fecha_fin}</td>
+                                            <th scope="row">${ausencia.id}</th>
+                                            <td>${ausencia.motivo}</td>
+                                            <td>${ausencia.estado}</td>
+                                            <td>${ausencia.fecha_inicio}</td>
+                                            <td>${ausencia.fecha_fin}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a class="btn btn-sm btn-outline-secondary"
-                                                        href="/ausencias-aceptar/${ausenciasPendientes.id}"
+                                                        href="/ausencias-aceptar/${ausencia.id}"
                                                         role="button">Aceptar</a>
                                                     
                                                     <a class="btn btn-sm btn-outline-secondary"
-                                                        href="/ausencias-denegar/${ausenciasPendientes.id}"
+                                                        href="/ausencias-denegar/${ausencia.id}"
                                                         role="button">Denegar</a>
                                             </td>
                                             <td>
                                                 <a class="btn btn-sm btn-outline-secondary"
-                                                        href="/ver-empleado/${ausenciasPendientes.empleado_id}"
+                                                        href="/ver-empleado/${ausencia.empleado_id}"
                                                         role="button">Ver Empleado</a>
                                             </td>
                                         </tr>
@@ -153,6 +154,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th scope="col">#</th>
                                         <th scope="col">Motivo</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col">Inicio</th>
@@ -162,15 +164,16 @@
                                 </thead>
 
                                 <tbody>
-                                    <c:forEach var="ausenciasTodas" items="${ausenciasTodas}">
+                                    <c:forEach var="ausencia" items="${ausenciasTotal}">
                                         <tr>
-                                            <td>${ausenciasTodas.motivo}</td>
-                                            <td>${ausenciasTodas.estado}</td>
-                                            <td>${ausenciasTodas.fecha_inicio}</td>
-                                            <td>${ausenciasTodas.fecha_fin}</td>
+                                            <th scope="row">${ausencia.id}</th>
+                                            <td>${ausencia.motivo}</td>
+                                            <td>${ausencia.estado}</td>
+                                            <td>${ausencia.fecha_inicio}</td>
+                                            <td>${ausencia.fecha_fin}</td>
                                             <td>
                                                 <a class="btn btn-sm btn-outline-secondary"
-                                                        href="/ver-empleado/${ausenciasTodas.empleado_id}"
+                                                        href="/ver-empleado/${ausencia.empleado_id}"
                                                         role="button">Ver Empleado</a>
                                             </td>
                                         </tr>
@@ -192,7 +195,7 @@
 				<p class="float-right">
 					<a href="">Volver arriba</a>
 				</p>
-				<p>Ausencias pendientes de nuestra cadena.</p>
+				<p>Administración de ausencias</p>
 			</div>
 		</footer>
 		<script src="/js/jquery-3.4.1.slim.min.js"></script>
