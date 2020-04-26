@@ -9,7 +9,7 @@ public class PruebasFNA {
 		prueba=FacturaDAO.sumaReservas();
 		prueba=FacturaDAO.beneficiosServicios(prueba);
 		prueba=ConexionEM.peticionSueldoEmpleados(prueba);
-		prueba=FacturaDAO.gastosAlimentosPorHotel(prueba);
+		//prueba=FacturaDAO.gastosAlimentosPorHotel(prueba);
 		for(BeneficiosGastosModel elem: prueba.values()) {
 			System.out.println(elem.getNombreHotel()+": ");
 			System.out.println("Dinero Reservas");
