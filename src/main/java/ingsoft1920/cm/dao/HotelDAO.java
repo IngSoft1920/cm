@@ -163,7 +163,8 @@ public class HotelDAO {
 			runner.update(conn, query, id);
 
 		} catch (Exception e) { e.printStackTrace(); }
-
+		
+		APIdho.eliminarHotel(id);
 	}
 	
 	// TODO: Re-hacer la query criminal
