@@ -90,5 +90,29 @@ public class ValoracionDAO {
 
 		return (res != null ? res.doubleValue() : -1);
 	}
+	
+	
+	// Devuelve la media de las valoraciones (nota) de un cliente
+	// en un hotel. Si no hay ninguna valoración se devuelve -1
+	public double valoracionHotel(int cliente_id,int hotel_id) {
+		BigDecimal res = null;
+		ScalarHandler<BigDecimal> handler = new ScalarHandler<>();
+		String query = "SELECT AVG(nota) "
+					  +"FROM Valoracion "
+					  +"WHERE cliente_id = ? AND hotel_id = ?;";
+		
+		try (Connection conn = conector.getConn())
+		{
+			res = runner.query(conn,query,handler,cliente_id,hotel_id);
+			
+		} catch(Exception e) { e.printStackTrace(); }
+		
+		
+		return res != null ? res.doubleValue() : -1;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println( new ValoracionDAO().valoracionHotel(1, 2) );
+	}
 
 }

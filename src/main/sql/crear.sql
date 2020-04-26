@@ -185,7 +185,7 @@ CREATE TABLE `Ausencia`	(
     `fecha_fin` DATE,
     `estado` ENUM('denegada', 'aprobada', 'pendiente'),
     `empleado_id` INT,
-    PRIMARY KEY (`id`),
+    PRIMARY KEY (`id`,`motivo`),
     FOREIGN KEY (`empleado_id`) REFERENCES `Empleado` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
