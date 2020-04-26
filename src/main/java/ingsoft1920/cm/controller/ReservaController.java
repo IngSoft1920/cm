@@ -41,7 +41,8 @@ public class ReservaController {
 	 * "cliente_id" : 14,
 	 * "hotel_id" : 11,
 	 * "tipo_hab_id" : 9,
-	 * "numero_acompanantes": 21 
+	 * "numero_acompanantes": 21,
+	 * "metodo_pago": "pagado" // Valores posible: "pagado","efectivo"
 	 * }
 	 */
 	@PostMapping("/reserva")
@@ -59,6 +60,7 @@ public class ReservaController {
 		  reserva.setHotel_id( jsonO.get("hotel_id").getAsInt() );
 		  reserva.setTipo_hab_id( jsonO.get("tipo_hab_id").getAsInt() );
 		  reserva.setNumero_acompanantes( jsonO.get("numero_acompanantes").getAsInt());
+		  reserva.setMetodo_pago( Reserva.Metodo_Pago.valueOf( jsonO.get("metodo_pago").getAsString() ) );
 		
 		int id = reservaDao.anadir(reserva);
 		
@@ -102,6 +104,7 @@ public class ReservaController {
 		  reserva.setHotel_id( jsonO.get("hotel_id").getAsInt() );
 		  reserva.setTipo_hab_id( jsonO.get("tipo_hab_id").getAsInt() );
 		  reserva.setNumero_acompanantes( jsonO.get("numero_acompanantes").getAsInt());
+		  reserva.setMetodo_pago( Reserva.Metodo_Pago.valueOf( jsonO.get("metodo_pago").getAsString() ) );
 
 		int id = reservaDao.anadir(reserva);
 
