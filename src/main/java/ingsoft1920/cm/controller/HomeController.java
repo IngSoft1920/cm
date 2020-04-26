@@ -38,6 +38,10 @@ import ingsoft1920.cm.dao.ServicioDAO;
 import ingsoft1920.cm.dao.TipoHabitacionDAO;
 
 // Controlador del FE
+/**
+ * @author luism
+ *
+ */
 @Controller
 public class HomeController {
 

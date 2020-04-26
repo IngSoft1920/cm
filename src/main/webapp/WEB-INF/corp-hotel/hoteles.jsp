@@ -119,6 +119,9 @@
 													
 												<a class="btn btn-sm btn-outline-secondary"
 													href="/editar-hotel/${hotel.id}" role="button">Editar</a>
+													
+													<a class="btn btn-sm btn-outline-secondary"
+													href="/tarifas-ocupaciones/${hotel.id}" role="button">Estadísticas</a>
 												
 												<a class="btn btn-sm btn-outline-secondary"
 													href="/hoteles/eliminar-hotel/${hotel.id}" role="button">Eliminar</a>
