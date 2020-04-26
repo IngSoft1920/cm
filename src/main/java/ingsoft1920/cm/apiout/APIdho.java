@@ -1,7 +1,11 @@
 package ingsoft1920.cm.apiout;
 
+
+import org.apache.http.client.methods.HttpPost;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
 
 import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Reserva;
@@ -46,8 +50,12 @@ public class APIdho {
 		  json.add("categorias",jsonMaker.toJsonTree(new CategoriaDAO().categoriasHotel( h.getId() )));
 		
 		System.out.println( json.toString() );
-		APIout.enviar(json.toString(), 7001, "/recibirHotel");
+		APIout.enviar(json.toString(), PUERTO, "/recibirHotel");
 
+	}
+	
+	public static void eliminarHotel(int hotel_id) {
+		APIout.post(PUERTO, "/eliminarHotel/"+hotel_id);
 	}
 
 }

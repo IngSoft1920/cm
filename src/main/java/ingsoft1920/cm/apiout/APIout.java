@@ -6,7 +6,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 // Esta clase, con su método enviar(), nos permite mandar json's a otros equipos
@@ -40,5 +42,14 @@ public class APIout {
 		catch (IOException e) { e.printStackTrace(); }
 
 		System.out.println(mensRespuesta);
+	}
+	
+	public static void post(int puerto,String endpoint) {
+		
+		try {
+			HttpClients.createDefault().execute( new HttpPost(SERVIDOR+":"+puerto+endpoint) );
+			
+		} catch (Exception e) { e.printStackTrace(); }
+		  
 	}
 }
