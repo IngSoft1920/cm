@@ -104,9 +104,9 @@ public class ReservaDAO {
     }
 	
 	public static void main(String[] args) {
-		ReservaDAO dao = new ReservaDAO();
-		Reserva r = new Reserva(-1,Date.valueOf("2020-10-01"),Date.valueOf("2020-10-10"), 1000, Regimen.media_pension, 3, 5, 1, 1);
-	
-		dao.anadir(r);
+//		ReservaDAO dao = new ReservaDAO();
+//		Reserva r = new Reserva(-1,Date.valueOf("2020-10-01"),Date.valueOf("2020-10-10"), 1000, Regimen.media_pension, 3, 5, 1, 1);
+//	
+//		dao.anadir(r);
 	}
 }

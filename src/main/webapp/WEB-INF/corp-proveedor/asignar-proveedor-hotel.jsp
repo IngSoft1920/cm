@@ -62,9 +62,9 @@
         <div class="row center">
             <div class="col-md-18 order-md-1">
                 <form class="needs-validation" method="POST" novalidate>
-                     <div class="mb-3">
-                    <label for="nombre">Empresa</label>
-                    <input type="text" class="form-control" value="${proveedor.empresa}" readonly>
+                    <div class="mb-3">
+                        <label for="nombre">Empresa</label>
+                        <input type="text" class="form-control" value="${proveedor.empresa}" readonly>
                     </div>
 
                     <div class="mb-3">
@@ -72,47 +72,33 @@
                         <input type="text" class="form-control" value="${proveedor.CIF}" readonly>
                     </div>
 
-                     <div class="row">
-                     
-                      <c:forEach var="producto" items="${productos}"> 
-
-                        <div class="col-md-3 mb-3">
-                            <label>Producto</label>
+                    <div class="row">
+                        <c:forEach var="producto" items="${productos}"> 
                             
-                            
-                            <div class="form-check">
-                                <input class="form-check-input" type="hidden" value="${producto.id}" name="productosIDs">
-                                <label>
-                                    ${producto.nombre}
-                                </label>
+                            <div class="col-md-3 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="hidden" value="${producto.id}" name="productosIDs">
+                                    <label>${producto.nombre}</label>
+                                </div>
                             </div>
 
-                        </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="precio">Precio</label>
+                                <input type="number" class="form-control" id="precio" name="precios">
+                            </div>
 
-                        <div class="col-md-4 mb-4">
-                            <label for="zip">Precio</label>
-                            <input type="number" class="form-control" id="zip" placeholder="" name="precio">
-
-                        </div>
-
-                        <div class="col-md-4 mb-4">
-                            <label for="zip">Unidad de Medida</label>
-                            <input type="text" class="form-control" id="zip" placeholder="" name="unidadMedida">
-
-                        </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="unidad">Unidad de Medida</label>
+                                <input type="text" class="form-control" id="unidad" name="unidadesMedida">
+                            </div>
                         
                         </c:forEach>
-
-
-
                     </div>
-                    
                     
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Asignar</button>
                 </form>
-                
-                
+               
             </div>
         </div>
 

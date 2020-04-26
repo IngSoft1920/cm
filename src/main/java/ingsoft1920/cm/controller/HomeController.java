@@ -25,12 +25,10 @@ import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.bean.Servicio;
 import ingsoft1920.cm.bean.Tipo_Habitacion;
-import ingsoft1920.cm.bean.Hotel_Proveedor_Producto;
 import ingsoft1920.cm.dao.AusenciaDAO;
 import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
-import ingsoft1920.cm.dao.Hotel_Proveedor_ProductoDAO;
 import ingsoft1920.cm.dao.ProductoDAO;
 import ingsoft1920.cm.dao.ProfesionDAO;
 import ingsoft1920.cm.dao.ProveedorDAO;
@@ -58,8 +56,6 @@ public class HomeController {
 	public ProfesionDAO profesionDao;
 	@Autowired
 	public ProductoDAO productoDao;
-	@Autowired
-	public Hotel_Proveedor_ProductoDAO hppDao;
 	@Autowired
 	public AusenciaDAO ausenciaDao;
 	@Autowired
@@ -238,9 +234,10 @@ public class HomeController {
 	@GetMapping("/corp-proveedor/select-hoteles-prov/{proveedor_id}")
 	public ModelAndView selectHotelFormProv(@PathVariable(name = "proveedor_id") int proveedorId) {
 		List<Hotel> hoteles = hotelDao.hoteles();
+		
 		ModelAndView modelAndView = new ModelAndView("corp-proveedor/select-hoteles-prov.jsp");
-		modelAndView.addObject("hoteles", hoteles);
-		modelAndView.addObject("proveedor_id", proveedorId);
+		  modelAndView.addObject("hoteles", hoteles);
+		  modelAndView.addObject("proveedor_id", proveedorId);
 		return modelAndView;
 	}
 
@@ -289,9 +286,7 @@ public class HomeController {
 								  Integer profesionID, 
 								  @PathVariable(name = "id") int id,
 								  Integer[] diasLibres) {
-		
-		
-		
+				
 		Empleado em = new Empleado();
 		  em.setNombre(firstName);
 		  em.setApellidos(lastNames);
@@ -381,37 +376,43 @@ public class HomeController {
 	
 	
 	// Asignar proveedor-hotel
-		@GetMapping("/asignar-proveedor-hotel/{proveedor_id}/{hotel.id}")
-		public ModelAndView asignarProveedorHotel(@PathVariable(name = "hotel.id")int hotelId, @PathVariable(name = "proveedor_id") int proveedorId) {
-			
-			List<Producto> productos = productoDao.productosProveedor(proveedorId);
-			Proveedor proveedor = proveedorDao.getByID(proveedorId);
-			
-			ModelAndView modelAndView = new ModelAndView("corp-proveedor/asignar-proveedor-hotel.jsp");
-        	modelAndView.addObject("productos", productos);
-			modelAndView.addObject("proveedor", proveedor);
-			modelAndView.addObject("hotel.id", hotelId);
-			
-			return modelAndView;
-		}
+	@GetMapping("/asignar-proveedor-hotel/{proveedor_id}/{hotel_id}")
+	public ModelAndView asignarProveedorHotel(@PathVariable(name = "hotel_id")int hotel_id, @PathVariable(name = "proveedor_id") int proveedor_id) {
+		
+		Proveedor proveedor = proveedorDao.getByID(proveedor_id);
+		List<Producto> productos = productoDao.productosProveedor(proveedor_id);
+		
+		ModelAndView modelAndView = new ModelAndView("corp-proveedor/asignar-proveedor-hotel.jsp");
+    	  modelAndView.addObject("productos", productos);
+		  modelAndView.addObject("proveedor", proveedor);
+		
+		return modelAndView;
+	}
 	
-		@PostMapping("/asignar-proveedor-hotel/{proveedor_id}/{hotel.id}")
-		public String asignarProveedorPost(String empresa,
-				String CIF, Integer [] productosIDs, Integer [] precio, String [] unidadMedida,
-				@PathVariable(name = "proveedor_id") int proveedorId,
-				@PathVariable(name = "hotel.id")int hotelId) {
-//			Proveedor proveedor= proveedorDao.getByCIF(CIF);
-//			int provID=proveedor.getId();
-			int i;
-			for(i=0;i<productosIDs.length;i++) {
-				if(productosIDs[i]!=null && precio[i]!=null && !unidadMedida[i].equals("")) {
-			Hotel_Proveedor_Producto d = new Hotel_Proveedor_Producto(hotelId,productosIDs[i],proveedorId,precio[i], unidadMedida[i]);
-			hppDao.anadir(d);
-				}
+	@PostMapping("/asignar-proveedor-hotel/{proveedor_id}/{hotel_id}")
+	public String asignarProveedorPost(@PathVariable(name = "proveedor_id") int proveedor_id,
+									   @PathVariable(name = "hotel_id")int hotel_id,
+									   Integer[] productosIDs,
+									   Integer[] precios,
+									   String [] unidadesMedida)
+	{
+		
+		List<Properties> info = new ArrayList<>();
+		Properties aux;
+		for(int i=0;i<productosIDs.length;i++) {
+			if(precios[i] != null && !unidadesMedida[i].equals("")) {
+				aux = new Properties();
+				  aux.put("producto_id", productosIDs[i]);
+				  aux.put("precio",precios[i]);
+				  aux.put("unidad_medida",unidadesMedida[i]);
+				  
+				info.add(aux);
 			}
-			
-			return "redirect:/proveedores";
 		}
+		
+		proveedorDao.asignarHotel(hotel_id, proveedor_id, info);
+		return "redirect:/proveedores";
+	}
 		
 		
 
