@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,8 +168,8 @@ public class HotelDAO {
 		APIdho.eliminarHotel(id);
 	}
 	
-	// TODO: Re-hacer la query criminal
-	// Cada Properties tendrá lo siguiente:
+	// Cada Properties tendrá lo siguiente (esto es así porque al pasarlo
+	// a json la librería lo hace automático):
 	// -hotel_id: int
 	// -habs: List<Properties>, siendo cada Properties a su vez:
 	// 					-tipo_hab_id: int
@@ -178,11 +179,19 @@ public class HotelDAO {
 		List<Properties> res = null;
 		List<Map<String, Object>> resConsulta = null;
 		MapListHandler handler = new MapListHandler();
-		String query = "SELECT h.id, GROUP_CONCAT(hth.tipo_hab_id) AS habIDs, GROUP_CONCAT(th.nombre_tipo) AS habNombres "
-					  +" FROM Hotel h "
-					  +" JOIN Hotel_Tipo_Habitacion hth ON h.id = hth.hotel_id "
-					  +" JOIN Tipo_Habitacion th ON hth.tipo_hab_id = th.id "
-					  +"GROUP BY h.id";
+		
+		// Esto nos da las habitaciones disponibles entre esas dos fechas
+		String query = "SELECT ocup.hotel_id,ocup.tipo_hab_id,th.nombre_tipo "
+					  +"FROM"
+					  	   +"("
+					  	     +"SELECT hth.hotel_id,hth.tipo_hab_id,COUNT(*) AS ocupadas,hth.num_disponibles "
+					  	     	+"FROM Hotel_Tipo_Habitacion hth " 
+					  	     	+"JOIN Reserva r ON hth.hotel_id=r.hotel_id AND hth.tipo_hab_id=r.tipo_hab_id "
+					  	     +"WHERE r.fecha_entrada <= ? AND r.fecha_salida >= ? "
+					  	     +"GROUP BY hth.hotel_id,hth.tipo_hab_id"
+					  	     +") AS ocup "
+					  +"JOIN Tipo_Habitacion th ON ocup.tipo_hab_id=th.id "
+					  +"WHERE ocup.num_disponibles - ocup.ocupadas > 0;";
 		
 		try( Connection conn = conector.getConn() )
 		{
@@ -221,6 +230,71 @@ public class HotelDAO {
 		}
 		return res;
 	}
+	
+
+	
+	// Cada Properties tendrá lo siguiente:
+	// -hotel_id: int
+	// -habs_disp_ids: Integer[]
+	// -habs_disp_nombres: String[]  
+	// Nota: habs_disp_ids y habs_disp_nombres están mapeados
+	private List<Properties> habsDisponibles(Date fecha_ent,Date fecha_sal) {
+		List<Properties> res = new ArrayList<>();
+		List<Map<String, Object>> resConsulta = null;
+		MapListHandler handler = new MapListHandler();
+		
+		// Esto nos da las habitaciones disponibles entre esas dos fechas
+		// Un ejemplo de la salida es la siguiente:
+		// hotel_id  habs_disp_ids   habs_dis_nombres
+		//    1			1,2,3			normal,premium,presiencial
+		//	  4			1,3				normal,presidencial
+		// -Como se parecia, habs_disp_ids y habs_dis_nombres están mapeados
+		String query = "SELECT ocup.hotel_id AS hotel_id,"
+							 +"GROUP_CONCAT(ocup.tipo_hab_id) AS habs_disp_ids,"
+							 +"GROUP_CONCAT(th.nombre_tipo) habs_disp_nombres "
+					  +"FROM"
+					  	   +"("
+					  	     +"SELECT hth.hotel_id,hth.tipo_hab_id,COUNT(*) AS ocupadas,hth.num_disponibles "
+					  	     	+"FROM Hotel_Tipo_Habitacion hth " 
+					  	     	+"JOIN Reserva r ON hth.hotel_id=r.hotel_id AND hth.tipo_hab_id=r.tipo_hab_id "
+					  	     +"WHERE r.fecha_entrada <= ? AND r.fecha_salida >= ? "
+					  	     +"GROUP BY hth.hotel_id,hth.tipo_hab_id"
+					  	     +") AS ocup "
+					  +"JOIN Tipo_Habitacion th ON ocup.tipo_hab_id=th.id "
+					  +"WHERE ocup.num_disponibles - ocup.ocupadas > 0 "
+					  +"GROUP BY ocup.hotel_id";
+		
+		try( Connection conn = conector.getConn() )
+		{
+			resConsulta = runner.query(conn, query, handler, fecha_sal, fecha_ent);
+			
+		} catch( Exception e ) { e.printStackTrace(); } 
+		
+		if( resConsulta != null ) {
+			Properties aux;
+			
+			Integer[] habs_disp_ids;
+			String[] habs_disp_nombres;
+			for( Map<String,Object> fila : resConsulta ) {
+				aux = new Properties();
+				  aux.put("hotel_id",fila.get("hotel_id"));
+				  
+				  habs_disp_ids = Arrays
+						  			.stream( ((String)fila.get("habs_disp_ids")).split(",") )
+						  			.map( idString -> Integer.valueOf(idString) )
+						  			.toArray(Integer[]::new);
+				  aux.put("habs_disp_ids",habs_disp_ids);
+				  
+				  habs_disp_nombres = ((String)fila.get("habs_disp_nombres")).split(",");
+				  aux.put("habs_disp_nombres",habs_disp_nombres);
+				
+				res.add(aux);
+			}
+		}
+		return res;
+	}
+	
+
 	
 
 	/*
@@ -296,38 +370,6 @@ public class HotelDAO {
 
 		} catch (Exception e) { e.printStackTrace(); }
 		return res != null ? res.doubleValue() : 0;
-	}
-	
-	
-	public static void main(String[] args) {
-		
-//		HotelDAO dao = new HotelDAO();
-//		Hotel h = new Hotel(-1, "Hotel New Japón","Asia", "Japón", "Tokyo", "Calle Luna,12", 5, "Oriental");
-//		
-//		Properties hab1 = new Properties();
-//		  hab1.put("tipo_hab_id", 1);
-//		  hab1.put("num_disponibles", 30);
-//		Properties hab2 = new Properties();
-//		  hab2.put("tipo_hab_id", 2);
-//		  hab2.put("num_disponibles", 15);
-//		List<Properties> habs = List.of(hab1,hab2);
-//		
-//		
-//		Properties serv1 = new Properties();
-//		  serv1.put("servicio_id",1);
-//		  serv1.put("precio",100);
-//		  serv1.put("unidad_medida",2);
-//		  serv1.put("num_instalaciones",2);
-//		List<Properties> servs = List.of(serv1);
-//		
-//		
-//		Properties cat1 = new Properties();
-//		  cat1.put("categoria_id",1);
-//		List<Properties> cats = List.of(cat1);
-//
-// 		
-//		dao.anadir(h, habs, servs, cats);
-		
 	}	
 
 }

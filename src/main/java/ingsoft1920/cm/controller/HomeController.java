@@ -1,6 +1,6 @@
 package ingsoft1920.cm.controller;
 
-import java.sql.Date;
+import java.sql.Date;	
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -626,15 +626,18 @@ public class HomeController {
 	@GetMapping("/ausencias")
 	public ModelAndView todasAusencias() {
 		
-		List<Ausencia> ausenciasTotal = ausenciaDao.ausencias();
-		List<Ausencia> ausenciasPendientes = ausenciasTotal
-												.stream()
-												.filter( a -> a.getEstado() == Ausencia.Estado.pendiente )
-												.collect( Collectors.toList() );
+		List<Properties> ausenciasTotal = ausenciaDao.ausenciasConEmpleado();
+		List<Properties> ausenciasPendientes = 
+				ausenciasTotal
+					.stream()
+					.filter( a -> ((Ausencia) a.get("ausencia")).getEstado() == Ausencia.Estado.pendiente )
+					.collect( Collectors.toList() );
+		
+
 		
 		ModelAndView mav = new ModelAndView("corp-ausencias/ausencias.jsp");
-		  mav.addObject("ausenciasTotal",ausenciasTotal);
-		  mav.addObject("ausenciasPendientes",ausenciasPendientes);
+		  mav.addObject("ausenciasTotalProp",ausenciasTotal);
+		  mav.addObject("ausenciasPendientesProp",ausenciasPendientes);
 		
 		return mav;
 	}

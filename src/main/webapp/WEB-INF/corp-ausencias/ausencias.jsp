@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -108,37 +107,37 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">id</th>
                                         <th scope="col">Motivo</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col">Inicio</th>
                                         <th scope="col">Fin</th>
                                         <th scope="col">Acción</th>
+                                        <th scope="col">Empleado</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <c:forEach var="ausencia" items="${ausenciasPendientes}">
+                                    <c:forEach var="ausenciaProp" items="${ausenciasPendientesProp}">
                                         <tr>
-                                            <th scope="row">${ausencia.id}</th>
-                                            <td>${ausencia.motivo}</td>
-                                            <td>${ausencia.estado}</td>
-                                            <td>${ausencia.fecha_inicio}</td>
-                                            <td>${ausencia.fecha_fin}</td>
+                                            <td>${ausenciaProp.ausencia.motivo}</td>
+                                            <td>${ausenciaProp.ausencia.estado}</td>
+                                            <td>${ausenciaProp.ausencia.fecha_inicio}</td>
+                                            <td>${ausenciaProp.ausencia.fecha_fin}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a class="btn btn-sm btn-outline-secondary"
-                                                        href="/ausencias-aceptar/${ausencia.id}"
+                                                        href="/ausencias-aceptar/${ausenciaProp.ausencia.id}"
                                                         role="button">Aceptar</a>
                                                     
                                                     <a class="btn btn-sm btn-outline-secondary"
-                                                        href="/ausencias-denegar/${ausencia.id}"
+                                                        href="/ausencias-denegar/${ausenciaProp.ausencia.id}"
                                                         role="button">Denegar</a>
                                             </td>
+                                            <td>${ausenciaProp.email_empleado}</td>
                                             <td>
                                                 <a class="btn btn-sm btn-outline-secondary"
-                                                        href="/ver-empleado/${ausencia.empleado_id}"
+                                                        href="/ver-empleado/${ausenciaProp.ausencia.empleado_id}"
                                                         role="button">Ver Empleado</a>
                                             </td>
                                         </tr>
@@ -154,26 +153,26 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
                                         <th scope="col">Motivo</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col">Inicio</th>
                                         <th scope="col">Fin</th>
                                         <th scope="col">Empleado</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <c:forEach var="ausencia" items="${ausenciasTotal}">
+                                    <c:forEach var="ausenciaProp" items="${ausenciasTotalProp}">
                                         <tr>
-                                            <th scope="row">${ausencia.id}</th>
-                                            <td>${ausencia.motivo}</td>
-                                            <td>${ausencia.estado}</td>
-                                            <td>${ausencia.fecha_inicio}</td>
-                                            <td>${ausencia.fecha_fin}</td>
+                                            <td>${ausenciaProp.ausencia.motivo}</td>
+                                            <td>${ausenciaProp.ausencia.estado}</td>
+                                            <td>${ausenciaProp.ausencia.fecha_inicio}</td>
+                                            <td>${ausenciaProp.ausencia.fecha_fin}</td>
+                                            <td>${ausenciaProp.email_empleado}</td>
                                             <td>
                                                 <a class="btn btn-sm btn-outline-secondary"
-                                                        href="/ver-empleado/${ausencia.empleado_id}"
+                                                        href="/ver-empleado/${ausenciaProp.ausencia.empleado_id}"
                                                         role="button">Ver Empleado</a>
                                             </td>
                                         </tr>

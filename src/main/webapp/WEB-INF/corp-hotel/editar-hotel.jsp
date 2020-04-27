@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label>Direccion</label>
+                        <label>Dirección</label>
                         <input type="text" class="form-control" name="direccion" value="${hotel.direccion}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
