@@ -66,6 +66,7 @@ public class HomeController {
 	public AusenciaDAO ausenciaDao;
 	@Autowired
 	public ValoracionDAO valoracionDao;
+
 	
 	
 
@@ -220,11 +221,17 @@ public class HomeController {
 
 	@GetMapping("/tarifas-ocupaciones/{hotel_id}")
 	public ModelAndView tarifasOcupacionesHotel(@PathVariable(name = "hotel_id") int hotel_id,
-												@PathParam("fecha") String fecha) {		
+												@PathParam("fecha") String fecha) {	
+		
+		List<Properties> estadisticas = 
+				hotelDao.estadisticasHotelDia(hotel_id, Date.valueOf(fecha)); 
+		
+		System.out.println( estadisticas );
 		
 		ModelAndView mav = new ModelAndView("corp-hotel/tarifas-ocupaciones.jsp");
 		  mav.addObject("fecha",Date.valueOf( fecha ));
 		  mav.addObject("hotel_id",hotel_id);
+		  mav.addObject("estadisticas",estadisticas);
 		 
 		return mav;
 	}

@@ -1,17 +1,24 @@
 package ingsoft1920.cm.dao;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Precio_Habitacion;
+import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
+@Component
 public class Precio_HabitacionDAO {
 
     @Autowired
@@ -98,6 +105,8 @@ public class Precio_HabitacionDAO {
     	    			
     	return res != null ? res.intValue() : -1;
     }
+    
+  
     
     public static void main(String[] args) {
 		System.out.println( new 

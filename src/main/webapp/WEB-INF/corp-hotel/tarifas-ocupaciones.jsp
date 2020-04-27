@@ -93,36 +93,43 @@
         <main role="main">	
             <div class="album py- bg-light">
                 <div class="container">
+                    <c:choose>
+                        <c:when test="${empty estadisticas}">
+                            <h4 class="text-center">Este hotel no tiene precio establecido en esta fecha</h4>
+                        </c:when>
 
-                    <div class="row">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Día</th>
-                                    <th scope="col">Tipo Habitación</th>
-                                    <th scope="col">Tarifa</th>
-                                    <th scope="col">Ocupación</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                <c:forEach var="tipoHabitacion" items="${tipoHabitacion}">	
-                                    <th>Lunes</th>
-                                    <td>Premium</td>
-                                    <td>26$</td>
-                                    <td>50%</td>
-                                    </c:forEach>
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-
+                        <c:otherwise>
+                            <div class="row">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nombre Tipo</th>
+                                            <th scope="col">Tarifa</th>
+                                            <th scope="col">Ocupación</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="estadistica" items="${estadisticas}">	
+                                            <tr>
+                                                <th>${estadistica.hab.nombre_tipo}</th>
+                                                <td>${estadistica.tarifa}</td>
+                                                <td>${estadistica.ocupacion}%</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                    <div class="form-check text-center">
+                        <Label for="busc">Elegir fecha</Label>
+                        <input id="busc" type="date">
+                        <button onclick="buscador();">Ir</button>
                     </div>
                 </div>
             </div>
 
+           
 
         </main>
 
@@ -153,6 +160,12 @@
             function forward() {
                 date.setDate( date.getDate() + 1 );
                 window.location.href='/tarifas-ocupaciones/${hotel_id}?fecha='+date.toISOString().slice(0,10);
+            }
+
+            function buscador() {
+                if( document.getElementById('busc').value ) {
+                    window.location.href='/tarifas-ocupaciones/${hotel_id}?fecha='+new Date(document.getElementById('busc').value).toISOString().slice(0,10);
+                }
             }
         
         </script>

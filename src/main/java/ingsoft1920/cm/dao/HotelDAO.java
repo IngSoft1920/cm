@@ -2,6 +2,7 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.apiout.APIdho;
 import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
@@ -429,5 +431,71 @@ public class HotelDAO {
 		} catch (Exception e) { e.printStackTrace(); }
 		return res != null ? res.doubleValue() : 0;
 	}	
+	
+	
+	
+	// Cada Properties tendrá
+    // -hab: Tipo_Hab
+    // -tarifa: int
+    // -ocupacion: double (porcentaje)
+    public List<Properties> estadisticasHotelDia(int hotel_id,Date fecha) {
+    	List<Properties> res = new ArrayList<>();
+    	List<Map<String,Object>> resConsulta = null;
+    	MapListHandler handler = new MapListHandler();
+    	String query = "SELECT tarif.id,tarif.nombre_tipo,tarif.tarifa,ocup.ocupacion "
+    					 +"FROM"
+    					 	  +"("
+    					 	   +"SELECT th.id,th.nombre_tipo,ph.precio_por_noche AS tarifa "
+    					 	       +"FROM Precio_Habitacion ph "
+    					 	       +"JOIN Tipo_Habitacion th ON ph.tipo_hab_id=th.id "
+    					 	   +"WHERE hotel_id = ? AND fecha = ? "
+    					 	   +") AS tarif "
+    					 +"JOIN"
+    					 	   +"("
+    					 	    +"SELECT hth.tipo_hab_id,COUNT(*)/hth.num_disponibles AS ocupacion "
+    					 	       +"FROM Hotel_Tipo_Habitacion hth "
+    					 	       +"JOIN Reserva r ON hth.hotel_id=r.hotel_id AND hth.tipo_hab_id=r.tipo_hab_id "
+    					 	    +"WHERE hth.hotel_id = ? AND (? BETWEEN r.fecha_entrada AND r.fecha_salida) "
+    					 	    +"GROUP BY hth.tipo_hab_id "
+    					 	    +"UNION "
+    							+"SELECT DISTINCT tipo_hab_id,0 AS ocupacion "
+    							   +"FROM Hotel_Tipo_Habitacion "
+    							+"WHERE tipo_hab_id NOT IN ("
+    														+"SELECT DISTINCT tipo_hab_id "
+    															+"FROM Reserva "
+    														+"WHERE hotel_id = ? AND (? BETWEEN fecha_entrada AND fecha_salida)"
+    													  +")"
+    					 	    +") AS ocup "
+    					 +"ON tarif.id=ocup.tipo_hab_id;";
+    	
+    	try( Connection conn = conector.getConn() )
+    	{
+    		resConsulta = runner.query(conn,query,handler,hotel_id,
+    													  fecha,
+    													  hotel_id,
+    													  fecha,
+    													  hotel_id,
+    													  fecha);
+    		
+    	} catch( Exception e ) { e.printStackTrace(); }
+    	
+    	if( res!=null ) {
+    		Properties aux;
+    		System.out.println(resConsulta);
+    		for( Map<String,Object> fila : resConsulta ) {
+    			aux = new Properties();
+    			  aux.put("hab",new Tipo_Habitacion( (int) fila.get("id"),
+    					  							(String) fila.get("nombre_tipo")));
+    			  
+    			  aux.put("tarifa", (int) fila.get("tarifa"));
+    			  aux.put("ocupacion", ((BigDecimal)fila.get("ocupacion"))
+    					  						.setScale(2, RoundingMode.HALF_UP)
+    					  						.multiply(BigDecimal.valueOf(100)));
+    			  
+    			res.add(aux);
+    		}
+    	}
+    	return res;
+    }
 
 }
