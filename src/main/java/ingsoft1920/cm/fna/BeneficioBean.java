@@ -22,35 +22,35 @@ public class BeneficioBean {
 	      this.nombresHotel = h;
 	   }
 	 */
-	 public boolean getIfReserva() {
+	 public boolean getReserva() {
 		 return this.reserva;
 	 }
 	 
-	 public void setIfReserva(boolean r) {
+	 public void setReserva(boolean r) {
 		 this.reserva=r;
 	 }
 	 
-	 public boolean getIfServicios() {
+	 public boolean getServicios() {
 		 return this.servicios;
 	 }
 	 
-	 public void setIfServicios(boolean s) {
+	 public void setServicios(boolean s) {
 		 this.servicios=s;
 	 }
 	 
-	 public boolean getIfEmpleados() {
+	 public boolean getEmpleados() {
 		 return this.empleados;
 	 }
 	 
-	 public void setIfEmpleados(boolean h) {
+	 public void setEmpleados(boolean h) {
 		 this.empleados=h;
 	 }
 	 
-	 public boolean getIfComida() {
+	 public boolean getComida() {
 		 return this.comida;
 	 }
 	 
-	 public void setIfComida(boolean h) {
+	 public void setComida(boolean h) {
 		 this.comida=h;
 	 }
 	 

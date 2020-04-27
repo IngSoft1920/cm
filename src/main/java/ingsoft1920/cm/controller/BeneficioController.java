@@ -71,14 +71,14 @@ public class BeneficioController {
 		
 		model.addAttribute("treasureMap", beneficios_gastos);
 		//model.addAttribute("Hoteles", bg.getNombresHotel());
-		model.addAttribute("reserva", bg.getIfReserva());
-		model.addAttribute("servicios", bg.getIfServicios());
-		model.addAttribute("empleados", bg.getIfComida()); //boolean
-		model.addAttribute("comida", bg.getIfEmpleados());
+		model.addAttribute("reserva", bg.getReserva());
+		model.addAttribute("servicios", bg.getServicios());
+		model.addAttribute("empleados", bg.getComida()); //boolean
+		model.addAttribute("comida", bg.getEmpleados());
 		
 		return "fna/beneficios.jsp";
 	}
-	
+	/*
 	@ModelAttribute("hotelesList")
 	   public List<String> getHotelesList() {
 	      List<String> hotelesList = new ArrayList<String>();
