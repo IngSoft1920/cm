@@ -235,7 +235,7 @@ public class HotelDAO {
 	// Cada Properties tendrá lo siguiente (esto es así porque al pasarlo
 	// a json la librería lo hace automático):
 	// -hotel_id: int
-	// -habs: List<Properties>, siendo cada Properties a su vez:
+	// -habitaciones: List<Properties>, siendo cada Properties a su vez:
 	// 					-tipo_hab_id: int
 	//					-nombre: String
 	//					-precio_total: int
@@ -307,7 +307,7 @@ public class HotelDAO {
 			for( Map<String,Object> fila : resConsulta ) {
 				aux = new Properties();
 				  aux.put( "hotel_id" , fila.get("hotel_id") );
-				  aux.put( "habs" , tratarFilaDisponibles(fila) );
+				  aux.put( "habitaciones" , tratarFilaDisponibles(fila) );
 				    
 				res.add(aux);
 			}

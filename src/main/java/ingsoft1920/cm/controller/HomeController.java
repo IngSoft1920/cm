@@ -1,12 +1,14 @@
 package ingsoft1920.cm.controller;
 
-import java.sql.Date;	
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
+
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -215,27 +217,17 @@ public class HomeController {
 	}
 	
 	
-		/**
-		 * @param Hotel id
-		 * @return tarifas y ocupaciones del Hotel
-		 */
-		@GetMapping("/tarifas-ocupaciones/{id}")
-		public ModelAndView tarifasOcupacionesHotel(@PathVariable(name = "id") int id) {
 
-			Hotel hotel = hotelDao.getByID(id);
-			List<Tipo_Habitacion> habs = habsDao.tipos();
-			//tarifas
-			//ocupaciones
-			
-			
-			ModelAndView mav = new ModelAndView("corp-hotel/tarifas-ocupaciones.jsp");
-			  mav.addObject("hotel", hotel);
-			  mav.addObject("habs",habs);
-			 
-			 
-
-			return mav;
-		}
+	@GetMapping("/tarifas-ocupaciones/{hotel_id}")
+	public ModelAndView tarifasOcupacionesHotel(@PathVariable(name = "hotel_id") int hotel_id,
+												@PathParam("fecha") String fecha) {		
+		
+		ModelAndView mav = new ModelAndView("corp-hotel/tarifas-ocupaciones.jsp");
+		  mav.addObject("fecha",Date.valueOf( fecha ));
+		  mav.addObject("hotel_id",hotel_id);
+		 
+		return mav;
+	}
 
 	// eliminar hotel
 	@GetMapping("/hoteles/eliminar-hotel/{id}")

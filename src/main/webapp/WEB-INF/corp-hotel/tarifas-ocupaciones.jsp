@@ -67,21 +67,21 @@
 <body>
     <div class="conteiner">
 
-
         <header>
-
             <div class="navbar navbar-light bg-light shadow-sm">
                 <div class="container d-flex align-content-start">
 
-                    <svg class="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <svg onclick="back();" class="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M5.854 4.646a.5.5 0 010 .708L3.207 8l2.647 2.646a.5.5 0 01-.708.708l-3-3a.5.5 0 010-.708l3-3a.5.5 0 01.708 0z" clip-rule="evenodd"/>
                         <path fill-rule="evenodd" d="M2.5 8a.5.5 0 01.5-.5h10.5a.5.5 0 010 1H3a.5.5 0 01-.5-.5z" clip-rule="evenodd"/>
-                      </svg>
-                    <a class="navbar-nav" href=""><strong >Fecha</strong></a>
-                    <svg class="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" hr>
+                    </svg>
+
+                    <strong class="navbar-nav">${fecha}</strong>
+
+                    <svg onclick="forward();" class="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" hr>
                         <path fill-rule="evenodd" d="M10.146 4.646a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708-.708L12.793 8l-2.647-2.646a.5.5 0 010-.708z" clip-rule="evenodd"/>
                         <path fill-rule="evenodd" d="M2 8a.5.5 0 01.5-.5H13a.5.5 0 010 1H2.5A.5.5 0 012 8z" clip-rule="evenodd"/>
-                      </svg>
+                    </svg>
 
 
 
@@ -126,17 +126,35 @@
 
         </main>
 
-        <footer class="text-muted">
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
-                <p class="float-right">
-                    <a href="">Back to top</a>
+                <p class="float-left">
+                    <a href="/hoteles">Volver a hoteles</a>
                 </p>
-
+                <p class="float-right">
+                    <a href="/inicio">Volver a inicio</a>
+                </p>
             </div>
         </footer>
         <script src="/js/jquery-3.4.1.slim.min.js"></script>
         <script>
             window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
+                
+            const url = window.location.search;
+            const urlParams = new URLSearchParams(url);
+            const date = new Date(urlParams.get('fecha'));
+
+            function back() {
+                date.setDate( date.getDate() - 1 );
+                window.location.href='/tarifas-ocupaciones/${hotel_id}?fecha='+date.toISOString().slice(0,10);
+            }
+
+            function forward() {
+                date.setDate( date.getDate() + 1 );
+                window.location.href='/tarifas-ocupaciones/${hotel_id}?fecha='+date.toISOString().slice(0,10);
+            }
+        
         </script>
         <script src="/js/bootstrap.bundle.min.js" ></script>
 

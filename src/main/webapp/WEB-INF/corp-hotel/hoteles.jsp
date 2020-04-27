@@ -120,8 +120,9 @@
 												<a class="btn btn-sm btn-outline-secondary"
 													href="/editar-hotel/${hotel.id}" role="button">Editar</a>
 													
-													<a class="btn btn-sm btn-outline-secondary"
-													href="/tarifas-ocupaciones/${hotel.id}" role="button">Estadísticas</a>
+												<a class="btn btn-sm btn-outline-secondary"onclick="window.location.href='/tarifas-ocupaciones/${hotel.id}?fecha='+new Date().toISOString().slice(0,10);"
+													href="#"
+													role="button">Estadísticas</a>
 												
 												<a class="btn btn-sm btn-outline-secondary"
 													href="/hoteles/eliminar-hotel/${hotel.id}" role="button">Eliminar</a>
