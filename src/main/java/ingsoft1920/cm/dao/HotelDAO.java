@@ -175,7 +175,7 @@ public class HotelDAO {
 	// 					-tipo_hab_id: int
 	//					-nombre: String
 	//					-precio_total: int
-	public List<Properties> disponibles(Date fecha_entrada, Date fecha_salida) {
+	public List<Properties> disponiblesFalso(Date fecha_entrada, Date fecha_salida) {
 		List<Properties> res = null;
 		List<Map<String, Object>> resConsulta = null;
 		MapListHandler handler = new MapListHandler();
@@ -231,71 +231,129 @@ public class HotelDAO {
 		return res;
 	}
 	
-
 	
-	// Cada Properties tendrá lo siguiente:
+	// Cada Properties tendrá lo siguiente (esto es así porque al pasarlo
+	// a json la librería lo hace automático):
 	// -hotel_id: int
-	// -habs_disp_ids: Integer[]
-	// -habs_disp_nombres: String[]  
-	// Nota: habs_disp_ids y habs_disp_nombres están mapeados
-	private List<Properties> habsDisponibles(Date fecha_ent,Date fecha_sal) {
+	// -habs: List<Properties>, siendo cada Properties a su vez:
+	// 					-tipo_hab_id: int
+	//					-nombre: String
+	//					-precio_total: int
+	public List<Properties> disponibles(Date fecha_ent,Date fecha_sal) {
 		List<Properties> res = new ArrayList<>();
 		List<Map<String, Object>> resConsulta = null;
 		MapListHandler handler = new MapListHandler();
 		
-		// Esto nos da las habitaciones disponibles entre esas dos fechas
-		// Un ejemplo de la salida es la siguiente:
-		// hotel_id  habs_disp_ids   habs_dis_nombres
-		//    1			1,2,3			normal,premium,presiencial
-		//	  4			1,3				normal,presidencial
-		// -Como se parecia, habs_disp_ids y habs_dis_nombres están mapeados
-		String query = "SELECT ocup.hotel_id AS hotel_id,"
-							 +"GROUP_CONCAT(ocup.tipo_hab_id) AS habs_disp_ids,"
-							 +"GROUP_CONCAT(th.nombre_tipo) habs_disp_nombres "
-					  +"FROM"
-					  	   +"("
-					  	     +"SELECT hth.hotel_id,hth.tipo_hab_id,COUNT(*) AS ocupadas,hth.num_disponibles "
-					  	     	+"FROM Hotel_Tipo_Habitacion hth " 
-					  	     	+"JOIN Reserva r ON hth.hotel_id=r.hotel_id AND hth.tipo_hab_id=r.tipo_hab_id "
-					  	     +"WHERE r.fecha_entrada <= ? AND r.fecha_salida >= ? "
-					  	     +"GROUP BY hth.hotel_id,hth.tipo_hab_id"
-					  	     +") AS ocup "
-					  +"JOIN Tipo_Habitacion th ON ocup.tipo_hab_id=th.id "
-					  +"WHERE ocup.num_disponibles - ocup.ocupadas > 0 "
-					  +"GROUP BY ocup.hotel_id";
+		String query = "SELECT prec.hotel_id,"
+				   			 +"GROUP_CONCAT(prec.tipo_hab_id) AS habs_disp_ids,"
+				   			 +"GROUP_CONCAT(prec.nombre_tipo) AS habs_disp_nombres,"
+				   			 +"GROUP_CONCAT(prec.precio_total) AS precios_totales "
+				   	     +"FROM"
+				   	     	 +"("
+				   	     	  +"SELECT hth.hotel_id,hth.tipo_hab_id,SUM(ph.precio_por_noche) AS precio_total,th.nombre_tipo "
+				   	     	  	  +"FROM Tipo_Habitacion th "
+				   	     	  	  +"JOIN Hotel_Tipo_Habitacion hth ON th.id=hth.tipo_hab_id "
+				   	     	  	  +"JOIN Precio_Habitacion ph ON hth.hotel_id=ph.hotel_id AND hth.tipo_hab_id=ph.tipo_hab_id "
+				   	     	  +"WHERE ph.fecha BETWEEN ? AND ? "
+				   	     	  +"GROUP BY hth.hotel_id,hth.tipo_hab_id"
+				   	     	 +") AS prec "
+				   	     +"JOIN"
+				   	     	 +"("
+				   	     	  +"SELECT ocup.hotel_id,ocup.tipo_hab_id " /*Hoteles con reservas en conflicto con las fechas pedidas pero con capacidad suficiente*/
+				   	     	  	  +"FROM"
+				   	     	  	  	  +"(" 
+				   	     	  	  	   +"SELECT hth.hotel_id,hth.tipo_hab_id,COUNT(*) AS ocupadas,hth.num_disponibles "
+				   	     	  	  	   	  +"FROM Hotel_Tipo_Habitacion hth "
+				   	     	  	  	   	  +"JOIN Reserva r ON hth.hotel_id=r.hotel_id AND hth.tipo_hab_id=r.tipo_hab_id "
+				   	     	  	  	   	+"WHERE r.fecha_entrada <= ? AND r.fecha_salida >= ? "
+				   	     	  	  	   	+"GROUP BY hth.hotel_id, hth.tipo_hab_id "
+				   	     	  	  	   +") AS ocup "
+				   	     	  +"WHERE ocup.num_disponibles - ocup.ocupadas > 0 "
+				   	     	  +"UNION "
+				   	     	  +"SELECT hotel_id,tipo_hab_id " /*Hoteles sin reservas o bien hoteles con reservas pero que no tienen NINGUNA dentro de las fechas pedidas*/
+				   	     	  	  +"FROM Hotel_Tipo_Habitacion "
+				   	     	  +"WHERE (hotel_id,tipo_hab_id) NOT IN ("
+										   			  				+"SELECT hotel_id,tipo_hab_id "
+										   			  					+"FROM Reserva "
+										   			  				+"WHERE fecha_entrada <= ? AND fecha_salida >= ?"
+										   			  			   +")"
+						     +") AS disp "
+					    +"ON prec.hotel_id=disp.hotel_id AND prec.tipo_hab_id=disp.tipo_hab_id "
+					    +"GROUP BY prec.hotel_id";
+		
+		// Esto nos da lo siguiente (ejemplo):
+		// hotel_id  habs_disp_ids   habs_disp_nombres    precios_totales 
+		//    1		 	 1			    normal              411
+		//	  4			3,1		    presidencial,normal     552,428
+		//
+		// -Tal y como se aprecia, las columnas de habs_disp_ids, habs_disp_nombres
+		// y precios_totales están mapeadas
 		
 		try( Connection conn = conector.getConn() )
 		{
-			resConsulta = runner.query(conn, query, handler, fecha_sal, fecha_ent);
+			resConsulta = runner.query(conn,query,handler,
+										fecha_ent,
+										fecha_sal,
+										fecha_sal,
+										fecha_ent,
+										fecha_sal,
+										fecha_ent);
 			
-		} catch( Exception e ) { e.printStackTrace(); } 
+		} catch( Exception e ) { e.printStackTrace(); }
+		
 		
 		if( resConsulta != null ) {
 			Properties aux;
-			
-			Integer[] habs_disp_ids;
-			String[] habs_disp_nombres;
 			for( Map<String,Object> fila : resConsulta ) {
 				aux = new Properties();
-				  aux.put("hotel_id",fila.get("hotel_id"));
-				  
-				  habs_disp_ids = Arrays
-						  			.stream( ((String)fila.get("habs_disp_ids")).split(",") )
-						  			.map( idString -> Integer.valueOf(idString) )
-						  			.toArray(Integer[]::new);
-				  aux.put("habs_disp_ids",habs_disp_ids);
-				  
-				  habs_disp_nombres = ((String)fila.get("habs_disp_nombres")).split(",");
-				  aux.put("habs_disp_nombres",habs_disp_nombres);
-				
+				  aux.put( "hotel_id" , fila.get("hotel_id") );
+				  aux.put( "habs" , tratarFilaDisponibles(fila) );
+				    
 				res.add(aux);
 			}
 		}
+		
 		return res;
 	}
 	
+	// Cada Properties es así:
+	// -tipo_hab_id: int
+	// -nombre: String
+	// -precio_total: int
+	private List<Properties> tratarFilaDisponibles(Map<String,Object> fila) {
+		List<Properties> res = new ArrayList<>();
+		
+	    Integer[] habsIds = stringToArray( (String) fila.get("habs_disp_ids") );
+	    String[] habsNombres = ((String) fila.get("habs_disp_nombres")).split(",");
+	    Integer[] precios = stringToArray( (String) fila.get("precios_totales") );
 
+	    Properties aux;
+	    for(int i=0;i<habsIds.length;i++) {
+	    	aux = new Properties();
+	    	  aux.put("tipo_hab_id",habsIds[i]);
+	    	  aux.put("nombre",habsNombres[i]);
+	    	  aux.put("precio_total",precios[i]);
+	    	  
+	    	res.add(aux);
+	    }
+	    
+		return res;
+	}
 	
+	// Convierte una lista de números separados por comas
+	// en un array: "1,2,3" -> [1,2,3]
+	private Integer[] stringToArray(String s) {
+		return Arrays
+				 .stream( s.split(",") )
+				 .map( numStr -> Integer.valueOf(numStr) )
+				 .toArray(Integer[]::new);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println( new HotelDAO().disponibles(Date.valueOf("2020-04-27"),
+									   Date.valueOf("2020-04-30")));
+		
+	}
 
 	/*
 	 * Cada Properties de la lista tiene los siguientes atributos:

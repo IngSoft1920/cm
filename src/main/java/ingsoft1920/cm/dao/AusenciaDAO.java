@@ -210,10 +210,6 @@ public class AusenciaDAO {
 	}
 	
 
-	public static void main(String[] args) {
-		
-		AusenciaDAO dao = new AusenciaDAO();
-		System.out.println( dao.ausenciasConCliente() );
-	}
+
 	
 }
