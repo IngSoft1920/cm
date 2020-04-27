@@ -11,10 +11,11 @@ public class BeneficiosGastosModel {
 	private HashMap <String, Double> sumaFacturas;
 	// key=tipo_empleado (rol), value= dinero total por rol
 	private HashMap <String, Double> sueldoEmpleados;
+	//key=producto, value=dinero total por producto
 	private HashMap <String, Double> gastoComida;
 	private double total;
 	
-	public BeneficiosGastosModel(String nombreHotel, double gastoComida) {
+	public BeneficiosGastosModel(String nombreHotel) {
 		this.nombreHotel = nombreHotel;
 		this.sumaReservas = new HashMap <String, Double> ();
 		this.sumaFacturas = new HashMap <String, Double> ();
@@ -65,8 +66,38 @@ public class BeneficiosGastosModel {
 	public void setTotal(double total) {
 		this.total = total;
 	}
-	
-	
+/*	
+	public static HashMap<Integer, BeneficiosGastosModel> gastosProveedores( HashMap<Integer, BeneficiosGastosModel> map) {
+	String gastosProveedores =
+			"SELECT P1.id AS Pedido ,PP.cantidad AS cantidad ,P2.id AS producto_id, P2.nombre AS nombre_producto, "
+			+ "HPP.precio AS precio,HPP.hotel_id AS hotel_id, H.nombre AS nombre" + "FROM Pedido AS P1" + 
+					"JOIN Pedido_Producto AS PP ON P1.id = PP.pedido_id" +"JOIN Producto AS P2 ON PP.producto_id=P2.id"+ 
+							+ "JOIN Hotel_Proveedor_Producto AS HPP ON P2.id=HPP.producto_id AND P1.hotel_id=HPP.hotel_id" + 
+					"JOIN Hotel AS H ON P1.hotel_id=H.id" + "ORDER BY P1.id";
+	java.sql.Statement stmt= null;
+	ResultSet rs= null;
+	BeneficiosGastosModel aux;
+	try {
+		stmt=conector.getConn().createStatement();
+		rs=stmt.executeQuery(gastosProveedores);
+                    HashMap <String, Double> servicios;
+		while(rs.next()) {
+			map.get(rs.getInt("HPP.hotel_id"));
+			if(rs!=null) {
+			   servicios.put(rs.getString("P1.id") , rs.getInt(HPP.precio));
+				
+			}
+			
+		}
+	}catch (SQLException ex){ 
+		System.out.println("SQLException: " + ex.getMessage());
+	} finally { // it is a good idea to release resources in a finally block 
+		if (rs != null) { try { rs.close(); } catch (SQLException sqlEx) { } rs = null; } 
+		if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
+	}
+	return map;
+}*/
+
 
 
 }
