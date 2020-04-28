@@ -1,6 +1,6 @@
 package ingsoft1920.cm.controller;
 
-import java.util.HashMap;
+import java.util.HashMap;	
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public class BeneficioController {
 	   public String beneficios(Model m) {
 		 
 		beneficios_gastos = FacturaDAO.sumaReservas();
-		beneficios_gastos = FacturaDAO.gastosAlimentosPorHotel(beneficios_gastos);
+		//beneficios_gastos = FacturaDAO.gastosAlimentosPorHotel(beneficios_gastos);
 		beneficios_gastos = ConexionEM.peticionSueldoEmpleados(beneficios_gastos);
 		beneficios_gastos = FacturaDAO.beneficiosServicios(beneficios_gastos);
 		// ModelAndView modelAndView = new ModelAndView("fna/beneficio0.jsp", "command", bg);
