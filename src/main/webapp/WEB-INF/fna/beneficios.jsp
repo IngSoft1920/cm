@@ -7,46 +7,58 @@
    
    <body>
    
-      <h2>Submitted User Information</h2>
-      <table>
-	
+     
+      <div align="center">
+     <h2>User Submitted Information </h2>
 	<c:forEach items="${treasureMap}" var="entry">
-		   			  <tr>
+		    <table border="1" cellpadding="5">
+		    	   	<caption><h2>Submitted User Information for ${entry.value.nombreHotel} <br>ID: ${entry.key}</td>   </h2></caption>
+		   			 
+		   			  
 					 < c:if test = "${BeneficioBean.reserva}">
+					 <tr>
 							 <td> <b>Ingresos por estancia en habitaciones:</b> </td>
         							<c:forEach items="${entry.value.sumaReservas}" var="serv">
 				   	     				    <td>${serv.key}: <vd> ${serv.value}</vd><td>
 				 	      			   </c:forEach>
+					</tr>
       							 </c:if>
+				
 
 						<c:if test = "${BeneficioBean.servicios}">
+					<tr>
 						 <td> <b>Ingresos por servicios ofrecidos:</b> </td>
         					<c:forEach items="${entry.value.sumaFacturas}" var="fact">
 		       			    <td>${fact.key}: <vd> ${fact.value}</vd><td>
 				 	      	 </c:forEach>
+					</tr>
       					     </c:if>
 
 					     <c:if test = "${BeneficioBean.empleados}">
+					     <tr>
 						 <td> <b>Dinero Invertido en Empleados:</b> </td>
         					<c:forEach items="${entry.value.sueldoEmpleados}" var="sl">
 		       			    <td>${sl.key}: <vd> ${sl.value}</vd><td>
 				 	      	 </c:forEach>
+						 </tr>
       					     </c:if>
 
 					     <c:if test = "${BeneficioBean.comida}">
+					     <tr>
 						 <td> <b>Dinero Invertido en Productos Alimenticios:</b> </td>
-        					<c:forEach items="${entry.value.gastoComida}" var="fact">
-		       			    <td>${fact.key}: <vd> ${fact.value}</vd><td>
-				 	      	 </c:forEach>
+        					
+		       			    <td> <vd> ${entry.value.gastoComida}</vd><td>
+				 	      	</tr> 
       					     </c:if>
 									     
-					</tr>
+					
               						
 
 							
-
-							
-         				 	 </table>
+					 </table>
+		</c:forEach>					
+         				 	
+						 </div>
 
 				 </body>
 				</html>

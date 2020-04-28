@@ -10,7 +10,7 @@
          <table>
 
 
-	<tr>
+		<tr>
               <td> <form:checkbox path="reserva"/>Ingresos de Reservas </td>       
             </tr>
 
@@ -25,7 +25,7 @@
 	    		 
 
 		<tr>
-               <
+               
                <td><form:checkbox path = "comida" /> Dinero Invertido en Productos Alimenticios</td>
             </tr> 
 
