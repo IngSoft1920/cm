@@ -55,6 +55,20 @@ public class TipoHabitacionDAO {
 
         return res;
     }
+    
+    public Tipo_Habitacion getByNombre(String nombre){
+        Tipo_Habitacion res = null;
+        BeanHandler<Tipo_Habitacion> handler = new BeanHandler<>(Tipo_Habitacion.class);
+        String query = "SELECT * FROM Tipo_Habitacion WHERE nombre_tipo = ?";
+        
+        try ( Connection conn = conector.getConn() )
+        {
+            res = runner.query(conn, query, handler, nombre);
+
+        } catch(Exception e) { e.printStackTrace(); }
+
+        return res;
+    }
 
     public List<Tipo_Habitacion> tipos(){
         List<Tipo_Habitacion> res = new ArrayList<>();

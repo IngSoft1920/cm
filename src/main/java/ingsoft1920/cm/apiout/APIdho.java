@@ -1,8 +1,6 @@
 package ingsoft1920.cm.apiout;
 
 
-import org.apache.http.client.methods.HttpPost;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
