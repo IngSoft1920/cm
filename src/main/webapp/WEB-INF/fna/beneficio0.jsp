@@ -1,13 +1,15 @@
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
    <head>
-      <title>Spring MVC Form Handling</title>
+      <title>Parametros de Búsqueda</title>
    </head>
    <body>
+   <div align="center">
 	<h2>Seleccione la informacion a mostrar</h2>
 
 	 <form:form method = "POST" action = "beneficio0" modelAttribute="BeneficioBean">
-         <table>
+         <table line-height="200px" height="200px">
 
 
 		<tr>
@@ -26,7 +28,7 @@
 
 		<tr>
                
-               <td><form:checkbox path = "comida" /> Dinero Invertido en Productos Alimenticios</td>
+               <td><form:checkbox path = "comida" /> Gastos en productos de proveedores</td>
             </tr> 
 
 	    <tr>
@@ -37,5 +39,6 @@
 
 	 </table>  
       </form:form>
+      </div>
    </body>
 </html>
