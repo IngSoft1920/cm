@@ -186,7 +186,7 @@ public class ReservaController {
 			  elem.addProperty("importe", r.getImporte());
 			  elem.addProperty("fecha_entrada", r.getFecha_entrada().toString());
 			  elem.addProperty("fecha_salida", r.getFecha_salida().toString());
-			  elem.addProperty("valoracion", valoracionDao.valoracionHotel(cliente_id, r.getHotel_id()) );
+			  elem.addProperty("valoracion", (int) valoracionDao.valoracionHotel(cliente_id, r.getHotel_id()) );
 
 			res.add(elem);
 		}
