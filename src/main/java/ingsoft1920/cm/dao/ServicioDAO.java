@@ -54,6 +54,19 @@ public class ServicioDAO {
 		
 		return res;
 	}
+	
+	public Servicio getByNombre(String nombre) {
+		Servicio res=null;
+		BeanHandler<Servicio> handler = new BeanHandler<>(Servicio.class);
+		String query = "SELECT * FROM Servicio WHERE nombre = ?";
+
+		try (Connection conn = conector.getConn()) {
+			res = runner.query(conn, query, handler,nombre);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		return res;
+	}
 
 	public List<Servicio> servicios() {
 		List<Servicio> res = new ArrayList<>();

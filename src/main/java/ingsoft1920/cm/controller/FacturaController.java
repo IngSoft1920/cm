@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +17,9 @@ import com.google.gson.JsonParser;
 
 import ingsoft1920.cm.bean.Factura;
 import ingsoft1920.cm.dao.FacturaDAO;
-import ingsoft1920.cm.dao.TipoHabitacionDAO;
+import ingsoft1920.cm.dao.ServicioDAO;
 
+@Controller
 public class FacturaController {
 
 	@Autowired
@@ -44,6 +46,8 @@ public class FacturaController {
 	@PostMapping("/facturas")
 	@ResponseBody
 	public void volcarFacturas(@RequestBody String json) {
+		
+		System.out.println( json );
 
 		JsonArray jsonA = JsonParser.parseString(json).getAsJsonArray();
 		Factura factura = new Factura();
@@ -60,7 +64,7 @@ public class FacturaController {
 				  factura.setImporte(jsonO.get("importe").getAsInt());
 				  factura.setPagado(jsonO.get("pagado").getAsBoolean());
 				  factura.setCantidad_consumida(jsonO.get("cantidad_consumida").getAsInt());
-				  factura.setServicio_id(new TipoHabitacionDAO().getByNombre(jsonO.get("nombre_servicio").getAsString()).getId());
+				  factura.setServicio_id(new ServicioDAO().getByNombre(jsonO.get("nombre_servicio").getAsString()).getId());
 				  factura.setReserva_id(jsonO.get("reserva_id").getAsInt());
 
 				dao.anadir(factura);
