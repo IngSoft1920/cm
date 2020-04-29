@@ -21,7 +21,7 @@ CREATE TABLE `Hotel`(
 
 CREATE TABLE `Tipo_Habitacion` (
 	`id` INT AUTO_INCREMENT,
-	`nombre` VARCHAR(100) NOT NULL,
+	`nombre_tipo` VARCHAR(100) NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -110,6 +110,7 @@ CREATE TABLE `Pedido_Producto` (
 	`pedido_id` INT NOT NULL,
 	`producto_id` INT NOT NULL,
 	`cantidad` DOUBLE NOT NULL,
+	`especificaciones` VARCHAR(200),
 	FOREIGN KEY (`pedido_id`) REFERENCES `Pedido` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	PRIMARY KEY (`pedido_id`,`producto_id`)
@@ -145,6 +146,7 @@ CREATE TABLE `Hotel_Servicio` (
     `servicio_id` INT,
     `precio` INT,
     `unidad_medida` VARCHAR(40),
+    `num_instalaciones` INT,
     FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`servicio_id`) REFERENCES `Servicio` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     PRIMARY KEY (`hotel_id`,`servicio_id`)
@@ -162,6 +164,7 @@ CREATE TABLE `Empleado` (
     `telefono` VARCHAR(15) NOT NULL,
     `sueldo` DOUBLE,
     `profesion_id` INT,
+    `dias_libres` JSON,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`profesion_id`) REFERENCES `Profesion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -182,7 +185,7 @@ CREATE TABLE `Ausencia`	(
     `fecha_fin` DATE,
     `estado` ENUM('denegada', 'aprobada', 'pendiente'),
     `empleado_id` INT,
-    PRIMARY KEY (`id`),
+    PRIMARY KEY (`id`,`motivo`),
     FOREIGN KEY (`empleado_id`) REFERENCES `Empleado` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -199,6 +202,7 @@ CREATE TABLE `Cliente` (
     `telefono` VARCHAR(15),
     `email` VARCHAR(100) UNIQUE,
     `password` VARCHAR(100),
+    `preferencias` VARCHAR(200),
     PRIMARY KEY (id)
 );
 
@@ -225,6 +229,7 @@ CREATE TABLE `Reserva`	(
     `hotel_id` INT NOT NULL,
     `cliente_id` INT,
     `tipo_hab_id` INT NOT NULL,
+    `metodo_pago` ENUM('efectivo','pagado'),
     PRIMARY KEY (`id`),
     FOREIGN KEY (`cliente_id`) REFERENCES `Cliente` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (`tipo_hab_id`) REFERENCES `Tipo_Habitacion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,

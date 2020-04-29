@@ -1,12 +1,18 @@
 package ingsoft1920.cm.controller;
 
+import java.util.ArrayList;	
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -75,6 +81,69 @@ public class ClienteController {
 		} else {
 			return new Gson().toJson(cliente, Cliente.class).toString();
 		}
+	}
+	
+	@GetMapping("/clientes")
+	@ResponseBody
+	public String clientesIds() {
+		List<Cliente> listaClientes = dao.clientes();
+
+
+		JsonArray res = new JsonArray();
+		JsonObject elem;
+		int i=0;
+		for (Cliente c : listaClientes) {
+			elem = new JsonObject();
+			elem.addProperty("id",c.getId());
+			elem.addProperty("nombre", c.getNombre());
+			res.add(elem);
+		}
+		
+		return res.toString();
+	}
+	
+	@GetMapping("/nombre-clientes")
+	@ResponseBody
+	public String clientesNombres() {
+		List<Cliente> listaClientes = dao.clientes();
+		List<String> listaNombres = new ArrayList<>();
+
+		JsonArray res = new JsonArray();
+		JsonObject elem;
+		for (Cliente c : listaClientes) {
+			listaNombres.add(c.getNombre());
+		}
+		elem = new JsonObject();
+		elem.addProperty("nombre-clientes", listaNombres.toString());
+		res.add(elem);
+
+		return res.toString();
+	}
+	
+	
+	@GetMapping("/preferencias/{cliente_id}")
+	@ResponseBody
+	public String preferenciasCliente(@PathVariable int cliente_id) {
+		JsonObject res = new JsonObject();
+		  res.addProperty("preferencias", dao.preferenciasCliente(cliente_id) );
+
+		return res.toString();
+	}
+	
+	@PostMapping("preferencias/{cliente_id}")
+	@ResponseBody
+	public String recibirPreferenciasCliente(@PathVariable int cliente_id,
+										   @RequestBody String json)
+	{
+		String nuevasPreferencias = JsonParser
+										.parseString(json)
+										.getAsJsonObject()
+										.get("preferencias")
+										.getAsString();
+		
+		dao.anadirPreferenciasCliente(cliente_id, nuevasPreferencias);
+		
+		return "ok";
 	}
 
 }

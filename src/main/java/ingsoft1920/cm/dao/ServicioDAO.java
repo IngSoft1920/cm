@@ -1,6 +1,6 @@
 package ingsoft1920.cm.dao;
 
-import java.math.BigInteger;	
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,32 +27,15 @@ public class ServicioDAO {
 	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 
-	// Cada Properties nos da info de las profesiones que atienden
-	// a dicho servicio:
-	// -profesion_id: int
-	public int anadir(Servicio s, List<Properties> info) {
+	public int anadir(Servicio s) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		String query = "INSERT INTO Servicio "
+					  +"(nombre) "
+					  +"VALUES (?);";
 
-		String queryServ = "INSERT INTO Servicio "
-						  +"(nombre) "
-						  +"VALUES (?);";
-
-		String queryProfs = "INSERT INTO Servicio_Profesion "
-						   +"(servicio_id,profesion_id) "
-						   +"VALUES (?,?)";
-
-		List<Object[]> batch;
 		try (Connection conn = conector.getConn()) {
-			res = runner.insert(conn, queryServ, handler, s.getNombre());
-	
-			batch = new ArrayList<>();
-			for (Properties prof : info) {
-				batch.add(new Object[] { res.intValue(),
-										 prof.get("profesion_id") 
-									   });
-			}
-			runner.batch(conn, queryProfs, batch.toArray(new Object[info.size()][]));
+			res = runner.insert(conn, query, handler, s.getNombre());
 
 		} catch (Exception e) { e.printStackTrace(); }
 
@@ -66,6 +49,19 @@ public class ServicioDAO {
 
 		try (Connection conn = conector.getConn()) {
 			res = runner.query(conn, query, handler,servicioID);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		return res;
+	}
+	
+	public Servicio getByNombre(String nombre) {
+		Servicio res=null;
+		BeanHandler<Servicio> handler = new BeanHandler<>(Servicio.class);
+		String query = "SELECT * FROM Servicio WHERE nombre = ?";
+
+		try (Connection conn = conector.getConn()) {
+			res = runner.query(conn, query, handler,nombre);
 
 		} catch (Exception e) { e.printStackTrace(); }
 		
@@ -90,10 +86,11 @@ public class ServicioDAO {
 	// -nombre: String
 	// -precio: Integer
 	// -unidad_medida: String
+	// -num_instalaciones: int
 	public List<Properties> serviciosHotel(int hotelID) {
 		List<Map<String, Object>> resConsulta = null;
 		MapListHandler handler = new MapListHandler();
-		String query = "SELECT s.*,hs.precio,hs.unidad_medida "
+		String query = "SELECT s.*,hs.precio,hs.unidad_medida,hs.num_instalaciones "
 					  +"FROM Servicio s "
 					  +"JOIN Hotel_Servicio hs ON s.id = hs.servicio_id "
 					  +"WHERE hs.hotel_id = ?";
@@ -110,9 +107,10 @@ public class ServicioDAO {
 			aux.put("id", fila.get("id") );
 			aux.put("nombre", fila.get("nombre") );
 			
-			// Estos dos campos podrían ser null
-			aux.put("precio", fila.get("precio") != null ? fila.get("precio") : "null" );
-			aux.put("unidad_medida", fila.get("unidad_medida") != null ? fila.get("unidad_medida") : "null" );
+			// Estos campos podrían ser null
+			if( fila.get("precio")!=null ) aux.put("precio", fila.get("precio"));
+			if( fila.get("unidad_medida")!=null ) aux.put("unidad_medida", fila.get("unidad_medida"));
+			if( fila.get("num_instalaciones")!=null ) aux.put("num_instalaciones", fila.get("num_instalaciones"));
 			
 			res.add(aux);
 		}

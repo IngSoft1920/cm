@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
-    <title>Home Page</title>
+    <title>Inicio</title>
 </head>
 
 <body>
@@ -19,20 +19,20 @@
         </div>
         <nav>
             <ul class="nav-links">
-                <li><a class="nav-link" href="/hoteles">Hoteles</a>
-                </li>
-                <li><a class="nav-link" href="/empleados">Empleados</a>
-                </li>
-                <li><a class="nav-link" href="/proveedores">Proveedores</a>
-                </li>
-                <li><a class="nav-link" href="#">Facturación</a></li>
+                <li><a class="nav-link" href="/hoteles">Hoteles</a></li>
+                <li><a class="nav-link" href="/select-hoteles">Empleados</a></li>
+                <li><a class="nav-link" href="/proveedores">Proveedores</a></li>
+                <li><a class="nav-link" href="/beneficio0">Facturación</a></li>
+                <li><a class="nav-link" href="/ausencias"> Ausencias </a></li>
+                <li><a class="nav-link" href="/configuracion"> Configuración </a></li>
+
             </ul>
         </nav>
-        <div class="login">
+        <!-- <div class="login">
             <a href="/login-corp">
                 <img src="https://img.icons8.com/metro/26/000000/user-male.png">
             </a>
-        </div>
+        </div> -->
     </header>
 
     <main>
@@ -44,17 +44,15 @@
                         La nueva forma de vivir la experiencia hotelera.
                     </p>
                 </div>
-                <div class="cta">
+                <!-- <div class="cta">
                     <form action="">
                         <button class="cta-select" type="submit" formaction="login-corp">Iniciar Sesión</button>
                     </form>
 
-                </div>
+                </div> -->
             </div>
             <div class="cover">
-                
-                    <img src="./img/white-boats-on-body-of-water-2265876.jpg" alt="world" />
-             
+                <img src="./img/white-boats-on-body-of-water-2265876.jpg" alt="world" />
             </div>
         </section>
 

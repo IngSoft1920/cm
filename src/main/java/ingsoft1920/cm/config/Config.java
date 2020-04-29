@@ -1,6 +1,6 @@
 package ingsoft1920.cm.config;
 
-import org.apache.commons.dbutils.QueryRunner;	
+import org.apache.commons.dbutils.QueryRunner;
 import org.springframework.context.annotation.Bean;
 
 import ingsoft1920.cm.conector.ConectorBBDD;

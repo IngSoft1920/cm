@@ -1,4 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
@@ -11,12 +14,12 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Añadir Categoria</title>
+    <title>Asignar Proveedor Hotel</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -46,50 +49,79 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="../css/form-validation.css" rel="stylesheet">
+    <link href="/css/form-validation.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Añadir Categoria</h2>
-            <p class="lead">Añadir categoria a la cadena.</p>
+            <h2>Asignar Proveedor a Hotel</h2>
+           
         </div>
 
         <div class="row center">
-
             <div class="col-md-18 order-md-1">
-
-                <form class="needs-validation" novalidate="">
+                <form class="needs-validation" method="POST" novalidate>
                     <div class="mb-3">
-                        <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Nombre de la categoria" value="" required="">
-                        <div class="invalid-feedback">
-                            El nombre de la categoria es obligatorio
-                        </div>
+                        <label for="nombre">Empresa</label>
+                        <input type="text" class="form-control" value="${proveedor.empresa}" readonly>
                     </div>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
+
+                    <div class="mb-3">
+                        <label>CIF</label>
+                        <input type="text" class="form-control" value="${proveedor.CIF}" readonly>
+                    </div>
+
+                    <div class="row">
+                        <c:forEach var="producto" items="${productos}"> 
+                            
+                            <div class="col-md-3 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="hidden" value="${producto.id}" name="productosIDs">
+                                    <br>
+                                    <label>${producto.nombre}</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <label for="precio">Precio</label>
+                                <input type="number" class="form-control" id="precio" name="precios">
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <label for="unidad">Unidad de Medida</label>
+                                <input type="text" class="form-control" id="unidad" name="unidadesMedida">
+                            </div>
+                        
+                        </c:forEach>
+                    </div>
+                    
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Asignar</button>
                 </form>
+               
             </div>
         </div>
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">© 2020 Company Name</p>
+            <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
-                <p class="float-right">
-                    <a href="/index.html">Back to Home</a>
+                <p class="float-left">
+                    <a href="/proveedores">Volver a proveedores</a>
                 </p>
-
+                <p class="float-right">
+                    <a href="/inicio">Volver a inicio</a>
+                </p>
             </div>
         </footer>
     </div>
-    <script src="../js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="/js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
-    <script src="../js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
-    <script src="../js/form-validation.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/form-validation.js"></script>
 
 </body>
 

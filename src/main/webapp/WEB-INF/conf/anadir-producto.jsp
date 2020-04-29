@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
 <html lang="en">
@@ -11,12 +14,12 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Ver Empleado</title>
+    <title>Añadir Producto</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -46,63 +49,26 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="/css/form-validation.css" rel="stylesheet">
+    <link href="../css/form-validation.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Visualizar Empleado</h2>
+            <h2>Añadir Producto</h2>
         </div>
 
         <div class="row center">
             <div class="col-md-18 order-md-1">
-
-                <div class="mb-3">
-                    <label>Nombre</label>
-                    <input type="text" class="form-control" value="${empleado.nombre}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label>Apellidos</label>
-                    <input type="text" class="form-control" value="${empleado.apellidos}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label>Email</label>
-                    <input type="text" class="form-control" value="${empleado.email}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label>Teléfono</label>
-                    <input type="text" class="form-control" value="${empleado.telefono}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label>Sueldo</label>
-                    <input type="text" class="form-control" value="${empleado.sueldo}€" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label>Profesión</label>
-                    <input type="text" class="form-control" value="${nombreProf}" readonly>
-                </div>
-
-                <c:if test="${!empty diasLibres}">
-                    <div class="row">
-                        <div class="col-md-10 mb-3">
-                            <label>Días Libres</label>
-                            <c:forEach var="dia" items="${diasLibres}">
-                                <div class="form-check">${dia}</div>
-                            </c:forEach>
-                        </div>
+                <form class="needs-validation" method="POST" novalidate>
+                    <div class="mb-3">
+                        <label for="firstName">Producto</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="tomate" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
-                </c:if>
-
-
-                
-                <hr class="mb-4">
-                <a class="btn btn-primary btn-lg btn-block" href="/select/empleados/${hotel_id}" role="button">Volver a Empleados</a>
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
+                </form>
             </div>
         </div>
 
@@ -110,21 +76,21 @@
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
+                <p class="float-left">
+                    <a href="/configuracion">Volver a configuración</a>
+                </p>
                 <p class="float-right">
                     <a href="/inicio">Volver a inicio</a>
                 </p>
-
             </div>
         </footer>
     </div>
-
-    <script src="/js/jquery-3.4.1.slim.min.js"></script>
+    <script src="../js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/form-validation.js"></script>
-
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/form-validation.js"></script>
 
 </body>
 

@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -45,7 +44,8 @@ public class ProductoDAO {
 		BeanHandler<Producto> handler = new BeanHandler<>(Producto.class);
 		String query = "SELECT * FROM Producto WHERE id = ?";
 
-		try (Connection conn = conector.getConn()) {
+		try (Connection conn = conector.getConn()) 
+		{
 			res = runner.query(conn, query, handler,productoID);
 
 		} catch (Exception e) { e.printStackTrace(); }
@@ -58,8 +58,27 @@ public class ProductoDAO {
 		BeanListHandler<Producto> handler = new BeanListHandler<>(Producto.class);
 		String query = "SELECT * FROM Producto";
 
-		try (Connection conn = conector.getConn()) {
+		try (Connection conn = conector.getConn()) 
+		{
 			res = runner.query(conn, query, handler);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		return res;
+	}
+	
+	public List<Producto> productosProveedor(int id) {
+		List<Producto> res = new ArrayList<>();
+		BeanListHandler<Producto> handler = new BeanListHandler<>(Producto.class);
+		String query = "SELECT p.* "
+					  +"FROM Producto p "
+					  +"JOIN Proveedor_Producto pp ON p.id=pp.producto_id "
+					  +"JOIN Proveedor pr ON pp.proveedor_id=pr.id "
+					  +"WHERE pr.id=? ";
+
+		try (Connection conn = conector.getConn()) 
+		{
+			res = runner.query(conn, query, handler,id);
 
 		} catch (Exception e) { e.printStackTrace(); }
 		

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
@@ -12,12 +13,12 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Editar Hotel</title>
+    <title>Editar Empleado</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -58,85 +59,114 @@
         </div>
 
         <div class="row center">
-
             <div class="col-md-18 order-md-1">
+                <form class="needs-validation" method="POST" novalidate>
 
-                <form class="needs-validation" novalidate="" method="POST">
                     <div class="mb-3">
-                        <label for="firstName">Nombre</label>
-                        <input type="text" class="form-control" name="firstName" placeholder="Nombre" value="${empleado.nombre}" required="">
-                        <div class="invalid-feedback">
-                            Required field.
-                        </div>
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" name="firstName" value="${empleado.nombre}" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="lastNames">Apellidos</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="lastNames" placeholder="Apellidos" value="${empleado.apellidos}" required="">
-                            <div class="invalid-feedback" style="width: 100%;">
-                                Required field.
+                        <label>Apellidos</label>
+                        <input type="text" class="form-control" name="lastNames" value="${empleado.apellidos}" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Email </label>
+                        <input type="text" class="form-control" name="email" value="${empleado.email}" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Teléfono</label>
+                        <input type="text" class="form-control" name="telefono" value="${empleado.telefono}" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Sueldo</label>
+                        <input type="number" class="form-control" name="sueldo" min="0" value="${empleado.sueldo}" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label>Profesión</label>
+                            <c:forEach var="profesion" items="${profesiones}">  
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="${profesion.id}" name="profesionID" required <c:if test="${profesion.id == empleado.profesion_id}">checked="true"</c:if> >
+                                    <label>${profesion.nombre}</label>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label>Días Libres</label>
+    
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="0" <c:if test="${fn:contains(empleado.dias_libres,'0')}">checked</c:if> >
+                                <label>Lunes</label>
+                            </div>
+                          
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="1" <c:if test="${fn:contains(empleado.dias_libres,'1')}">checked</c:if> >
+                                <label>Martes</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="2" <c:if test="${fn:contains(empleado.dias_libres,'2')}">checked</c:if> >
+                                <label>Miércoles</label>
+                            </div>
+
+                             <div class="form-check">
+                                 <input type="checkbox" class="form-check-input" name="diasLibres" value="3" <c:if test="${fn:contains(empleado.dias_libres,'3')}">checked</c:if> >
+                                 <label>Jueves</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="4" <c:if test="${fn:contains(empleado.dias_libres,'4')}">checked</c:if> >
+                                <label>Viernes</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="5" <c:if test="${fn:contains(empleado.dias_libres,'5')}">checked</c:if> >
+                                <label>Sábado</label>
+                            </div>
+                          
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="diasLibres" value="6" <c:if test="${fn:contains(empleado.dias_libres,'6')}">checked</c:if> >
+                                <label>Domingo</label>
                             </div>
                         </div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="email">Email </label>
-                        <input type="text" class="form-control" name="email" value="${empleado.email}" placeholder="Email" required="">
-                        <div class="invalid-feedback">
-                            Required field.
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="telefono">Teléfono</label>
-                        <input type="text" class="form-control" name="telefono" placeholder="Numero de telef."  value="${empleado.telefono}" required="">
-                        <div class="invalid-feedback">
-                            Required field.
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="sueldo">Sueldo<span class="text-muted">(Optional)</span></label>
-                        <input type="number" class="form-control" name="sueldo" placeholder="Sueldo"  value="${empleado.sueldo}">
-                        <div class="invalid-feedback">
-                            Required field.
-                        </div>
-                    </div>
-
                     
                     <hr class="mb-4">
-
                     <button class="btn btn-primary btn-lg " type="submit" >Guardar cambios</button>
-                    <a class="btn btn-secondary btn-lg" href="/empleados" role="button">Cancelar</a>
+                    <a class="btn btn-secondary btn-lg" href="/select/empleados/${hotel_id}" role="button">Cancelar</a>
                 </form>
             </div>
         </div>
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">© 2020 Company Name</p>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Privacy</a>
-                </li>
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Terms</a>
-                </li>
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Support</a>
-                </li>
-            </ul>
+            <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
                 <p class="float-right">
-                    <a href="/inicio">Back to Home</a>
+                    <a href="/inicio">Volver a inicio</a>
                 </p>
-
             </div>
         </footer>
     </div>
-    <script src="/js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="/js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
-    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/form-validation.js"></script>
 
 </body>

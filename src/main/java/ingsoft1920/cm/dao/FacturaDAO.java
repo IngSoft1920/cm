@@ -6,10 +6,12 @@ import java.sql.Connection;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Factura;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
+@Component
 public class FacturaDAO {
 
     @Autowired

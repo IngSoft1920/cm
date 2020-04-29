@@ -1,5 +1,10 @@
 package ingsoft1920.cm.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 
 public class Empleado {
 	
@@ -10,11 +15,12 @@ public class Empleado {
 	private String telefono;
 	private double sueldo;
 	private int profesion_id;
+	private String dias_libres; //->0-Lunes,1-Martes,...,6-Domingo . Es un json array: '[1,3,4]'
 
 	public Empleado() {}
 
 	public Empleado(int id, String nombre, String apellidos, String email, String telefono, double sueldo,
-			int profesion_id) {
+			int profesion_id, String dias_libres) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -23,10 +29,8 @@ public class Empleado {
 		this.telefono = telefono;
 		this.sueldo = sueldo;
 		this.profesion_id = profesion_id;
+		this.dias_libres = dias_libres;
 	}
-
-
-
 
 	public int getId() {
 		return id;
@@ -71,12 +75,59 @@ public class Empleado {
 		this.profesion_id = profesion_id;
 	}
 
+	public String getDias_libres() {
+		return dias_libres;
+	}
+
+	public void setDias_libres(String dias_libres) {
+		this.dias_libres = dias_libres;
+	}
+	
+	public List<String> getDiasLibresString() {
+		List<String> res = new ArrayList<>();
+		
+		JsonParser
+		  .parseString(dias_libres)
+		  .getAsJsonArray()
+		  .forEach(dia -> {
+			  String diaStr="";
+			  switch(dia.getAsInt()) {
+			  
+			  case 0:
+				  diaStr="Lunes";
+				  break;
+			  case 1:
+				  diaStr="Martes";
+				  break;
+			  case 2:
+				  diaStr="Miércoles";
+				  break;
+			  case 3:
+				  diaStr="Jueves";
+				  break;
+			  case 4:
+				  diaStr="Viernes";
+				  break;
+			  case 5:
+				  diaStr="Sábado";
+				  break;
+			  case 6:
+				  diaStr="Domingo";
+				  break;
+			  }
+			  res.add( diaStr );
+		  });
+		
+		return res;
+	}
+	
+
 	@Override
 	public String toString() {
 		return "Empleado [id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email=" + email
-				+ ", telefono=" + telefono + ", sueldo=" + sueldo + ", profesion_id=" + profesion_id + "]";
+				+ ", telefono=" + telefono + ", sueldo=" + sueldo + ", profesion_id=" + profesion_id + ", dias_libres="
+				+ dias_libres + "]";
 	}
-	
 	
 
 }
