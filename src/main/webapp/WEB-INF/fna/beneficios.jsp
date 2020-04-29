@@ -120,7 +120,7 @@
 					 <tr>
 							 <td> <b>Ingresos por estancia en habitaciones:</b> </td>
         							<c:forEach items="${entry.value.sumaReservas}" var="serv">
-				   	     				    <td>${serv.key}: <vd> ${serv.value}</vd><td>
+				   	     				    <td>${serv.key}: <vd> ${serv.value}€</vd><td>
 				 	      			   </c:forEach>
 					</tr>
       							 </c:if>
@@ -130,7 +130,7 @@
 					<tr>
 						 <td> <b>Ingresos por servicios ofrecidos:</b> </td>
         					<c:forEach items="${entry.value.sumaFacturas}" var="fact">
-		       			    <td>${fact.key}: <vd> ${fact.value}</vd><td>
+		       			    <td>${fact.key}: <vd> ${fact.value}€</vd><td>
 				 	      	 </c:forEach>
 					</tr>
       					     </c:if>
@@ -139,7 +139,7 @@
 					     <tr>
 						 <td> <b>Dinero Invertido en Empleados:</b> </td>
         					<c:forEach items="${entry.value.sueldoEmpleados}" var="sl">
-		       			    <td>${sl.key}: <vd> ${sl.value}</vd><td>
+		       			    <td>${sl.key}: <vd> ${sl.value} €</vd><td>
 				 	      	 </c:forEach>
 						 </tr>
       					     </c:if>
@@ -148,12 +148,15 @@
 					     <tr>
 						 <td> <b>Gastos en productos de proveedores:</b> </td>
         					<c:forEach items="${entry.value.gastoComida}" var="co">
-		       			    <td>${co.key}: <vd> ${co.value}</vd><td>
+		       			    <td>${co.key}: <vd> ${co.value}</vd>€<td>
 				 	      	 </c:forEach>
 				 	      	</tr> 
       					     </c:if>
-									     
-					
+						<tr>
+						<td>
+						Total: ${entry.value.total} €
+						</td>			     
+						</tr>
               						
 
 							
