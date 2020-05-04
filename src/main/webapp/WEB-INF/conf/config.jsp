@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
 
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
 <html lang="en">
 
 <head>
@@ -11,12 +11,12 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Ver Proveedor</title>
+    <title>Configuración</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -46,62 +46,39 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="/css/form-validation.css" rel="stylesheet">
+    <link href="../css/form-validation.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Visualizar Proveedor</h2>
+            <h2>Configuración</h2>
+            <p class="lead">Añadir parámetros</p>
         </div>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
-
-                <div class="mb-3">
-                    <label for="nombre">Empresa</label>
-                    <input type="text" class="form-control" value="${proveedor.empresa}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label>CIF</label>
-                    <input type="text" class="form-control" value="${proveedor.CIF}" readonly>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-5">
-                        <label>Productos</label>
-                        <c:forEach var="producto" items="${productos}">
-                            <div class="form-check">${producto.nombre}</div>
-                        </c:forEach>
-                    </div>
-                </div>
+        <a href="/anadir-categoria" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Categorias</a>
+        <a href="/anadir-servicios" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Servicios</a>
+        <a href="/anadir-profesion" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Profesiones</a>
+        <a href="/anadir-producto" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Productos</a>
+        <a href="/anadir-tipos-hab" class="btn btn-primary btn-lg btn-block btn-huge" role="button">Tipos de habitación</a>
 
 
-                <hr class="mb-4">
-                <a class="btn btn-primary btn-lg btn-block" href="/proveedores" role="button">Volver a Proveedores</a>
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">© 2020 Company Management - UPM</p>
+            <div class="container">
+                <div><a class="float" href="/inicio">Volver a inicio</a></div>
+                <div><a class="float" href="/hoteles">Ir a hoteles</a></div>
+                <div><a class="float" href="/select-hoteles">Ir a empleados</a></div>
+                <div><a class="float" href="/proveedores">Ir a proveedores</a></div>
             </div>
-        </div>
+        </footer>
     </div>
-
-
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">© 2020 Company Management - UPM</p>
-        <div class="container">
-            <p class="float-right">
-                <a href="/inicio">Volver a inicio</a>
-            </p>
-        </div>
-    </footer>
-
-
-    <script src="/js/jquery-3.4.1.slim.min.js" ></script>
+    <script src="/js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js" ></script>
     <script src="/js/form-validation.js"></script>
-
 
 </body>
 

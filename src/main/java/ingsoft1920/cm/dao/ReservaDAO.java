@@ -33,9 +33,10 @@ public class ReservaDAO {
 		BigInteger idGenerado = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 		String query = "INSERT INTO Reserva "
-					  +"(fecha_entrada,fecha_salida,importe,regimen_comida,"
-					  +"numero_acompanantes,hotel_id,cliente_id,tipo_hab_id) "
-					  +"VALUES (?,?,?,?,?,?,?,?);";
+					  +"(fecha_entrada,fecha_salida,importe,"
+					  +"regimen_comida,numero_acompanantes,hotel_id,"
+					  +"cliente_id,tipo_hab_id,metodo_pago) "
+					  +"VALUES (?,?,?,?,?,?,?,?,?);";
 
 		try (Connection conn = conector.getConn())
 		{
@@ -47,7 +48,8 @@ public class ReservaDAO {
 								r.getNumero_acompanantes(),
 								r.getHotel_id(),
 								r.getCliente_id(),
-								r.getTipo_hab_id());
+								r.getTipo_hab_id(),
+								r.getMetodo_pago().toString());
 
 		} catch (Exception e) { e.printStackTrace(); }
 		
@@ -105,7 +107,7 @@ public class ReservaDAO {
 	
 	public static void main(String[] args) {
 		ReservaDAO dao = new ReservaDAO();
-		Reserva r = new Reserva(-1,Date.valueOf("2020-10-01"),Date.valueOf("2020-10-10"), 1000, Regimen.media_pension, 3, 5, 1, 1);
+		Reserva r = new Reserva(-1,Date.valueOf("2020-10-01"),Date.valueOf("2020-10-10"), 1000, Regimen.media_pension, 1, 1, 1, 1, Reserva.Metodo_Pago.efectivo);
 	
 		dao.anadir(r);
 	}

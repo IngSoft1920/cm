@@ -24,7 +24,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/album/">
 
     <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" >
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -68,37 +68,32 @@
 
             <div class="navbar navbar-light bg-light shadow-sm">
                 <div class="container d-flex align-content-start">
-                    <a href="" class="navbar-brand ">
-
-                        <strong>Empleados</strong>
-                    </a>
+                    <strong class="navbar-brand">Empleados</strong>
                     <a class="navbar-nav" href="/inicio">Inicio</a>
-                    <a class="navbar-nav" href="/anadir-empleado">Añadir Empleado</a>
+                    <a class="navbar-nav" href="/anadir-empleado/${id}">Añadir Empleado</a>
+                   
                 </div>
             </div>
         </header>
-
 
         <main role="main">
             <div class="album py- bg-light">
                 <div class="container">  
                     <div class="row">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Sueldo</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
                         
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Apellido</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Sueldo</th>
-                                        <th scope="col">Acciones</th>
-
-                                    </tr>
-                                </thead>
-                        
-                                <tbody>
-                        <c:forEach var="empleado" items="${empleados}">            
+                            <tbody>
+                                <c:forEach var="empleado" items="${empleados}">            
                                     <tr>
                                         <th scope="row">${empleado.id}</th>
                                         <td>${empleado.nombre}</td>
@@ -109,40 +104,31 @@
                                             <div class="btn-group">
                                                 <a class="btn btn-sm btn-outline-secondary" href="/ver-empleado/${empleado.id}" role="button">Ver</a>
                                                 <a class="btn btn-sm btn-outline-secondary" href="/editar-empleado/${empleado.id}" role="button">Editar</a>
-                                                <!-- Button trigger modal -->
-                                                <a class="btn btn-sm btn-outline-secondary" href="/eliminar-empleado/${empleado.id}" role="button">
-                                                    Eliminar
-                                                </a>
-                                                <!-- Modal -->
-                                                
+                                                <a class="btn btn-sm btn-outline-secondary" href="/eliminar-empleado/${empleado.id}" role="button">Eliminar</a>  
+                                            </div>
                                         </td>
                                     </tr>
-                        </c:forEach>     
-                                </tbody>
-                          
-
-                            </table>
-                        
+                                </c:forEach>     
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-
-
         </main>
 
         <footer class="text-muted">
             <div class="container">
                 <p class="float-right">
-                    <a href="">Back to top</a>
+                    <a href="">Volver arriba</a>
                 </p>
-                <p>Lista de empleados que conforman nuestra cadena.</p>
+                <p>Administración de empleados</p>
             </div>
         </footer>
-        <script src="/js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="/js/jquery-3.4.1.slim.min.js"></script>
         <script>
             window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
         </script>
-        <script src="/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+        <script src="/js/bootstrap.bundle.min.js" ></script>
 
 
         </div>

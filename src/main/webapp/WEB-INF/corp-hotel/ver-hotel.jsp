@@ -17,7 +17,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -58,128 +58,93 @@
         </div>
 
         <div class="row center">
-
             <div class="col-md-18 order-md-1">
                 <div class="mb-3">
-                    <label for="firstName">Nombre</label>
-                    <input type="text" class="form-control" id="firstName" readonly value="${hotel.nombre}">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" readonly value="${hotel.nombre}">
                 </div>
 
                 <div class="mb-3">
-                    <label for="username">Continente</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="username" readonly value="${hotel.continente}">
-                    </div>
+                    <label>Continente</label>
+                    <input type="text" class="form-control" readonly value="${hotel.continente}">
                 </div>
 
                 <div class="mb-3">
-                    <label for="text">Pais </label>
-                    <input type="text" class="form-control" id="text" readonly value="${hotel.pais}">
+                    <label>Pais</label>
+                    <input type="text" class="form-control" readonly value="${hotel.pais}">
                 </div>
 
                 <div class="mb-3">
-                    <label for="address">Ciudad</label>
-                    <input type="text" class="form-control" id="address" readonly value="${hotel.ciudad}">
+                    <label>Ciudad</label>
+                    <input type="text" class="form-control" readonly value="${hotel.ciudad}">
                 </div>
 
                 <div class="mb-3">
-                    <label for="address2">Direccion</label>
-                    <input type="text" class="form-control" id="address2" readonly value="${hotel.direccion}">
+                    <label>Dirección</label>
+                    <input type="text" class="form-control" readonly value="${hotel.direccion}">
                 </div>
 
+                <div class="mb-3">
+                    <label>Estrellas</label>
+                    <input type="number" class="form-control" readonly value="${hotel.estrellas}">
+                </div>
+                
                 <div class="row">
-
-                    <div class="col-md-5 mb-3">
-                        <label for="country">Servicios</label>
-                        <!-- Hacer bucle para mostrar los servicios del hotel(id) -->
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" disabled>
-                            <label class="form-check-label" for="defaultCheck1">
-                                Restuaracion
-                            </label>
-                        </div>
-                        
-                    </div>
+                    <div class="col-md-18 mb-3">
+                        <label>Servicios</label>
+                        <c:forEach var="servicio" items="${servicios}">
+                            <div class="form-check mb-3"">
+                                <label>${servicio.nombre}</label>
+                                <input name="numInstalaciones" text="number" class="form-control" value="instalaciones: ${servicio.num_instalaciones}" readonly>
+                                <c:if test="${servicio.precio!=null}">
+                                    <input type="text" class="form-control" value="precio: ${servicio.precio}" readonly>
+                                </c:if>
+                                <c:if test="${servicio.unidad_medida!=null}">
+                                    <input type="text" class="form-control" value="unidad medida: ${servicio.unidad_medida}" readonly>
+                                </c:if>
+                            </div>
+                        </c:forEach>
+                    </div>        
                 </div>
-
-                <div class="row">
-                 <!-- Hacer bucle para mostrar los tipo-habitaciones del hotel(id) -->
-                    <div class="col-md-5 mb-5">
-                        <label for="zip">Habitaciones "tipo"</label>
-                        <input type="number" class="form-control" id="zip" disabled placeholder="50" required="">
-                        <div class="invalid-feedback">
-                            Numero de habitaciones "tipo"
-                        </div>
-                    </div>
-                    
-                </div>
-
-                <div class="row">
-                    <div class="col-md-5 mb-5">
-                        <label for="zip">Estrellas</label>
-                        <input type="number" min="0" max="6" class="form-control" id="zip" value="${hotel.estrellas}" readonly>
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="col-md-5 mb-3">
-                        <label for="country">Categorias</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" checked disabled value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                Family
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" disabled value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                Adult only
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" disabled value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                Se permiten mascotas
-                            </label>
-                        </div>
-
+                        <label>Categorias</label>
+                        <c:forEach var="categoria" items="${categorias}">
+                            <div class="form-check">${categoria.nombre}</div>
+                        </c:forEach>
                     </div>
                 </div>
-
-
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label>Habitaciones</label>
+                        <c:forEach var="hab" items="${habs}">
+                            <div class="form-check">
+                                ${hab.nombre_tipo}
+                                <input type="number" class="form-control" disabled placeholder="${hab.num_disponibles}">
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+                <!-- Esto es una línea separatoria -->
                 <hr class="mb-4">
                 <a class="btn btn-primary btn-lg btn-block" href="/hoteles" role="button">Volver a Hoteles</a>
             </div>
         </div>
-
-
-
         <footer class="my-5 pt-5 text-muted text-center text-small">
-            <p class="mb-1">© 2020 Company Name</p>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Privacy</a>
-                </li>
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Terms</a>
-                </li>
-                <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.4/examples/checkout/#">Support</a>
-                </li>
-            </ul>
+            <p class="mb-1">© 2020 Company Management - UPM</p>
+            
             <div class="container">
                 <p class="float-right">
-                    <a href="/inicio">Back to Home</a>
+                    <a href="/inicio">Volver a inicio</a>
                 </p>
             </div>
         </footer>
     </div>
-
-    <script src="../js/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="../js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
-    <script src="../js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/form-validation.js"></script>
-
-
 </body>
-
 </html>

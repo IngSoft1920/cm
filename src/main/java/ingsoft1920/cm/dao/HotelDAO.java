@@ -2,10 +2,12 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.apiout.APIdho;
 import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.Tipo_Habitacion;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
@@ -41,6 +44,7 @@ public class HotelDAO {
 	// -servicio_id: int
 	// -precio: Integer
 	// -unidad_medida: String
+	// -num_instalaciones: int
 	
 	// *En cats cada Properties tendrá:
 	// -categoria_id: int
@@ -62,8 +66,8 @@ public class HotelDAO {
 						  +"VALUES (?,?,?)";
 
 		String queryServs = "INSERT INTO Hotel_Servicio "
-						   +"(hotel_id,servicio_id,precio,unidad_medida) "
-						   +"VALUES (?,?,?,?)";
+						   +"(hotel_id,servicio_id,precio,unidad_medida,num_instalaciones) "
+						   +"VALUES (?,?,?,?,?)";
 
 		String queryCats = "INSERT INTO Hotel_Categoria "
 						  +"(hotel_id,categoria_id) "
@@ -100,7 +104,8 @@ public class HotelDAO {
 				batch.add(new Object[] { idGenerado.intValue(),
 										 serv.get("servicio_id"),
 										 serv.get("precio"),
-										 serv.get("unidad_medida")
+										 serv.get("unidad_medida"),
+										 serv.get("num_instalaciones")
 									   });
 			}
 			runner.batch(conn, queryServs, batch.toArray(new Object[servs.size()][]));
@@ -161,25 +166,34 @@ public class HotelDAO {
 			runner.update(conn, query, id);
 
 		} catch (Exception e) { e.printStackTrace(); }
-
+		
+		APIdho.eliminarHotel(id);
 	}
 	
-	// TODO: Re-hacer la query criminal
-	// Cada Properties tendrá lo siguiente:
+	// Cada Properties tendrá lo siguiente (esto es así porque al pasarlo
+	// a json la librería lo hace automático):
 	// -hotel_id: int
 	// -habs: List<Properties>, siendo cada Properties a su vez:
 	// 					-tipo_hab_id: int
 	//					-nombre: String
 	//					-precio_total: int
-	public List<Properties> disponibles(Date fecha_entrada, Date fecha_salida) {
+	public List<Properties> disponiblesFalso(Date fecha_entrada, Date fecha_salida) {
 		List<Properties> res = null;
 		List<Map<String, Object>> resConsulta = null;
 		MapListHandler handler = new MapListHandler();
-		String query = "SELECT h.id, GROUP_CONCAT(hth.tipo_hab_id) AS habIDs, GROUP_CONCAT(th.nombre_tipo) AS habNombres "
-					  +" FROM Hotel h "
-					  +" JOIN Hotel_Tipo_Habitacion hth ON h.id = hth.hotel_id "
-					  +" JOIN Tipo_Habitacion th ON hth.tipo_hab_id = th.id "
-					  +"GROUP BY h.id";
+		
+		// Esto nos da las habitaciones disponibles entre esas dos fechas
+		String query = "SELECT ocup.hotel_id,ocup.tipo_hab_id,th.nombre_tipo "
+					  +"FROM"
+					  	   +"("
+					  	     +"SELECT hth.hotel_id,hth.tipo_hab_id,COUNT(*) AS ocupadas,hth.num_disponibles "
+					  	     	+"FROM Hotel_Tipo_Habitacion hth " 
+					  	     	+"JOIN Reserva r ON hth.hotel_id=r.hotel_id AND hth.tipo_hab_id=r.tipo_hab_id "
+					  	     +"WHERE r.fecha_entrada <= ? AND r.fecha_salida >= ? "
+					  	     +"GROUP BY hth.hotel_id,hth.tipo_hab_id"
+					  	     +") AS ocup "
+					  +"JOIN Tipo_Habitacion th ON ocup.tipo_hab_id=th.id "
+					  +"WHERE ocup.num_disponibles - ocup.ocupadas > 0;";
 		
 		try( Connection conn = conector.getConn() )
 		{
@@ -219,6 +233,129 @@ public class HotelDAO {
 		return res;
 	}
 	
+	
+	// Cada Properties tendrá lo siguiente (esto es así porque al pasarlo
+	// a json la librería lo hace automático):
+	// -hotel_id: int
+	// -habitaciones: List<Properties>, siendo cada Properties a su vez:
+	// 					-tipo_hab_id: int
+	//					-nombre: String
+	//					-precio_total: int
+	public List<Properties> disponibles(Date fecha_ent,Date fecha_sal) {
+		List<Properties> res = new ArrayList<>();
+		List<Map<String, Object>> resConsulta = null;
+		MapListHandler handler = new MapListHandler();
+		
+		String query = "SELECT prec.hotel_id,"
+				   			 +"GROUP_CONCAT(prec.tipo_hab_id) AS habs_disp_ids,"
+				   			 +"GROUP_CONCAT(prec.nombre_tipo) AS habs_disp_nombres,"
+				   			 +"GROUP_CONCAT(prec.precio_total) AS precios_totales "
+				   	     +"FROM"
+				   	     	 +"("
+				   	     	  +"SELECT hth.hotel_id,hth.tipo_hab_id,SUM(ph.precio_por_noche) AS precio_total,th.nombre_tipo "
+				   	     	  	  +"FROM Tipo_Habitacion th "
+				   	     	  	  +"JOIN Hotel_Tipo_Habitacion hth ON th.id=hth.tipo_hab_id "
+				   	     	  	  +"JOIN Precio_Habitacion ph ON hth.hotel_id=ph.hotel_id AND hth.tipo_hab_id=ph.tipo_hab_id "
+				   	     	  +"WHERE ph.fecha BETWEEN ? AND ? "
+				   	     	  +"GROUP BY hth.hotel_id,hth.tipo_hab_id"
+				   	     	 +") AS prec "
+				   	     +"JOIN"
+				   	     	 +"("
+				   	     	  +"SELECT ocup.hotel_id,ocup.tipo_hab_id " /*Hoteles con reservas en conflicto con las fechas pedidas pero con capacidad suficiente*/
+				   	     	  	  +"FROM"
+				   	     	  	  	  +"(" 
+				   	     	  	  	   +"SELECT hth.hotel_id,hth.tipo_hab_id,COUNT(*) AS ocupadas,hth.num_disponibles "
+				   	     	  	  	   	  +"FROM Hotel_Tipo_Habitacion hth "
+				   	     	  	  	   	  +"JOIN Reserva r ON hth.hotel_id=r.hotel_id AND hth.tipo_hab_id=r.tipo_hab_id "
+				   	     	  	  	   	+"WHERE r.fecha_entrada <= ? AND r.fecha_salida >= ? "
+				   	     	  	  	   	+"GROUP BY hth.hotel_id, hth.tipo_hab_id "
+				   	     	  	  	   +") AS ocup "
+				   	     	  +"WHERE ocup.num_disponibles - ocup.ocupadas > 0 "
+				   	     	  +"UNION "
+				   	     	  +"SELECT hotel_id,tipo_hab_id " /*Hoteles sin reservas o bien hoteles con reservas pero que no tienen NINGUNA dentro de las fechas pedidas*/
+				   	     	  	  +"FROM Hotel_Tipo_Habitacion "
+				   	     	  +"WHERE (hotel_id,tipo_hab_id) NOT IN ("
+										   			  				+"SELECT hotel_id,tipo_hab_id "
+										   			  					+"FROM Reserva "
+										   			  				+"WHERE fecha_entrada <= ? AND fecha_salida >= ?"
+										   			  			   +")"
+						     +") AS disp "
+					    +"ON prec.hotel_id=disp.hotel_id AND prec.tipo_hab_id=disp.tipo_hab_id "
+					    +"GROUP BY prec.hotel_id";
+		
+		// Esto nos da lo siguiente (ejemplo):
+		// hotel_id  habs_disp_ids   habs_disp_nombres    precios_totales 
+		//    1		 	 1			    normal              411
+		//	  4			3,1		    presidencial,normal     552,428
+		//
+		// -Tal y como se aprecia, las columnas de habs_disp_ids, habs_disp_nombres
+		// y precios_totales están mapeadas
+		
+		try( Connection conn = conector.getConn() )
+		{
+			resConsulta = runner.query(conn,query,handler,
+										fecha_ent,
+										fecha_sal,
+										fecha_sal,
+										fecha_ent,
+										fecha_sal,
+										fecha_ent);
+			
+		} catch( Exception e ) { e.printStackTrace(); }
+		
+		
+		if( resConsulta != null ) {
+			Properties aux;
+			for( Map<String,Object> fila : resConsulta ) {
+				aux = new Properties();
+				  aux.put( "hotel_id" , fila.get("hotel_id") );
+				  aux.put( "habitaciones" , tratarFilaDisponibles(fila) );
+				    
+				res.add(aux);
+			}
+		}
+		
+		return res;
+	}
+	
+	// Cada Properties es así:
+	// -tipo_hab_id: int
+	// -nombre: String
+	// -precio_total: int
+	private List<Properties> tratarFilaDisponibles(Map<String,Object> fila) {
+		List<Properties> res = new ArrayList<>();
+		
+	    Integer[] habsIds = stringToArray( (String) fila.get("habs_disp_ids") );
+	    String[] habsNombres = ((String) fila.get("habs_disp_nombres")).split(",");
+	    Integer[] precios = stringToArray( (String) fila.get("precios_totales") );
+
+	    Properties aux;
+	    for(int i=0;i<habsIds.length;i++) {
+	    	aux = new Properties();
+	    	  aux.put("tipo_hab_id",habsIds[i]);
+	    	  aux.put("nombre",habsNombres[i]);
+	    	  aux.put("precio_total",precios[i]);
+	    	  
+	    	res.add(aux);
+	    }
+	    
+		return res;
+	}
+	
+	// Convierte una lista de números separados por comas
+	// en un array: "1,2,3" -> [1,2,3]
+	private Integer[] stringToArray(String s) {
+		return Arrays
+				 .stream( s.split(",") )
+				 .map( numStr -> Integer.valueOf(numStr) )
+				 .toArray(Integer[]::new);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println( new HotelDAO().disponibles(Date.valueOf("2020-04-27"),
+									   Date.valueOf("2020-04-30")));
+		
+	}
 
 	/*
 	 * Cada Properties de la lista tiene los siguientes atributos:
@@ -293,96 +430,72 @@ public class HotelDAO {
 
 		} catch (Exception e) { e.printStackTrace(); }
 		return res != null ? res.doubleValue() : 0;
-	}
-
-	
-//	/**
-//	 * Metodo para anadir un hotel a BD
-//	 * 
-//	 * @param h
-//	 * @param habs
-//	 * @param servicios
-//	 * @param categorias Creado por Luis(Front)
-//	 */
-//	public void anadirHotel(Hotel h, List<Hotel_Tipo_Habitacion> habs, List<Hotel_Servicio> servicios,
-//			List<Hotel_Categoria> categorias) {
-//		// Primero añadimos el hotel mismamente
-//		BigInteger res = null;
-//		ScalarHandler<BigInteger> handlerH = new ScalarHandler<>();
-//		String queryH = "INSERT INTO Hotel " + "(nombre,continente,pais,ciudad,direccion,estrellas,descripcion) "
-//				+ "VALUES (?,?,?,?,?,?,?);";
-//
-//		String queryHabs = "INSERT INTO Hotel_Tipo_Habitacion " + "(hotel_id,tipo_hab_id,num_disponibles) "
-//				+ "VALUES (?,?,?)";
-//
-//		String queryServ = "INSERT INTO Hotel_Servicio " + "(hotel_id,servicio_id,precio,unidad_medida) "
-//				+ "VALUES (?,?,?,?)";
-//
-//		String queryCat = "INSERT INTO Hotel_Categoria " + "(hotel_id,categoria_id) " + "VALUES (?,?)";
-//
-//		List<Object[]> batch;
-//		try (Connection conn = conector.getConn()) {
-//			res = runner.insert(conn, queryH, handlerH, h.getNombre(), h.getContinente(), h.getPais(), h.getCiudad(),
-//					h.getDireccion(), h.getEstrellas(), h.getDescripcion());
-//
-//			// Enlazamos con los tipo de habitaciones:
-//			batch = new ArrayList<>();
-//			for (Hotel_Tipo_Habitacion hab : habs) {
-//				batch.add(new Object[] { res.intValue(), hab.getTipo_hab_id(), hab.getNum_disponibles() });
-//			}
-//			runner.batch(conn, queryHabs, batch.toArray(new Object[habs.size()][]));
-//
-//			// Enlazamos con los servicios
-//			batch = new ArrayList<>();
-//			for (Hotel_Servicio srv : servicios) {
-//				batch.add(
-//						new Object[] { res.intValue(), srv.getServicio_id(), srv.getPrecio(), srv.getUnidad_medida() });
-//			}
-//			runner.batch(conn, queryServ, batch.toArray(new Object[servicios.size()][]));
-//
-//			// Enlazamos con las categorias
-//			batch = new ArrayList<>();
-//			for (Hotel_Categoria cat : categorias) {
-//				batch.add(new Object[] { res.intValue(), cat.getCategoria_id() });
-//			}
-//			runner.batch(conn, queryCat, batch.toArray(new Object[categorias.size()][]));
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		//return ( res != null ? res.intValue() : -1 );
-//	}
+	}	
 	
 	
-//	public static void main(String[] args) {
-//		
-//		HotelDAO dao = new HotelDAO();
-//		Hotel h = new Hotel(-1, "Hotel New Japón","Asia", "Japón", "Tokyo", "Calle Luna,12", 5, "Oriental");
-//		
-//		Properties hab1 = new Properties();
-//		  hab1.put("tipo_hab_id", 1);
-//		  hab1.put("num_disponibles", 30);
-//		Properties hab2 = new Properties();
-//		  hab2.put("tipo_hab_id", 2);
-//		  hab2.put("num_disponibles", 15);
-//		List<Properties> habs = List.of(hab1,hab2);
-//		
-//		
-//		Properties serv1 = new Properties();
-//		  serv1.put("servicio_id",1);
-//		  serv1.put("precio",100);
-//		  serv1.put("unidad_medida",2);
-//		List<Properties> servs = List.of(serv1);
-//		
-//		
-//		Properties cat1 = new Properties();
-//		  cat1.put("categoria_id",1);
-//		List<Properties> cats = List.of(cat1);
-//
-// 		
-//		dao.anadir(h, habs, servs, cats);
-//		
-//	}	
+	
+	// Cada Properties tendrá
+    // -hab: Tipo_Hab
+    // -tarifa: int
+    // -ocupacion: double (porcentaje)
+    public List<Properties> estadisticasHotelDia(int hotel_id,Date fecha) {
+    	List<Properties> res = new ArrayList<>();
+    	List<Map<String,Object>> resConsulta = null;
+    	MapListHandler handler = new MapListHandler();
+    	String query = "SELECT tarif.id,tarif.nombre_tipo,tarif.tarifa,ocup.ocupacion "
+    					 +"FROM"
+    					 	  +"("
+    					 	   +"SELECT th.id,th.nombre_tipo,ph.precio_por_noche AS tarifa "
+    					 	       +"FROM Precio_Habitacion ph "
+    					 	       +"JOIN Tipo_Habitacion th ON ph.tipo_hab_id=th.id "
+    					 	   +"WHERE hotel_id = ? AND fecha = ? "
+    					 	   +") AS tarif "
+    					 +"JOIN"
+    					 	   +"("
+    					 	    +"SELECT hth.tipo_hab_id,COUNT(*)/hth.num_disponibles AS ocupacion "
+    					 	       +"FROM Hotel_Tipo_Habitacion hth "
+    					 	       +"JOIN Reserva r ON hth.hotel_id=r.hotel_id AND hth.tipo_hab_id=r.tipo_hab_id "
+    					 	    +"WHERE hth.hotel_id = ? AND (? BETWEEN r.fecha_entrada AND r.fecha_salida) "
+    					 	    +"GROUP BY hth.tipo_hab_id "
+    					 	    +"UNION "
+    							+"SELECT DISTINCT tipo_hab_id,0 AS ocupacion "
+    							   +"FROM Hotel_Tipo_Habitacion "
+    							+"WHERE tipo_hab_id NOT IN ("
+    														+"SELECT DISTINCT tipo_hab_id "
+    															+"FROM Reserva "
+    														+"WHERE hotel_id = ? AND (? BETWEEN fecha_entrada AND fecha_salida)"
+    													  +")"
+    					 	    +") AS ocup "
+    					 +"ON tarif.id=ocup.tipo_hab_id;";
+    	
+    	try( Connection conn = conector.getConn() )
+    	{
+    		resConsulta = runner.query(conn,query,handler,hotel_id,
+    													  fecha,
+    													  hotel_id,
+    													  fecha,
+    													  hotel_id,
+    													  fecha);
+    		
+    	} catch( Exception e ) { e.printStackTrace(); }
+    	
+    	if( res!=null ) {
+    		Properties aux;
+    		System.out.println(resConsulta);
+    		for( Map<String,Object> fila : resConsulta ) {
+    			aux = new Properties();
+    			  aux.put("hab",new Tipo_Habitacion( (int) fila.get("id"),
+    					  							(String) fila.get("nombre_tipo")));
+    			  
+    			  aux.put("tarifa", (int) fila.get("tarifa"));
+    			  aux.put("ocupacion", ((BigDecimal)fila.get("ocupacion"))
+    					  						.setScale(2, RoundingMode.HALF_UP)
+    					  						.multiply(BigDecimal.valueOf(100)));
+    			  
+    			res.add(aux);
+    		}
+    	}
+    	return res;
+    }
 
 }

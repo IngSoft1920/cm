@@ -2,17 +2,24 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigInteger;
 import java.sql.Connection;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.apiout.APIem;
 import ingsoft1920.cm.bean.Ausencia;
+import ingsoft1920.cm.bean.Ausencia.Estado;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
@@ -37,6 +44,20 @@ public class AusenciaDAO {
 		
 		return ausencias;
 	}
+	
+	public List<Ausencia> ausenciasPendientes() {
+		BeanListHandler<Ausencia> beanListHandler = new BeanListHandler<>(Ausencia.class);
+		String query = "SELECT * FROM Ausencia WHERE Estado = 'pendiente'";
+		List<Ausencia> ausencias = new LinkedList<>();
+
+		try (Connection conn = conector.getConn()) 
+		{
+			ausencias = runner.query(conn, query, beanListHandler);
+			
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		return ausencias;
+	}
 
 	public void resultadoAusencia(Ausencia a, Ausencia.Estado resolucion) {
 
@@ -49,6 +70,7 @@ public class AusenciaDAO {
 		} catch (Exception e) { e.printStackTrace(); }
 
 		// Notificamos a em del resultado
+		
 		APIem.resultadoAusencia(a.getId(),
 								resolucion.name(),
 								a.getMotivo());
@@ -133,11 +155,61 @@ public class AusenciaDAO {
 		}
 
 	}
+	
+	public Ausencia getById(int id) {
+		Ausencia res=null;
+		BeanHandler<Ausencia> handler = new BeanHandler<>(Ausencia.class);
+		String query = "SELECT * FROM Ausencia WHERE id = ?";
 
-	public static void main(String[] args) {
-		AusenciaDAO dao = new AusenciaDAO();
-		Ausencia primera = dao.ausencias().get(0);
-		dao.resultadoAusencia(primera, Ausencia.Estado.aprobada);
+		try (Connection conn = conector.getConn()) 
+		{
+			res = runner.query(conn, query, handler,id);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		return res;
 	}
+	
+	
+	// Cada Properties tiene
+	// -ausencia: Ausencia
+	// -email_empleado: String
+	public List<Properties> ausenciasConEmpleado() {
+		List<Properties> res = new ArrayList<>();
+		List<Map<String,Object>> resConsulta = null;
+		MapListHandler handler = new MapListHandler();
+		String query = "SELECT a.*, e.email AS email_empleado "
+					  +"FROM Ausencia a "
+					  +"JOIN Empleado e ON a.empleado_id=e.id;";
+		
+		try( Connection conn = conector.getConn() )
+		{
+			resConsulta = runner.query(conn,query,handler);
+			
+		} catch( Exception e ) { e.printStackTrace(); } 
+		
+		if( resConsulta != null ) {
+			Properties aux;
+			for( Map<String,Object> fila : resConsulta ) {
+				aux = new Properties();
+				  
+				  aux.put("ausencia", new Ausencia((int) fila.get("id") ,
+						  						   (String) fila.get("motivo"),
+						  						   (Date) fila.get("fecha_inicio"),
+						  						   (Date) fila.get("fecha_fin"),
+						  						   Ausencia.Estado.valueOf( (String) fila.get("estado")),
+						  						   (int) fila.get("empleado_id")));
+				  
+				  aux.put("email_empleado",(String) fila.get("email_empleado"));
+				  
+				res.add(aux);
+			}
+		}
+		
+		return res;
+	}
+	
+
+
 	
 }

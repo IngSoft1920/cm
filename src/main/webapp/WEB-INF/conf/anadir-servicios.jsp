@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <!DOCTYPE html>
-<!-- saved from url=(0051)https://getbootstrap.com/docs/4.4/examples/sign-in/ -->
+<!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
 <html lang="en">
 
 <head>
@@ -11,12 +11,12 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Signin Template · Bootstrap</title>
+    <title>Añadir Servicios</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/sign-in/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
     <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -46,26 +46,49 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="/css/signin.css" rel="stylesheet">
+    <link href="../css/form-validation.css" rel="stylesheet">
 </head>
 
-<body class="text-center">
-    <form class="form-signin">
-        <img class="mb-4" src="/img/bootstrap-solid.svg" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Iniciar Sesión</h1>
-        <label for="inputEmail" class="sr-only">Correo Electrónico</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required="" autofocus="">
-        <label for="inputPassword" class="sr-only">Contraseña</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="">
-        <div class="checkbox mb-3">
-            <label>
-      <input type="checkbox" value="remember-me"> Recordarme
-    </label>
+<body class="bg-light">
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Añadir Servicios</h2>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Acceder</button>
-        <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
-    </form>
 
+        <div class="row center">
+            <div class="col-md-18 order-md-1">
+                <form class="needs-validation" novalidate="" method="POST">
+                    <div class="mb-3">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="piscina" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
+                </form>
+            </div>
+        </div>
+
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">© 2020 Company Management - UPM</p>
+            <div class="container">
+                <p class="float-left">
+                    <a href="/configuracion">Volver a configuración</a>
+                </p>
+                <p class="float-right">
+                    <a href="/inicio">Volver a inicio</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+    <script src="/js/jquery-3.4.1.slim.min.js" ></script>
+    <script>
+        window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
+    </script>
+    <script src="/js/bootstrap.bundle.min.js" ></script>
+    <script src="/js/form-validation.js"></script>
 
 </body>
 

@@ -10,7 +10,7 @@ import ingsoft1920.cm.dao.HotelDAO;
 
 
 @SpringBootApplication
-public class CmApplication {
+public class CmApplication {	
 	final static Logger logger = LogManager.getLogger(CmApplication.class.getName());
 
 	public static void main(String[] args) {

@@ -1,6 +1,6 @@
 package ingsoft1920.cm.dao;
 
-import java.math.BigInteger;
+import java.math.BigInteger;	
 import java.sql.Connection;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,6 +42,23 @@ public class EmpleadoDAO {
         catch(Exception e) { e.printStackTrace(); }
         return empleados;
     }
+    
+    /**
+     * @param hotel.id
+     * @return List de empleados que pertenezcan al Hotel
+     */
+    public List<Empleado> empleadosPorHotel(int id) {
+        List<Empleado> empleados = new LinkedList<>();
+        BeanListHandler<Empleado> beanListHandler = new BeanListHandler<>(Empleado.class);
+        String getEmpleados = "SELECT e.* FROM Empleado e JOIN Hotel_Empleado he ON e.id=he.empleado_id JOIN Hotel h ON he.hotel_id=h.id WHERE h.id=? ";
+
+        try( Connection conn = conector.getConn() )
+        {
+            empleados = runner.query(conn, getEmpleados, beanListHandler,id);
+        }
+        catch(Exception e) { e.printStackTrace(); }
+        return empleados;
+    }
 
     // *Properties
     // -hotel_id: int
@@ -50,8 +67,8 @@ public class EmpleadoDAO {
     	BigInteger idGenerado = null;
         ScalarHandler<BigInteger> handler = new ScalarHandler<>();
         String queryEmpleado = "INSERT INTO Empleado "
-        					  +"(nombre,apellidos,email,telefono,sueldo,profesion_id) "
-        					  +"VALUES (?, ?, ?, ?, ?, ?);";
+        					  +"(nombre,apellidos,email,telefono,sueldo,profesion_id,dias_libres) "
+        					  +"VALUES (?, ?, ?, ?, ?, ?, ?);";
         
         String queryHotelEmpleado = "INSERT INTO Hotel_Empleado "
         						   +"(empleado_id, hotel_id, fecha_contratacion) "
@@ -65,7 +82,8 @@ public class EmpleadoDAO {
             						   empleado.getEmail(),
             						   empleado.getTelefono(),
             						   empleado.getSueldo(),
-            						   empleado.getProfesion_id()
+            						   empleado.getProfesion_id(),
+            						   empleado.getDias_libres()
             						  );
             
             runner.insert(conn, queryHotelEmpleado, handler,
@@ -106,7 +124,8 @@ public class EmpleadoDAO {
     public void editar(Empleado info){
         String query = "UPDATE Empleado SET "
         			  +"nombre = ?, apellidos = ?, email = ?,"
-        			  +"telefono = ?, sueldo = ?, profesion_id = ? "
+        			  +"telefono = ?, sueldo = ?, profesion_id = ?,"
+        			  +"dias_libres=? "
         			  +"WHERE id = ?";
         
         try( Connection conn = conector.getConn() )
@@ -118,6 +137,7 @@ public class EmpleadoDAO {
         				  info.getTelefono(),
         				  info.getSueldo(),
         				  info.getProfesion_id(),
+        				  info.getDias_libres(),
         				  info.getId()
         				 );
         }
@@ -125,7 +145,7 @@ public class EmpleadoDAO {
         catch(Exception e) { e.printStackTrace(); }
         
         // Notificamos a em
-    	//APIem.editarEmpleado(info);
+    	APIem.editarEmpleado(info);
     }
     
    	public Empleado getByID(int id) {
@@ -141,8 +161,6 @@ public class EmpleadoDAO {
    		return res;
    	}
    	
-   	// TODO: Considerar que un empleado puede trabajar en varios hoteles
-   	// (devolvería un List<Properties>
    	// El Properties tendrá:
    	// -hotel_id: int
    	// -fecha_contratacion: Date
@@ -168,13 +186,13 @@ public class EmpleadoDAO {
     
 
     public static void main(String[] args) {
-    	Empleado test = new Empleado(8, "Pepe", "Gonzalez", "pepe@gmail.com", "600600600", 1500, 1);
-    	Properties hotel = new Properties();
-    	  hotel.put("hotel_id",1);
-    	  hotel.put("fecha_contratacion",Date.valueOf("2020-02-01"));
-    	
-    	//new EmpleadoDAO().anadir(test,hotel);
-    	new EmpleadoDAO().editar(test);
+//    	Empleado test = new Empleado(8, "Pepe", "Gonzalez", "pepe@gmail.com", "600600600", 1500, 1,new Integer[] {5,6});
+//    	Properties hotel = new Properties();
+//    	  hotel.put("hotel_id",1);
+//    	  hotel.put("fecha_contratacion",Date.valueOf("2020-02-01"));
+//    	
+//    	new EmpleadoDAO().anadir(test,hotel);
+//    	//new EmpleadoDAO().editar(test);
     }
 
 }

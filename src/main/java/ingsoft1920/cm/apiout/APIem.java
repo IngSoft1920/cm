@@ -1,6 +1,7 @@
 package ingsoft1920.cm.apiout;
 
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.Properties;
 
 import com.google.gson.JsonArray;
@@ -41,14 +42,12 @@ public class APIem {
   	      json.addProperty("valor",em.getSueldo());
   	      json.addProperty("id_hotel", hotel_id);
   	      json.addProperty("fecha_contratacion",fecha_contratacion.toString());
-  	    
-  	      // Esto habría que cambiarlo:
+  	      json.addProperty("dias_libres",em.getDias_libres());  
+  	      
+  	      // Esto habría que cambiarlo (o no)
   	      json.addProperty("contrasenia", "12345");
-  	      JsonArray diasLibres = new JsonArray();
-  	        diasLibres.add(5);
-  	        diasLibres.add(6);
-  	      json.add("dias_libres",diasLibres);
- 
+  	      
+  	    System.out.println( json.toString() );
   	    APIout.enviar(json.toString(),PUERTO,"/creaEmpleado");
 	}
 	
