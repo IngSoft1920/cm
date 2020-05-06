@@ -90,7 +90,7 @@
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
 					<a href="" class="navbar-brand "> <strong>Beneficio</strong>
-					</a> <a class="navbar-nav" href="/inicio">Inicio</a> <a
+					</a> <a class="navbar-nav" href="/inicio">Inicio</a> 
 					
 
 				</div>
@@ -123,7 +123,7 @@
 				   	     				    <td>${serv.key}: <vd> ${serv.value}€</vd><td>
 				 	      			   </c:forEach>
 					</tr>
-      							 </c:if>
+      						
 				
 
 						<c:if test = "${BeneficioBean.servicios}">

@@ -90,7 +90,7 @@
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
 					<a href="" class="navbar-brand "> <strong>Beneficio</strong>
-					</a> <a class="navbar-nav" href="/inicio">Inicio</a> <a
+					</a> <a class="navbar-nav" href="/inicio">Inicio</a> 
 					<!--class="navbar-nav" href="/anadir-hotel"><strong>Añadir Hotel</strong></a> -->
 
 				</div>
