@@ -74,6 +74,12 @@ public class HomeController {
 	public String homeCorporativo() {
 		return "index.jsp";
 	}
+	
+	@GetMapping("/login")
+	public String loginCorporativo() {
+		return "login.jsp";
+	}
+
 
 	// -------------------HOTELES-----------------------
 	
