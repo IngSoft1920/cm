@@ -513,6 +513,21 @@ public class HomeController {
 		recibirProveedorForm(empresa, cif, productosIDs);
 		return "redirect:/proveedores";
 	}
+	
+	
+	//Ver productos del proveedor
+
+		@GetMapping("/proveedores/productos/{id}")
+		public ModelAndView productosProveedor(@PathVariable(name = "id") int id) {
+			Proveedor proveedor = new ProveedorDAO().getByID(id);
+			List<Producto> productos = productoDao.productosProveedor(id);
+			
+			ModelAndView mav = new ModelAndView("corp-proveedor/productos.jsp");
+			  mav.addObject("proveedor",proveedor);
+			  mav.addObject("productos",productos);
+			 
+			return mav;
+		}
 
 	// Eliminar proveedor
 	@GetMapping("/eliminar-proveedor/{id}")
