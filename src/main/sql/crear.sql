@@ -69,18 +69,23 @@ CREATE TABLE `Proveedor` (
 	`id` INT AUTO_INCREMENT,
 	`empresa` VARCHAR(100) NOT NULL,
 	`CIF` VARCHAR(10) NOT NULL,
+	`usuario`VARCHAR(30),
+	`password` VARCHAR(15),
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Producto` (
 	`id` INT AUTO_INCREMENT,
 	`nombre` VARCHAR(100) NOT NULL,
+	`unidad_medida` VARCHAR(30),
+	`precio_maximo`INT,
 	PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `Proveedor_Producto` (
 	`proveedor_id` INT NOT NULL,
 	`producto_id` INT NOT NULL,
+	`precio_venta`INT,
 	FOREIGN KEY (`proveedor_id`) REFERENCES `Proveedor` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	PRIMARY KEY(`proveedor_id`,`producto_id`)
@@ -90,8 +95,6 @@ CREATE TABLE `Hotel_Proveedor_Producto` (
 	`hotel_id` INT NOT NULL,
 	`proveedor_id` INT NOT NULL,
 	`producto_id` INT,
-	`precio` DOUBLE,
-    `unidad_medida` VARCHAR(40),
     FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (`proveedor_id`) REFERENCES `Proveedor` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (`producto_id`) REFERENCES `Producto` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
