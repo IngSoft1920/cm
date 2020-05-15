@@ -33,17 +33,19 @@ public class APIem {
 	// -fecha_contratacion: Date
 	public static void enviarEmpleado(Empleado em,int hotel_id,Date fecha_contratacion)
 	{
+		String nombreProfesion = new ProfesionDAO().getByID(em.getProfesion_id()).getNombre();
 		json = new JsonObject();
   	      json.addProperty("id",em.getId());
   	      json.addProperty("nombre",em.getNombre());
   	      json.addProperty("telefono",em.getTelefono());
   	      json.addProperty("email",em.getEmail());
-  	      json.addProperty("ocupacion",new ProfesionDAO().getByID(em.getProfesion_id()).getNombre());
+  	      json.addProperty("ocupacion",nombreProfesion);
   	      json.addProperty("valor",em.getSueldo());
   	      json.addProperty("id_hotel", hotel_id);
   	      json.addProperty("fecha_contratacion",fecha_contratacion.toString());
-  	      json.addProperty("dias_libres",em.getDias_libres());  
-  	      
+  	      json.addProperty("dias_libres",em.getDias_libres());
+  	      json.addProperty("superior",nombreProfesion.equals("gobernanta")?"":"gobernanta");
+  	    	  
   	      // Esto habría que cambiarlo (o no)
   	      json.addProperty("contrasenia", "12345");
   	      
