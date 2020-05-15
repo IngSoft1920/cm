@@ -105,8 +105,10 @@ CREATE TABLE `Pedido` (
 	`id` INT AUTO_INCREMENT,
     `fecha` DATE NOT NULL,
     `hotel_id` INT NOT NULL,
+    `proveedor_id` INT NOT NULL,
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+	FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+	FOREIGN KEY (`proveedor_id`) REFERENCES `Proveedor` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `Pedido_Producto` (
