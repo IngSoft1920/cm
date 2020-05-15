@@ -4,6 +4,20 @@ public class Producto {
 	
 	private int id;
 	private String nombre;
+	public double getPrecio_maximo() {
+		return precio_maximo;
+	}
+	public void setPrecio_maximo(double precio_maximo) {
+		this.precio_maximo = precio_maximo;
+	}
+	public String getUnidad_medida() {
+		return unidad_medida;
+	}
+	public void setUnidad_medida(String unidad_medida) {
+		this.unidad_medida = unidad_medida;
+	}
+	private double precio_maximo;
+	private String unidad_medida;
 	
 	
 	public Producto() {}
