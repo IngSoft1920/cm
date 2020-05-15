@@ -78,6 +78,7 @@
                             <div class="col-md-3 mb-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="hidden" value="${producto.id}" name="productosIDs">
+                                    <br>
                                     <label>${producto.nombre}</label>
                                 </div>
                             </div>
