@@ -21,15 +21,17 @@ public class FacturaDAO {
 		//key=hotel_id, value=Beneficios del hotel
 		HashMap <Integer, BeneficiosGastosModel> map = new HashMap <Integer, BeneficiosGastosModel> ();
 		//Consulta para obtener el beneficio de las reservas(habitaciones)
-		String beneficiosReservas = "SELECT R.hotel_id,H.nombre,SUM(R.importe)\r\n" + 
+		String beneficiosReservas = "SELECT R.hotel_id,R.fecha_entrada,H.nombre,SUM(R.importe)\r\n" + 
 				"FROM Reserva AS R\r\n" + 
 				"JOIN Hotel AS H ON R.hotel_id=H.id\r\n" + 
+				"WHERE year(R.fecha_entrada) = YEAR(CURDATE())\r\n"+
 				"GROUP BY R.hotel_id;";
 		//Consulta para obteher el beneficio de los servicios
-		String beneficiosServicios ="SELECT R.hotel_id,H.nombre,SUM(F.importe)\r\n" + 
+		String beneficiosServicios ="SELECT R.hotel_id,H.nombre,SUM(F.importe),F.fecha\r\n" + 
 				"FROM Reserva AS R\r\n" + 
 				"JOIN Factura AS F ON R.id=F.reserva_id\r\n" + 
 				"JOIN Hotel AS H ON R.hotel_id=H.id\r\n" + 
+                "WHERE year(F.fecha) = YEAR(CURDATE())\r\n"+
 				"GROUP BY R.hotel_id;";
 		java.sql.Statement stmt= null;
 		ResultSet rs= null;
@@ -108,12 +110,13 @@ public class FacturaDAO {
 		return map;
 	}*/
 	public static HashMap<Integer, BeneficiosGastosModel> gastosProveedores( HashMap<Integer, BeneficiosGastosModel> map) {
-	String consulta ="SELECT P1.id AS Pedido ,PP.cantidad AS cantidad ,P2.id AS producto_id, P2.nombre AS nombre_producto,HPP.precio AS precio,HPP.hotel_id AS hotel_id, H.nombre AS nombre\n" + 
+	String consulta ="SELECT P1.id AS Pedido ,PP.cantidad AS cantidad ,P2.id AS producto_id, P2.nombre AS nombre_producto,HPP.precio AS precio,HPP.hotel_id AS hotel_id, H.nombre AS nombre, P1.fecha\n" + 
 			"FROM Pedido AS P1\n" + 
 			"JOIN Pedido_Producto AS PP ON P1.id = PP.pedido_id\n" + 
 			"JOIN Producto AS P2 ON PP.producto_id=P2.id\n" + 
 			"JOIN Hotel_Proveedor_Producto AS HPP ON P2.id=HPP.producto_id AND P1.hotel_id=HPP.hotel_id \n" + 
 			"JOIN Hotel AS H ON P1.hotel_id=H.id\n" + 
+			"WHERE year(P1.fecha) = YEAR(CURDATE())\n"+
 			"ORDER BY P1.id;";
 	java.sql.Statement stmt= null;
 	ResultSet rs= null;
