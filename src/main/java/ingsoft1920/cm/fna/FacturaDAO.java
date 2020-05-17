@@ -110,7 +110,7 @@ public class FacturaDAO {
 		return map;
 	}*/
 	public static HashMap<Integer, BeneficiosGastosModel> gastosProveedores( HashMap<Integer, BeneficiosGastosModel> map) {
-	String consulta ="SELECT P1.id AS Pedido ,PP.cantidad AS cantidad ,P2.id AS producto_id, P2.nombre AS nombre_producto,HPP.precio AS precio,HPP.hotel_id AS hotel_id, H.nombre AS nombre, P1.fecha\n" + 
+	String consulta ="SELECT P1.id AS Pedido ,PP.cantidad AS cantidad ,P2.id AS producto_id, P2.nombre AS nombre_producto,P2.precio_maximo AS precio,HPP.hotel_id AS hotel_id, H.nombre AS nombre, P1.fecha\n" + 
 			"FROM Pedido AS P1\n" + 
 			"JOIN Pedido_Producto AS PP ON P1.id = PP.pedido_id\n" + 
 			"JOIN Producto AS P2 ON PP.producto_id=P2.id\n" + 
