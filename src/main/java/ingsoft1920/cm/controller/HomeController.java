@@ -79,6 +79,20 @@ public class HomeController {
 	public String loginCorporativo() {
 		return "login.jsp";
 	}
+	
+	
+	
+	//New Proveedores Vistas
+	
+	@GetMapping("/login-proveedores")
+	public String loginProveedores() {
+		return "login-proveedores.jsp";
+	}
+	
+	@GetMapping("/new-proveedores")
+	public String paginaProveedores() {
+		return "proveedores/new-proveedores.jsp";
+	}
 
 
 	// -------------------HOTELES-----------------------
