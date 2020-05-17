@@ -286,5 +286,20 @@ public class FacturaDAO {
 		}
 		return resultado;
 	}
+	
+	public static double balanceTotal (Double[] beneficiosTotalesSeparados) {
+		double total = 0;
+		int i=0;
+		for (i=0; i<beneficiosTotalesSeparados.length; i++) {
+			if(i==0 | i==1) {
+				total += beneficiosTotalesSeparados[i];
+			}
+			else {
+				total -= beneficiosTotalesSeparados[i];
+			}
+		}
+		
+		return total;
+	}
 
 }
