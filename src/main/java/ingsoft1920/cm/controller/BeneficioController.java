@@ -26,7 +26,7 @@ import ingsoft1920.cm.fna.BeneficioBean;
 @Controller
 public class BeneficioController {
 	private HashMap <Integer, BeneficiosGastosModel> beneficios_gastos = new HashMap <Integer, BeneficiosGastosModel> ();
-	
+	private Double[] res;
 	
 	 @GetMapping ("/beneficio0")
 	   public String beneficios(Model m) {
@@ -46,17 +46,21 @@ public class BeneficioController {
 		  return "fna/beneficio0.jsp";
 	   }
 
-	/*
+	
 	 @GetMapping("/beneficio")
 	public String beneficio(Model model) {
-		beneficios_gastos = FacturaDAO.sumaReservas();
-		beneficios_gastos = FacturaDAO.gastosProveedores(beneficios_gastos);
-		beneficios_gastos = ConexionEM.peticionSueldoEmpleados(beneficios_gastos);
-		beneficios_gastos = FacturaDAO.beneficiosServicios(beneficios_gastos);
-		model.addAttribute("treasureMap", beneficios_gastos);
+		res=FacturaDAO.beneficiosTotalesSeparados();
+		model.addAttribute("reservas", res[0]);
+		model.addAttribute("servicios",res[1]);
+		model.addAttribute("sueldos",res[2]);
+		model.addAttribute("proveedores",res[3]);
+		model.addAttribute("total_servicios",res[1]-2500-res[3]);
+		model.addAttribute("beneficio_bruto",res[0]+res[1]-2500-res[3]);
+		model.addAttribute("total_gastos", res[2]+2000+2200+1200);
+		model.addAttribute("beneficio_neto", res[0]+res[1]-2500-res[3]-res[2]-2000-2200-1200);
 		return "fna/beneficio.jsp";
 	}
-	*/
+	
 	/*this.nombreHotel = nombreHotel;
 	this.sumaReservas = new HashMap <String, Double> ();
 	this.sumaFacturas = new HashMap <String, Double> ();
