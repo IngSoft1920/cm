@@ -254,9 +254,37 @@ public class FacturaDAO {
 			if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
 		}
 		return map;
-
-
-
+		}
+	// Devuelve los totales de todos los hoteles separados en categorias
+	// 0-> reservas
+	// 1-> servicios
+	// 2-> Empleados
+	// 3-> Proveedores
+	public static Double[] beneficiosTotalesSeparados() {
+		Double[] resultado = {0.0,0.0,0.0,0.0};
+		HashMap <Integer, BeneficiosGastosModel> aux = sumaReservas();
+		beneficiosServicios(aux);
+		gastosProveedores(aux);
+		ConexionEM.peticionSueldoEmpleados(aux);
+		for(BeneficiosGastosModel elem: aux.values()) {
+			//Beneficios reservas
+			for (String aux2: elem.getSumaReservas().keySet()) {
+			   resultado[0]+=elem.getSumaReservas().get(aux2);
+			}
+			//Beneficios servicios
+			for (String aux2: elem.getSumaFacturas().keySet()) {
+			    resultado[1]+=elem.getSumaFacturas().get(aux2);
+			}
+			//Empleados
+			for (String aux2: elem.getSueldoEmpleados().keySet()) {
+			    resultado[2]+=elem.getSueldoEmpleados().get(aux2);
+			}
+			//Proveedores
+			for (String aux2: elem.getGastoComida().keySet()) {
+			    resultado[3]+=elem.getGastoComida().get(aux2);
+			}
+		}
+		return resultado;
 	}
 
 }

@@ -39,6 +39,10 @@ public class PruebasFNA {
 			    System.out.println(aux);
 			}
 		}
+		Double[] resultado = FacturaDAO.beneficiosTotalesSeparados();
+		for(int i =0;i<resultado.length;i++) {
+			System.out.println(resultado[i]);
+		}
 	}
 
 }
