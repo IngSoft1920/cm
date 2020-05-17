@@ -1,7 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
@@ -14,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Añadir Proveedor</title>
+    <title>Editar Precio</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
@@ -55,56 +52,36 @@
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Añadir Proveedor</h2>
-            <p class="lead">Añadir proveedor a la cadena.</p>
+            <h2>Editar Precio</h2>
         </div>
 
-        
-                <form class="needs-validation" method="POST" novalidate>
+                <form class="needs-validation" novalidate="" method="POST">
                     <div class="form-group">
-                        <label>Empresa</label>
-                        <input type="text" class="form-control" name="empresa" placeholder="Licores SA" required>
+                        <label class="col-form-label-lg">Precio</label>
+                        <input type="number" class="form-control" name="Nuevo precio" placeholder="Nuevo precio" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="firstName">CIF</label>
-                        <input type="text" class="form-control" name="cif" placeholder="S0794867B" required>
-                        <div class="invalid-feedback">Campo obligatorio</div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-5">
-                            <label class="col-form-label-lg">Productos</label>
-                            <c:forEach var="producto" items="${productos}">  
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="productosIDs" value="${producto.id}">
-                                    <label >${producto.nombre}</label>
-                                </div>
-                            </c:forEach> 
-                        </div>
-                    </div>
-                    
                     <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Actualizar</button>
                 </form>
             </div>
-
+       
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
                 <p class="float-left">
-                    <a href="/proveedores">Volver a proveedores</a>
+                    <a href="/configuracion">Volver a configuración</a>
                 </p>
                 <p class="float-right">
                     <a href="/inicio">Volver a inicio</a>
                 </p>
             </div>
         </footer>
-    
-    <script src="../js/jquery-3.4.1.slim.min.js"></script>
+
+    <script src="../js/jquery-3.4.1.slim.min.js" ></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>
