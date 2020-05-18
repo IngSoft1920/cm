@@ -123,12 +123,6 @@
 				   	     				    <td>${serv.key}: <vd> ${serv.value}€</vd><td>
 				 	      			   </c:forEach>
 					</tr>
-<<<<<<< HEAD
-      						
-=======
-      							
->>>>>>> new-login
-				
 
 						<c:if test = "${BeneficioBean.servicios}">
 					<tr>
