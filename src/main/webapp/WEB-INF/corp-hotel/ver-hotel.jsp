@@ -57,40 +57,40 @@
             <p class="lead">Ver los datos del hotel</p>
         </div>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
-                <div class="mb-3">
+        
+            
+                <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" class="form-control" readonly value="${hotel.nombre}">
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Continente</label>
                     <input type="text" class="form-control" readonly value="${hotel.continente}">
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Pais</label>
                     <input type="text" class="form-control" readonly value="${hotel.pais}">
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Ciudad</label>
                     <input type="text" class="form-control" readonly value="${hotel.ciudad}">
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Dirección</label>
                     <input type="text" class="form-control" readonly value="${hotel.direccion}">
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Estrellas</label>
                     <input type="number" class="form-control" readonly value="${hotel.estrellas}">
                 </div>
                 
-                <div class="row">
-                    <div class="col-md-18 mb-3">
+               
+                    <div class="form-group">
                         <label>Servicios</label>
                         <c:forEach var="servicio" items="${servicios}">
                             <div class="form-check mb-3"">
@@ -105,17 +105,17 @@
                             </div>
                         </c:forEach>
                     </div>        
-                </div>
-                <div class="row">
-                    <div class="col-md-5 mb-3">
+               
+               
+                    <div class="form-group">
                         <label>Categorias</label>
                         <c:forEach var="categoria" items="${categorias}">
                             <div class="form-check">${categoria.nombre}</div>
                         </c:forEach>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 mb-3">
+               
+                
+                    <div class="form-group">
                         <label>Habitaciones</label>
                         <c:forEach var="hab" items="${habs}">
                             <div class="form-check">
@@ -124,7 +124,7 @@
                             </div>
                         </c:forEach>
                     </div>
-                </div>
+
                 <!-- Esto es una línea separatoria -->
                 <hr class="mb-4">
                 <a class="btn btn-primary btn-lg btn-block" href="/hoteles" role="button">Volver a Hoteles</a>

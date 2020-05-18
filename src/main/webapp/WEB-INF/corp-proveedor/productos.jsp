@@ -12,13 +12,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet" />
 
-
     <title>Productos</title>
 
-
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
@@ -98,18 +94,21 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <c:forEach var="productos" items="${productos}">  
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Peras</td>
-                                    <td>2$</td>
+                                    <th scope="row">${productos.id}</th>
+                                    <td>${productos.nombre}</td>
+                                    <td>${producto.precio}</td>
 
-
+                                       <!-- Botones -->
                                     <td>
                                         <div class="btn-group">
                                         
-                                         <a class="btn btn-sm btn-outline-secondary" href="/corp-proveedor/select-hoteles-prov/${proveedores.id}" role="button">Asignar hotel</a>
+                                         <a class="btn btn-sm btn-outline-secondary" href="/proveedores/productos/asignar/${proveedores.id}" role="button">Asignar hotel</a>
 
-                                            <a class="btn btn-sm btn-outline-secondary" href="/productos/editar-precio" role="button">Editar precio</a>
+                                            <a class="btn btn-sm btn-outline-secondary" href="/proveedores/productos/editar-precio/${proveedores.id}" role="button">Editar precio</a>
+                                            
+                                            
                                             <!-- Button trigger modal -->
                                             <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" href="#" role="button">
                                                 Eliminar
@@ -130,17 +129,20 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                            <button type="button" class="btn btn-primary">Eliminar</button>
+                                                            <button type="button" class="btn btn-primary" href="/proveedores/productos/eliminar-producto/${productos.id}">Eliminar</button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            
+                                            
                                     </td>
                                 </tr>
+                                
+                                </c:forEach>
 
                             </tbody>
                         </table>
-
 
                         </div>
                     </div>

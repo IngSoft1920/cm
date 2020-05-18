@@ -55,35 +55,33 @@
             <h2>Visualizar Empleado</h2>
         </div>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" class="form-control" value="${empleado.nombre}" readonly>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Apellidos</label>
                     <input type="text" class="form-control" value="${empleado.apellidos}" readonly>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Email</label>
                     <input type="text" class="form-control" value="${empleado.email}" readonly>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Teléfono</label>
                     <input type="text" class="form-control" value="${empleado.telefono}" readonly>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Sueldo</label>
                     <input type="text" class="form-control" value="${empleado.sueldo}€" readonly>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>Profesión</label>
                     <input type="text" class="form-control" value="${nombreProf}" readonly>
                 </div>
@@ -104,7 +102,7 @@
                 <hr class="mb-4">
                 <a class="btn btn-primary btn-lg btn-block" href="/select/empleados/${hotel_id}" role="button">Volver a Empleados</a>
             </div>
-        </div>
+        
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
@@ -116,7 +114,7 @@
 
             </div>
         </footer>
-    </div>
+  
 
     <script src="/js/jquery-3.4.1.slim.min.js"></script>
     <script>

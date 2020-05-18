@@ -55,35 +55,30 @@
             <h2>Visualizar Proveedor</h2>
         </div>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
-
-                <div class="mb-3">
+       
+                <div class="form-group">
                     <label for="nombre">Empresa</label>
                     <input type="text" class="form-control" value="${proveedor.empresa}" readonly>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <label>CIF</label>
                     <input type="text" class="form-control" value="${proveedor.CIF}" readonly>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-5">
-                        <label>Productos</label>
+               
+                    <div class="form-group">
+                        <label class="col-form-label-lg">Productos</label>
                         <c:forEach var="producto" items="${productos}">
                             <div class="form-check">${producto.nombre}</div>
                         </c:forEach>
                     </div>
-                </div>
-
+                
 
                 <hr class="mb-4">
                 <a class="btn btn-primary btn-lg btn-block" href="/proveedores" role="button">Volver a Proveedores</a>
             </div>
-        </div>
-    </div>
-
+   
 
     <footer class="my-5 pt-5 text-muted text-center text-small">
         <p class="mb-1">© 2020 Company Management - UPM</p>

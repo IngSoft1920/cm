@@ -57,57 +57,56 @@
             <p class="lead">Añadir hotel a la cadena</p>
         </div>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
+     
                 <form class="needs-validation" method="POST" novalidate>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Nombre</label>
                         <input type="text" class="form-control" name="nombre" placeholder="Costa Brava" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Continente</label>
                         <input type="text" class="form-control" name="continente" placeholder="América" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>País</label>
                         <input type="text" class="form-control" name="pais" placeholder="Puerto Rico" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Ciudad</label>
                         <input type="text" class="form-control" name="ciudad" placeholder="San Juan" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Direccion</label>
                         <input type="text" class="form-control" name="direccion" placeholder="Calle/Avenida" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Estrellas</label>
                         <input type="number" min="0" max="6" class="form-control" name="estrellas" placeholder="5" required>
                         <div class="invalid-feedback">No válido</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Descripción</label>
                         <textarea type="text" class="form-control" name="descripcion" placeholder="Una experiencia única"></textarea>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-18 mb-3">
-                            <label>Servicios</label>
+                    
+                        <div class="form-group">
+                            <label class="col-form-label-lg">Servicios</label>
                             <c:forEach var="servicio" items="${servicios}">
                                 <div class="form-check mb-3"">
-                                    <label>${servicio.nombre}</label>
+                                    <label class="col-form-label-lg">${servicio.nombre}</label>
                                     <input type="number" class="form-control" name="numInstalaciones" min="0" placeholder="número de instalaciones">
                                     <input type="number" class="form-control" name="precios" min="0" placeholder="precio">
                                     <input type="text" class="form-control" name="unidadesMedida" placeholder="unidad de medida">
@@ -115,39 +114,35 @@
                                 </div>
                             </c:forEach>
                         </div>        
-                    </div>
+                  
 
-                    <div class="row">
+                    
                         <div class="col-md-5 mb-3">
-                            <label>Categorias</label>
+                            <label class="col-form-label-lg">Categorias</label>
                             <c:forEach var="categoria" items="${categorias}">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="${categoria.id}" name="categoriasIDs">
-                                    <label class="form-check-label" for="defaultCheck1">${categoria.nombre}</label>
+                                    <label  class="col-form-label-md" for="defaultCheck1">${categoria.nombre}</label>
                                 </div>
                             </c:forEach>
                         </div>
-                    </div>
-                   
-                    <div class="row">
-                        <div class="col-md-18">
-                            <label>Habitaciones</label>
+                    
+                        <div class="form-group">
+                            <label class="col-form-label-lg">Habitaciones</label>
                             <c:forEach var="hab" items="${habs}">
                                 <div class="form-check">
-                                    <label>${hab.nombre_tipo}</label>
+                                    <label class="col-form-label-md">${hab.nombre_tipo}</label>
                                     <input type="number" class="form-control" name="numDisponibles">
                                     <input type="hidden" name="habsIDs" value="${hab.id}">
                                 </div>
                             </c:forEach>
                         </div>        
-                    </div>
-
                     
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
                 </form>
             </div>
-        </div>
+        
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
@@ -161,7 +156,7 @@
                 </p>
             </div>
         </footer>
-    </div>
+   
     <script src="../js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>');
