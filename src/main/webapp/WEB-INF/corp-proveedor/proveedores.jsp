@@ -92,52 +92,85 @@
 		</header>
 
 		<main role="main">
-			<div class="album py- bg-light">
-				<div class="container">
-					<div class="row">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">Empresa</th>
-									<th scope="col">CIF</th>
-								</tr>
-							</thead>
+			
+			 <div class="album py-5 bg-light">
+                <div class="container">
 
-							<tbody>
-								<c:forEach var="proveedores" items="${proveedores}">
-									<tr>
-										<th scope="row">${proveedores.id}</th>
-										<td>${proveedores.empresa}</td>
-										<td>${proveedores.CIF}</td>
-										<td>
-											<div class="btn-group">
-												<a class="btn btn-sm btn-outline-secondary"
+                    <div class="row">
+                    
+                    	<c:forEach var="proveedores" items="${proveedores}">
+                    
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                              <svg class="bd-placeholder-img card-img-top" width="100%"
+										height="225" xmlns="http://www.w3.org/2000/svg"
+										preserveAspectRatio="xMidYMid slice" focusable="false"
+										role="img" aria-label="Placeholder: Thumbnail">
+										
+										<title>${hotel.nombre}</title>
+                                    	<rect width="100%" height="100%" fill="#55595c"></rect>
+										<text x="50%" y="50%" fill="#eceeef" dy=".3em">${proveedores.empresa}</text>
+									</svg>
+                                <div class="card-body">
+                                    
+                                    <!-- <p class="card-text">${proveedores.empresa} </p> -->
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a class="btn btn-sm btn-outline-secondary"
 												   href="/proveedores/ver-proveedor/${proveedores.id}"
 												   role="button">Ver</a>
-												
-												<a class="btn btn-sm btn-outline-secondary"
+                                           <a class="btn btn-sm btn-outline-secondary"
 													href="/proveedores/editar-proveedor/${proveedores.id}"
 													role="button">Editar</a>
+                                            <a class="btn btn-sm btn-outline-secondary" href="/proveedores/productos/${proveedores.id}" role="button">Productos</a>
+                                            
+                                            <a class="btn btn-sm btn-outline-secondary"
+													href="/corp-proveedor/select-hoteles-prov/${proveedores.id}"
+													role="button">Asignar</a>	
 
-												<a class="btn btn-sm btn-outline-secondary"
+
+
+
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
+                                                Eliminar
+                                            </button>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar Proveedor
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Esta seguro que desea eliminar el proveedor?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                           <a class="btn btn-sm btn-outline-primary"
 												   href="/eliminar-proveedor/${proveedores.id}"
 												   role="button">Eliminar</a>
 
-												<a class="btn btn-sm btn-outline-secondary"
-													href="/corp-proveedor/select-hoteles-prov/${proveedores.id}"
-													role="button">Asignar a Hotel</a>	
-										</td>
-									</tr>
-								</c:forEach>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-							</tbody>
-						</table>
-
-
-					</div>
-				</div>
-			</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </c:forEach>
+                        </div>
+                        </div>
+                        </div>
+                        
 
 
 		</main>
