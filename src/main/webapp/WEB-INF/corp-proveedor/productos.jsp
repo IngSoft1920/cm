@@ -73,7 +73,7 @@
                         <strong>Productos del proveedor X</strong>
                     </a>
                     <a class="navbar-nav" href="/inicio">Inicio</a>
-                    <a class="navbar-nav" href="/productos/anadir-producto">Añadir producto</a>
+                    <a class="navbar-nav" href="/anadir-producto">Añadir producto</a>
                 </div>
             </div>
         </header>

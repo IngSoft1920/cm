@@ -331,7 +331,7 @@ public class HomeController {
 				
 		Empleado em = new Empleado();
 		  em.setNombre(firstName);
-		  em.setApellidos(lastNames);
+		  em.setApellidos(lastNames); 	
 		  em.setEmail(email);
 		  em.setTelefono(telefono);
 		  em.setSueldo(sueldo);
