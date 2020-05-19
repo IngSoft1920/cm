@@ -67,7 +67,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="precioMax">Precio máximo</label>
+                        <label for="precioMax">Precio de venta</label>
                         <input type="number" class="form-control" name="precio" placeholder="20$" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>

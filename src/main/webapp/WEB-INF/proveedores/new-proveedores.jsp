@@ -100,30 +100,33 @@
 								<tr>
 									<th scope="col">#</th>
 									<th scope="col">Producto</th>
-									<th scope="col">Hotel</th>
-									<th scope="col">Cantidad</th>
+									
+									
+									<th scope="col">Precio de venta</th>
+									<th scope="col">Opciones</th>
 								</tr>
 							</thead>
 
 							<tbody>
-								<!-- <c:forEach var="proveedores" items="${proveedores}">  -->
+								
 									<tr>
 										<th scope="row">1</th>
 										<td>Vino</td>
-										<td>Hotel Nuevo Tokio</td>
-										<td>20 Botellas</td>
+									
+										<td>20 $</td>
 										<td>
 											<div class="btn-group">
-												<a class="btn btn-sm btn-outline-secondary"  role="button">Ver</a>
 												
-												<a class="btn btn-sm btn-outline-secondary" role="button">Editar</a>
+												
+												<a class="btn btn-sm btn-outline-secondary" role="button">Editar producto</a>
+												<a class="btn btn-sm btn-outline-secondary" role="button">Editar precio</a>
 
 												<a class="btn btn-sm btn-outline-secondary"  role="button">Eliminar</a>
 
-												<a class="btn btn-sm btn-outline-secondary" role="button">Asignar a Hotel</a>	
+												<a class="btn btn-sm btn-outline-secondary" role="button">Hoteles</a>	
 										</td>
 									</tr>
-								<!-- </c:forEach> -->
+							
 
 							</tbody>
 						</table>
