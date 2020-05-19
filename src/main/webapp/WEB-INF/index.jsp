@@ -28,11 +28,11 @@
 
             </ul>
         </nav>
-        <!-- <div class="login">
-            <a href="/login-corp">
+         <div class="login">
+            <a href="/login">
                 <img src="https://img.icons8.com/metro/26/000000/user-male.png">
             </a>
-        </div> -->
+        </div> 
     </header>
 
     <main>
@@ -44,12 +44,12 @@
                         La nueva forma de vivir la experiencia hotelera.
                     </p>
                 </div>
-                <!-- <div class="cta">
+               <div class="cta">
                     <form action="">
-                        <button class="cta-select" type="submit" formaction="login-corp">Iniciar Sesión</button>
+                        <button class="cta-select" type="submit" formaction="login">Iniciar Sesión</button>
                     </form>
 
-                </div> -->
+                </div>
             </div>
             <div class="cover">
                 <img src="./img/white-boats-on-body-of-water-2265876.jpg" alt="world" />

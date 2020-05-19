@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+ <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -39,8 +39,6 @@
     <link rel="icon" href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon.ico">
     <meta name="msapplication-config" content="/docs/4.4/assets/img/favicons/browserconfig.xml">
     <meta name="theme-color" content="#563d7c">
-
-
 
 
     <style>
@@ -124,8 +122,10 @@
                     <div class="form-check text-center">
                         <Label for="busc">Elegir fecha</Label>
                         <input id="busc" type="date">
-                        <button onclick="buscador();">Ir</button>
+                        <button onclick="buscador();" class ="btn-btn-primary" type="button" >Ir</button>
                     </div>
+                    
+                   
                 </div>
             </div>
 
