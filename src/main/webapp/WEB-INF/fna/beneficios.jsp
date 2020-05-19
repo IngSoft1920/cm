@@ -160,8 +160,8 @@
 
 							
 					 </table>
-					 
-					 	</c:forEach>					
+					 </c:if>				 
+				</c:forEach>					
 						 <div align="center">
 						 <table>
 						 <tr><td>
