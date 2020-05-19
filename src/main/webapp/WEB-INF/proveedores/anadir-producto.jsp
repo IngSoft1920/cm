@@ -78,21 +78,18 @@
             </div>
         
 
+
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
-                <p class="float-left">
-                    <a href="/configuracion">Volver a configuración</a>
-                </p>
+              
                 <p class="float-right">
                     <a href="/inicio">Volver a inicio</a>
                 </p>
-                <p class="float-center">
-                    <a href="/proveedores">Volver a proveedores</a>
-                </p>
+               
             </div>
         </footer>
-   
+    
     <script src="../js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')

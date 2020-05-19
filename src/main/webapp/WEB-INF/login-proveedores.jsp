@@ -65,7 +65,7 @@
       <input type="checkbox" value="remember-me"> Recordarme
     </label>
         </div>
-        <a class="btn btn-lg btn-primary btn-block" type="submit" href="/proveedores/new-proveedores">Acceder</a>
+        <a class="btn btn-lg btn-primary btn-block" type="submit" href="/new-proveedores">Acceder</a>
         <p class="mt-5 mb-3 text-muted">© 2019-2020</p>
     </form>
 

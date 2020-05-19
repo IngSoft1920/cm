@@ -85,7 +85,7 @@
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
 					<strong class="navbar-brand">Nombre de proveedor</strong>
-					
+					<a class="navbar-nav" href="/new-proveedores/anadir-producto">Añadir producto</a>
 					
 				</div>
 			</div>
