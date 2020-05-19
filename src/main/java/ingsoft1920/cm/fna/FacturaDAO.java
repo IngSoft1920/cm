@@ -21,15 +21,17 @@ public class FacturaDAO {
 		//key=hotel_id, value=Beneficios del hotel
 		HashMap <Integer, BeneficiosGastosModel> map = new HashMap <Integer, BeneficiosGastosModel> ();
 		//Consulta para obtener el beneficio de las reservas(habitaciones)
-		String beneficiosReservas = "SELECT R.hotel_id,H.nombre,SUM(R.importe)\r\n" + 
+		String beneficiosReservas = "SELECT R.hotel_id,R.fecha_entrada,H.nombre,SUM(R.importe)\r\n" + 
 				"FROM Reserva AS R\r\n" + 
 				"JOIN Hotel AS H ON R.hotel_id=H.id\r\n" + 
+				"WHERE year(R.fecha_entrada) = YEAR(CURDATE())\r\n"+
 				"GROUP BY R.hotel_id;";
 		//Consulta para obteher el beneficio de los servicios
-		String beneficiosServicios ="SELECT R.hotel_id,H.nombre,SUM(F.importe)\r\n" + 
+		String beneficiosServicios ="SELECT R.hotel_id,H.nombre,SUM(F.importe),F.fecha\r\n" + 
 				"FROM Reserva AS R\r\n" + 
 				"JOIN Factura AS F ON R.id=F.reserva_id\r\n" + 
 				"JOIN Hotel AS H ON R.hotel_id=H.id\r\n" + 
+                "WHERE year(F.fecha) = YEAR(CURDATE())\r\n"+
 				"GROUP BY R.hotel_id;";
 		java.sql.Statement stmt= null;
 		ResultSet rs= null;
@@ -108,12 +110,13 @@ public class FacturaDAO {
 		return map;
 	}*/
 	public static HashMap<Integer, BeneficiosGastosModel> gastosProveedores( HashMap<Integer, BeneficiosGastosModel> map) {
-	String consulta ="SELECT P1.id AS Pedido ,PP.cantidad AS cantidad ,P2.id AS producto_id, P2.nombre AS nombre_producto,HPP.precio AS precio,HPP.hotel_id AS hotel_id, H.nombre AS nombre\n" + 
+	String consulta ="SELECT P1.id AS Pedido ,PP.cantidad AS cantidad ,P2.id AS producto_id, P2.nombre AS nombre_producto,P2.precio_maximo AS precio,HPP.hotel_id AS hotel_id, H.nombre AS nombre, P1.fecha\n" + 
 			"FROM Pedido AS P1\n" + 
 			"JOIN Pedido_Producto AS PP ON P1.id = PP.pedido_id\n" + 
 			"JOIN Producto AS P2 ON PP.producto_id=P2.id\n" + 
 			"JOIN Hotel_Proveedor_Producto AS HPP ON P2.id=HPP.producto_id AND P1.hotel_id=HPP.hotel_id \n" + 
 			"JOIN Hotel AS H ON P1.hotel_id=H.id\n" + 
+			"WHERE year(P1.fecha) = YEAR(CURDATE())\n"+
 			"ORDER BY P1.id;";
 	java.sql.Statement stmt= null;
 	ResultSet rs= null;
@@ -164,6 +167,7 @@ public class FacturaDAO {
 				"JOIN Factura AS F ON R.id=F.reserva_id\n" + 
 				"JOIN Hotel AS H ON R.hotel_id=H.id\n" + 
 				"JOIN Servicio AS S ON F.servicio_id=S.id\n" + 
+				"WHERE year(F.fecha) = YEAR(CURDATE())\n"+
 				"GROUP BY R.hotel_id,S.id;";
 		java.sql.Statement stmt= null;
 		ResultSet rs= null;
@@ -211,6 +215,7 @@ public class FacturaDAO {
 				"FROM Reserva AS R\n" + 
 				"JOIN Hotel AS H ON R.hotel_id=H.id\n" + 
 				"JOIN Tipo_Habitacion AS TH ON R.tipo_hab_id=TH.id\n" + 
+				"WHERE year(R.fecha_entrada) = YEAR(CURDATE())\n"+
 				"GROUP BY R.hotel_id,TH.id;";
 
 		java.sql.Statement stmt= null;
@@ -251,9 +256,52 @@ public class FacturaDAO {
 			if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
 		}
 		return map;
-
-
-
+		}
+	// Devuelve los totales de todos los hoteles separados en categorias
+	// 0-> reservas
+	// 1-> servicios
+	// 2-> Empleados
+	// 3-> Proveedores
+	public static Double[] beneficiosTotalesSeparados() {
+		Double[] resultado = {0.0,0.0,0.0,0.0};
+		HashMap <Integer, BeneficiosGastosModel> aux = sumaReservas();
+		beneficiosServicios(aux);
+		gastosProveedores(aux);
+		ConexionEM.peticionSueldoEmpleados(aux);
+		for(BeneficiosGastosModel elem: aux.values()) {
+			//Beneficios reservas
+			for (String aux2: elem.getSumaReservas().keySet()) {
+			   resultado[0]+=elem.getSumaReservas().get(aux2);
+			}
+			//Beneficios servicios
+			for (String aux2: elem.getSumaFacturas().keySet()) {
+			    resultado[1]+=elem.getSumaFacturas().get(aux2);
+			}
+			//Empleados
+			for (String aux2: elem.getSueldoEmpleados().keySet()) {
+			    resultado[2]+=elem.getSueldoEmpleados().get(aux2);
+			}
+			//Proveedores
+			for (String aux2: elem.getGastoComida().keySet()) {
+			    resultado[3]+=elem.getGastoComida().get(aux2);
+			}
+		}
+		return resultado;
+	}
+	
+	public static double balanceTotal (Double[] beneficiosTotalesSeparados) {
+		double total = 0;
+		int i=0;
+		for (i=0; i<beneficiosTotalesSeparados.length; i++) {
+			if(i==0 | i==1) {
+				total += beneficiosTotalesSeparados[i];
+			}
+			else {
+				total -= beneficiosTotalesSeparados[i];
+			}
+		}
+		
+		return total;
 	}
 
 }

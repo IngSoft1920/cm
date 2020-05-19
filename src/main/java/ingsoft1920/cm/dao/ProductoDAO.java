@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Producto;
+import ingsoft1920.cm.bean.Proveedor_Producto;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
 @Component
@@ -84,6 +85,23 @@ public class ProductoDAO {
 		
 		return res;
 	}
+	
+	public Proveedor_Producto infoproducto(int producto_id, int proveedor_id) {
+		Proveedor_Producto res=null;
+		BeanHandler<Proveedor_Producto> handler = new BeanHandler<>(Proveedor_Producto.class);
+		String query = "SELECT * "
+					  +"FROM Proveedor_Producto "
+					  +"WHERE producto_id=? AND proveedor_id=? ";
+
+		try (Connection conn = conector.getConn()) 
+		{
+			res = runner.query(conn, query, handler,producto_id, proveedor_id);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		return res;
+	}
+
 	
 	public static void main(String[] args) {
 		Producto prod = new Producto(-1, "Bananas");
