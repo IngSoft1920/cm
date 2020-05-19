@@ -123,7 +123,6 @@
 				   	     				    <td>${serv.key}: <vd> ${serv.value}€</vd><td>
 				 	      			   </c:forEach>
 					</tr>
-      						
 				
 
 						<c:if test = "${BeneficioBean.servicios}">

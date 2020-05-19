@@ -74,6 +74,26 @@ public class HomeController {
 	public String homeCorporativo() {
 		return "index.jsp";
 	}
+	
+	@GetMapping("/login")
+	public String loginCorporativo() {
+		return "login.jsp";
+	}
+	
+	
+	
+	//New Proveedores Vistas
+	
+	@GetMapping("/login-proveedores")
+	public String loginProveedores() {
+		return "login-proveedores.jsp";
+	}
+	
+	@GetMapping("/new-proveedores")
+	public String paginaProveedores() {
+		return "proveedores/new-proveedores.jsp";
+	}
+
 
 	// -------------------HOTELES-----------------------
 	
@@ -311,7 +331,7 @@ public class HomeController {
 				
 		Empleado em = new Empleado();
 		  em.setNombre(firstName);
-		  em.setApellidos(lastNames);
+		  em.setApellidos(lastNames); 	
 		  em.setEmail(email);
 		  em.setTelefono(telefono);
 		  em.setSueldo(sueldo);
@@ -507,6 +527,49 @@ public class HomeController {
 		recibirProveedorForm(empresa, cif, productosIDs);
 		return "redirect:/proveedores";
 	}
+	
+	
+	//Ver productos del proveedor
+
+		@GetMapping("/proveedores/productos/{id}")
+		public ModelAndView productosProveedor(@PathVariable(name = "id") int id) {
+			Proveedor proveedor = new ProveedorDAO().getByID(id);
+			List<Producto> productos = productoDao.productosProveedor(id);
+			
+			ModelAndView mav = new ModelAndView("corp-proveedor/productos.jsp");
+			  mav.addObject("proveedor",proveedor);
+			  mav.addObject("productos",productos);
+			 
+			return mav;
+		}
+		
+		//Asignar proveedor a Hotel
+
+				@GetMapping("/proveedores/productos/asignar/{id}")
+				public ModelAndView productosAsignarProveedorHotel(@PathVariable(name = "id") int id) {
+					Proveedor proveedor = new ProveedorDAO().getByID(id);
+					List<Producto> productos = productoDao.productosProveedor(id);
+					
+					ModelAndView mav = new ModelAndView("corp-proveedor/hoteles.jsp");
+					  mav.addObject("proveedor",proveedor);
+					  mav.addObject("productos",productos);
+					 
+					return mav;
+				}
+				
+				
+				//Editar precio producto de un proveedor
+				//TODO
+
+				
+				
+				//Eliminar producto de un proveedor 
+
+				@GetMapping("/proveedores/productos/eliminar-producto/{id}")
+				public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
+					//proveedorDao.eliminar(id);
+					return new ModelAndView("redirect:/proveedores");
+				}
 
 	// Eliminar proveedor
 	@GetMapping("/eliminar-proveedor/{id}")

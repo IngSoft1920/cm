@@ -57,53 +57,52 @@
             <p class="lead">Modificar datos</p>
         </div>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
+     
                 <form class="needs-validation" method="POST" novalidate>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Nombre</label>
                         <input type="text" class="form-control" name="nombre" value="${hotel.nombre}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Continente</label>
                         <input type="text" class="form-control" name="continente" value="${hotel.continente}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>País</label>
                         <input type="text" class="form-control" name="pais" value="${hotel.pais}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Ciudad</label>
                         <input type="text" class="form-control" name="ciudad" value="${hotel.ciudad}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Dirección</label>
                         <input type="text" class="form-control" name="direccion" value="${hotel.direccion}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div  class="form-group">
                         <label>Estrellas</label>
                         <input type="number" min="0" max="6" class="form-control" name="estrellas" value="${hotel.estrellas}" required>
                         <div class="invalid-feedback">No válido</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label>Descripción</label>
                         <textarea type="text" class="form-control" name="descripcion">${hotel.descripcion}</textarea>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-18 mb-3">
+                   
+                        <div class="form-group">
                             <label>Servicios</label>
                             <c:forEach var="servicio" items="${servicios}">
                                 <div class="form-check mb-3"">
@@ -115,10 +114,10 @@
                                 </div>
                             </c:forEach>
                         </div>        
-                    </div>
+                   
 
-                    <div class="row">
-                        <div class="col-md-5 mb-3">
+                    
+                        <div class="form-group">
                             <label>Categorias</label>
                             <c:forEach var="categoria" items="${categorias}">
                                 <div class="form-check">
@@ -127,10 +126,9 @@
                                 </div>
                             </c:forEach>
                         </div>
-                    </div>
                    
-                    <div class="row">
-                        <div class="col-md-18">
+                    
+                        <div class="form-group">
                             <label>Habitaciones</label>
                             <c:forEach var="hab" items="${habs}">
                                 <div class="form-check">
@@ -140,7 +138,7 @@
                                 </div>
                             </c:forEach>
                         </div>        
-                    </div>
+                    
 
                     
                     <hr class="mb-4">

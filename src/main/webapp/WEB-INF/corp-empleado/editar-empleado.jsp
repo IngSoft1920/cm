@@ -58,35 +58,34 @@
             <p class="lead">Modificar los datos del empleado</p>
         </div>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
+       	
                 <form class="needs-validation" method="POST" novalidate>
 
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label>Nombre</label>
                         <input type="text" class="form-control" name="firstName" value="${empleado.nombre}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label>Apellidos</label>
                         <input type="text" class="form-control" name="lastNames" value="${empleado.apellidos}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label>Email </label>
                         <input type="text" class="form-control" name="email" value="${empleado.email}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label>Teléfono</label>
                         <input type="text" class="form-control" name="telefono" value="${empleado.telefono}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label>Sueldo</label>
                         <input type="number" class="form-control" name="sueldo" min="0" value="${empleado.sueldo}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
@@ -98,7 +97,7 @@
                             <c:forEach var="profesion" items="${profesiones}">  
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" value="${profesion.id}" name="profesionID" required <c:if test="${profesion.id == empleado.profesion_id}">checked="true"</c:if> >
-                                    <label>${profesion.nombre}</label>
+                                    <label class="form-check-label" >${profesion.nombre}</label>
                                 </div>
                             </c:forEach>
                         </div>
@@ -110,37 +109,37 @@
     
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="diasLibres" value="0" <c:if test="${fn:contains(empleado.dias_libres,'0')}">checked</c:if> >
-                                <label>Lunes</label>
+                                <label class="form-check-label">Lunes</label>
                             </div>
                           
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="diasLibres" value="1" <c:if test="${fn:contains(empleado.dias_libres,'1')}">checked</c:if> >
-                                <label>Martes</label>
+                                <label class="form-check-label">Martes</label>
                             </div>
 
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="diasLibres" value="2" <c:if test="${fn:contains(empleado.dias_libres,'2')}">checked</c:if> >
-                                <label>Miércoles</label>
+                                <label class="form-check-label">Miércoles</label>
                             </div>
 
                              <div class="form-check">
                                  <input type="checkbox" class="form-check-input" name="diasLibres" value="3" <c:if test="${fn:contains(empleado.dias_libres,'3')}">checked</c:if> >
-                                 <label>Jueves</label>
+                                 <label class="form-check-label">Jueves</label>
                             </div>
 
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="diasLibres" value="4" <c:if test="${fn:contains(empleado.dias_libres,'4')}">checked</c:if> >
-                                <label>Viernes</label>
+                                <label class="form-check-label">Viernes</label>
                             </div>
 
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="diasLibres" value="5" <c:if test="${fn:contains(empleado.dias_libres,'5')}">checked</c:if> >
-                                <label>Sábado</label>
+                                <label class="form-check-label">Sábado</label>
                             </div>
                           
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="diasLibres" value="6" <c:if test="${fn:contains(empleado.dias_libres,'6')}">checked</c:if> >
-                                <label>Domingo</label>
+                                <label class="form-check-label">Domingo</label>
                             </div>
                         </div>
                     </div>

@@ -59,28 +59,27 @@
             <p class="lead">Añadir proveedor a la cadena.</p>
         </div>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
+        
                 <form class="needs-validation" method="POST" novalidate>
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label>Empresa</label>
                         <input type="text" class="form-control" name="empresa" placeholder="Licores SA" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label for="firstName">CIF</label>
                         <input type="text" class="form-control" name="cif" placeholder="S0794867B" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="row">
+                    <div class="form-group">
                         <div class="col-md-5">
-                            <label>Productos</label>
+                            <label class="col-form-label-lg">Productos</label>
                             <c:forEach var="producto" items="${productos}">  
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" name="productosIDs" value="${producto.id}">
-                                    <label>${producto.nombre}</label>
+                                    <label >${producto.nombre}</label>
                                 </div>
                             </c:forEach> 
                         </div>
@@ -90,7 +89,7 @@
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
                 </form>
             </div>
-        </div>
+
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
@@ -104,7 +103,7 @@
                 </p>
             </div>
         </footer>
-    </div>
+    
     <script src="../js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
