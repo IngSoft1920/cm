@@ -99,50 +99,32 @@
 		
 		<table class="table table-striped"line-height="200px" height="200px">
 		 <tr>
-		 <td><b>Ventas            </b> </td>	<td>		${reservas}			</td>
+		 <td><b>Reservas            </b> </td>	<td>		${reservas}			</td>
 		 </tr>
+		 <tr class="blank_row">
+   		 <td colspan="5"></td>
+		 </tr>		
 		  <tr>
 		 <td>Servicios            </td>	<td>			${servicios}		</td>
 		 </tr>
 		 <tr>
-		 <tr>
-		 <td>Costo de servicios:	</td><td></td> 
+		 <td>Gasto en servicios:	</td><td></td> 
 		</tr>
 		<td>Materias Primas       </td> <td>       ${proveedores}                              </td>
 		</tr>
+		
 		<tr>
-		<td>Transporte             </td><td>				2500</td>
-		</tr>
-		<tr>
-		<td><b>Costo total de Servicios</b></td><td>			${total_servicios}				</td>
+		<td><b>Coste total de Servicios</b></td><td>			${total_servicios}				</td>
 		</tr>
 		<tr>
 		<td><b>Beneficio en Bruto	  </b></td><td>	${beneficio_bruto}		</td>
 		</tr>
 
-		<tr class="blank_row">
-   		 <td colspan="5"></td>
-		 </tr>
-		 <tr class="blank_row">
-   		 <td colspan="5"></td>
-		 </tr>
-		<tr><td>Gastos:	 </td> <td>   </td>
-		</tr>
+		
 		<tr>
 		<td>Salarios				 </td>  <td>	${sueldos}			</td>
 		</tr>
-		<tr>
-		<td>Electricidad			</td>  <td>					2200			</td>
-		</tr>
-		<tr>
-		<td>Seguro			 </td>  <td>					1200			</td>
-		</tr>
-		<tr>
-		<td>Teléfono			 </td>  <td>					2000			</td>
-		</tr>
-		<tr>
-		<td><b>Total Gastos</b>	 </td>  <td>				${total_gastos}		</td>
-		</tr>
+		
 
 		<tr class="blank_row">
    		 <td colspan="5"></td>

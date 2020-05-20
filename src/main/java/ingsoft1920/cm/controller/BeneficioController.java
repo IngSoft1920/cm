@@ -54,10 +54,10 @@ public class BeneficioController {
 		model.addAttribute("servicios",res[1]);
 		model.addAttribute("sueldos",res[2]);
 		model.addAttribute("proveedores",res[3]);
-		model.addAttribute("total_servicios",res[1]-2500-res[3]);
-		model.addAttribute("beneficio_bruto",res[0]+res[1]-2500-res[3]);
-		model.addAttribute("total_gastos", res[2]+2000+2200+1200);
-		model.addAttribute("beneficio_neto", res[0]+res[1]-2500-res[3]-res[2]-2000-2200-1200);
+		model.addAttribute("total_servicios",res[1]-res[3]);
+		model.addAttribute("beneficio_bruto",res[0]+res[1]-res[3]);
+		model.addAttribute("total_gastos", res[2]);
+		model.addAttribute("beneficio_neto", res[0]+res[1]-res[3]-res[2]);
 		return "fna/beneficio.jsp";
 	}
 	

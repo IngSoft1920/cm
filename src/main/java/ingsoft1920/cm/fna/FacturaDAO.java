@@ -167,6 +167,7 @@ public class FacturaDAO {
 				"JOIN Factura AS F ON R.id=F.reserva_id\n" + 
 				"JOIN Hotel AS H ON R.hotel_id=H.id\n" + 
 				"JOIN Servicio AS S ON F.servicio_id=S.id\n" + 
+				"WHERE year(F.fecha) = YEAR(CURDATE())\n"+
 				"GROUP BY R.hotel_id,S.id;";
 		java.sql.Statement stmt= null;
 		ResultSet rs= null;
@@ -214,6 +215,7 @@ public class FacturaDAO {
 				"FROM Reserva AS R\n" + 
 				"JOIN Hotel AS H ON R.hotel_id=H.id\n" + 
 				"JOIN Tipo_Habitacion AS TH ON R.tipo_hab_id=TH.id\n" + 
+				"WHERE year(R.fecha_entrada) = YEAR(CURDATE())\n"+
 				"GROUP BY R.hotel_id,TH.id;";
 
 		java.sql.Statement stmt= null;
