@@ -10,6 +10,7 @@ public class PruebasFNA {
 		prueba=FacturaDAO.beneficiosServicios(prueba);
 		prueba=ConexionEM.peticionSueldoEmpleados(prueba);
 		prueba=FacturaDAO.gastosProveedores(prueba);
+		prueba=FacturaDAO.roomNights(prueba);
 		for(BeneficiosGastosModel elem: prueba.values()) {
 			System.out.println(elem.getNombreHotel()+": ");
 			System.out.println("Dinero Reservas");
@@ -28,6 +29,8 @@ public class PruebasFNA {
 			for (String aux: elem.getGastoComida().keySet()) {
 			    System.out.println(aux+": "+elem.getGastoComida().get(aux));
 			}
+			System.out.println("Numero Room Nights");
+			System.out.println(elem.getNumeroRoomNights());
 			System.out.println("Total");
 			System.out.println(elem.getTotal());
 		}

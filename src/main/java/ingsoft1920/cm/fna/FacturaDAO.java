@@ -211,6 +211,7 @@ public class FacturaDAO {
 		//key=hotel_id, value=Beneficios del hotel
 		//Consulta para obtener el gastos de los alimentos
 		HashMap <Integer, BeneficiosGastosModel> map = new HashMap <Integer, BeneficiosGastosModel>();
+		map=crearTodasEntradas(map);
 		String sql = "SELECT R.hotel_id,H.nombre,TH.id,TH.nombre_tipo,sum(R.importe)\n" + 
 				"FROM Reserva AS R\n" + 
 				"JOIN Hotel AS H ON R.hotel_id=H.id\n" + 
@@ -305,5 +306,74 @@ public class FacturaDAO {
 		
 		return total;
 	}
+	
+	// Rellena el numero de room nigts de cada hotel
+	public static HashMap<Integer, BeneficiosGastosModel> roomNights(HashMap<Integer, BeneficiosGastosModel> map) {
+	String consulta ="SELECT R.hotel_id,H.nombre,R.id,DATEDIFF(R.fecha_salida,R.fecha_entrada) AS dias\n" + 
+			"FROM Reserva AS R\n" + 
+			"JOIN Hotel AS H ON R.hotel_id=H.id\n" + 
+			"ORDER BY R.hotel_id;";
+	java.sql.Statement stmt= null;
+	ResultSet rs= null;
+	BeneficiosGastosModel aux;
+	try {
+		stmt=conector.getConn().createStatement();
+		rs=stmt.executeQuery(consulta);
+		while(rs.next()) {
+			//Aqui iria el codigo para ver si el hotel_id esta ya en el map
+			aux=map.get(rs.getInt("R.hotel_id"));
+			if(aux!=null) {
+				//En caso de estarlo, actualizar el numero de roomNights
+				aux.setNumeroRoomNights(aux.getNumeroRoomNights()+rs.getInt("dias"));
+			}
+			//En caso de no estarlo, añadir nueva entrada (Nombre del hotel, y costeAlimentos, el resto de valores los pondrias a 0)
+			else {
+				aux=new BeneficiosGastosModel(rs.getString("H.nombre"));
+				aux.setNumeroRoomNights(rs.getInt("dias"));;
+				map.put(rs.getInt("R.hotel_id"), aux);	
+			}
+		}
+	}catch (SQLException ex){ 
+		System.out.println("SQLException: " + ex.getMessage());
+	} finally { // it is a good idea to release resources in a finally block 
+		if (rs != null) { try { rs.close(); } catch (SQLException sqlEx) { } rs = null; } 
+		if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
+	}
+	return map;
+	}
+	
+	//Fix para que no aparezcan hoteles sin nombre
+	public static HashMap <Integer, BeneficiosGastosModel> crearTodasEntradas(HashMap<Integer, BeneficiosGastosModel> map) {
+		String sql = "SELECT id,nombre\n" + 
+				"FROM Hotel;";
+
+		java.sql.Statement stmt= null;
+		ResultSet rs= null;
+		BeneficiosGastosModel aux;
+
+		try {
+			stmt=conector.getConn().createStatement();
+			rs=stmt.executeQuery(sql);
+			while(rs.next()) {
+				//Vemos si el hotel_id ya esta en el map
+				aux=map.get(rs.getInt("id"));
+				if(aux!=null) {
+					//En caso de estarlo, no hariamos nada
+					}
+				else {
+					//En caso de no estarlo creamos la entrada
+					aux=new BeneficiosGastosModel(rs.getString("nombre"));
+					map.put(rs.getInt("id"), aux);	
+				}
+
+			}
+		}catch (SQLException ex){ 
+			System.out.println("SQLException: " + ex.getMessage());
+		} finally { // it is a good idea to release resources in a finally block 
+			if (rs != null) { try { rs.close(); } catch (SQLException sqlEx) { } rs = null; } 
+			if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
+		}
+		return map;
+		}
 
 }

@@ -58,17 +58,17 @@
                 <form class="needs-validation" novalidate="" method="POST">
                     <div class="form-group">
                         <label class="col-form-label-lg">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="Nuevo nombre" required>
+                        <input type="text" class="form-control" name="nombre" value=${producto.nombre} required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label-lg">Precio Máximo</label>
-                        <input type="number" class="form-control" name="precioMax" placeholder="Nuevo precio" required>
+                        <input type="number" class="form-control" name="precioMax" value=${producto.precio_maximo} required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label-lg">Unidad de medida</label>
-                        <input type="text" class="form-control" name="unidadDeMedida" placeholder="Unidad de medida" required>
+                        <input type="text" class="form-control" name="unidadDeMedida" value=${producto.unidad_medida} required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 

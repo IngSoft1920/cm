@@ -74,7 +74,8 @@ public class ProductoDAO {
 	public List<Producto> productos() {
 		List<Producto> res = new ArrayList<>();
 		BeanListHandler<Producto> handler = new BeanListHandler<>(Producto.class);
-		String query = "SELECT * FROM Producto";
+		String query = "SELECT * FROM Producto " +
+                        "ORDER BY nombre; ";
 
 		try (Connection conn = conector.getConn()) 
 		{
@@ -141,6 +142,16 @@ public class ProductoDAO {
         try ( Connection conn = conector.getConn() )
         {
             runner.update(conn, query, id);
+
+        } catch(Exception e) { e.printStackTrace(); }
+    }
+
+    public void eliminarProductoProveedor(int proveedorID, int productoId){
+        String query = "DELETE FROM Proveedor_Producto WHERE proveedor_id = ? and producto_id = ?;";
+
+        try ( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, query, proveedorID, productoId);
 
         } catch(Exception e) { e.printStackTrace(); }
     }
