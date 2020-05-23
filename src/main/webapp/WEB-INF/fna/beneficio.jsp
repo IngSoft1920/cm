@@ -1,20 +1,18 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
+<!DOCTYPE html>
 <html>
-<html lang="en">
+
 
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-<link
-	href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
-	rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet" />
 
 
 <title>Beneficio</title>
-
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,13 +25,10 @@
 <meta name="generator" content="Jekyll v3.8.6">
 
 
-<link rel="canonical"
-	href="https://getbootstrap.com/docs/4.4/examples/album/">
+<link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/album/">
 
 <!-- Bootstrap core CSS -->
-<link href="/css/bootstrap.min.css" rel="stylesheet"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+<link href="/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
 <!-- Favicons -->
 <link rel="apple-touch-icon"
@@ -81,34 +76,41 @@
 </head>
 
 <body>
+	
 	<div class="conteiner">
-
 
 		<header>
 
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<a href="" class="navbar-brand "> <strong>Beneficio 2020</strong>
-					</a> <a class="navbar-nav" href="/inicio">Inicio</a> 
-					
-
+					<a class="navbar-brand ">
+					 <strong class="navbar-nav">Beneficio 2020</strong> 
+					 </a> 
+					<a class="navbar-nav" href="/inicio">Inicio</a> 
 				</div>
 			</div>
 		</header>
+				
 			<main role="main">
 		
-		<table class="table table-striped"line-height="200px" height="200px">
-		 <tr>
-		 <td><b>Reservas            </b> </td>	<td>		${reservas}			</td>
+		       <table class="table table-striped" line-height="200px" height="200px">
+		       
+		                     
+		       
+		   <tr>
+		 <th>Reservas  </th>	 
+		 <td>	${reservas}</td>
 		 </tr>
-		 <tr class="blank_row">
+		
    		 <td colspan="5"></td>
-		 </tr>		
+			
 		  <tr>
 		 <td>Servicios            </td>	<td>			${servicios}		</td>
 		 </tr>
+		 
+		 <td colspan="5"></td>
 		 <tr>
-		<td>Pedidos a proveedores   </td> <td>       ${proveedores}                              </td>
+		<td>Pedidos a proveedores   </td> <td> ${proveedores}</td>
 		</tr>
 		
 		
@@ -118,13 +120,10 @@
 
 		
 		<tr>
-		<td>Salarios				 </td>  <td>	${sueldos}			</td>
+		<td>Salarios</td>  <td>	${sueldos}</td>
 		</tr>
 		
-
-		<tr class="blank_row">
-   		 <td colspan="5"></td>
-		 </tr>											
+   								
 		 <tr class="blank_row">
    		 <td colspan="5"></td>
 		 </tr>
@@ -132,6 +131,9 @@
 		   <tr><td><b>	BENEFICIO NETO/(PÉRDIDA) </b></td>	<td>	  ${beneficio_neto}     </td> </tr>
 		   </table>
 		</main>
+		
+		</div>
 	</body>
+	
 
 </html>
