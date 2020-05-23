@@ -9,7 +9,38 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/main.css" />
     <title>Inicio</title>
+
+
+<!-- Bootstrap core CSS -->
+<link href="/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Favicons -->
+<link rel="apple-touch-icon"
+	href="https://getbootstrap.com/docs/4.4/assets/img/favicons/apple-touch-icon.png"
+	sizes="180x180">
+<link rel="icon"
+	href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon-32x32.png"
+	sizes="32x32" type="image/png">
+<link rel="icon"
+	href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon-16x16.png"
+	sizes="16x16" type="image/png">
+<link rel="manifest"
+	href="https://getbootstrap.com/docs/4.4/assets/img/favicons/manifest.json">
+<link rel="mask-icon"
+	href="https://getbootstrap.com/docs/4.4/assets/img/favicons/safari-pinned-tab.svg"
+	color="#563d7c">
+<link rel="icon"
+	href="https://getbootstrap.com/docs/4.4/assets/img/favicons/favicon.ico">
+<meta name="msapplication-config"
+	content="/docs/4.4/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#563d7c">
+
+
+    
+<link href="/css/pricing.css" rel="stylesheet">  
+    
 </head>
 
 <body>
@@ -39,6 +70,17 @@
                     </p>
                 </div>
             </div>
+            
+            <div class="card mb-4 box-shadow">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Beneficio</h4>
+          </div>
+          <div class="card-body">
+            <h1 class="card-title pricing-card-title">$100000 <small class="text-muted"></small></h1>
+            
+          </div>
+        </div>
+            
             <div class="cover">
                 <img src="./img/white-boats-on-body-of-water-2265876.jpg" alt="world" />
             </div>
