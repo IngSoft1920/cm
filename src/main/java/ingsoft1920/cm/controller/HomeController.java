@@ -522,11 +522,11 @@ public class HomeController {
 		return mav;
 	}
 
-	// editar-proveedor GET
-	@GetMapping("/proveedores/editar-proveedor/{id}")
-	public ModelAndView editarProveedorForm(@PathVariable(name = "id") int id) {
+	//Pedidos
+	@GetMapping("/proveedores/pedidos/{id}")
+	public ModelAndView pedidosProveedor(@PathVariable(name = "id") int id) {
 		
-		ModelAndView mav = new ModelAndView("corp-proveedor/editar-proveedor.jsp");
+		ModelAndView mav = new ModelAndView("corp-proveedor/pedidos.jsp");
 		  mav.addObject("proveedor",proveedorDao.getByID(id));
 		  mav.addObject("productos",productoDao.productos());
 		  mav.addObject("productosProveedor",productoDao.productosProveedor(id));
@@ -534,22 +534,6 @@ public class HomeController {
 		return mav;
 	}
 
-	// editar-proveedor POST
-	@PostMapping("/proveedores/editar-proveedor/{id}")
-	public String recibirEditarProveedorForm(@PathVariable(name = "id") int id,
-													String empresa,
-													String cif,
-													Integer[] productosIDs) {
-
-		proveedorDao.eliminar(id);
-		recibirProveedorForm(empresa, cif, productosIDs);
-		return "redirect:/proveedores";
-	}
-	
-	
-	//Ver productos del proveedor
-
-		
 		
 		//Select hoteles para asignar un proveedor-producto
 		

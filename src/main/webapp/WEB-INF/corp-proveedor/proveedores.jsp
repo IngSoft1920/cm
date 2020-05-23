@@ -120,8 +120,8 @@
 												   href="/proveedores/ver-proveedor/${proveedores.id}"
 												   role="button">Ver</a>
                                            <a class="btn btn-sm btn-outline-secondary"
-													href="/proveedores/editar-proveedor/${proveedores.id}"
-													role="button">Editar</a>
+													href="/proveedores/pedidos/${proveedores.id}"
+													role="button">Pedidos</a>
                                             <a class="btn btn-sm btn-outline-secondary" href="/proveedores/productos/${proveedores.id}" role="button">Productos</a>
                                             
                                             <a class="btn btn-sm btn-outline-secondary"

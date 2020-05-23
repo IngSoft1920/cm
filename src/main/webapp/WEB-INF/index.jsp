@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/main.css" />
+
     <title>Inicio</title>
 
 
