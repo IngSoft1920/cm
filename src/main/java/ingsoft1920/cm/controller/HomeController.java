@@ -22,6 +22,7 @@ import ingsoft1920.cm.bean.Ausencia.Estado;
 import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.Pedido;
 import ingsoft1920.cm.bean.Producto;
 import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.Proveedor;
@@ -480,26 +481,15 @@ public class HomeController {
 	@PostMapping("/anadir-proveedor")
 	public String recibirProveedorForm(String empresa,
 									   String cif,
-									   Integer[] productosIDs) {
+									   String usuario,
+									   String contraseña) {
 		
 		Proveedor p = new Proveedor();
 		  p.setEmpresa(empresa);
 		  p.setCIF(cif);
-		  
-		List<Properties> info = new ArrayList<>();
-		
-		// Si productosIDs es null es que no se
-		// ha seleccionado ninguno
-		if( productosIDs != null ) {
-			Properties aux;
-			for(Integer id:productosIDs) {
-				aux = new Properties();
-				  aux.put("producto_id",id);
-				  
-				info.add(aux);
-			}
-		}
-		proveedorDao.anadir(p, info);
+		  p.setNombre(usuario);
+		  p.setPassword(contraseña);
+		proveedorDao.anadirProveedor(p);
 		return "redirect:/proveedores";
 	}
 	
@@ -545,9 +535,9 @@ public class HomeController {
 
 	// Eliminar proveedor
 	@GetMapping("/eliminar-proveedor/{id}")
-	public ModelAndView eliminarProveedorForm(@PathVariable(name = "id") int id) {
+	public String eliminarProveedorForm(@PathVariable(name = "id") int id) {
 		proveedorDao.eliminar(id);
-		return new ModelAndView("redirect:/proveedores");
+		return "redirect:/proveedores";
 	}
 	
 	// -------------------FACTURACIÓN-------------------------
@@ -732,7 +722,10 @@ public class HomeController {
 	
 	@PostMapping("/editar-precio-venta/{producto_id}/{proveedor_id}")
 	public String recibirEditarProductoForm(@PathVariable(name = "proveedor_id") int proveedor_id, @PathVariable(name = "producto_id") int producto_id, int precioVenta) {
-		
+		Producto producto = productoDao.getByID(producto_id);
+		if (precioVenta > producto.getPrecio_maximo()) {
+			return "redirect:/editar-precio-venta/"+producto_id+"/"+proveedor_id;
+		}
 		proveedorDao.actualizarPrecioVenta(producto_id, proveedor_id, precioVenta);
 		return "redirect:/new-proveedores/{proveedor_id}";
 	}
