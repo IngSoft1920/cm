@@ -112,7 +112,7 @@
 
 		<tr>
               <td>
-	      <form:checkbox path="reserva"/>Ingresos de Reservas </td>       
+	      <form:checkbox path="reserva"/>Ingresos derivados de habitaciones </td>       
             </tr>
 
 	
@@ -121,13 +121,13 @@
             </tr>
 
 		<tr>
-               <td><form:checkbox path="empleados"/>Dinero invertido en empleados</td>       
+               <td><form:checkbox path="empleados"/>Gastos personal</td>       
             </tr>
 	    		 
 
 		<tr>
                
-               <td><form:checkbox path = "comida" /> Gastos en productos de proveedores</td>
+               <td><form:checkbox path = "comida" />Gastos derivados de los pedidos</td>
             </tr> 
 
 	    <tr>
