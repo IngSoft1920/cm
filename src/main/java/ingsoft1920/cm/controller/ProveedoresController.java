@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonArray;
@@ -14,7 +13,6 @@ import com.google.gson.JsonObject;
 
 import ingsoft1920.cm.bean.Producto;
 import ingsoft1920.cm.bean.Proveedor;
-import ingsoft1920.cm.bean.Proveedor_Producto;
 import ingsoft1920.cm.dao.ProveedorDAO;
 import ingsoft1920.cm.dao.ProductoDAO;
 
@@ -46,9 +44,8 @@ public class ProveedoresController {
 				
 				unproducto.addProperty("id",producto.getId());
 				unproducto.addProperty("nombre",producto.getNombre());
-				
-				Proveedor_Producto info = ProductoDao.infoproducto(producto.getId(), p.getId());
-				unproducto.addProperty("precio_venta",info.getPrecio_venta());
+
+				unproducto.addProperty("precio_venta", ProductoDao.infoproducto(producto.getId(), p.getId()));
 				unproducto.addProperty("unidad_medida",producto.getUnidad_medida());
 				productos.add(unproducto);
 			}

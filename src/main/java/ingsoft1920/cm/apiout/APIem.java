@@ -1,12 +1,8 @@
 package ingsoft1920.cm.apiout;
 
 import java.sql.Date;
-import java.util.Arrays;
 import java.util.Properties;
-
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.ProfesionDAO;
