@@ -649,24 +649,7 @@ public class HomeController {
 		profesionDao.anadir(p,infoServs);
 		return "redirect:/configuracion";
 	}
-	
-	// PRODUCTOS
-	@GetMapping("/anadir-producto")
-	public String anadirProductoForm() {
-		return "conf/anadir-producto.jsp";
-	}
-	
-	@PostMapping("/anadir-producto")
-	public String recibirProductoForm(String nombre) {
-		Producto p = new Producto();
-		  p.setNombre(nombre);
-		
-		productoDao.anadir(p);
-		return "redirect:/configuracion";
-	}
-	
-	
-	
+
 	// TIPOS DE HABITACIÓN
 	@GetMapping("/anadir-tipos-hab")
 	public String anadirTipoHabForm() {
@@ -753,5 +736,22 @@ public class HomeController {
 		  mav.addObject("productos",productos);
 		 
 		return mav;
+	}
+	
+	// PRODUCTOS
+	@GetMapping("/anadir-producto")
+	public String anadirProductoForm() {
+		return "conf/anadir-producto.jsp";
+	}
+	
+	@PostMapping("/anadir-producto")
+	public String recibirProductoForm(String nombre,Integer precioMax,String unidadMedida) {
+		Producto p = new Producto();
+		  p.setNombre(nombre);
+		  p.setPrecio_maximo(precioMax);
+		  p.setUnidad_medida(unidadMedida);
+		
+		productoDao.anadir(p);
+		return "redirect:/productos";
 	}
 }
