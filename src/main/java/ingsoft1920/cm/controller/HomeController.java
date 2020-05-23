@@ -37,6 +37,7 @@ import ingsoft1920.cm.dao.ProveedorDAO;
 import ingsoft1920.cm.dao.ServicioDAO;
 import ingsoft1920.cm.dao.TipoHabitacionDAO;
 import ingsoft1920.cm.dao.ValoracionDAO;
+import ingsoft1920.cm.fna.FacturaDAO;
 
 // Controlador del FE
 /**
@@ -756,5 +757,9 @@ public class HomeController {
 	public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
 		productoDao.eliminarProducto(id);
 		return new ModelAndView("redirect:/productos");
+	}
+	@GetMapping("/beneficio")
+	public Double eliminarProducto() {
+		return FacturaDAO.balanceTotal();
 	}
 }
