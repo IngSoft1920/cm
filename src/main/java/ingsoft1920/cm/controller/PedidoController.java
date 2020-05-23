@@ -1,9 +1,6 @@
 package ingsoft1920.cm.controller;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import ingsoft1920.cm.bean.Pedido;
 import ingsoft1920.cm.dao.PedidoDAO;
 import org.springframework.stereotype.Controller;
@@ -44,7 +41,7 @@ public class PedidoController {
             prop = new Properties();
             prop.put("producto_id", element.getAsJsonObject().get("producto_id").getAsInt());
             prop.put("cantidad", element.getAsJsonObject().get("cantidad").getAsInt());
-            if (element.getAsJsonObject().get("especificaciones") != null) {
+            if (! element.getAsJsonObject().get("especificaciones").isJsonNull()) {
                 prop.put("especificaciones", element.getAsJsonObject().get("especificaciones").getAsString());
             }else{
                 prop.put("especificaciones", null);
