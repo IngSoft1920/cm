@@ -104,23 +104,6 @@ public class ProductoDAO {
 		
 		return res;
 	}
-	
-	public int infoproducto(int producto_id, int proveedor_id) {
-
-        Integer res = -1;
-        ScalarHandler<Integer> scalarHandler = new ScalarHandler<>();
-		String query = "SELECT precio_venta "
-					  +"FROM Proveedor_Producto "
-					  +"WHERE producto_id=? AND proveedor_id=? ";
-
-		try (Connection conn = conector.getConn()) 
-		{
-			res = runner.query(conn, query, scalarHandler,producto_id, proveedor_id);
-
-		} catch (Exception e) { e.printStackTrace(); }
-		
-		return res;
-	}
 
 	public void editarProducto(Producto producto){
 	    String query =  "UPDATE Producto " +
