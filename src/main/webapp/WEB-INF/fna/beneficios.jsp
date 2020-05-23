@@ -184,7 +184,7 @@
 						</tr> 
               				    </c:if>	
 
-							
+					</c:if>		
 					 </table>
 					 			 
 				</c:forEach>					
