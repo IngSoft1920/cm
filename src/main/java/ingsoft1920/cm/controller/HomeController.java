@@ -593,6 +593,22 @@ public class HomeController {
 		return new ModelAndView("redirect:/proveedores");
 	}
 	
+	
+	
+	//----------------PRODUCTO-------------------
+
+			@GetMapping("/productos")
+			public ModelAndView productos() {
+				
+				List<Producto> productos = productoDao.productos();
+				
+				ModelAndView mav = new ModelAndView("corp-proveedor/productos.jsp");
+				 
+				  mav.addObject("productos",productos);
+				 
+				return mav;
+			}
+	
 	// -------------------FACTURACIÓN-------------------------
 
 	// Pagina de facturacion
