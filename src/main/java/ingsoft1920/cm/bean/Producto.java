@@ -12,7 +12,7 @@ public class Producto {
 	public Producto(int id, String nombre, int precio_maximo, String unidad_medida) {
 		super();
 		this.id = id;
-		this.nombre = nombre;
+        this.nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1).toLowerCase();
 		this.precio_maximo = precio_maximo;
 		this.unidad_medida = unidad_medida;
 	}
@@ -26,7 +26,7 @@ public class Producto {
 		return nombre;
 	}
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+        this.nombre = nombre.substring(0, 1).toUpperCase() + nombre.substring(1).toLowerCase();
 	}
 	public int getPrecio_maximo() {
 		return precio_maximo;

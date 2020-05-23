@@ -91,13 +91,26 @@ public class HomeController {
 	//New Proveedores Vistas
 	
 	@GetMapping("/login-proveedores")
-	public String loginProveedores() {
+	public String loginProveedoresForm() {
 		return "login-proveedores.jsp";
 	}
 	
-	@GetMapping("/new-proveedores")
-	public String paginaProveedores() {
-		return "proveedores/new-proveedores.jsp";
+	@PostMapping("login-proveedores")
+	public String recibirCredenciales(String usuario,String password) {
+		Proveedor p = proveedorDao.login(usuario,password);
+		return p != null ? "redirect:/new-proveedores/"+p.getId() : "redirect:/login-proveedores";
+	}
+	
+	@GetMapping("/new-proveedores/{proveedor_id}")
+	public ModelAndView paginaProveedores(@PathVariable int proveedor_id) {
+		Proveedor p = proveedorDao.getByID(proveedor_id);
+		List<Properties> productos = proveedorDao.productos(proveedor_id);
+		
+		ModelAndView mav = new ModelAndView("proveedores/new-proveedores.jsp");
+		  mav.addObject("proveedor",p);
+		  mav.addObject("productos",productos);
+		
+		return mav;
 	}
 	
 	@GetMapping("/new-proveedores/anadir-producto")
@@ -549,18 +562,12 @@ public class HomeController {
 			return modelAndView;
 		}
 				
-				
-				//Editar precio producto de un proveedor
-				//TODO
 
-				
-				//Eliminar producto de un proveedor 
-
-				@GetMapping("/proveedores/productos/eliminar-producto/{id}")
-				public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
-					//proveedorDao.eliminar(id);
-					return new ModelAndView("redirect:/proveedores");
-				}
+	@GetMapping("/proveedores/productos/eliminar-producto/{id}")
+	public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
+		//proveedorDao.eliminar(id);
+		return new ModelAndView("redirect:/proveedores");
+	}
 
 	// Eliminar proveedor
 	@GetMapping("/eliminar-proveedor/{id}")

@@ -1,15 +1,17 @@
 package ingsoft1920.cm.dao;
 
-import java.math.BigInteger;	
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -104,6 +106,25 @@ public class ProveedorDAO {
 		return res;
 
 	}
+	
+	// null si las credenciales no son correctas
+	public Proveedor login(String usuario,String password) {
+		Proveedor res = null;
+		BeanHandler<Proveedor> handler = new BeanHandler<>(Proveedor.class);
+		String query = "SELECT * FROM Proveedor WHERE usuario=? AND password=?;";
+
+		try (Connection conn = conector.getConn()) 
+		{
+			res = runner.query(conn, query, handler, usuario, password);
+
+		} catch (Exception e) { e.printStackTrace(); }
+
+		return res;
+	}
+	
+	public boolean tryLogin(String usuario,String password) {
+		return login(usuario,password) != null;
+	}
 
 	// Eliminar empleado
 	public void eliminar(int proveedorID) {
@@ -116,22 +137,6 @@ public class ProveedorDAO {
 			
 		} catch (Exception e) { e.printStackTrace(); }
 	}
-	
-	
-//	public static void main(String[] args) {
-//		Proveedor prov = new Proveedor(-1, "Almacenes Juan", "123456");
-//		
-//		Properties prod1 = new Properties();
-//		  prod1.put("producto_id",1);
-//		  
-//		Properties prod2 = new Properties();
-//		  prod2.put("producto_id",2);
-//		  
-//		List<Properties> info = List.of(prod1,prod2);
-//		
-//		new ProveedorDAO().anadir(prov, info);
-//	}
-	
 	
    public List<Proveedor> proveedoresPorHotel(int id) {
         List<Proveedor> proveedores = new LinkedList<>();
@@ -210,7 +215,39 @@ public class ProveedorDAO {
 		} catch (Exception e) { e.printStackTrace(); }
     }
     
-    
+    // Cada Properties tiene:
+    // -nombre: String
+    // -precio_venta: int
+    // -unidad_medida: String
+    public List<Properties> productos(int proveedor_id) {
+    	List<Properties> res = new ArrayList<>();
+    	List<Map<String,Object>> resConsulta = null;
+    	MapListHandler handler = new MapListHandler();
+        String query = "SELECT p.nombre, pp.precio_venta, p.unidad_medida "
+        			  +"FROM Producto p "
+        			  +"JOIN Proveedor_Producto pp ON p.id = pp.producto_id "
+        			  +"WHERE pp.proveedor_id = ?";
+        
+        try( Connection conn = conector.getConn() )
+        {
+            resConsulta = runner.query(conn,query,handler,proveedor_id);
+        }
+        catch(Exception e) { e.printStackTrace(); }
+        
+        if( resConsulta != null ) {
+        	Properties aux;
+        	for( Map<String,Object> fila : resConsulta ) {
+        		aux = new Properties();
+        		  aux.put("nombre",fila.get("nombre"));
+        		  aux.put("precio_venta",fila.get("precio_venta"));
+        		  aux.put("unidad_medida",fila.get("unidad_medida"));
+        		  
+        		res.add(aux);
+        	}
+        }
+        
+        return res;
+    }
     
     
 
