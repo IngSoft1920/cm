@@ -1,4 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/checkout/ -->
@@ -11,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Editar Precio</title>
+    <title>Añadir Producto</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
@@ -52,37 +55,39 @@
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Editar Producto</h2>
+            <h2>Editar precio de venta</h2>
         </div>
 
-                <form class="needs-validation" novalidate="" method="POST">
+      
+                <form class="needs-validation" method="POST" novalidate>
+
                     <div class="form-group">
-                        <label class="col-form-label-lg">Precio Venta</label>
-                        <input type="number" class="form-control" name="precioVenta" placeholder="Nuevo precio Venta" required>
-                        <div class="invalid-feedback">Campo obligatorio</div>
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" value="${producto.nombre}" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Precio máximo de venta</label>
+                        <input type="text" class="form-control" value="${producto.precio_maximo}€/${producto.unidad_medida}" readonly>
                     </div>
 
-
+                    <div class="form-group">
+                        <label class="col-form-label-lg">Introduzca el nuevo precio de venta:</label>
+                        <input type="number" class="form-control" name="precioVenta" min="1" max="${producto.precio_maximo}" value="${precioActual}" required validate>
+                        <div class="invalid-feedback">Por favor, introduzca un precio por debajo del máximo</div>
+                    </div>
+                    
                     <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg btn-block"  type="submit">Actualizar</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Confirmar</button>
                 </form>
             </div>
-       
-
+        
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2020 Company Management - UPM</p>
-            <div class="container">
-                <p class="float-left">
-                    <a href="/configuracion">Volver a configuración</a>
-                </p>
-                <p class="float-right">
-                    <a href="/inicio">Volver a inicio</a>
-                </p>
-            </div>
         </footer>
-
-    <script src="/js/jquery-3.4.1.slim.min.js" ></script>
+   
+    <script src="/js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
     </script>

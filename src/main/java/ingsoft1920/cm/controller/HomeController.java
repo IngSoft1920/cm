@@ -113,22 +113,31 @@ public class HomeController {
 		return mav;
 	}
 	
-	@GetMapping("/new-proveedores/anadir-producto/{id}")
-	public String anadirProductos(@PathVariable(name = "id") int id) {
-		return "proveedores/anadir-producto.jsp";
+	
+	@GetMapping("/new-proveedores/escoger-producto/{proveedor_id}")
+	public ModelAndView vistaEscogerProductos(@PathVariable(name="proveedor_id") int proveedor_id) {
+		ModelAndView mav = new ModelAndView("proveedores/escoger-producto.jsp");
+		  mav.addObject("proveedor_id",proveedor_id);
+		  mav.addObject("productos",productoDao.productosQueNoVendeProveedor(proveedor_id));
+		return mav;
 	}
 	
-	@PostMapping("/new-proveedores/anadir-producto/{id}")
-	public String recibirProductoProveedorForm(@PathVariable(name = "id") int id,String nombre,Integer precioVenta,String unidadMedida) {
-		Producto p = new Producto();
-		  p.setNombre(nombre);
-		  p.setUnidad_medida(unidadMedida);
-		  if(productoDao.anadir(p)<0) {
-	            return "redirect:/new-proveedores/anadir-producto/"+id;}
-	        else {
-	        	proveedorDao.asignar_producto_proveedor(id,productoDao.getByName(nombre).getId(), precioVenta);
-	            return "redirect:/new-proveedores/"+id;}
-		
+	@GetMapping("/new-proveedores/anadir-producto/{proveedor_id}/{producto_id}")
+	public ModelAndView anadirProductoForm(@PathVariable(name = "proveedor_id") int proveedor_id,
+								  @PathVariable(name = "producto_id") int producto_id) 
+	{
+		ModelAndView mav = new ModelAndView("proveedores/anadir-producto-from-proveedor.jsp");
+		  mav.addObject("producto",productoDao.getByID(producto_id));
+		return mav;
+	}
+	
+	@PostMapping("/new-proveedores/anadir-producto/{proveedor_id}/{producto_id}")
+	public String recibirProductoProveedorForm(@PathVariable(name = "proveedor_id") int proveedor_id,
+											   @PathVariable(name = "producto_id") int producto_id,
+											   Integer precioVenta)
+	{
+		proveedorDao.asignar_producto_proveedor(proveedor_id, producto_id, precioVenta);
+		return "redirect:/new-proveedores/"+proveedor_id;
 	}
 
 
@@ -727,9 +736,19 @@ public class HomeController {
 	
 	@GetMapping("/editar-precio-venta/{producto_id}/{proveedor_id}")
 	public ModelAndView editarPrecioForm(@PathVariable(name = "proveedor_id") int proveedor_id, @PathVariable(name = "producto_id") int producto_id) {
-		
 		ModelAndView mav = new ModelAndView("corp-proveedor/editar-precio-venta.jsp");
-		 
+		  mav.addObject("producto",productoDao.getByID(producto_id));
+		  
+		  int precioActual = (int) proveedorDao
+								  	.productos(proveedor_id)
+								  	.stream()
+								  	.filter( prod -> (int) prod.get("id") == producto_id )
+								  	.findAny()
+								  	.get()
+								  	.get("precio_venta");
+		  
+		 mav.addObject("precioActual",precioActual);
+		  
 		return mav;
 	}
 	

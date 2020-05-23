@@ -82,7 +82,7 @@
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
 					<strong class="navbar-brand">${proveedor.empresa}</strong>
-					<a class="navbar-nav" href="/new-proveedores/anadir-producto/${proveedor.id}">Añadir producto</a>
+					<a class="navbar-nav" href="/new-proveedores/escoger-producto/${proveedor.id}">Añadir producto</a>
 					
 				</div>
 			</div>

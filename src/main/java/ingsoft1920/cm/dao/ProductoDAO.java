@@ -153,5 +153,25 @@ public class ProductoDAO {
 
         } catch(Exception e) { e.printStackTrace(); }
     }
+    
+    public List<Producto> productosQueNoVendeProveedor(int proveedor_id) {
+    	List<Producto> res = new ArrayList<>();
+    	BeanListHandler<Producto> handler = new BeanListHandler<>(Producto.class);
+    	String query = "SELECT * "
+    				  +"FROM Producto "
+    				  +"WHERE id NOT IN ("
+    				  					+"SELECT producto_id "
+    				  					+"FROM Proveedor_Producto "
+    				  					+"WHERE proveedor_id = ?"
+    				  					+")";
+    	
+    	try ( Connection conn = conector.getConn() )
+    	{
+    		res = runner.query(conn,query,handler,proveedor_id);
+    		
+    	} catch(Exception e) { e.printStackTrace(); }
+    	
+    	return res;
+    }
 
 }
