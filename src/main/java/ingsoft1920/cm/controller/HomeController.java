@@ -37,6 +37,7 @@ import ingsoft1920.cm.dao.ProveedorDAO;
 import ingsoft1920.cm.dao.ServicioDAO;
 import ingsoft1920.cm.dao.TipoHabitacionDAO;
 import ingsoft1920.cm.dao.ValoracionDAO;
+import ingsoft1920.cm.fna.FacturaDAO;
 
 // Controlador del FE
 /**
@@ -563,11 +564,6 @@ public class HomeController {
 		}
 				
 
-	@GetMapping("/proveedores/productos/eliminar-producto/{id}")
-	public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
-		//proveedorDao.eliminar(id);
-		return new ModelAndView("redirect:/proveedores");
-	}
 
 	// Eliminar proveedor
 	@GetMapping("/eliminar-proveedor/{id}")
@@ -760,8 +756,20 @@ public class HomeController {
 		  p.setNombre(nombre);
 		  p.setPrecio_maximo(precioMax);
 		  p.setUnidad_medida(unidadMedida);
+		  if(productoDao.anadir(p)<0) {
+	            return "redirect:/anadir-producto";}
+	        else {
+	            return "redirect:/productos";}
 		
-		productoDao.anadir(p);
-		return "redirect:/productos";
+	}
+
+	@GetMapping("/eliminar-producto/{id}")
+	public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
+		productoDao.eliminarProducto(id);
+		return new ModelAndView("redirect:/productos");
+	}
+	@GetMapping("/beneficio")
+	public Double eliminarProducto() {
+		return FacturaDAO.balanceTotal();
 	}
 }

@@ -24,6 +24,7 @@
                 <li><a class="nav-link" href="/proveedores">Proveedores</a></li>
                 <li><a class="nav-link" href="/beneficio0">Facturación</a></li>
                 <li><a class="nav-link" href="/productos"> Productos </a></li>
+                <li><a class="nav-link" href="/productos"> Productos </a></li>
                 <li><a class="nav-link" href="/configuracion"> Configuración </a></li>
             </ul>
         </nav>  
