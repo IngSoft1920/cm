@@ -754,7 +754,7 @@ public class HomeController {
 
 	@GetMapping("/eliminar-producto/{id}")
 	public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
-		//proveedorDao.eliminar(id);
-		return new ModelAndView("redirect:/proveedores");
+		productoDao.eliminarProducto(id);
+		return new ModelAndView("redirect:/productos");
 	}
 }
