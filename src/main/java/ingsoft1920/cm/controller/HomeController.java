@@ -75,6 +75,12 @@ public class HomeController {
 		return "index.jsp";
 	}
 	
+	//Index para dividir la pagina entre corporativo y proveedores
+	@GetMapping("/inicio2")
+	public String home() {
+		return "index2.jsp";
+	}
+	
 	@GetMapping("/login")
 	public String loginCorporativo() {
 		return "login.jsp";

@@ -82,19 +82,19 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Profesión</label>
+                    <label class="col-form-label-lg">Profesión</label>
                     <input type="text" class="form-control" value="${nombreProf}" readonly>
                 </div>
 
                 <c:if test="${!empty diasLibres}">
-                    <div class="row">
-                        <div class="col-md-10 mb-3">
-                            <label>Días Libres</label>
+                    
+                        <div class="form-group">
+                            <label class="col-form-label-lg">Días Libres</label>
                             <c:forEach var="dia" items="${diasLibres}">
                                 <div class="form-check">${dia}</div>
                             </c:forEach>
                         </div>
-                    </div>
+                    
                 </c:if>
 
 
