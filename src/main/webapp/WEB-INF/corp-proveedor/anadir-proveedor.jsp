@@ -83,6 +83,8 @@
                         <input type="text" class="form-control" name="contraseña" placeholder="*********" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
+                    
+                 
  
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit" >Añadir</button>

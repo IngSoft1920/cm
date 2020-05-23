@@ -546,9 +546,9 @@ public class HomeController {
 
 	// Eliminar proveedor
 	@GetMapping("/eliminar-proveedor/{id}")
-	public String eliminarProveedorForm(@PathVariable(name = "id") int id) {
+	public ModelAndView eliminarProveedorForm(@PathVariable(name = "id") int id) {
 		proveedorDao.eliminar(id);
-		return "redirect:/proveedores";
+		return new ModelAndView("redirect:/proveedores");
 	}
 	
 	// -------------------FACTURACIÓN-------------------------
@@ -733,10 +733,7 @@ public class HomeController {
 	
 	@PostMapping("/editar-precio-venta/{producto_id}/{proveedor_id}")
 	public String recibirEditarProductoForm(@PathVariable(name = "proveedor_id") int proveedor_id, @PathVariable(name = "producto_id") int producto_id, int precioVenta) {
-		Producto producto = productoDao.getByID(producto_id);
-		if (precioVenta > producto.getPrecio_maximo()) {
-			return "redirect:/editar-precio-venta/"+producto_id+"/"+proveedor_id;
-		}
+		
 		proveedorDao.actualizarPrecioVenta(producto_id, proveedor_id, precioVenta);
 		return "redirect:/new-proveedores/{proveedor_id}";
 	}
