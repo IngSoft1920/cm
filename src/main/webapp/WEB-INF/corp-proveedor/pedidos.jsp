@@ -86,6 +86,8 @@
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
 					<a href="" class="navbar-brand "> <strong>Pedidos del proveedor</strong> </a> 
+					<a class="navbar-nav" href="/inicio">Inicio</a>
+					<a class="navbar-nav" href="/proveedores">Volver Proveedor</a>
 				</div>
 			</div>
 		</header>
@@ -116,7 +118,7 @@
 										<td>${hotel.nombre}</td>
 										<td>
 										<c:forEach var="productos" items="${productos}">
-										${productos.nombre}
+										${productos.nombre}<small class="text-muted">/ ${productos.cantidad}</small><small class="text-muted">/ ${productos.unidad-medida}</small>
 										</c:forEach>
 										</td>
 										<td>${pedido.fecha}</td>
