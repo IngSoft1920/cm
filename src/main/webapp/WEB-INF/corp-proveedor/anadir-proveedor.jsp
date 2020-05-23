@@ -75,12 +75,12 @@
                     
                     <div class="form-group">
                         <label for="usuario">Usuario</label>
-                        <input type="text" class="form-control" name="usuario" placeholder="Vegetales S.A." required>
+                        <input type="text" class="form-control" name="usuario" placeholder="Usuario" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
                     <div class="form-group">
                         <label for="contrasena">Contraseña</label>
-                        <input type="text" class="form-control" name="contrasena"  required>
+                        <input type="text" class="form-control" name="contrasena" placeholder="*********" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
  
