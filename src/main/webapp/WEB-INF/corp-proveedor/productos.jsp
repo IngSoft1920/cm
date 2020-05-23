@@ -105,6 +105,7 @@
 									<th scope="col">#</th>
 									<th scope="col">Producto</th>
 									<th scope="col">Precio Max</th>
+									<th scope="col">Unidad de medida</th>
 									<th scope="col">Opciones</th>
 
 								</tr>
@@ -114,7 +115,8 @@
 									<tr>
 										<th scope="row">${productos.id}</th>
 										<td>${productos.nombre}</td>
-										<td>${producto.precio}</td>
+										<td>${producto.precio_max}</td>
+										<td>${producto.unidad_medida}</td>
 
 										<!-- Botones -->
 										<td>
@@ -122,11 +124,11 @@
 
 											
 													<a class="btn btn-sm btn-outline-secondary"
-													href="/proveedores/productos/editar-precio/${productos.id }"
+													href="/editar-producto/${productos.id }"
 													role="button">Editar</a>
 													
 													<a class="btn btn-sm btn-outline-secondary"
-													href="/proveedores/productos/eliminar/${productos.id }"
+													href="/editar-producto/${productos.id }"
 													role="button">Eliminar</a>
 
 

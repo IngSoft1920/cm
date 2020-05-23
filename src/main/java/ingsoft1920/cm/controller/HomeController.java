@@ -552,21 +552,7 @@ public class HomeController {
 				
 				//Editar precio producto de un proveedor
 				//TODO
-				
-				@GetMapping("/proveedores/productos/editar-precio/{id}")
-				public ModelAndView productosEditarPrecio(@PathVariable(name = "id") int id) {
-					
-					
-					Producto producto = productoDao.getByID(id);
-					
-					ModelAndView mav = new ModelAndView("corp-proveedor/editar-precio.jsp");
-					  mav.addObject("producto",producto);
-					
-					return mav;
-				}
-				
 
-				
 				
 				//Eliminar producto de un proveedor 
 
@@ -726,10 +712,10 @@ public class HomeController {
 		return "redirect:/ausencias";
 	}
 	
-	@GetMapping("/productos/editar-precio/{id}")
+	@GetMapping("/editar-producto/{id}")
 	public ModelAndView editarProductoForm(@PathVariable(name = "id") int id) {
 		
-		ModelAndView mav = new ModelAndView("corp-proveedor/editar-precio.jsp");
+		ModelAndView mav = new ModelAndView("corp-proveedor/editar-producto.jsp");
 		Producto producto = productoDao.getByID(id);
 		mav.addObject("producto",producto);
 		 
@@ -737,7 +723,7 @@ public class HomeController {
 	}
 
 	// editar-producto POST
-	@PostMapping("/productos/editar-precio/{id}")
+	@PostMapping("/editar-producto/{id}")
 	public String recibirEditarProductoForm(@PathVariable(name = "id") int id,
 													String nombre,
 													Integer precioMax,
