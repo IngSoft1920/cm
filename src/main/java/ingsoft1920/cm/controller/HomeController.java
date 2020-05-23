@@ -729,7 +729,7 @@ public class HomeController {
 													Integer precioMax,
 													String unidadDeMedida) {
 
-		Producto producto = new Producto();
+		Producto producto = productoDao.getByID(id);
 		producto.setNombre(nombre);
 		producto.setPrecio_maximo(precioMax);
 		producto.setUnidad_medida(unidadDeMedida);

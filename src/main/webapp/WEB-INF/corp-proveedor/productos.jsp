@@ -115,8 +115,8 @@
 									<tr>
 										<th scope="row">${productos.id}</th>
 										<td>${productos.nombre}</td>
-										<td>${producto.precio_max}</td>
-										<td>${producto.unidad_medida}</td>
+										<td>${productos.precio_maximo}</td>
+										<td>${productos.unidad_medida}</td>
 
 										<!-- Botones -->
 										<td>
@@ -124,7 +124,7 @@
 
 											
 													<a class="btn btn-sm btn-outline-secondary"
-													href="/editar-producto/${productos.id }"
+													href="/editar-producto/${productos.id}"
 													role="button">Editar</a>
 													
 													<a class="btn btn-sm btn-outline-secondary"
