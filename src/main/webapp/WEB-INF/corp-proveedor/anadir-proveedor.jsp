@@ -63,24 +63,24 @@
                 <form class="needs-validation" method="POST" novalidate>
                     <div class="form-group">
                         <label>Empresa</label>
-                        <input type="text" class="form-control" name="empresa" placeholder="Licores SA" required>
+                        <input type="text" class="form-control" name="empresa" placeholder="Empresa" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
                     <div class="form-group">
                         <label for="cif">CIF</label>
-                        <input type="text" class="form-control" name="cif" placeholder="S0794867B" required>
+                        <input type="text" class="form-control" name="cif" placeholder="CIF" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
                     
                     <div class="form-group">
                         <label for="usuario">Usuario</label>
-                        <input type="text" class="form-control" name="usuario" placeholder="Vegetales S.A." required>
+                        <input type="text" class="form-control" name="usuario" placeholder="Usuario" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
                     <div class="form-group">
                         <label for="contrasena">Contraseña</label>
-                        <input type="text" class="form-control" name="contrasena"  required>
+                        <input type="text" class="form-control" name="contraseña" placeholder="*********" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
  
