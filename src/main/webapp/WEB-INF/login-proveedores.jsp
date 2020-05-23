@@ -64,6 +64,8 @@
         <input class="form-control" type="password" id="inputPassword" name="password" placeholder="Contraseña" required>
         
         <button class="btn btn-lg btn-primary btn-block" type="submit" >Acceder</button>
+        
+       
         <p class="mt-5 mb-3 text-muted">© 2020 Company Management - UPM</p>
     </form>
 

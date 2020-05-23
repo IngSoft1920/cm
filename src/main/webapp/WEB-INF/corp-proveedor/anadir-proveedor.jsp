@@ -68,25 +68,26 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="firstName">CIF</label>
+                        <label for="cif">CIF</label>
                         <input type="text" class="form-control" name="cif" placeholder="S0794867B" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
-
+                    
                     <div class="form-group">
-                        <div class="col-md-5">
-                            <label class="col-form-label-lg">Productos</label>
-                            <c:forEach var="producto" items="${productos}">  
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="productosIDs" value="${producto.id}">
-                                    <label >${producto.nombre}</label>
-                                </div>
-                            </c:forEach> 
-                        </div>
+                        <label for="usuario">Usuario</label>
+                        <input type="text" class="form-control" name="usuario" placeholder="Vegetales S.A." required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
+                    <div class="form-group">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="text" class="form-control" name="contrasena"  required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+
+                    
                     
                     <hr class="mb-4">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit" >Añadir</button>
                 </form>
             </div>
 
