@@ -40,8 +40,8 @@ public class ProductoDAO {
 
     public int anadir(Producto p) {
 
-        if (getByName(p.getNombre()) == null){
-            return -2;
+        if (getByName(p.getNombre()) != null){
+            return -1;
         }
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
@@ -134,5 +134,5 @@ public class ProductoDAO {
                             producto.getId());
         }catch (Exception e) { e.printStackTrace(); }
     }
-    
+
 }

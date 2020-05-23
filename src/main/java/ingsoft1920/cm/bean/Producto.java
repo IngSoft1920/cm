@@ -45,4 +45,5 @@ public class Producto {
 		return "Producto [id=" + id + ", nombre=" + nombre + ", precio_maximo=" + precio_maximo + ", unidad_medida="
 				+ unidad_medida + "]";
 	}
+
 }
