@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 
 import ingsoft1920.cm.apiout.APIout;
 import ingsoft1920.cm.bean.Empleado;
+import ingsoft1920.cm.bean.Hotel;
 import ingsoft1920.cm.bean.Proveedor;
 import ingsoft1920.cm.conector.ConectorBBDD;
 
@@ -189,33 +190,30 @@ public class ProveedorDAO {
     // -producto_id: int
     // -precio: int
     // -unidad_medida: String
-    public void asignarHotel(int hotel_id,int proveedor_id,List<Properties> info) {
+    public void asignarHotel(int hotel_id,int proveedor_id,Integer[] productos_ids) {
 
 		String query = "INSERT INTO Hotel_Proveedor_Producto "
-					  +"(hotel_id, proveedor_id, producto_id, precio, unidad_medida) "
-					  +"VALUES (?,?,?,?,?);";
+					  +"(hotel_id, proveedor_id, producto_id) "
+					  +"VALUES (?,?,?);";
 
 		List<Object[]> batch;
 		try (Connection conn = conector.getConn()) 
 		{
-			
 			batch = new ArrayList<>();
-			for(Properties ent : info) {
+			for(int prodID : productos_ids) {
 				batch.add(new Object[] {
-					hotel_id,
-					proveedor_id,
-					ent.get("producto_id"),
-				    ent.get("precio"),
-				    ent.get("unidad_medida")
-				});
+							hotel_id,
+							proveedor_id,
+							prodID
+						});
 			}
-			
-			runner.batch(conn,query,batch.toArray(new Object[info.size()][]));
+			runner.batch(conn,query,batch.toArray(new Object[batch.size()][]));
 
 		} catch (Exception e) { e.printStackTrace(); }
     }
     
     // Cada Properties tiene:
+    // -id: int
     // -nombre: String
     // -precio_venta: int
     // -unidad_medida: String
@@ -223,7 +221,7 @@ public class ProveedorDAO {
     	List<Properties> res = new ArrayList<>();
     	List<Map<String,Object>> resConsulta = null;
     	MapListHandler handler = new MapListHandler();
-        String query = "SELECT p.nombre, pp.precio_venta, p.unidad_medida "
+        String query = "SELECT p.id,p.nombre, pp.precio_venta, p.unidad_medida "
         			  +"FROM Producto p "
         			  +"JOIN Proveedor_Producto pp ON p.id = pp.producto_id "
         			  +"WHERE pp.proveedor_id = ?";
@@ -238,6 +236,7 @@ public class ProveedorDAO {
         	Properties aux;
         	for( Map<String,Object> fila : resConsulta ) {
         		aux = new Properties();
+        		  aux.put("id",fila.get("id"));
         		  aux.put("nombre",fila.get("nombre"));
         		  aux.put("precio_venta",fila.get("precio_venta"));
         		  aux.put("unidad_medida",fila.get("unidad_medida"));
@@ -247,6 +246,26 @@ public class ProveedorDAO {
         }
         
         return res;
+    }
+    
+    public List<Hotel> hotelesNoAsignados(int proveedor_id) {
+    	List<Hotel> res = new ArrayList<>();
+    	BeanListHandler<Hotel> handler = new BeanListHandler<>(Hotel.class);
+    	String query = "SELECT * "
+    				  +"FROM Hotel "
+    				  +"WHERE id NOT IN ( SELECT hotel_id "
+    				  						+"FROM Hotel_Proveedor_Producto "
+    				  						+"WHERE proveedor_id = ? "
+    				  						+"GROUP BY hotel_id "
+    				  				  +")";
+    	
+    	try ( Connection conn = conector.getConn() )
+    	{
+    		res = runner.query(conn,query,handler,proveedor_id);
+    		
+    	} catch( Exception e ) { e.printStackTrace(); }
+    	
+    	return res;
     }
     
     
