@@ -1,6 +1,6 @@
 package ingsoft1920.cm.apiout;
 
-import java.io.IOException;	
+import java.io.IOException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

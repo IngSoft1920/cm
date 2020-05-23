@@ -26,32 +26,30 @@ public class PedidoDAO {
 	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 
-	// TODO CAMBIAR CON LO NUEVO
 	// Cada Properties representa un producto en el pedido:
 	// -producto_id: int
 	// -cantidad: int
+	// -especificaciones: String
 	public int anadir(Pedido p,List<Properties> info) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-        int cantidad;
-        int importeTotal = 0;
-        ProductoDAO dao = new ProductoDAO();
 
 		String queryPedido = "INSERT INTO Pedido "
 							+"(fecha,hotel_id, proveedor_id, importe) "
 							+"VALUES (?,?,?,?);";
 		
 		String queryProductos = "INSERT INTO Pedido_Producto "
-							   +"(pedido_id,producto_id,cantidad, especificaciones) "
+							   +"(pedido_id,producto_id,cantidad,especificaciones) "
 							   +"VALUES (?,?,?,?)";
 
 		List<Object[]> batch;
-        for (Properties prod : info) {
-            cantidad = (int) prod.get("cantidad");
-            importeTotal += cantidad * dao.infoproducto((int) prod.get("producto_id"), p.getProveedor_id());
-        }
 		try (Connection conn = conector.getConn()) {
-			res = runner.insert(conn, queryPedido, handler, p.getFecha(),p.getHotel_id(),p.getProveedor_id(),importeTotal);
+			res = runner.insert(conn, queryPedido, handler,
+								 p.getFecha(),
+								 p.getHotel_id(),
+								 p.getProveedor_id(),
+								 p.getImporte()
+							 	);
 	
 			batch = new ArrayList<>();
 			for (Properties prod : info) {

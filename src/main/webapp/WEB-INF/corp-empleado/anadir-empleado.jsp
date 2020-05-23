@@ -91,8 +91,7 @@
                     </div>
                     <div class="form-group">
                         <label>Superior</label>
-                        <input type="email" class="form-control" name="superior" placeholder="juan@gmail.com" required>
-                        <div class="invalid-feedback">Campo obligatorio</div>
+                        <input type="email" class="form-control" name="superior" placeholder="juan@gmail.com">
                     </div>
 
                     <div class="row">

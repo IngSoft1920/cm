@@ -357,9 +357,11 @@ public class HomeController {
 								  Integer[] diasLibres,
 								  String superior)
 	{
+		System.out.println("SUPERIOR " + superior);
+
 		// Comprobamos si existe el superior y si no recargamos la página,
 		// invalidando el registro
-		if( empleadoDao.getByEmail(superior) == null )
+		if( superior != null && !superior.equals("") && empleadoDao.getByEmail(superior) == null )
 			return "redirect:/anadir-empleado/"+id;
 		
 		Empleado em = new Empleado();
@@ -418,8 +420,8 @@ public class HomeController {
 										   Integer profesionID,
 										   Integer[] diasLibres,
 										   String superior) {
-	
-		if( empleadoDao.getByEmail(superior) == null )
+		
+		if( superior != null && !superior.equals("") && empleadoDao.getByEmail(superior) == null )
 			return "redirect:/editar-empleado/"+id;
 		
 		Empleado em = new Empleado();
@@ -500,7 +502,7 @@ public class HomeController {
 		  p.setCIF(cif);
 		  p.setNombre(usuario);
 		  p.setPassword(contraseña);
-		proveedorDao.anadirProveedor(p);
+		proveedorDao.anadir(p);
 		return "redirect:/proveedores";
 	}
 	
@@ -732,8 +734,9 @@ public class HomeController {
 	}
 	
 	@PostMapping("/editar-precio-venta/{producto_id}/{proveedor_id}")
-	public String recibirEditarProductoForm(@PathVariable(name = "proveedor_id") int proveedor_id, @PathVariable(name = "producto_id") int producto_id, int precioVenta) {
-		
+	public String recibirEditarProductoForm(@PathVariable(name = "proveedor_id") int proveedor_id,
+											@PathVariable(name = "producto_id") int producto_id,
+											int precioVenta) {
 		proveedorDao.actualizarPrecioVenta(producto_id, proveedor_id, precioVenta);
 		return "redirect:/new-proveedores/{proveedor_id}";
 	}

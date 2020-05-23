@@ -34,38 +34,7 @@ public class ProveedorDAO {
 	private ConectorBBDD conector = new ConectorBBDD();
 
 	
-	// Cada Properties da la info de cada producto
-	// -producto_id: int
-	public int anadir(Proveedor p, List<Properties> info) {
-		BigInteger res = null;
-		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-
-		String queryProv = "INSERT INTO Proveedor "
-						  +"(empresa, CIF) "
-						  +"VALUES (?,?);";
-		
-		String queryPro = "INSERT INTO Proveedor_Producto "
-						 +"(proveedor_id,producto_id) "
-						 +"VALUES (?,?)";
-
-		List<Object[]> batch;
-		try (Connection conn = conector.getConn()) {
-			res = runner.insert(conn, queryProv, handler, p.getEmpresa(),p.getCIF());
-	
-			batch = new ArrayList<>();
-			for (Properties prod : info) {
-				batch.add(new Object[] { res.intValue(),
-										 prod.get("producto_id")
-									   });
-			}
-			runner.batch(conn, queryPro, batch.toArray(new Object[info.size()][]));
-
-		} catch (Exception e) { e.printStackTrace(); }
-
-		return (res != null ? res.intValue() : -1);
-	}
-	
-	public void anadirProveedor (Proveedor p) {
+	public void anadir(Proveedor p) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
 		String query = "INSERT INTO Proveedor (empresa,CIF,usuario,password) VALUES (?, ?, ?, ?);";
@@ -149,10 +118,6 @@ public class ProveedorDAO {
 		} catch (Exception e) { e.printStackTrace(); }
 
 		return res;
-	}
-	
-	public boolean tryLogin(String usuario,String password) {
-		return login(usuario,password) != null;
 	}
 
 	// Eliminar empleado
@@ -309,6 +274,20 @@ public class ProveedorDAO {
     	} catch( Exception e ) { e.printStackTrace(); }
     	
     	return res;
+    }
+    
+    public int getPrecioCantidad(int producto_id,int cantidad) {
+    	Integer precioVenta = null;
+    	ScalarHandler<Integer> handler = new ScalarHandler<>();
+    	String query = "SELECT precio_venta FROM Proveedor_Producto WHERE producto_id=?";
+    	
+    	try( Connection conn = conector.getConn() )
+    	{
+    		precioVenta = runner.query(conn,query,handler,producto_id);
+    		
+    	} catch( Exception e) { e.printStackTrace(); }
+    	
+    	return precioVenta != null ? (int) cantidad * precioVenta : -1;
     }
     
 

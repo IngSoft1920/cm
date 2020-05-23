@@ -93,8 +93,7 @@
 
                     <div class="form-group">
                         <label>Superior</label>
-                        <input type="email" class="form-control" name="superior" value="${empleado.superior}" required>
-                        <div class="invalid-feedback">Campo obligatorio</div>
+                        <input type="email" class="form-control" name="superior" value="${empleado.superior}">
                     </div>
 
                     <div class="row">
