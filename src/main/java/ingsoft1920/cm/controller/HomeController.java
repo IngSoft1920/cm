@@ -535,17 +535,6 @@ public class HomeController {
 	
 	//Ver productos del proveedor
 
-		@GetMapping("/proveedores/productos/{id}")
-		public ModelAndView productosProveedor(@PathVariable(name = "id") int id) {
-			Proveedor proveedor = new ProveedorDAO().getByID(id);
-			List<Producto> productos = productoDao.productosProveedor(id);
-			
-			ModelAndView mav = new ModelAndView("corp-proveedor/productos.jsp");
-			  mav.addObject("proveedor",proveedor);
-			  mav.addObject("productos",productos);
-			 
-			return mav;
-		}
 		
 		
 		//Select hoteles para asignar un proveedor-producto
@@ -761,5 +750,15 @@ public class HomeController {
 		
 		productoDao.editarProducto(producto);
 		return "redirect:/productos";
+	}
+
+	@GetMapping("/productos")
+	public ModelAndView productos() {
+		List<Producto> productos = productoDao.productos();
+		
+		ModelAndView mav = new ModelAndView("corp-proveedor/productos.jsp");
+		  mav.addObject("productos",productos);
+		 
+		return mav;
 	}
 }
