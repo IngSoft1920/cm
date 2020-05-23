@@ -289,9 +289,11 @@ public class FacturaDAO {
 		return resultado;
 	}
 	
-	public static double balanceTotal (Double[] beneficiosTotalesSeparados) {
+	public double balanceTotal() {
 		double total = 0;
 		int i=0;
+        Double[] beneficiosTotalesSeparados = beneficiosTotalesSeparados();
+
 		for (i=0; i<beneficiosTotalesSeparados.length; i++) {
 			if(i==0 | i==1) {
 				total += beneficiosTotalesSeparados[i];
