@@ -22,7 +22,6 @@ import ingsoft1920.cm.bean.Ausencia.Estado;
 import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
-import ingsoft1920.cm.bean.Pedido;
 import ingsoft1920.cm.bean.Producto;
 import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.Proveedor;
