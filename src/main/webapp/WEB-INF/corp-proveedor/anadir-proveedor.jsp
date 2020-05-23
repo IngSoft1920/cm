@@ -80,7 +80,7 @@
                     </div>
                     <div class="form-group">
                         <label for="contrasena">Contraseña</label>
-                        <input type="text" class="form-control" name="contraseña" placeholder="*********" required>
+                        <input type="password" class="form-control" name="contraseña" placeholder="*********" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
                     

@@ -33,7 +33,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="/css/bootstrap.min.css" rel="stylesheet"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	
 	crossorigin="anonymous">
 
 <!-- Favicons -->
@@ -134,6 +134,31 @@
 					</tr>
       					     </c:if>
 
+						<c:if test = "${BeneficioBean.roomNight}">
+					<tr>
+						 <td> <b>Beneficio/Room Night:</b> </td>
+        					
+		       			    <td> ${entry.value.beneficiosPorRoomNight}€ <td>
+				 	      	
+					</tr>
+
+						<tr>
+						 <td> <b>Gastos/Room Night:</b> </td>
+        				
+		       			    <td> ${entry.value.beneficiosPorRoomNight}€ <td>
+				 	      	
+						</tr>
+						
+						<tr>
+						 <td> <b>Gastos/Room Night:</b> </td>
+        				
+		       			    <td> ${entry.value.balancePorRoomNight}€ <td>
+				 	      	
+						</tr>
+
+
+      					     </c:if>
+
 					     <c:if test = "${BeneficioBean.empleados}">
 					     <tr>
 						 <td> <b>Gastos derivados de Personal:</b> </td>
@@ -159,9 +184,9 @@
 						</tr> 
               				    </c:if>	
 
-							
+					</c:if>		
 					 </table>
-					 </c:if>				 
+					 			 
 				</c:forEach>					
 						 <div align="center">
 						 <table>
