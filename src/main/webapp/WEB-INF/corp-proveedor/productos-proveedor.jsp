@@ -134,7 +134,7 @@
 		<footer class="text-muted">
 			<div class="container">
 				<p class="float-right">
-					<a href="">Back to top</a>
+					<a href="">Volver arriba</a>
 				</p>
 				<p>Lista de productos.</p>
 			</div>

@@ -58,7 +58,7 @@
         <h1 class="h5 mb-3 font-weight-normal">Proveedor oficial</h1>
 
         <label for="user" class="sr-only">Usuario</label>
-        <input class="form-control" type="text" id="user" name="usuario" placeholder="Correo Electrónico" required autofocus>
+        <input class="form-control" type="text" id="user" name="usuario" placeholder="Usuario" required autofocus>
         
         <label for="inputPassword" class="sr-only">Contraseña</label>
         <input class="form-control" type="password" id="inputPassword" name="password" placeholder="Contraseña" required>
