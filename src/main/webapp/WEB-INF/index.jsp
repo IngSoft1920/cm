@@ -62,7 +62,10 @@
 
     <main>
         <section class="presentation">
-            <div class="introduction">
+        
+        
+        <section class="vertical">
+            <div class="introduction" style="margin-bottom: 120px">
                 <div class="intro-text">
                     <h1>La cadena del futuro</h1>
                     <p>
@@ -71,7 +74,7 @@
                 </div>
             </div>
             
-           <div class="card mb-4 box-shadow">
+           <div class="card mb-4 box-shadow" >
              <div class="card-header">
               <h4 class="my-0 font-weight-normal">Balance económico</h4>
              </div>
@@ -79,6 +82,10 @@
               <h1 class="card-title pricing-card-title">${balance}€<small class="text-muted"></small></h1>
              </div>
            </div>
+           
+           </section>
+           
+           
          
             <div class="cover">
                 <img src="./img/white-boats-on-body-of-water-2265876.jpg" alt="world" />

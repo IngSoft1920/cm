@@ -22,7 +22,6 @@ import ingsoft1920.cm.bean.Ausencia.Estado;
 import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
-import ingsoft1920.cm.bean.Pedido;
 import ingsoft1920.cm.bean.Producto;
 import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.Proveedor;
@@ -71,7 +70,7 @@ public class HomeController {
 
 	@GetMapping("/inicio")
 	public ModelAndView homeCorporativo() {
-		Double balance = FacturaDAO.balanceTotal();
+		Integer balance = (int)FacturaDAO.balanceTotal();
 		return new ModelAndView("index.jsp", "balance", balance);
 	}
 	

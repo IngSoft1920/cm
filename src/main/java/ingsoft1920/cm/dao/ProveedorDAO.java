@@ -170,7 +170,11 @@ public class ProveedorDAO {
    public List<Proveedor> proveedoresPorHotel(int id) {
         List<Proveedor> proveedores = new LinkedList<>();
         BeanListHandler<Proveedor> beanListHandler = new BeanListHandler<>(Proveedor.class);
-        String getProveedores = "SELECT p.* FROM Proveedor p JOIN Hotel_Proveedor_Producto hp ON p.id=hp.proveedor_id JOIN Hotel h ON hp.hotel_id=h.id WHERE h.id=? group by p.id ";
+        String getProveedores = "SELECT p.* "
+        					   +"FROM Proveedor p "
+        					   +"JOIN Hotel_Proveedor_Producto hp ON p.id=hp.proveedor_id "
+        					   +"JOIN Hotel h ON hp.hotel_id=h.id "
+        					   +"WHERE h.id=? group by p.id ";
 
         try( Connection conn = conector.getConn() )
         {
@@ -306,7 +310,6 @@ public class ProveedorDAO {
     	
     	return res;
     }
-    
     
 
 }

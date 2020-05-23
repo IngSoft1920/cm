@@ -85,11 +85,7 @@
 
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-<<<<<<< Updated upstream
-					<a href="" class="navbar-brand "> <strong>Productos de la cadena</strong>
-=======
 					<a href="" class="navbar-brand "> <strong>Productos</strong>
->>>>>>> Stashed changes
 					</a> <a class="navbar-nav" href="/inicio">Inicio</a> <a
 						class="navbar-nav" href="/anadir-producto">Añadir producto</a>
 				</div>

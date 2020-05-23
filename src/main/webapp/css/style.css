@@ -204,6 +204,15 @@ nav {
     right: 19%;
 }
 
+ .vertical {
+        flex-direction: column;
+        
+    }
+        .card mb-4 box-shadow{
+    margin-top: 25px;
+    }
+    
+
 @keyframes drop {
     0% {
         opacity: 0;

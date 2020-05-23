@@ -86,7 +86,7 @@
 				<div class="container d-flex align-content-start">
 					<strong class="navbar-brand">Proveedores</strong>
 					<a class="navbar-nav" href="/inicio">Inicio</a>
-					<a class="navbar-nav" href="/anadir-proveedor">Añadir Proveedor</a>
+					<a class="navbar-nav" href="/anadir-proveedor">Añadir proveedor</a>
 				</div>
 			</div>
 		</header>
