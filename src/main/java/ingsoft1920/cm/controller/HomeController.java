@@ -353,9 +353,14 @@ public class HomeController {
 								  Integer sueldo,
 								  Integer profesionID, 
 								  @PathVariable(name = "id") int id,
-								  Integer[] diasLibres) {
-				
-		//
+								  Integer[] diasLibres,
+								  String superior)
+	{
+		// Comprobamos si existe el superior y si no recargamos la página,
+		// invalidando el registro
+		if( empleadoDao.getByEmail(superior) == null )
+			return "redirect:/anadir-empleado/"+id;
+		
 		Empleado em = new Empleado();
 		  em.setNombre(firstName);
 		  em.setApellidos(lastNames); 	
@@ -368,6 +373,7 @@ public class HomeController {
 		Properties info = new Properties();
 		  info.put("fecha_contratacion",Date.valueOf( LocalDate.now() ));
 		  info.put("hotel_id", id);
+		  info.put("superior",superior);
 		   
 		empleadoDao.anadir(em, info);		
 		return "redirect:/select/empleados/"+id;

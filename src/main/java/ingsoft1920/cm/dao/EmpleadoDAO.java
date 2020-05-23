@@ -63,6 +63,7 @@ public class EmpleadoDAO {
     // *Properties
     // -hotel_id: int
     // -fecha_contratacion: Date
+    // -superior: String (no lo guardamos)
     public int anadir(Empleado empleado,Properties hotelEmpleado){
     	BigInteger idGenerado = null;
         ScalarHandler<BigInteger> handler = new ScalarHandler<>();
@@ -99,7 +100,8 @@ public class EmpleadoDAO {
         	empleado.setId( idGenerado.intValue() );
         	APIem.enviarEmpleado(empleado,
         						 (int) hotelEmpleado.get("hotel_id"),
-        						 (Date) hotelEmpleado.get("fecha_contratacion"));
+        						 (Date) hotelEmpleado.get("fecha_contratacion"),
+        						 (String) hotelEmpleado.get("superior"));
         }
 
         return ( idGenerado != null ? idGenerado.intValue() : -1 );
@@ -149,12 +151,25 @@ public class EmpleadoDAO {
     }
     
    	public Empleado getByID(int id) {
-   		Empleado res = new Empleado();
+   		Empleado res = null;
    		BeanHandler<Empleado> handler = new BeanHandler<>(Empleado.class);
    		String query = "SELECT * FROM Empleado WHERE id=?;";
 
    		try (Connection conn = conector.getConn()) {
    			res = runner.query(conn, query, handler, id);
+
+   		} catch (Exception e) { e.printStackTrace(); }
+   		
+   		return res;
+   	}
+   	
+   	public Empleado getByEmail(String email) {
+   		Empleado res = null;
+   		BeanHandler<Empleado> handler = new BeanHandler<>(Empleado.class);
+   		String query = "SELECT * FROM Empleado WHERE email=?;";
+
+   		try (Connection conn = conector.getConn()) {
+   			res = runner.query(conn, query, handler, email);
 
    		} catch (Exception e) { e.printStackTrace(); }
    		
