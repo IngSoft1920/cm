@@ -10,9 +10,9 @@ public class ConexionEM {
 		try {
 			HttpClient client= new HttpClient("http://piedrafita.ls.fi.upm.es:7002/sueldoHotel","GET");
 			int respCode = client.getResponseCode();
-			System.out.println(respCode);
+			//System.out.println(respCode);
 			if(respCode==200){
-				System.out.println("conexion establecida");
+				//System.out.println("conexion establecida");
 				//parseamos respuesta
 				String resp=client.getResponseBody();
 				JsonObject obj = (JsonObject) JsonParser.parseString(resp);
@@ -38,7 +38,7 @@ public class ConexionEM {
 					rol[i]=rolLista.get(i).getAsString();
 					incentivo[i]=incentivoLista.get(i).getAsDouble();
 					aux=map.get(id_hotel[i]);
-					System.out.println("Hotel_id: "+id_hotel[i]+" , sueldo: "+sueldo[i]+", id_empleado: "+id_empleado[i]+", rol: "+rol[i]+", incentivo: "+incentivo[i]);
+					//System.out.println("Hotel_id: "+id_hotel[i]+" , sueldo: "+sueldo[i]+", id_empleado: "+id_empleado[i]+", rol: "+rol[i]+", incentivo: "+incentivo[i]);
 					if(aux!=null) {
 						sueldoEmpleados = aux.getSueldoEmpleados().get(rol[i]);
 						aux.setTotal(aux.getTotal()-(sueldo[i]+incentivo[i]));
