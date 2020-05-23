@@ -44,7 +44,7 @@ public class EmpleadoDAO {
     }
     
     /**
-     * @param hotel.id
+     * @param id
      * @return List de empleados que pertenezcan al Hotel
      */
     public List<Empleado> empleadosPorHotel(int id) {
