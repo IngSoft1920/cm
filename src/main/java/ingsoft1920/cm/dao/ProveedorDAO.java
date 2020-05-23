@@ -68,7 +68,7 @@ public class ProveedorDAO {
 	public void anadirProveedor (Proveedor p) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-		String query = "INSERT INTO Producto (empresa,CIF,usuario,password) VALUES (?, ?, ?);";
+		String query = "INSERT INTO Proveedor (empresa,CIF,usuario,password) VALUES (?, ?, ?, ?);";
 
 		try (Connection conn = conector.getConn()) 
 		{
