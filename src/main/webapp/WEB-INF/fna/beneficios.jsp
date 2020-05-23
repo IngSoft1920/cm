@@ -118,16 +118,16 @@
 		   			  
 					 < c:if test = "${BeneficioBean.reserva}">
 					 <tr>
-							 <td> <b>Ingresos por estancia en habitaciones:</b> </td>
+							 <td> <b>Ingresos derivados de habitaciones:</b> </td>
         							<c:forEach items="${entry.value.sumaReservas}" var="serv">
 				   	     				    <td>${serv.key}: <vd> ${serv.value}€</vd><td>
 				 	      			   </c:forEach>
 					</tr>
-				
-
+					
+					
 						<c:if test = "${BeneficioBean.servicios}">
 					<tr>
-						 <td> <b>Ingresos por servicios ofrecidos:</b> </td>
+						 <td> <b>Ingresos derivados de  servicios:</b> </td>
         					<c:forEach items="${entry.value.sumaFacturas}" var="fact">
 		       			    <td>${fact.key}: <vd> ${fact.value}€</vd><td>
 				 	      	 </c:forEach>
@@ -136,7 +136,7 @@
 
 					     <c:if test = "${BeneficioBean.empleados}">
 					     <tr>
-						 <td> <b>Dinero Invertido en Empleados:</b> </td>
+						 <td> <b>Gastos derivados de Personal:</b> </td>
         					<c:forEach items="${entry.value.sueldoEmpleados}" var="sl">
 		       			    <td>${sl.key}: <vd> ${sl.value} €</vd><td>
 				 	      	 </c:forEach>
@@ -145,18 +145,19 @@
 
 					     <c:if test = "${BeneficioBean.comida}">
 					     <tr>
-						 <td> <b>Gastos en productos de proveedores:</b> </td>
+						 <td> <b>Gastos derivados de los pedidos:</b> </td>
         					<c:forEach items="${entry.value.gastoComida}" var="co">
 		       			    <td>${co.key}: <vd> ${co.value}</vd>€<td>
 				 	      	 </c:forEach>
 				 	      	</tr> 
       					     </c:if>
+					     <c:if test="${total}">
 						<tr>
 						<td>
-						Total: ${entry.value.total} €
+						Balance: ${entry.value.total} €  
 						</td>			     
-						</tr>
-              						
+						</tr> 
+              				    </c:if>	
 
 							
 					 </table>

@@ -108,14 +108,10 @@
 		 <td>Servicios            </td>	<td>			${servicios}		</td>
 		 </tr>
 		 <tr>
-		 <td>Gasto en servicios:	</td><td></td> 
-		</tr>
-		<td>Materias Primas       </td> <td>       ${proveedores}                              </td>
+		<td>Pedidos a proveedores   </td> <td>       ${proveedores}                              </td>
 		</tr>
 		
-		<tr>
-		<td><b>Coste total de Servicios</b></td><td>			${total_servicios}				</td>
-		</tr>
+		
 		<tr>
 		<td><b>Beneficio en Bruto	  </b></td><td>	${beneficio_bruto}		</td>
 		</tr>
