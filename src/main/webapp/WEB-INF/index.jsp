@@ -73,13 +73,7 @@
             
             <div class="card mb-4 box-shadow">
 
-              <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Profit-Loss</h4>
-              </div>
-            <div class="card-body">
-              <h1 class="card-title pricing-card-title">${balance} <small class="text-muted"></small></h1>
-            </div>
-
+  
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">Balance económico</h4>
           </div>
