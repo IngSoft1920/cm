@@ -15,6 +15,9 @@ public class BeneficiosGastosModel {
 	private HashMap <String, Double> gastoComida;
 	private double total;
 	private int numeroRoomNights;
+	private double beneficiosPorRoomNight;
+	private double gastosPorRoomNight;
+	private double balancePorRoomNight;
 	
 	public BeneficiosGastosModel(String nombreHotel) {
 		this.nombreHotel = nombreHotel;
@@ -24,6 +27,9 @@ public class BeneficiosGastosModel {
 		this.sueldoEmpleados = new HashMap <String, Double> ();
 		this.total=0;
 		this.numeroRoomNights=0;
+		this.beneficiosPorRoomNight=0;
+		this.gastosPorRoomNight=0;
+		this.balancePorRoomNight=0;
 	}
 	
 	
@@ -144,6 +150,39 @@ public class BeneficiosGastosModel {
 	
 	public double balancePorRoomNight() {
 		return this.beneficiosPorRoomNight()-this.gastosPorRoomNight();
+	}
+
+
+	public double getBeneficiosPorRoomNight() {
+		this.beneficiosPorRoomNight=this.beneficiosPorRoomNight();
+		return beneficiosPorRoomNight;
+	}
+
+
+	public void setBeneficiosPorRoomNight(double beneficiosPorRoomNight) {
+		this.beneficiosPorRoomNight = beneficiosPorRoomNight;
+	}
+
+
+	public double getGastosPorRoomNight() {
+		this.gastosPorRoomNight=this.gastosPorRoomNight();
+		return gastosPorRoomNight;
+	}
+
+
+	public void setGastosPorRoomNight(double gastosPorRoomNight) {
+		this.gastosPorRoomNight = gastosPorRoomNight;
+	}
+
+
+	public double getBalancePorRoomNight() {
+		this.balancePorRoomNight=this.balancePorRoomNight();
+		return balancePorRoomNight;
+	}
+
+
+	public void setBalancePorRoomNight(double balancePorRoomNight) {
+		this.balancePorRoomNight = balancePorRoomNight;
 	}
 
 
