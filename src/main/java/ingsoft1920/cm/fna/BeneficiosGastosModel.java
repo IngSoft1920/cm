@@ -114,6 +114,8 @@ public class BeneficiosGastosModel {
 	
 	public double beneficiosPorRoomNight() {
 		double resultado=0;
+		if(this.numeroRoomNights==0)
+			return 0;
 		HashMap <String, Double> aux=this.sumaReservas;
 		for (Double aux2: aux.values()) {
 		    resultado+=aux2;
@@ -127,6 +129,8 @@ public class BeneficiosGastosModel {
 	
 	public double gastosPorRoomNight() {
 		double resultado=0;
+		if(this.numeroRoomNights==0)
+			return 0;
 		HashMap <String, Double> aux=this.sueldoEmpleados;
 		for (Double aux2: aux.values()) {
 		    resultado+=aux2;
