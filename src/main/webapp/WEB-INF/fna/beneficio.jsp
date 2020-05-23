@@ -102,20 +102,20 @@
 		 <td>	${reservas}</td>
 		 </tr>
 		
-   		 <td colspan="5"></td>
+   		
 			
 		  <tr>
 		 <td>Servicios            </td>	<td>			${servicios}		</td>
 		 </tr>
 		 
-		 <td colspan="5"></td>
+		
 		 <tr>
 		<td>Pedidos a proveedores   </td> <td> ${proveedores}</td>
 		</tr>
 		
-		
+	
 		<tr>
-		<td><b>Beneficio en Bruto	  </b></td><td>	${beneficio_bruto}		</td>
+		<th>Beneficio en Bruto</th><td>	${beneficio_bruto}		</td>
 		</tr>
 
 		
