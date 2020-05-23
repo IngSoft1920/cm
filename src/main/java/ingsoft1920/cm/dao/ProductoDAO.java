@@ -24,14 +24,32 @@ public class ProductoDAO {
 	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 
-	public int anadir(Producto p) {
+    public Producto getByName(String productoName) {
+        Producto res=null;
+        BeanHandler<Producto> handler = new BeanHandler<>(Producto.class);
+        String query = "SELECT * FROM Producto WHERE nombre = ?";
+
+        try (Connection conn = conector.getConn())
+        {
+            res = runner.query(conn, query, handler,productoName);
+
+        } catch (Exception e) { e.printStackTrace(); }
+
+        return res;
+    }
+
+    public int anadir(Producto p) {
+
+        if (getByName(p.getNombre()) != null){
+            return -1;
+        }
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
-		String query = "INSERT INTO Producto (nombre) VALUES (?);";
+		String query = "INSERT INTO Producto (nombre, unidad_medida, precio_maximo) VALUES (?, ?, ?);";
 
 		try (Connection conn = conector.getConn()) 
 		{
-			res = runner.insert(conn, query, handler, p.getNombre());
+			res = runner.insert(conn, query, handler, p.getNombre(), p.getUnidad_medida(), p.getPrecio_maximo());
 
 		} catch (Exception e) { e.printStackTrace(); }
 
@@ -112,8 +130,19 @@ public class ProductoDAO {
         {
             runner.update(conn, query, producto.getNombre(),
                             producto.getUnidad_medida(),
-                            producto.getPrecio_maximo(), producto.getId());
+                            producto.getPrecio_maximo(),
+                            producto.getId());
         }catch (Exception e) { e.printStackTrace(); }
     }
-    
+
+    public void eliminarProducto(int id){
+        String query = "DELETE FROM Producto WHERE id = ?;";
+
+        try ( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, query, id);
+
+        } catch(Exception e) { e.printStackTrace(); }
+    }
+
 }

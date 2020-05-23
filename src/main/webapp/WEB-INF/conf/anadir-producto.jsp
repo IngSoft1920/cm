@@ -61,14 +61,19 @@
       
                 <form class="needs-validation" method="POST" novalidate>
                     <div class="form-group">
-                        <label for="firstName">Producto</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="Producto" required>
+                        <label class="col-form-label-lg">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="Nombre" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="precioMax">Precio máximo</label>
-                        <input type="number" class="form-control" name="precio" placeholder="20$" required>
+                        <label class="col-form-label-lg">Precio máximo</label>
+                        <input type="number" class="form-control" name="precioMax" placeholder="Precio" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label-lg">Unidad de medida</label>
+                        <input type="text" class="form-control" name="unidadMedida" placeholder="Unidad de medida" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
                     

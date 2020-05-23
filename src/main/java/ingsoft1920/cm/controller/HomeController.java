@@ -37,6 +37,7 @@ import ingsoft1920.cm.dao.ProveedorDAO;
 import ingsoft1920.cm.dao.ServicioDAO;
 import ingsoft1920.cm.dao.TipoHabitacionDAO;
 import ingsoft1920.cm.dao.ValoracionDAO;
+import ingsoft1920.cm.fna.FacturaDAO;
 
 // Controlador del FE
 /**
@@ -71,8 +72,9 @@ public class HomeController {
 	
 
 	@GetMapping("/inicio")
-	public String homeCorporativo() {
-		return "index.jsp";
+	public ModelAndView homeCorporativo() {
+		Double balance = FacturaDAO.balanceTotal();
+		return new ModelAndView("index.jsp", "balance", balance);
 	}
 	
 	//Index para dividir la pagina entre corporativo y proveedores
@@ -506,11 +508,11 @@ public class HomeController {
 		return mav;
 	}
 
-	// editar-proveedor GET
-	@GetMapping("/proveedores/editar-proveedor/{id}")
-	public ModelAndView editarProveedorForm(@PathVariable(name = "id") int id) {
+	//Pedidos
+	@GetMapping("/proveedores/pedidos/{id}")
+	public ModelAndView pedidosProveedor(@PathVariable(name = "id") int id) {
 		
-		ModelAndView mav = new ModelAndView("corp-proveedor/editar-proveedor.jsp");
+		ModelAndView mav = new ModelAndView("corp-proveedor/pedidos.jsp");
 		  mav.addObject("proveedor",proveedorDao.getByID(id));
 		  mav.addObject("productos",productoDao.productos());
 		  mav.addObject("productosProveedor",productoDao.productosProveedor(id));
@@ -518,22 +520,6 @@ public class HomeController {
 		return mav;
 	}
 
-	// editar-proveedor POST
-	@PostMapping("/proveedores/editar-proveedor/{id}")
-	public String recibirEditarProveedorForm(@PathVariable(name = "id") int id,
-													String empresa,
-													String cif,
-													Integer[] productosIDs) {
-
-		proveedorDao.eliminar(id);
-		recibirProveedorForm(empresa, cif, productosIDs);
-		return "redirect:/proveedores";
-	}
-	
-	
-	//Ver productos del proveedor
-
-		
 		
 	//Select hoteles para asignar un proveedor-producto
 	
@@ -550,11 +536,6 @@ public class HomeController {
 	}
 				
 
-	@GetMapping("/proveedores/productos/eliminar-producto/{id}")
-	public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
-		//proveedorDao.eliminar(id);
-		return new ModelAndView("redirect:/proveedores");
-	}
 
 	// Eliminar proveedor
 	@GetMapping("/eliminar-proveedor/{id}")
@@ -636,24 +617,7 @@ public class HomeController {
 		profesionDao.anadir(p,infoServs);
 		return "redirect:/configuracion";
 	}
-	
-	// PRODUCTOS
-	@GetMapping("/anadir-producto")
-	public String anadirProductoForm() {
-		return "conf/anadir-producto.jsp";
-	}
-	
-	@PostMapping("/anadir-producto")
-	public String recibirProductoForm(String nombre) {
-		Producto p = new Producto();
-		  p.setNombre(nombre);
-		
-		productoDao.anadir(p);
-		return "redirect:/configuracion";
-	}
-	
-	
-	
+
 	// TIPOS DE HABITACIÓN
 	@GetMapping("/anadir-tipos-hab")
 	public String anadirTipoHabForm() {
@@ -740,5 +704,40 @@ public class HomeController {
 		  mav.addObject("productos",productos);
 		 
 		return mav;
+	}
+	
+	@GetMapping("/proveedores/productos/{id}")
+	public ModelAndView proveedoresProductos(@PathVariable(name = "id") int id) {
+		List<Producto> productos = productoDao.productosProveedor(id);
+		
+		ModelAndView mav = new ModelAndView("corp-proveedor/productos-proveedor.jsp");
+		  mav.addObject("productos",productos);
+		 
+		return mav;
+	}
+	
+	// PRODUCTOS
+	@GetMapping("/anadir-producto")
+	public String anadirProductoForm() {
+		return "conf/anadir-producto.jsp";
+	}
+	
+	@PostMapping("/anadir-producto")
+	public String recibirProductoForm(String nombre,Integer precioMax,String unidadMedida) {
+		Producto p = new Producto();
+		  p.setNombre(nombre);
+		  p.setPrecio_maximo(precioMax);
+		  p.setUnidad_medida(unidadMedida);
+		  if(productoDao.anadir(p)<0) {
+	            return "redirect:/anadir-producto";}
+	        else {
+	            return "redirect:/productos";}
+		
+	}
+
+	@GetMapping("/eliminar-producto/{id}")
+	public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
+		productoDao.eliminarProducto(id);
+		return new ModelAndView("redirect:/productos");
 	}
 }

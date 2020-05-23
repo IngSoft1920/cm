@@ -87,8 +87,7 @@
 				<div class="container d-flex align-content-start">
 					<a href="" class="navbar-brand "> <strong>Productos
 							del proveedor</strong>
-					</a> <a class="navbar-nav" href="/inicio">Inicio</a> <a
-						class="navbar-nav" href="/anadir-producto">Añadir producto</a>
+					</a> <a class="navbar-nav" href="/inicio">Inicio</a> 
 				</div>
 			</div>
 		</header>
@@ -106,7 +105,6 @@
 									<th scope="col">Producto</th>
 									<th scope="col">Precio Max</th>
 									<th scope="col">Unidad de medida</th>
-									<th scope="col">Opciones</th>
 
 								</tr>
 							</thead>
@@ -119,22 +117,6 @@
 										<td>${productos.unidad_medida}</td>
 
 										<!-- Botones -->
-										<td>
-											<div class="btn-group">
-
-											
-													<a class="btn btn-sm btn-outline-secondary"
-													href="/editar-producto/${productos.id}"
-													role="button">Editar</a>
-													
-													<a class="btn btn-sm btn-outline-secondary"
-													href="/eliminar-producto/${productos.id }"
-													role="button">Eliminar</a>
-
-
-												
-											</div>
-										</td>
 									</tr>
 
 								</c:forEach>

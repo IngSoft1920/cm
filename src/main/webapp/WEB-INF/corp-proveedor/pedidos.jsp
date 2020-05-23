@@ -14,7 +14,7 @@
 	href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
 	rel="stylesheet" />
 
-<title>Productos</title>
+<title>Pedidos</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
@@ -74,7 +74,7 @@
 </style>
 <!-- Custom styles for this template -->
 
-<link href="../css/album.css" rel="stylesheet">
+<link href="/css/album.css" rel="stylesheet">
 </head>
 
 <body>
@@ -85,10 +85,9 @@
 
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<a href="" class="navbar-brand "> <strong>Productos
-							del proveedor</strong>
-					</a> <a class="navbar-nav" href="/inicio">Inicio</a> <a
-						class="navbar-nav" href="/anadir-producto">Añadir producto</a>
+					<a href="" class="navbar-brand "> <strong>Pedidos del proveedor</strong> </a> 
+					<a class="navbar-nav" href="/inicio">Inicio</a>
+					<a class="navbar-nav" href="/proveedores">Volver Proveedor</a>
 				</div>
 			</div>
 		</header>
@@ -103,38 +102,29 @@
 							<thead>
 								<tr>
 									<th scope="col">#</th>
-									<th scope="col">Producto</th>
-									<th scope="col">Precio Max</th>
-									<th scope="col">Unidad de medida</th>
-									<th scope="col">Opciones</th>
+									<th scope="col">Hotel</th>
+									<th scope="col">Lista de productos</th>
+									<th scope="col">Fecha</th>
+									<th scope="col">Precio total</th>
+									
+									
 
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="productos" items="${productos}">
+								<c:forEach var="pedidos" items="${pedidos}">
 									<tr>
-										<th scope="row">${productos.id}</th>
-										<td>${productos.nombre}</td>
-										<td>${productos.precio_maximo}</td>
-										<td>${productos.unidad_medida}</td>
-
-										<!-- Botones -->
+										<th scope="row">${pedido.id}</th>
+										<td>${hotel.nombre}</td>
 										<td>
-											<div class="btn-group">
-
-											
-													<a class="btn btn-sm btn-outline-secondary"
-													href="/editar-producto/${productos.id}"
-													role="button">Editar</a>
-													
-													<a class="btn btn-sm btn-outline-secondary"
-													href="/eliminar-producto/${productos.id }"
-													role="button">Eliminar</a>
-
-
-												
-											</div>
+										<c:forEach var="productos" items="${productos}">
+										${productos.nombre}<small class="text-muted">/ ${productos.cantidad}</small><small class="text-muted">/ ${productos.unidad-medida}</small>
+										</c:forEach>
 										</td>
+										<td>${pedido.fecha}</td>
+										
+
+										
 									</tr>
 
 								</c:forEach>
@@ -154,16 +144,16 @@
 				<p class="float-right">
 					<a href="">Back to top</a>
 				</p>
-				<p>Lista de productos.</p>
+				<p>Lista de pedidos.</p>
 			</div>
 		</footer>
-		<script src="../js/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
+		<script src="/js/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
 		<script>
 			window.jQuery
 					|| document
 							.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
 		</script>
-		<script src="../js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+		<script src="/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
 
 	</div>
