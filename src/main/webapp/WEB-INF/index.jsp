@@ -62,6 +62,9 @@
 
     <main>
         <section class="presentation">
+        
+        
+        <section class="vertical">
             <div class="introduction">
                 <div class="intro-text">
                     <h1>La cadena del futuro</h1>
@@ -79,6 +82,8 @@
               <h1 class="card-title pricing-card-title">${balance}€<small class="text-muted"></small></h1>
              </div>
            </div>
+           
+           </section>
          
             <div class="cover">
                 <img src="./img/white-boats-on-body-of-water-2265876.jpg" alt="world" />
