@@ -35,6 +35,7 @@ public class BeneficioController {
 		beneficios_gastos = FacturaDAO.gastosProveedores(beneficios_gastos);
 		beneficios_gastos = ConexionEM.peticionSueldoEmpleados(beneficios_gastos);
 		beneficios_gastos = FacturaDAO.beneficiosServicios(beneficios_gastos);
+		beneficios_gastos=FacturaDAO.roomNights(beneficios_gastos);
 		// ModelAndView modelAndView = new ModelAndView("fna/beneficio0.jsp", "command", bg);
 		 
 		  
