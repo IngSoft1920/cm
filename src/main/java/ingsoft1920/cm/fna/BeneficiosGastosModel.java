@@ -14,6 +14,7 @@ public class BeneficiosGastosModel {
 	//key=producto, value=dinero total por producto
 	private HashMap <String, Double> gastoComida;
 	private double total;
+	private int numeroRoomNights;
 	
 	public BeneficiosGastosModel(String nombreHotel) {
 		this.nombreHotel = nombreHotel;
@@ -22,6 +23,7 @@ public class BeneficiosGastosModel {
 		this.gastoComida = new HashMap <String, Double> ();
 		this.sueldoEmpleados = new HashMap <String, Double> ();
 		this.total=0;
+		this.numeroRoomNights=0;
 	}
 	
 	
@@ -99,6 +101,16 @@ public class BeneficiosGastosModel {
 	}
 	return map;
 }*/
+
+
+	public int getNumeroRoomNights() {
+		return numeroRoomNights;
+	}
+
+
+	public void setNumeroRoomNights(int numeroRoomNights) {
+		this.numeroRoomNights = numeroRoomNights;
+	}
 
 
 

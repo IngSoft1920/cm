@@ -305,5 +305,40 @@ public class FacturaDAO {
 		
 		return total;
 	}
+	
+	// Rellena el numero de room nigts de cada hotel
+	public static HashMap<Integer, BeneficiosGastosModel> roomNights(HashMap<Integer, BeneficiosGastosModel> map) {
+	String consulta ="SELECT R.hotel_id,H.nombre,R.id,DATEDIFF(R.fecha_salida,R.fecha_entrada) AS dias\n" + 
+			"FROM Reserva AS R\n" + 
+			"JOIN Hotel AS H ON R.hotel_id=H.id\n" + 
+			"ORDER BY R.hotel_id;";
+	java.sql.Statement stmt= null;
+	ResultSet rs= null;
+	BeneficiosGastosModel aux;
+	try {
+		stmt=conector.getConn().createStatement();
+		rs=stmt.executeQuery(consulta);
+		while(rs.next()) {
+			//Aqui iria el codigo para ver si el hotel_id esta ya en el map
+			aux=map.get(rs.getInt("R.hotel_id"));
+			if(aux!=null) {
+				//En caso de estarlo, actualizar el numero de roomNights
+				aux.setNumeroRoomNights(aux.getNumeroRoomNights()+rs.getInt("dias"));
+			}
+			//En caso de no estarlo, añadir nueva entrada (Nombre del hotel, y costeAlimentos, el resto de valores los pondrias a 0)
+			else {
+				aux=new BeneficiosGastosModel(rs.getString("H.nombre"));
+				aux.setNumeroRoomNights(rs.getInt("dias"));;
+				map.put(rs.getInt("R.hotel_id"), aux);	
+			}
+		}
+	}catch (SQLException ex){ 
+		System.out.println("SQLException: " + ex.getMessage());
+	} finally { // it is a good idea to release resources in a finally block 
+		if (rs != null) { try { rs.close(); } catch (SQLException sqlEx) { } rs = null; } 
+		if (stmt != null) { try {  stmt.close(); } catch (SQLException sqlEx) { }  stmt = null; } 
+	}
+	return map;
+	}
 
 }
