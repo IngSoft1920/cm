@@ -14,7 +14,7 @@
 	rel="stylesheet" />
 
 
-<title>Seleccionar Hotel</title>
+<title>Selecciona el hotel</title>
 
 
 
@@ -84,7 +84,7 @@
 		<header>
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<strong class="navbar-brand">Seleccionar Hotel</strong>
+					<strong class="navbar-brand">Selecciona el hotel para visualizar los empleados</strong>
 					<a class="navbar-nav" href="/inicio">Inicio</a> 
 					
 				</div>

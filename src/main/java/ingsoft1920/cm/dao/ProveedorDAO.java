@@ -65,6 +65,18 @@ public class ProveedorDAO {
 		return (res != null ? res.intValue() : -1);
 	}
 	
+	public void anadirProveedor (Proveedor p) {
+		BigInteger res = null;
+		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		String query = "INSERT INTO Producto (empresa,CIF,usuario,password) VALUES (?, ?, ?);";
+
+		try (Connection conn = conector.getConn()) 
+		{
+			res = runner.insert(conn, query, handler, p.getEmpresa(), p.getCIF(),p.getNombre(),p.getPassword());
+
+		} catch (Exception e) { e.printStackTrace(); }
+	}
+	
 	public void asignar_producto_proveedor(int proveedor_id, int producto_id, int PrecioVenta) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
