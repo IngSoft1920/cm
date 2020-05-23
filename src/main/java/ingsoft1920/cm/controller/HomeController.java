@@ -70,7 +70,7 @@ public class HomeController {
 
 	@GetMapping("/inicio")
 	public ModelAndView homeCorporativo() {
-		Double balance = FacturaDAO.balanceTotal();
+		Integer balance = (int)FacturaDAO.balanceTotal();
 		return new ModelAndView("index.jsp", "balance", balance);
 	}
 	
