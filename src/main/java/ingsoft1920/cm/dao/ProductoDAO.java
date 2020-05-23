@@ -135,4 +135,14 @@ public class ProductoDAO {
         }catch (Exception e) { e.printStackTrace(); }
     }
 
+    public void eliminarProducto(int id){
+        String query = "DELETE FROM Producto WHERE id = ?;";
+
+        try ( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, query, id);
+
+        } catch(Exception e) { e.printStackTrace(); }
+    }
+    
 }
