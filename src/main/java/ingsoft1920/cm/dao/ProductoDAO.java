@@ -106,7 +106,6 @@ public class ProductoDAO {
 	}
 	
 	public int infoproducto(int producto_id, int proveedor_id) {
-
         Integer res = -1;
         ScalarHandler<Integer> scalarHandler = new ScalarHandler<>();
 		String query = "SELECT precio_venta "
@@ -118,7 +117,6 @@ public class ProductoDAO {
 			res = runner.query(conn, query, scalarHandler,producto_id, proveedor_id);
 
 		} catch (Exception e) { e.printStackTrace(); }
-		
 		return res;
 	}
 
