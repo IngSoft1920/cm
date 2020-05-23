@@ -22,6 +22,7 @@ import ingsoft1920.cm.bean.Ausencia.Estado;
 import ingsoft1920.cm.bean.Categoria;
 import ingsoft1920.cm.bean.Empleado;
 import ingsoft1920.cm.bean.Hotel;
+import ingsoft1920.cm.bean.Pedido;
 import ingsoft1920.cm.bean.Producto;
 import ingsoft1920.cm.bean.Profesion;
 import ingsoft1920.cm.bean.Proveedor;
@@ -31,6 +32,7 @@ import ingsoft1920.cm.dao.AusenciaDAO;
 import ingsoft1920.cm.dao.CategoriaDAO;
 import ingsoft1920.cm.dao.EmpleadoDAO;
 import ingsoft1920.cm.dao.HotelDAO;
+import ingsoft1920.cm.dao.PedidoDAO;
 import ingsoft1920.cm.dao.ProductoDAO;
 import ingsoft1920.cm.dao.ProfesionDAO;
 import ingsoft1920.cm.dao.ProveedorDAO;
@@ -40,10 +42,6 @@ import ingsoft1920.cm.dao.ValoracionDAO;
 import ingsoft1920.cm.fna.FacturaDAO;
 
 // Controlador del FE
-/**
- * @author luism
- *
- */
 @Controller
 public class HomeController {
 
@@ -67,8 +65,8 @@ public class HomeController {
 	public AusenciaDAO ausenciaDao;
 	@Autowired
 	public ValoracionDAO valoracionDao;
-
-	
+	@Autowired
+	public PedidoDAO pedidoDao;
 	
 
 	@GetMapping("/inicio")
@@ -271,9 +269,7 @@ public class HomeController {
 		
 		List<Properties> estadisticas = 
 				hotelDao.estadisticasHotelDia(hotel_id, Date.valueOf(fecha)); 
-		
-		System.out.println( estadisticas );
-		
+				
 		ModelAndView mav = new ModelAndView("corp-hotel/tarifas-ocupaciones.jsp");
 		  mav.addObject("fecha",Date.valueOf( fecha ));
 		  mav.addObject("hotel_id",hotel_id);
@@ -509,14 +505,14 @@ public class HomeController {
 	}
 
 	//Pedidos
-	@GetMapping("/proveedores/pedidos/{id}")
-	public ModelAndView pedidosProveedor(@PathVariable(name = "id") int id) {
+	@GetMapping("/proveedores/pedidos/{proveedor_id}")
+	public ModelAndView pedidosProveedor(@PathVariable(name = "proveedor_id") int proveedor_id) {
+		
+		List<Properties> pedidos = pedidoDao.pedidosProveedor(proveedor_id);
 		
 		ModelAndView mav = new ModelAndView("corp-proveedor/pedidos.jsp");
-		  mav.addObject("proveedor",proveedorDao.getByID(id));
-		  mav.addObject("productos",productoDao.productos());
-		  mav.addObject("productosProveedor",productoDao.productosProveedor(id));
-		 
+		  mav.addObject("pedidos",pedidos);
+		
 		return mav;
 	}
 
@@ -526,9 +522,7 @@ public class HomeController {
 	@GetMapping("/corp-proveedor/select-hoteles-prov/{proveedor_id}")
 	public ModelAndView selectHotelFormProv(@PathVariable(name = "proveedor_id") int proveedorId) {
 		List<Hotel> hoteles = proveedorDao.hotelesNoAsignados(proveedorId);
-		
-		System.out.println( hoteles );
-		
+				
 		ModelAndView modelAndView = new ModelAndView("corp-proveedor/select-hoteles-prov.jsp");
 		  modelAndView.addObject("hoteles", hoteles);
 		  modelAndView.addObject("proveedor_id", proveedorId);

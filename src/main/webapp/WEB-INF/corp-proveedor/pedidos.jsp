@@ -103,28 +103,19 @@
 								<tr>
 									<th scope="col">#</th>
 									<th scope="col">Hotel</th>
-									<th scope="col">Lista de productos</th>
 									<th scope="col">Fecha</th>
-									<th scope="col">Precio total</th>
-									
-									
-
+									<th scope="col">Importe</th>
+									<th scope="col">Productos</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach var="pedidos" items="${pedidos}">
+								<c:forEach var="pedido" items="${pedidos}">
 									<tr>
 										<th scope="row">${pedido.id}</th>
-										<td>${hotel.nombre}</td>
-										<td>
-										<c:forEach var="productos" items="${productos}">
-										${productos.nombre}<small class="text-muted">/ ${productos.cantidad}</small><small class="text-muted">/ ${productos.unidad-medida}</small>
-										</c:forEach>
-										</td>
+										<td>${pedido.nombre_hotel}</td>
 										<td>${pedido.fecha}</td>
-										
-
-										
+										<td>${pedido.importe}€</td>
+										<td>${pedido.productos}</td>
 									</tr>
 
 								</c:forEach>
@@ -142,7 +133,7 @@
 		<footer class="text-muted">
 			<div class="container">
 				<p class="float-right">
-					<a href="">Back to top</a>
+					<a href="">Volver arriba</a>
 				</p>
 				<p>Lista de pedidos.</p>
 			</div>

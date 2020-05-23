@@ -4,11 +4,13 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,7 @@ public class PedidoDAO {
 	@Autowired
 	private ConectorBBDD conector = new ConectorBBDD();
 
+	// TODO CAMBIAR CON LO NUEVO
 	// Cada Properties representa un producto en el pedido:
 	// -producto_id: int
 	// -cantidad: int
@@ -84,20 +87,69 @@ public class PedidoDAO {
 		return res;
 	}
 	
-//	public static void main(String[] args) {
-//		Pedido p = new Pedido(-1, Date.valueOf("2020-02-02"), 1);
-//		
-//		Properties prod1 = new Properties();
-//		  prod1.put("producto_id",1);
-//		  prod1.put("cantidad",100);
-//		  
-//		Properties prod2 = new Properties();
-//		  prod2.put("producto_id",2);
-//		  prod2.put("cantidad",50);
-//		
-//		List<Properties> info = List.of(prod1,prod2);
-//		
-//		new PedidoDAO().anadir(p, info);
-//	}
+	// Cada Properties tiene:
+	// id: int
+	// nombre_hotel: String
+	// fecha: Date
+	// importe: int
+	// productos: String
+	public List<Properties> pedidosProveedor(int proveedorID) {
+		List<Properties> res = new ArrayList<>();
+		List<Pedido> pedidos = new ArrayList<Pedido>();
+		BeanListHandler<Pedido> handler = new BeanListHandler<>(Pedido.class);
+		String query = "SELECT * FROM Pedido WHERE proveedor_id=?";
+		
+		try (Connection conn = conector.getConn()) {
+			pedidos = runner.query(conn, query, handler,proveedorID);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		
+		if( pedidos.size() > 0 ) {
+			Properties aux;
+			for( Pedido p : pedidos ) {
+				aux = new Properties();
+				  aux.put("id",p.getId());
+				  aux.put("nombre_hotel", new HotelDAO().getByID(p.getHotel_id()).getNombre() );
+				  aux.put("fecha",p.getFecha());
+				  aux.put("importe",p.getImporte());
+				  aux.put("productos",productosDePedido(p.getId()));
+				  
+				res.add(aux);
+			}
+		}
+		
+		return res;
+	}
+	
+	
+	
+	// Devuelve una representación así:
+	// tomates (10 kilos), vodka (2 litros),...,ron (1 barril)
+	public String productosDePedido(int pedidoID) {
+		String res = "";
+		List<Map<String,Object>> resConsulta = null;
+		MapListHandler handler = new MapListHandler();
+		String query = "SELECT p.nombre,pp.cantidad,p.unidad_medida "
+					  +"FROM Pedido_Producto pp "
+					  +"JOIN Producto p ON pp.producto_id = p.id "
+					  +"WHERE pp.pedido_id = ?";
+		
+		try ( Connection conn = conector.getConn() )
+		{
+			resConsulta = runner.query(conn,query,handler,pedidoID);
+			
+		} catch( Exception e ) { e.printStackTrace(); }
+		
+		if( resConsulta != null ) {
+			for( Map<String,Object> fila : resConsulta ) {
+				res += fila.get("nombre")+" ("+fila.get("cantidad")+" "+fila.get("unidad_medida")+"),";
+			}
+			// quitamos la coma del final
+			res = res.substring(0,res.length()-1);
+		}
+		
+		return res;
+	}
 
 }

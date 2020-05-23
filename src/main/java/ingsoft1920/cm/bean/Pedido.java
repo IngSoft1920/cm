@@ -8,17 +8,19 @@ public class Pedido {
 	private Date fecha;
 	private int proveedor_id;
 	private int hotel_id;
+	private int importe;
 	
 	public Pedido() {}
 	
-	public Pedido(int id, Date fecha, int proveedor_id, int hotel_id) {
+	public Pedido(int id, Date fecha, int proveedor_id, int hotel_id, int importe) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
 		this.proveedor_id = proveedor_id;
 		this.hotel_id = hotel_id;
+		this.importe = importe;
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -43,11 +45,18 @@ public class Pedido {
 	public void setHotel_id(int hotel_id) {
 		this.hotel_id = hotel_id;
 	}
+	public int getImporte() {
+		return importe;
+	}
+	public void setImporte(int importe) {
+		this.importe = importe;
+	}
 
 	@Override
 	public String toString() {
 		return "Pedido [id=" + id + ", fecha=" + fecha + ", proveedor_id=" + proveedor_id + ", hotel_id=" + hotel_id
-				+ "]";
+				+ ", importe=" + importe + "]";
 	}
+	
 
 }

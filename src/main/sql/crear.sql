@@ -106,6 +106,7 @@ CREATE TABLE `Pedido` (
     `fecha` DATE NOT NULL,
     `hotel_id` INT NOT NULL,
     `proveedor_id` INT NOT NULL,
+    `importe` INT NOT NULL,
 	PRIMARY KEY (`id`),
 	FOREIGN KEY (`hotel_id`) REFERENCES `Hotel` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (`proveedor_id`) REFERENCES `Proveedor` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
