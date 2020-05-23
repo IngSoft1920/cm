@@ -23,7 +23,7 @@ public class APIem {
 		APIout.enviar(json.toString(), PUERTO, "/resultadoAusencia");
 	}
 	
-	public static void enviarEmpleado(Empleado em,int hotel_id,Date fecha_contratacion,String superior)
+	public static void enviarEmpleado(Empleado em,int hotel_id,Date fecha_contratacion)
 	{
 		String nombreProfesion = new ProfesionDAO().getByID(em.getProfesion_id()).getNombre();
 		json = new JsonObject();
@@ -36,7 +36,7 @@ public class APIem {
   	      json.addProperty("id_hotel", hotel_id);
   	      json.addProperty("fecha_contratacion",fecha_contratacion.toString());
   	      json.addProperty("dias_libres",em.getDias_libres());
-  	      json.addProperty("superior",superior);
+  	      json.addProperty("superior",em.getSuperior());
   	    	  
   	      // Esto habría que cambiarlo (o no)
   	      json.addProperty("contrasenia", "12345");
@@ -50,6 +50,15 @@ public class APIem {
 		  json.addProperty("id",empleadoID);
 	      
 	    APIout.enviar(json.toString(), PUERTO, "/eliminarEmpleado");
+	}
+	
+	public static void editarEmpleado(Empleado em)
+	{
+		eliminarEmpleado(em.getId());
+		Properties hotelDondeTrabaja = new EmpleadoDAO().hotelDondeTrabaja(em.getId());
+		enviarEmpleado(em,
+					   (int) hotelDondeTrabaja.get("hotel_id"),
+					   (Date) hotelDondeTrabaja.get("fecha_contratacion"));
 	}
 	
 

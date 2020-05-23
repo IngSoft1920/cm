@@ -86,6 +86,11 @@
                     <input type="text" class="form-control" value="${nombreProf}" readonly>
                 </div>
 
+                <div class="form-group">
+                    <label class="col-form-label-lg">Superior</label>
+                    <input type="text" class="form-control" value="${empleado.superior}" readonly>
+                </div>
+
                 <c:if test="${!empty diasLibres}">
                     
                         <div class="form-group">

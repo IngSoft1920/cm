@@ -370,11 +370,11 @@ public class HomeController {
 		  em.setSueldo(sueldo);
 		  em.setProfesion_id(profesionID);
 		  em.setDias_libres(diasLibres != null ? Arrays.toString(diasLibres) : "[]");
+		  em.setSuperior(superior);
 		  
 		Properties info = new Properties();
 		  info.put("fecha_contratacion",Date.valueOf( LocalDate.now() ));
 		  info.put("hotel_id", id);
-		  info.put("superior",superior);
 		   
 		empleadoDao.anadir(em, info);		
 		return "redirect:/select/empleados/"+id;
@@ -416,8 +416,12 @@ public class HomeController {
 										   String telefono, 
 										   Double sueldo,
 										   Integer profesionID,
-										   Integer[] diasLibres) {
+										   Integer[] diasLibres,
+										   String superior) {
 	
+		if( empleadoDao.getByEmail(superior) == null )
+			return "redirect:/editar-empleado/"+id;
+		
 		Empleado em = new Empleado();
 		  em.setId(id);
 		  em.setNombre(firstName);
@@ -427,6 +431,7 @@ public class HomeController {
 		  em.setSueldo(sueldo);
 		  em.setProfesion_id(profesionID);
 		  em.setDias_libres(diasLibres != null ? Arrays.toString(diasLibres) : "[]");
+		  em.setSuperior(superior);
 		  
 		empleadoDao.editar(em);
 		

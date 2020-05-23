@@ -63,13 +63,12 @@ public class EmpleadoDAO {
     // *Properties
     // -hotel_id: int
     // -fecha_contratacion: Date
-    // -superior: String (no lo guardamos)
     public int anadir(Empleado empleado,Properties hotelEmpleado){
     	BigInteger idGenerado = null;
         ScalarHandler<BigInteger> handler = new ScalarHandler<>();
         String queryEmpleado = "INSERT INTO Empleado "
-        					  +"(nombre,apellidos,email,telefono,sueldo,profesion_id,dias_libres) "
-        					  +"VALUES (?, ?, ?, ?, ?, ?, ?);";
+        					  +"(nombre,apellidos,email,telefono,sueldo,profesion_id,dias_libres,superior) "
+        					  +"VALUES (?, ?, ?, ?, ?, ?, ?,?);";
         
         String queryHotelEmpleado = "INSERT INTO Hotel_Empleado "
         						   +"(empleado_id, hotel_id, fecha_contratacion) "
@@ -84,7 +83,8 @@ public class EmpleadoDAO {
             						   empleado.getTelefono(),
             						   empleado.getSueldo(),
             						   empleado.getProfesion_id(),
-            						   empleado.getDias_libres()
+            						   empleado.getDias_libres(),
+            						   empleado.getSuperior()
             						  );
             
             runner.insert(conn, queryHotelEmpleado, handler,
@@ -100,8 +100,7 @@ public class EmpleadoDAO {
         	empleado.setId( idGenerado.intValue() );
         	APIem.enviarEmpleado(empleado,
         						 (int) hotelEmpleado.get("hotel_id"),
-        						 (Date) hotelEmpleado.get("fecha_contratacion"),
-        						 (String) hotelEmpleado.get("superior"));
+        						 (Date) hotelEmpleado.get("fecha_contratacion"));
         }
 
         return ( idGenerado != null ? idGenerado.intValue() : -1 );
@@ -127,7 +126,7 @@ public class EmpleadoDAO {
         String query = "UPDATE Empleado SET "
         			  +"nombre = ?, apellidos = ?, email = ?,"
         			  +"telefono = ?, sueldo = ?, profesion_id = ?,"
-        			  +"dias_libres=? "
+        			  +"dias_libres=?, superior=? "
         			  +"WHERE id = ?";
         
         try( Connection conn = conector.getConn() )
@@ -140,6 +139,7 @@ public class EmpleadoDAO {
         				  info.getSueldo(),
         				  info.getProfesion_id(),
         				  info.getDias_libres(),
+        				  info.getSuperior(),
         				  info.getId()
         				 );
         }

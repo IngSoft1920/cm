@@ -91,6 +91,12 @@
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
+                    <div class="form-group">
+                        <label>Superior</label>
+                        <input type="email" class="form-control" name="superior" value="${empleado.superior}" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-5">
                             <label class="col-form-label-lg">Profesión</label>

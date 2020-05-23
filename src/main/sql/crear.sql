@@ -171,6 +171,7 @@ CREATE TABLE `Empleado` (
     `sueldo` DOUBLE,
     `profesion_id` INT,
     `dias_libres` JSON,
+    `superior` VARCHAR(30),
     PRIMARY KEY (`id`),
     FOREIGN KEY (`profesion_id`) REFERENCES `Profesion` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
 );
