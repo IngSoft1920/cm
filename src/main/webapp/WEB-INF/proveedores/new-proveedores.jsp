@@ -135,7 +135,7 @@
 		<footer class="text-muted">
 			<div class="container">
 				<p class="float-right">
-					<a href="">Volver arriba</a>
+					<a href="/login-proveedores">Cerrar sesión</a>
 				</p>
 				<p>Lista de productos de ${proveedor.empresa}</p>
 			</div>
