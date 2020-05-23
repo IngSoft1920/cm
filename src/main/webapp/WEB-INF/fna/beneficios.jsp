@@ -134,6 +134,31 @@
 					</tr>
       					     </c:if>
 
+						<c:if test = "${BeneficioBean.roomNight}">
+					<tr>
+						 <td> <b>Beneficio/Room Night:</b> </td>
+        					
+		       			    <td> ${entry.value.beneficiosPorRoomNight}€ <td>
+				 	      	
+					</tr>
+
+						<tr>
+						 <td> <b>Gastos/Room Night:</b> </td>
+        				
+		       			    <td> ${entry.value.beneficiosPorRoomNight}€ <td>
+				 	      	
+						</tr>
+						
+						<tr>
+						 <td> <b>Gastos/Room Night:</b> </td>
+        				
+		       			    <td> ${entry.value.balancePorRoomNight}€ <td>
+				 	      	
+						</tr>
+
+
+      					     </c:if>
+
 					     <c:if test = "${BeneficioBean.empleados}">
 					     <tr>
 						 <td> <b>Gastos derivados de Personal:</b> </td>
