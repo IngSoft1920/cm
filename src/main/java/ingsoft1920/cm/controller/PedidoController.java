@@ -44,7 +44,7 @@ public class PedidoController {
             if (! element.getAsJsonObject().get("especificaciones").isJsonNull()) {
                 prop.put("especificaciones", element.getAsJsonObject().get("especificaciones").getAsString());
             }else{
-                prop.put("especificaciones", null);
+                prop.put("especificaciones", "");
             }
             props.add(prop);
         }
