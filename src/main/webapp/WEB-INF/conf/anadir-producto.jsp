@@ -58,20 +58,25 @@
             <h2>Añadir Producto</h2>
         </div>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
+      
                 <form class="needs-validation" method="POST" novalidate>
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label for="firstName">Producto</label>
-                        <input type="text" class="form-control" name="nombre" placeholder="tomate" required>
+                        <input type="text" class="form-control" name="nombre" placeholder="Producto" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="precioMax">Precio máximo</label>
+                        <input type="number" class="form-control" name="precio" placeholder="20$" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+                    
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
                 </form>
             </div>
-        </div>
-
+        
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2020 Company Management - UPM</p>
@@ -82,9 +87,12 @@
                 <p class="float-right">
                     <a href="/inicio">Volver a inicio</a>
                 </p>
+                <p class="float-center">
+                    <a href="/proveedores">Volver a proveedores</a>
+                </p>
             </div>
         </footer>
-    </div>
+   
     <script src="../js/jquery-3.4.1.slim.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')

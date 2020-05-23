@@ -4,26 +4,17 @@ public class Producto {
 	
 	private int id;
 	private String nombre;
-	public double getPrecio_maximo() {
-		return precio_maximo;
-	}
-	public void setPrecio_maximo(double precio_maximo) {
-		this.precio_maximo = precio_maximo;
-	}
-	public String getUnidad_medida() {
-		return unidad_medida;
-	}
-	public void setUnidad_medida(String unidad_medida) {
-		this.unidad_medida = unidad_medida;
-	}
-	private double precio_maximo;
+	private int precio_maximo;
 	private String unidad_medida;
 	
-	
 	public Producto() {}
-	public Producto(int id, String nombre) {
+	
+	public Producto(int id, String nombre, int precio_maximo, String unidad_medida) {
+		super();
 		this.id = id;
 		this.nombre = nombre;
+		this.precio_maximo = precio_maximo;
+		this.unidad_medida = unidad_medida;
 	}
 	public int getId() {
 		return id;
@@ -37,8 +28,21 @@ public class Producto {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	public int getPrecio_maximo() {
+		return precio_maximo;
+	}
+	public void setPrecio_maximo(int precio_maximo) {
+		this.precio_maximo = precio_maximo;
+	}
+	public String getUnidad_medida() {
+		return unidad_medida;
+	}
+	public void setUnidad_medida(String unidad_medida) {
+		this.unidad_medida = unidad_medida;
+	}
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", nombre=" + nombre + "]";
+		return "Producto [id=" + id + ", nombre=" + nombre + ", precio_maximo=" + precio_maximo + ", unidad_medida="
+				+ unidad_medida + "]";
 	}
 }

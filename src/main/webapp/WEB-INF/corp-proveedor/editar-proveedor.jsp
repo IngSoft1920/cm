@@ -58,24 +58,23 @@
             <p class="lead">Modificar los datos del proveedor</p>
         </div>
 
-        <div class="row center">
-            <div class="col-md-18 order-md-1">
+       
                 <form class="needs-validation" method="POST" novalidate>
 
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label>Nombre</label>
                         <input type="text" class="form-control" name="empresa" value="${proveedor.empresa}" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="form-group">
                         <label>CIF</label>
                         <input type="text" class="form-control" name="cif" value="${proveedor.CIF}" required>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-5">
-                            <label>Productos</label>
+                 
+                        <div class="form-group">
+                            <label class="col-form-label-lg">Productos</label>
                             <c:forEach var="producto" items="${productos}">  
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" name="productosIDs" value="${producto.id}" <c:if test='${fn:contains(productosProveedor,producto.id)}'>checked</c:if> >
@@ -83,15 +82,13 @@
                                 </div>
                             </c:forEach> 
                         </div>
-                    </div>
+                    
 
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg " type="submit">Guardar cambios</button>
                     <a class="btn btn-secondary btn-lg" href="/proveedores" role="button">Cancelar</a>
                 </form>
-            </div>
-        </div>
-
+         
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">

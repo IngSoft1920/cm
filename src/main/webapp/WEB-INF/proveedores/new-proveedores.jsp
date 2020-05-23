@@ -1,7 +1,10 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<html>
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,7 +16,7 @@
 	rel="stylesheet" />
 
 
-<title>Beneficio</title>
+<title>Proveedores</title>
 
 
 
@@ -32,8 +35,7 @@
 
 <!-- Bootstrap core CSS -->
 <link href="/css/bootstrap.min.css" rel="stylesheet"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+	>
 
 <!-- Favicons -->
 <link rel="apple-touch-icon"
@@ -55,9 +57,6 @@
 <meta name="msapplication-config"
 	content="/docs/4.4/assets/img/favicons/browserconfig.xml">
 <meta name="theme-color" content="#563d7c">
-
-
-
 
 <style>
 .bd-placeholder-img {
@@ -82,60 +81,85 @@
 
 <body>
 	<div class="conteiner">
-
-
 		<header>
-
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<a href="" class="navbar-brand "> <strong>Beneficio 2020</strong>
-					</a> <a class="navbar-nav" href="/inicio">Inicio</a> 
+					<strong class="navbar-brand">Nombre de proveedor</strong>
+					<a class="navbar-nav" href="/new-proveedores/anadir-producto">Añadir producto</a>
 					
-
 				</div>
 			</div>
 		</header>
-			<main role="main">
-		
-		<table class="table table-striped"line-height="200px" height="200px">
-		 <tr>
-		 <td><b>Reservas            </b> </td>	<td>		${reservas}			</td>
-		 </tr>
-		 <tr class="blank_row">
-   		 <td colspan="5"></td>
-		 </tr>		
-		  <tr>
-		 <td>Servicios            </td>	<td>			${servicios}		</td>
-		 </tr>
-		 <tr>
-		 <td>Gasto en servicios:	</td><td></td> 
-		</tr>
-		<td>Materias Primas       </td> <td>       ${proveedores}                              </td>
-		</tr>
-		
-		<tr>
-		<td><b>Coste total de Servicios</b></td><td>			${total_servicios}				</td>
-		</tr>
-		<tr>
-		<td><b>Beneficio en Bruto	  </b></td><td>	${beneficio_bruto}		</td>
-		</tr>
 
-		
-		<tr>
-		<td>Salarios				 </td>  <td>	${sueldos}			</td>
-		</tr>
-		
+		<main role="main">
+			<div class="album py- bg-light">
+				<div class="container">
+					<div class="row">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Producto</th>
+									
+									
+									<th scope="col">Precio de venta</th>
+									<th scope="col">Opciones</th>
+								</tr>
+							</thead>
 
-		<tr class="blank_row">
-   		 <td colspan="5"></td>
-		 </tr>											
-		 <tr class="blank_row">
-   		 <td colspan="5"></td>
-		 </tr>
-		
-		   <tr><td><b>	BENEFICIO NETO/(PÉRDIDA) </b></td>	<td>	  ${beneficio_neto}     </td> </tr>
-		   </table>
+							<tbody>
+								
+									<tr>
+										<th scope="row">1</th>
+										<td>Vino</td>
+									
+										<td>20 $</td>
+										<td>
+											<div class="btn-group">
+												
+												
+												<a class="btn btn-sm btn-outline-secondary" role="button">Editar producto</a>
+												<a class="btn btn-sm btn-outline-secondary" role="button">Editar precio</a>
+
+												<a class="btn btn-sm btn-outline-secondary"  role="button">Eliminar</a>
+
+												<a class="btn btn-sm btn-outline-secondary" role="button">Hoteles</a>	
+										</td>
+									</tr>
+							
+
+							</tbody>
+						</table>
+
+
+					</div>
+				</div>
+			</div>
+			
+			
+
+
 		</main>
-	</body>
+
+		<footer class="text-muted">
+			<div class="container">
+				<p class="float-right">
+					<a href="">Volver arriba</a>
+				</p>
+				<p>Lista de productos del PROVEEDOR X.</p>
+			</div>
+		</footer>
+		<script src="/js/jquery-3.4.1.slim.min.js"></script>
+		<script>
+			window.jQuery
+					|| document
+							.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')
+		</script>
+		<script src="/js/bootstrap.bundle.min.js"></script>
+
+
+	</div>
+
+</body>
 
 </html>

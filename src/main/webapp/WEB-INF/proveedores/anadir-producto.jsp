@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.6">
-    <title>Añadir Proveedor</title>
+    <title>Añadir Producto</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/checkout/">
 
@@ -55,52 +55,38 @@
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Añadir Proveedor</h2>
-            <p class="lead">Añadir proveedor a la cadena.</p>
+            <h2>Añadir Producto</h2>
         </div>
 
-        
+      
                 <form class="needs-validation" method="POST" novalidate>
                     <div class="form-group">
-                        <label>Empresa</label>
-                        <input type="text" class="form-control" name="empresa" placeholder="Licores SA" required>
+                        <label for="firstName">Producto</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="Producto" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
-
+                    
                     <div class="form-group">
-                        <label for="firstName">CIF</label>
-                        <input type="text" class="form-control" name="cif" placeholder="S0794867B" required>
+                        <label for="precioMax">Precio de venta</label>
+                        <input type="number" class="form-control" name="precio" placeholder="20$" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-5">
-                            <label class="col-form-label-lg">Productos</label>
-                            <c:forEach var="producto" items="${productos}">  
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="productosIDs" value="${producto.id}">
-                                    <label >${producto.nombre}</label>
-                                </div>
-                            </c:forEach> 
-                        </div>
                     </div>
                     
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Añadir</button>
                 </form>
             </div>
-
+        
 
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2020 Company Management - UPM</p>
             <div class="container">
-                <p class="float-left">
-                    <a href="/proveedores">Volver a proveedores</a>
-                </p>
+              
                 <p class="float-right">
                     <a href="/inicio">Volver a inicio</a>
                 </p>
+               
             </div>
         </footer>
     
