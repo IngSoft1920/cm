@@ -72,8 +72,9 @@ public class HomeController {
 	
 
 	@GetMapping("/inicio")
-	public String homeCorporativo() {
-		return "index.jsp";
+	public ModelAndView homeCorporativo() {
+		Double balance = FacturaDAO.balanceTotal();
+		return new ModelAndView("index.jsp", "balance", balance);
 	}
 	
 	//Index para dividir la pagina entre corporativo y proveedores
@@ -751,9 +752,5 @@ public class HomeController {
 	public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
 		productoDao.eliminarProducto(id);
 		return new ModelAndView("redirect:/productos");
-	}
-	@GetMapping("inicio/beneficio")
-	public Double eliminarProducto() {
-		return FacturaDAO.balanceTotal();
 	}
 }
