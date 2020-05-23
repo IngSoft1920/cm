@@ -107,7 +107,7 @@
 							<tbody>
 								<c:forEach var="producto" items="${productos}">
 									<tr>
-										<th scope="row">1</th>
+										<th scope="row">${producto.id}</th>
 										<td>${producto.nombre}</td>
 									
 										<td>${producto.precio_venta}€/${producto.unidad_medida}</td>
