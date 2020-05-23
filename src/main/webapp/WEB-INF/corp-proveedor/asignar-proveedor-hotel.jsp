@@ -77,20 +77,9 @@
                             
                             <div class="col-md-3 mb-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="hidden" value="${producto.id}" name="productosIDs">
-                                    <br>
-                                    <label>${producto.nombre}</label>
+                                    <input class="form-check-input" type="checkbox" value="${producto.id}" name="productosIDs">
+                                    <label>${producto.nombre} (${producto.precio_venta}€/${producto.unidad_medida})</label>
                                 </div>
-                            </div>
-
-                            <div class="col-md-4 mb-4">
-                                <label for="precio">Precio</label>
-                                <input type="number" class="form-control" id="precio" name="precios">
-                            </div>
-
-                            <div class="col-md-4 mb-4">
-                                <label for="unidad">Unidad de Medida</label>
-                                <input type="text" class="form-control" id="unidad" name="unidadesMedida">
                             </div>
                         
                         </c:forEach>

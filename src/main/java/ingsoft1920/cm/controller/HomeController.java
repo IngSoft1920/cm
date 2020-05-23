@@ -441,7 +441,7 @@ public class HomeController {
 	public ModelAndView asignarProveedorHotel(@PathVariable(name = "hotel_id")int hotel_id, @PathVariable(name = "proveedor_id") int proveedor_id) {
 		
 		Proveedor proveedor = proveedorDao.getByID(proveedor_id);
-		List<Producto> productos = productoDao.productosProveedor(proveedor_id);
+		List<Properties> productos = proveedorDao.productos(proveedor_id);
 		
 		ModelAndView modelAndView = new ModelAndView("corp-proveedor/asignar-proveedor-hotel.jsp");
     	  modelAndView.addObject("productos", productos);
@@ -453,25 +453,10 @@ public class HomeController {
 	@PostMapping("/asignar-proveedor-hotel/{proveedor_id}/{hotel_id}")
 	public String asignarProveedorPost(@PathVariable(name = "proveedor_id") int proveedor_id,
 									   @PathVariable(name = "hotel_id")int hotel_id,
-									   Integer[] productosIDs,
-									   Integer[] precios,
-									   String [] unidadesMedida)
-	{
-		
-		List<Properties> info = new ArrayList<>();
-		Properties aux;
-		for(int i=0;i<productosIDs.length;i++) {
-			if(precios[i] != null && !unidadesMedida[i].equals("")) {
-				aux = new Properties();
-				  aux.put("producto_id", productosIDs[i]);
-				  aux.put("precio",precios[i]);
-				  aux.put("unidad_medida",unidadesMedida[i]);
-				  
-				info.add(aux);
-			}
-		}
-		
-		proveedorDao.asignarHotel(hotel_id, proveedor_id, info);
+									   Integer[] productosIDs)
+	{		
+		if( productosIDs != null )
+			proveedorDao.asignarHotel(hotel_id, proveedor_id, productosIDs);
 		return "redirect:/proveedores";
 	}
 		
@@ -536,17 +521,19 @@ public class HomeController {
 	}
 
 		
-		//Select hoteles para asignar un proveedor-producto
+	//Select hoteles para asignar un proveedor-producto
+	
+	@GetMapping("/corp-proveedor/select-hoteles-prov/{proveedor_id}")
+	public ModelAndView selectHotelFormProv(@PathVariable(name = "proveedor_id") int proveedorId) {
+		List<Hotel> hoteles = proveedorDao.hotelesNoAsignados(proveedorId);
 		
-		@GetMapping("/corp-proveedor/select-hoteles-prov/{proveedor_id}")
-		public ModelAndView selectHotelFormProv(@PathVariable(name = "proveedor_id") int proveedorId) {
-			List<Hotel> hoteles = hotelDao.hoteles();
-			
-			ModelAndView modelAndView = new ModelAndView("corp-proveedor/select-hoteles-prov.jsp");
-			  modelAndView.addObject("hoteles", hoteles);
-			  modelAndView.addObject("proveedor_id", proveedorId);
-			return modelAndView;
-		}
+		System.out.println( hoteles );
+		
+		ModelAndView modelAndView = new ModelAndView("corp-proveedor/select-hoteles-prov.jsp");
+		  modelAndView.addObject("hoteles", hoteles);
+		  modelAndView.addObject("proveedor_id", proveedorId);
+		return modelAndView;
+	}
 				
 
 
