@@ -2,10 +2,8 @@ package ingsoft1920.cm.dao;
 
 import java.math.BigInteger;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.sql.Date;
+import java.util.*;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import ingsoft1920.cm.bean.Pedido;
 import ingsoft1920.cm.conector.ConectorBBDD;
+import ingsoft1920.cm.dao.ProductoDAO;
 
 @Component
 public class PedidoDAO {
@@ -34,24 +33,32 @@ public class PedidoDAO {
 	public int anadir(Pedido p,List<Properties> info) {
 		BigInteger res = null;
 		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+        int cantidad;
+        int importeTotal = 0;
+        ProductoDAO dao = new ProductoDAO();
 
 		String queryPedido = "INSERT INTO Pedido "
-							+"(fecha,hotel_id) "
-							+"VALUES (?,?);";
+							+"(fecha,hotel_id, proveedor_id, importe) "
+							+"VALUES (?,?,?,?);";
 		
 		String queryProductos = "INSERT INTO Pedido_Producto "
-							   +"(pedido_id,producto_id,cantidad) "
-							   +"VALUES (?,?,?)";
+							   +"(pedido_id,producto_id,cantidad, especificaciones) "
+							   +"VALUES (?,?,?,?)";
 
 		List<Object[]> batch;
+        for (Properties prod : info) {
+            cantidad = (int) prod.get("cantidad");
+            importeTotal += cantidad * dao.infoproducto((int) prod.get("producto_id"), p.getProveedor_id());
+        }
 		try (Connection conn = conector.getConn()) {
-			res = runner.insert(conn, queryPedido, handler, p.getFecha(),p.getHotel_id());
+			res = runner.insert(conn, queryPedido, handler, p.getFecha(),p.getHotel_id(),p.getProveedor_id(),importeTotal);
 	
 			batch = new ArrayList<>();
 			for (Properties prod : info) {
 				batch.add(new Object[] { res.intValue(),
 										 prod.get("producto_id"),
-										 prod.get("cantidad")
+										 prod.get("cantidad"),
+                                         prod.get("especificaciones")
 									   });
 			}
 			runner.batch(conn, queryProductos, batch.toArray(new Object[info.size()][]));
@@ -121,9 +128,8 @@ public class PedidoDAO {
 		
 		return res;
 	}
-	
-	
-	
+
+
 	// Devuelve una representación así:
 	// tomates (10 kilos), vodka (2 litros),...,ron (1 barril)
 	public String productosDePedido(int pedidoID) {
