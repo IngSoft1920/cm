@@ -758,7 +758,7 @@ public class HomeController {
 		productoDao.eliminarProducto(id);
 		return new ModelAndView("redirect:/productos");
 	}
-	@GetMapping("/beneficio")
+	@GetMapping("inicio/beneficio")
 	public Double eliminarProducto() {
 		return FacturaDAO.balanceTotal();
 	}
