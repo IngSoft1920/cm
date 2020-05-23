@@ -732,7 +732,10 @@ public class HomeController {
 	
 	@PostMapping("/editar-precio-venta/{producto_id}/{proveedor_id}")
 	public String recibirEditarProductoForm(@PathVariable(name = "proveedor_id") int proveedor_id, @PathVariable(name = "producto_id") int producto_id, int precioVenta) {
-		
+		Producto producto = productoDao.getByID(producto_id);
+		if (precioVenta > producto.getPrecio_maximo()) {
+			return "redirect:/editar-precio-venta/"+producto_id+"/"+proveedor_id;
+		}
 		proveedorDao.actualizarPrecioVenta(producto_id, proveedor_id, precioVenta);
 		return "redirect:/new-proveedores/{proveedor_id}";
 	}
