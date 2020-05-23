@@ -111,6 +111,36 @@ public class BeneficiosGastosModel {
 	public void setNumeroRoomNights(int numeroRoomNights) {
 		this.numeroRoomNights = numeroRoomNights;
 	}
+	
+	public double beneficiosPorRoomNight() {
+		double resultado=0;
+		HashMap <String, Double> aux=this.sumaReservas;
+		for (Double aux2: aux.values()) {
+		    resultado+=aux2;
+		}
+		aux=this.sumaFacturas;
+		for (Double aux2: aux.values()) {
+		    resultado+=aux2;
+		}
+		return resultado/this.numeroRoomNights;
+	}
+	
+	public double gastosPorRoomNight() {
+		double resultado=0;
+		HashMap <String, Double> aux=this.sueldoEmpleados;
+		for (Double aux2: aux.values()) {
+		    resultado+=aux2;
+		}
+		aux=this.gastoComida;
+		for (Double aux2: aux.values()) {
+		    resultado+=aux2;
+		}
+		return resultado/this.numeroRoomNights;
+	}
+	
+	public double balancePorRoomNight() {
+		return this.beneficiosPorRoomNight()-this.gastosPorRoomNight();
+	}
 
 
 

@@ -31,6 +31,12 @@ public class PruebasFNA {
 			}
 			System.out.println("Numero Room Nights");
 			System.out.println(elem.getNumeroRoomNights());
+			System.out.println("Beneficio/Room Nights");
+			System.out.println(elem.beneficiosPorRoomNight());
+			System.out.println("Gastos/Room Nights");
+			System.out.println(elem.gastosPorRoomNight());
+			System.out.println("Balance/Room Nights");
+			System.out.println(elem.balancePorRoomNight());
 			System.out.println("Total");
 			System.out.println(elem.getTotal());
 		}
