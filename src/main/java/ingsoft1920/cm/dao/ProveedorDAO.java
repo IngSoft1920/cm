@@ -65,6 +65,22 @@ public class ProveedorDAO {
 		return (res != null ? res.intValue() : -1);
 	}
 	
+	public void asignar_producto_proveedor(int proveedor_id, int producto_id, int PrecioVenta) {
+		BigInteger res = null;
+		ScalarHandler<BigInteger> handler = new ScalarHandler<>();
+		
+		String queryPro = "INSERT INTO Proveedor_Producto "
+						 +"(proveedor_id,producto_id,precio_venta) "
+						 +"VALUES (?,?,?)";
+
+		List<Object[]> batch;
+		try (Connection conn = conector.getConn()) {
+			res = runner.insert(conn, queryPro, handler,proveedor_id,producto_id,PrecioVenta);
+		} catch (Exception e) { e.printStackTrace(); }
+
+	}
+	
+	
 	// Not used yet
 	public Proveedor getByID(int proveedorID) {
 		Proveedor res=null;
@@ -142,7 +158,7 @@ public class ProveedorDAO {
    public List<Proveedor> proveedoresPorHotel(int id) {
         List<Proveedor> proveedores = new LinkedList<>();
         BeanListHandler<Proveedor> beanListHandler = new BeanListHandler<>(Proveedor.class);
-        String getProveedores = "SELECT p.* FROM Proveedor p JOIN Hotel_Proveedor_Producto hp ON p.id=hp.proveedor_id JOIN Hotel h ON hp.hotel_id=h.id WHERE h.id=? ";
+        String getProveedores = "SELECT p.* FROM Proveedor p JOIN Hotel_Proveedor_Producto hp ON p.id=hp.proveedor_id JOIN Hotel h ON hp.hotel_id=h.id WHERE h.id=? group by p.id ";
 
         try( Connection conn = conector.getConn() )
         {
@@ -221,7 +237,7 @@ public class ProveedorDAO {
     	List<Properties> res = new ArrayList<>();
     	List<Map<String,Object>> resConsulta = null;
     	MapListHandler handler = new MapListHandler();
-        String query = "SELECT p.id,p.nombre, pp.precio_venta, p.unidad_medida "
+        String query = "SELECT p.id, p.nombre, pp.precio_venta, p.unidad_medida "
         			  +"FROM Producto p "
         			  +"JOIN Proveedor_Producto pp ON p.id = pp.producto_id "
         			  +"WHERE pp.proveedor_id = ?";
@@ -240,7 +256,6 @@ public class ProveedorDAO {
         		  aux.put("nombre",fila.get("nombre"));
         		  aux.put("precio_venta",fila.get("precio_venta"));
         		  aux.put("unidad_medida",fila.get("unidad_medida"));
-        		  
         		res.add(aux);
         	}
         }
@@ -248,6 +263,18 @@ public class ProveedorDAO {
         return res;
     }
     
+    public void actualizarPrecioVenta(int producto_id, int proveedor_id, int precioVenta){
+
+        String actualiza = "UPDATE Proveedor_Producto SET precio_venta = ? WHERE proveedor_id = ? and producto_id = ?";
+
+        try( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, actualiza, precioVenta, proveedor_id, producto_id);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
     public List<Hotel> hotelesNoAsignados(int proveedor_id) {
     	List<Hotel> res = new ArrayList<>();
     	BeanListHandler<Hotel> handler = new BeanListHandler<>(Hotel.class);

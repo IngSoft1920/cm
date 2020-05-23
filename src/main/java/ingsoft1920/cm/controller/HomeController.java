@@ -113,9 +113,22 @@ public class HomeController {
 		return mav;
 	}
 	
-	@GetMapping("/new-proveedores/anadir-producto")
-	public String anadirProductos() {
+	@GetMapping("/new-proveedores/anadir-producto/{id}")
+	public String anadirProductos(@PathVariable(name = "id") int id) {
 		return "proveedores/anadir-producto.jsp";
+	}
+	
+	@PostMapping("/new-proveedores/anadir-producto/{id}")
+	public String recibirProductoProveedorForm(@PathVariable(name = "id") int id,String nombre,Integer precioVenta,String unidadMedida) {
+		Producto p = new Producto();
+		  p.setNombre(nombre);
+		  p.setUnidad_medida(unidadMedida);
+		  if(productoDao.anadir(p)<0) {
+	            return "redirect:/new-proveedores/anadir-producto/"+id;}
+	        else {
+	        	proveedorDao.asignar_producto_proveedor(id,productoDao.getByName(nombre).getId(), precioVenta);
+	            return "redirect:/new-proveedores/"+id;}
+		
 	}
 
 
@@ -708,6 +721,28 @@ public class HomeController {
 		  mav.addObject("productos",productos);
 		 
 		return mav;
+	}
+	
+	@GetMapping("/editar-precio-venta/{producto_id}/{proveedor_id}")
+	public ModelAndView editarPrecioForm(@PathVariable(name = "proveedor_id") int proveedor_id, @PathVariable(name = "producto_id") int producto_id) {
+		
+		ModelAndView mav = new ModelAndView("corp-proveedor/editar-precio-venta.jsp");
+		 
+		return mav;
+	}
+	
+	@PostMapping("/editar-precio-venta/{producto_id}/{proveedor_id}")
+	public String recibirEditarProductoForm(@PathVariable(name = "proveedor_id") int proveedor_id, @PathVariable(name = "producto_id") int producto_id, int precioVenta) {
+		
+		proveedorDao.actualizarPrecioVenta(producto_id, proveedor_id, precioVenta);
+		return "redirect:/new-proveedores/{proveedor_id}";
+	}
+	
+	@GetMapping("/eliminar-proveedor-producto/{producto_id}/{proveedor_id}")
+	public String EliminarProveedorProducto(@PathVariable(name = "proveedor_id") int proveedor_id, @PathVariable(name = "producto_id") int producto_id) {
+		
+		productoDao.eliminarProductoProveedor(proveedor_id, producto_id);
+		return "redirect:/new-proveedores/{proveedor_id}";
 	}
 	
 	// PRODUCTOS

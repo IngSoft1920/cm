@@ -1,6 +1,8 @@
 package ingsoft1920.cm.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import ingsoft1920.cm.dao.ProductoDAO;
 public class ProveedoresController {
 	@Autowired
 	ProveedorDAO ProveedorDao;
+	@Autowired
 	ProductoDAO ProductoDao; 
 
 	
@@ -28,6 +31,7 @@ public class ProveedoresController {
 	public String listarProveedores(@PathVariable int hotel_id) {
 		List<Proveedor> listaProveedores = ProveedorDao.proveedoresPorHotel(hotel_id);
 		
+		
 		JsonArray res = new JsonArray();
 		JsonObject elem;
 		for(Proveedor p : listaProveedores) {
@@ -35,18 +39,17 @@ public class ProveedoresController {
 			
 			elem.addProperty("proveedor_id",p.getId());
 			elem.addProperty("empresa", p.getEmpresa());
-			
-			List<Producto> listaProductos = ProductoDao.productosProveedor(p.getId());
+
+			List<Properties>listaProductos = ProveedorDao.productos(p.getId());
+
 			JsonArray productos = new JsonArray();
 			JsonObject unproducto;
-			for(Producto producto : listaProductos) {
+			for(Properties producto : listaProductos) {
 				unproducto = new JsonObject();
-				
-				unproducto.addProperty("id",producto.getId());
-				unproducto.addProperty("nombre",producto.getNombre());
-
-				unproducto.addProperty("precio_venta", ProductoDao.infoproducto(producto.getId(), p.getId()));
-				unproducto.addProperty("unidad_medida",producto.getUnidad_medida());
+				unproducto.addProperty("id", (Integer) producto.get("id")); 
+				unproducto.addProperty("nombre",producto.getProperty("nombre"));
+				unproducto.addProperty("precio_venta",(Integer)producto.get("precio_venta"));
+				unproducto.addProperty("unidad_medida",producto.getProperty("unidad_medida"));
 				productos.add(unproducto);
 			}
 			
