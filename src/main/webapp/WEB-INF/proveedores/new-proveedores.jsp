@@ -82,7 +82,7 @@
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
 					<strong class="navbar-brand">${proveedor.empresa}</strong>
-					<a class="navbar-nav" href="/new-proveedores/anadir-producto">Añadir producto</a>
+					<a class="navbar-nav" href="/new-proveedores/anadir-producto/${proveedor.id}">Añadir producto</a>
 					
 				</div>
 			</div>
@@ -113,10 +113,8 @@
 										<td>${producto.precio_venta}€/${producto.unidad_medida}</td>
 										<td>
 											<div class="btn-group">
-												<a class="btn btn-sm btn-outline-secondary" role="button">Editar producto</a>
-												<a class="btn btn-sm btn-outline-secondary" role="button">Editar precio</a>
-												<a class="btn btn-sm btn-outline-secondary"  role="button">Eliminar</a>
-												<a class="btn btn-sm btn-outline-secondary" role="button">Hoteles</a>	
+												<a class="btn btn-sm btn-outline-secondary" href="/editar-precio-venta/${producto.id}/${proveedor.id}" role="button">Editar precio</a>
+												<a class="btn btn-sm btn-outline-secondary" href="/eliminar-proveedor-producto/${producto.id}/${proveedor.id}" role="button">Eliminar</a>
 										</td>
 									</tr>
 								</c:forEach>
