@@ -738,6 +738,16 @@ public class HomeController {
 		return mav;
 	}
 	
+	@GetMapping("/proveedores/productos/{id}")
+	public ModelAndView proveedoresProductos(@PathVariable(name = "id") int id) {
+		List<Producto> productos = productoDao.productosProveedor(id);
+		
+		ModelAndView mav = new ModelAndView("corp-proveedor/productos-proveedor.jsp");
+		  mav.addObject("productos",productos);
+		 
+		return mav;
+	}
+	
 	// PRODUCTOS
 	@GetMapping("/anadir-producto")
 	public String anadirProductoForm() {

@@ -89,6 +89,11 @@
                         <input type="number" class="form-control" name="sueldo" placeholder="1950" min="0" required>
                         <div class="invalid-feedback">No válido</div>
                     </div>
+                    <div class="form-group">
+                        <label>Superior</label>
+                        <input type="text" class="form-control" name="duperior" placeholder="gobernanta" min="0" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
 
                     <div class="row">
                         <div class="col-md-10">
