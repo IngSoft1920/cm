@@ -112,22 +112,27 @@
 
 		<tr>
               <td>
-	      <form:checkbox path="reserva"/>Ingresos de Reservas </td>       
+	      <form:checkbox path="reserva"/>Ingresos derivados de Reservas </td>       
             </tr>
 
 	
 	    <tr>
-               <td><form:checkbox path="servicios" />Ingresos por Servicios</td>       
+               <td><form:checkbox path="servicios" />Ingresos derivados de Servicios</td>       
             </tr>
 
 		<tr>
-               <td><form:checkbox path="empleados"/>Dinero invertido en empleados</td>       
+               <td><form:checkbox path="empleados"/>Gastos derivados de personal</td>       
             </tr>
 	    		 
 
 		<tr>
                
-               <td><form:checkbox path = "comida" /> Gastos en productos de proveedores</td>
+               <td><form:checkbox path = "comida" /> Gastos derivados de pedidos</td>
+            </tr>
+
+	<tr>
+               
+               <td><form:checkbox path = "roomNight" /> Por Room Night</td>
             </tr> 
 
 	    <tr>

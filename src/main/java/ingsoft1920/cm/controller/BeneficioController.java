@@ -79,6 +79,8 @@ public class BeneficioController {
 		model.addAttribute("servicios", bg.getServicios());
 		model.addAttribute("empleados", bg.getComida()); //boolean
 		model.addAttribute("comida", bg.getEmpleados());
+		model.addAttribute("roomNight", bg.getRoomNight());
+		model.addAttribute("total",bg.getReserva() && bg.getServicios() && bg.getComida() && bg.getEmpleados());
 		
 		return "fna/beneficios.jsp";
 	}

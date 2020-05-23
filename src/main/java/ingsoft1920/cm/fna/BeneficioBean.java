@@ -12,6 +12,8 @@ public class BeneficioBean {
 	// key=tipo_empleado (rol), value= dinero total por rol
 	private boolean empleados;
 	private boolean comida;
+	
+	private boolean roomNight;
 
 	/*
 	 public String[] getNombresHotel() {
@@ -54,6 +56,14 @@ public class BeneficioBean {
 		 this.comida=h;
 	 }
 	 
+	 
+	 public boolean getRoomNight() {
+		 return this.roomNight;
+	 }
+	 
+	 public void setRoomNight(boolean r) {
+		 this.roomNight=r;
+	 }
 	 
 	 
 	 
