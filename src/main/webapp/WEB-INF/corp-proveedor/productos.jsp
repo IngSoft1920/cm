@@ -128,7 +128,7 @@
 													role="button">Editar</a>
 													
 													<a class="btn btn-sm btn-outline-secondary"
-													href="/editar-producto/${productos.id }"
+													href="/eliminar-producto/${productos.id }"
 													role="button">Eliminar</a>
 
 
