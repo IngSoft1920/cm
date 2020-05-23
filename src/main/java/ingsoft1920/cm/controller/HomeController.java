@@ -332,6 +332,7 @@ public class HomeController {
 								  @PathVariable(name = "id") int id,
 								  Integer[] diasLibres) {
 				
+		//
 		Empleado em = new Empleado();
 		  em.setNombre(firstName);
 		  em.setApellidos(lastNames); 	
@@ -593,22 +594,6 @@ public class HomeController {
 		return new ModelAndView("redirect:/proveedores");
 	}
 	
-	
-	
-	//----------------PRODUCTO-------------------
-
-			@GetMapping("/productos")
-			public ModelAndView productos() {
-				
-				List<Producto> productos = productoDao.productos();
-				
-				ModelAndView mav = new ModelAndView("corp-proveedor/productos.jsp");
-				 
-				  mav.addObject("productos",productos);
-				 
-				return mav;
-			}
-	
 	// -------------------FACTURACIÓN-------------------------
 
 	// Pagina de facturacion
@@ -752,4 +737,29 @@ public class HomeController {
 		return "redirect:/ausencias";
 	}
 	
+	@GetMapping("/productos/editar-precio/{id}")
+	public ModelAndView editarProductoForm(@PathVariable(name = "id") int id) {
+		
+		ModelAndView mav = new ModelAndView("corp-proveedor/editar-precio.jsp");
+		Producto producto = productoDao.getByID(id);
+		mav.addObject("producto",producto);
+		 
+		return mav;
+	}
+
+	// editar-producto POST
+	@PostMapping("/productos/editar-precio/{id}")
+	public String recibirEditarProductoForm(@PathVariable(name = "id") int id,
+													String nombre,
+													Integer precioMax,
+													String unidadDeMedida) {
+
+		Producto producto = new Producto();
+		producto.setNombre(nombre);
+		producto.setPrecio_maximo(precioMax);
+		producto.setUnidad_medida(unidadDeMedida);
+		
+		productoDao.editarProducto(producto);
+		return "redirect:/productos";
+	}
 }
