@@ -71,19 +71,15 @@
                 </div>
             </div>
             
-            <div class="card mb-4 box-shadow">
-
-  
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Balance económico</h4>
-          </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title">${balance}€<small class="text-muted"></small></h1>
-            
-          </div>
-
-        </div>
-            
+           <div class="card mb-4 box-shadow">
+             <div class="card-header">
+              <h4 class="my-0 font-weight-normal">Balance económico</h4>
+             </div>
+             <div class="card-body">
+              <h1 class="card-title pricing-card-title">${balance}€<small class="text-muted"></small></h1>
+             </div>
+           </div>
+         
             <div class="cover">
                 <img src="./img/white-boats-on-body-of-water-2265876.jpg" alt="world" />
             </div>

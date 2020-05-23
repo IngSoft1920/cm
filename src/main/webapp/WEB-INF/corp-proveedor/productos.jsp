@@ -85,8 +85,7 @@
 
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<a href="" class="navbar-brand "> <strong>Productos
-							del proveedor</strong>
+					<a href="" class="navbar-brand "> <strong>Productos de la cadena</strong>
 					</a> <a class="navbar-nav" href="/inicio">Inicio</a> <a
 						class="navbar-nav" href="/anadir-producto">Añadir producto</a>
 				</div>

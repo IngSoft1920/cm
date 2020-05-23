@@ -74,7 +74,8 @@ public class ProductoDAO {
 	public List<Producto> productos() {
 		List<Producto> res = new ArrayList<>();
 		BeanListHandler<Producto> handler = new BeanListHandler<>(Producto.class);
-		String query = "SELECT * FROM Producto";
+		String query = "SELECT * FROM Producto " +
+                        "ORDER BY nombre; ";
 
 		try (Connection conn = conector.getConn()) 
 		{
