@@ -145,4 +145,14 @@ public class ProductoDAO {
         } catch(Exception e) { e.printStackTrace(); }
     }
 
+    public void eliminarProductoProveedor(int proveedorID, int productoId){
+        String query = "DELETE FROM Proveedor_Producto WHERE proveedor_id = ? and producto_id = ?;";
+
+        try ( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, query, proveedorID, productoId);
+
+        } catch(Exception e) { e.printStackTrace(); }
+    }
+
 }
