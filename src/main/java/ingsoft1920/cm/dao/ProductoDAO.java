@@ -89,7 +89,7 @@ public class ProductoDAO {
 
         Integer res = -1;
         ScalarHandler<Integer> scalarHandler = new ScalarHandler<>();
-		String query = "SELECT precio_venta"
+		String query = "SELECT precio_venta "
 					  +"FROM Proveedor_Producto "
 					  +"WHERE producto_id=? AND proveedor_id=? ";
 
