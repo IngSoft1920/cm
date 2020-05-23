@@ -126,8 +126,9 @@
                                             
                                             <a class="btn btn-sm btn-outline-secondary"
 													href="/corp-proveedor/select-hoteles-prov/${proveedores.id}"
-													role="button">Asignar</a>	
-
+													role="button">Asignar</a>
+													
+													
 
 
 
