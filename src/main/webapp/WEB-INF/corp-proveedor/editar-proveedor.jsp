@@ -73,15 +73,7 @@
                     </div>
 
                  
-                        <div class="form-group">
-                            <label class="col-form-label-lg">Productos</label>
-                            <c:forEach var="producto" items="${productos}">  
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" name="productosIDs" value="${producto.id}" <c:if test='${fn:contains(productosProveedor,producto.id)}'>checked</c:if> >
-                                    <label>${producto.nombre}</label>
-                                </div>
-                            </c:forEach> 
-                        </div>
+                        
                     
 
                     <hr class="mb-4">

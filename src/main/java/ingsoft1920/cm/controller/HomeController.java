@@ -75,6 +75,12 @@ public class HomeController {
 		return "index.jsp";
 	}
 	
+	//Index para dividir la pagina entre corporativo y proveedores
+	@GetMapping("/inicio2")
+	public String home() {
+		return "index2.jsp";
+	}
+	
 	@GetMapping("/login")
 	public String loginCorporativo() {
 		return "login.jsp";
@@ -339,6 +345,7 @@ public class HomeController {
 								  @PathVariable(name = "id") int id,
 								  Integer[] diasLibres) {
 				
+		//
 		Empleado em = new Empleado();
 		  em.setNombre(firstName);
 		  em.setApellidos(lastNames); 	
@@ -541,17 +548,6 @@ public class HomeController {
 	
 	//Ver productos del proveedor
 
-		@GetMapping("/proveedores/productos/{id}")
-		public ModelAndView productosProveedor(@PathVariable(name = "id") int id) {
-			Proveedor proveedor = new ProveedorDAO().getByID(id);
-			List<Producto> productos = productoDao.productosProveedor(id);
-			
-			ModelAndView mav = new ModelAndView("corp-proveedor/productos.jsp");
-			  mav.addObject("proveedor",proveedor);
-			  mav.addObject("productos",productos);
-			 
-			return mav;
-		}
 		
 		
 		//Select hoteles para asignar un proveedor-producto
@@ -566,26 +562,6 @@ public class HomeController {
 			return modelAndView;
 		}
 				
-				
-		//Editar precio producto de un proveedor
-		//TODO
-		
-		@GetMapping("/proveedores/productos/editar-precio/{id}")
-		public ModelAndView productosEditarPrecio(@PathVariable(name = "id") int id) {
-			
-			
-			Producto producto = productoDao.getByID(id);
-			
-			ModelAndView mav = new ModelAndView("corp-proveedor/editar-precio.jsp");
-			  mav.addObject("producto",producto);
-			
-			return mav;
-		}
-				
-
-				
-				
-	//Eliminar producto de un proveedor 
 
 	@GetMapping("/proveedores/productos/eliminar-producto/{id}")
 	public ModelAndView eliminarProducto(@PathVariable(name = "id") int id) {
@@ -743,4 +719,39 @@ public class HomeController {
 		return "redirect:/ausencias";
 	}
 	
+	@GetMapping("/editar-producto/{id}")
+	public ModelAndView editarProductoForm(@PathVariable(name = "id") int id) {
+		
+		ModelAndView mav = new ModelAndView("corp-proveedor/editar-producto.jsp");
+		Producto producto = productoDao.getByID(id);
+		mav.addObject("producto",producto);
+		 
+		return mav;
+	}
+
+	// editar-producto POST
+	@PostMapping("/editar-producto/{id}")
+	public String recibirEditarProductoForm(@PathVariable(name = "id") int id,
+													String nombre,
+													Integer precioMax,
+													String unidadDeMedida) {
+
+		Producto producto = productoDao.getByID(id);
+		producto.setNombre(nombre);
+		producto.setPrecio_maximo(precioMax);
+		producto.setUnidad_medida(unidadDeMedida);
+		
+		productoDao.editarProducto(producto);
+		return "redirect:/productos";
+	}
+
+	@GetMapping("/productos")
+	public ModelAndView productos() {
+		List<Producto> productos = productoDao.productos();
+		
+		ModelAndView mav = new ModelAndView("corp-proveedor/productos.jsp");
+		  mav.addObject("productos",productos);
+		 
+		return mav;
+	}
 }

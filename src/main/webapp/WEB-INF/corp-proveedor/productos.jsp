@@ -105,6 +105,7 @@
 									<th scope="col">#</th>
 									<th scope="col">Producto</th>
 									<th scope="col">Precio Max</th>
+									<th scope="col">Unidad de medida</th>
 									<th scope="col">Opciones</th>
 
 								</tr>
@@ -114,7 +115,8 @@
 									<tr>
 										<th scope="row">${productos.id}</th>
 										<td>${productos.nombre}</td>
-										<td>${producto.precio}</td>
+										<td>${productos.precio_maximo}</td>
+										<td>${productos.unidad_medida}</td>
 
 										<!-- Botones -->
 										<td>
@@ -122,40 +124,15 @@
 
 											
 													<a class="btn btn-sm btn-outline-secondary"
-													href="/proveedores/productos/editar-precio/${productos.id }"
-													role="button">Editar precio</a>
+													href="/editar-producto/${productos.id}"
+													role="button">Editar</a>
+													
+													<a class="btn btn-sm btn-outline-secondary"
+													href="/editar-producto/${productos.id }"
+													role="button">Eliminar</a>
 
 
-												<!-- Button trigger modal -->
-												<a class="btn btn-sm btn-outline-secondary"
-													data-toggle="modal" data-target="#exampleModal" href="#"
-													role="button"> Eliminar </a>
-												<!-- Modal -->
-												<div class="modal fade" id="exampleModal" tabindex="-1"
-													role="dialog" aria-labelledby="exampleModalLabel"
-													aria-hidden="true">
-													<div class="modal-dialog" role="document">
-														<div class="modal-content">
-															<div class="modal-header">
-																<h5 class="modal-title" id="exampleModalLabel">Eliminar
-																</h5>
-																<button type="button" class="close" data-dismiss="modal"
-																	aria-label="Close">
-																	<span aria-hidden="true">&times;</span>
-																</button>
-															</div>
-															<div class="modal-body">Esta seguro que desea
-																eliminar el producto?</div>
-															<div class="modal-footer">
-																<button type="button" class="btn btn-secondary"
-																	data-dismiss="modal">Cancelar</button>
-																<button type="button" class="btn btn-primary"
-																	href="/proveedores/productos/eliminar-producto/${productos.id}">Eliminar</button>
-															</div>
-														</div>
-													</div>
-												</div>
-
+												
 											</div>
 										</td>
 									</tr>

@@ -1,6 +1,6 @@
 package ingsoft1920.cm.dao;
 
-import java.math.BigInteger;	
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,20 +86,34 @@ public class ProductoDAO {
 		return res;
 	}
 	
-//	public Proveedor_Producto infoproducto(int producto_id, int proveedor_id) {
-//		Proveedor_Producto res=null;
-//		BeanHandler<Proveedor_Producto> handler = new BeanHandler<>(Proveedor_Producto.class);
-//		String query = "SELECT * "
-//					  +"FROM Proveedor_Producto "
-//					  +"WHERE producto_id=? AND proveedor_id=? ";
-//
-//		try (Connection conn = conector.getConn()) 
-//		{
-//			res = runner.query(conn, query, handler,producto_id, proveedor_id);
-//
-//		} catch (Exception e) { e.printStackTrace(); }
-//		
-//		return res;
-//	}	
+	public int infoproducto(int producto_id, int proveedor_id) {
 
+        Integer res = -1;
+        ScalarHandler<Integer> scalarHandler = new ScalarHandler<>();
+		String query = "SELECT precio_venta "
+					  +"FROM Proveedor_Producto "
+					  +"WHERE producto_id=? AND proveedor_id=? ";
+
+		try (Connection conn = conector.getConn()) 
+		{
+			res = runner.query(conn, query, scalarHandler,producto_id, proveedor_id);
+
+		} catch (Exception e) { e.printStackTrace(); }
+		
+		return res;
+	}
+
+	public void editarProducto(Producto producto){
+	    String query =  "UPDATE Producto " +
+                        "SET nombre=?, unidad_medida=?, precio_maximo=? " +
+                        "WHERE id=?";
+
+        try( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, query, producto.getNombre(),
+                            producto.getUnidad_medida(),
+                            producto.getPrecio_maximo(), producto.getId());
+        }catch (Exception e) { e.printStackTrace(); }
+    }
+    
 }

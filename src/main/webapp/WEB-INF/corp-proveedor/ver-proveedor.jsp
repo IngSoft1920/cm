@@ -67,12 +67,7 @@
                 </div>
 
                
-                    <div class="form-group">
-                        <label class="col-form-label-lg">Productos</label>
-                        <c:forEach var="producto" items="${productos}">
-                            <div class="form-check">${producto.nombre}</div>
-                        </c:forEach>
-                    </div>
+               
                 
 
                 <hr class="mb-4">

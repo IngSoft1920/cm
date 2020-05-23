@@ -52,13 +52,23 @@
 <body class="bg-light">
     <div class="container">
         <div class="py-5 text-center">
-            <h2>Editar Precio</h2>
+            <h2>Editar Producto</h2>
         </div>
 
                 <form class="needs-validation" novalidate="" method="POST">
                     <div class="form-group">
-                        <label class="col-form-label-lg">Precio</label>
-                        <input type="number" class="form-control" name="Nuevo precio" placeholder="Nuevo precio" required>
+                        <label class="col-form-label-lg">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="Nuevo nombre" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label-lg">Precio Máximo</label>
+                        <input type="number" class="form-control" name="precioMax" placeholder="Nuevo precio" required>
+                        <div class="invalid-feedback">Campo obligatorio</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label-lg">Unidad de medida</label>
+                        <input type="text" class="form-control" name="unidadDeMedida" placeholder="Unidad de medida" required>
                         <div class="invalid-feedback">Campo obligatorio</div>
                     </div>
 

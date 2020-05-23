@@ -18,15 +18,7 @@
             <h1 class="logo">Mi Cadena</h1>
         </div>
         <nav>
-            <ul class="nav-links">
-                <li><a class="nav-link" href="/hoteles">Hoteles</a></li>
-                <li><a class="nav-link" href="/select-hoteles">Empleados</a></li>
-                <li><a class="nav-link" href="/proveedores">Proveedores</a></li>
-                <li><a class="nav-link" href="/beneficio0">Facturación</a></li>
-                <li><a class="nav-link" href="/productos"> Productos </a></li>
-                <li><a class="nav-link" href="/configuracion"> Configuración </a></li>
-
-            </ul>
+            
         </nav>
          <div class="login">
             <a href="/login">
@@ -46,7 +38,10 @@
                 </div>
                <div class="cta">
                     <form action="">
-                        <button class="cta-select" type="submit" formaction="login">Iniciar Sesión</button>
+                        <button class="cta-select" type="submit" formaction="login">Corporativo</button>
+                    </form>
+                     <form action="">
+                        <button class="cta-add" type="submit" formaction="login-proveedores">Proveedores</button>
                     </form>
 
                 </div>
