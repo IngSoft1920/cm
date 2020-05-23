@@ -93,7 +93,7 @@
 
                     <div class="row">
                         <div class="col-md-5">
-                            <label>Profesión</label>
+                            <label class="col-form-label-lg">Profesión</label>
                             <c:forEach var="profesion" items="${profesiones}">  
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" value="${profesion.id}" name="profesionID" required <c:if test="${profesion.id == empleado.profesion_id}">checked="true"</c:if> >
@@ -105,7 +105,7 @@
 
                     <div class="row">
                         <div class="col-md-5">
-                            <label>Días Libres</label>
+                            <label class="col-form-label-lg">Días Libres</label>
     
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="diasLibres" value="0" <c:if test="${fn:contains(empleado.dias_libres,'0')}">checked</c:if> >
