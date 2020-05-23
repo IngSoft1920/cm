@@ -1,8 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +81,7 @@
 		<header>
 			<div class="navbar navbar-light bg-light shadow-sm">
 				<div class="container d-flex align-content-start">
-					<strong class="navbar-brand">Nombre de proveedor</strong>
+					<strong class="navbar-brand">${proveedor.empresa}</strong>
 					<a class="navbar-nav" href="/new-proveedores/anadir-producto">Añadir producto</a>
 					
 				</div>
@@ -108,25 +105,21 @@
 							</thead>
 
 							<tbody>
-								
+								<c:forEach var="producto" items="${productos}">
 									<tr>
 										<th scope="row">1</th>
-										<td>Vino</td>
+										<td>${producto.nombre}</td>
 									
-										<td>20 $</td>
+										<td>${producto.precio_venta}€/${producto.unidad_medida}</td>
 										<td>
 											<div class="btn-group">
-												
-												
 												<a class="btn btn-sm btn-outline-secondary" role="button">Editar producto</a>
 												<a class="btn btn-sm btn-outline-secondary" role="button">Editar precio</a>
-
 												<a class="btn btn-sm btn-outline-secondary"  role="button">Eliminar</a>
-
 												<a class="btn btn-sm btn-outline-secondary" role="button">Hoteles</a>	
 										</td>
 									</tr>
-							
+								</c:forEach>
 
 							</tbody>
 						</table>
@@ -146,7 +139,7 @@
 				<p class="float-right">
 					<a href="">Volver arriba</a>
 				</p>
-				<p>Lista de productos del PROVEEDOR X.</p>
+				<p>Lista de productos de ${proveedor.empresa}</p>
 			</div>
 		</footer>
 		<script src="/js/jquery-3.4.1.slim.min.js"></script>

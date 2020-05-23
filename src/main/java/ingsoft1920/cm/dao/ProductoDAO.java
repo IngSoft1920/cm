@@ -67,6 +67,7 @@ public class ProductoDAO {
 		return res;
 	}
 	
+	// Se llama desde corporativo
 	public List<Producto> productosProveedor(int id) {
 		List<Producto> res = new ArrayList<>();
 		BeanListHandler<Producto> handler = new BeanListHandler<>(Producto.class);

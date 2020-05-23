@@ -52,23 +52,20 @@
 </head>
 
 <body class="text-center">
-    <form class="form-signin">
+    <form class="form-signin" method="POST">
         <img class="mb-4" src="/img/bootstrap-solid.svg" alt="" width="100" height="100">
         <h1 class="h3 mb-3 font-weight-normal">Iniciar sesión </h1>
         <h1 class="h5 mb-3 font-weight-normal">Proveedor oficial</h1>
-        <label for="inputEmail" class="sr-only">Correo Electrónico</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico" required="" autofocus="">
-        <label for="inputPassword" class="sr-only">Contraseña</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña" required="">
-        <div class="checkbox mb-3">
-            <label>
-      <input type="checkbox" value="remember-me"> Recordarme
-    </label>
-        </div>
-        <a class="btn btn-lg btn-primary btn-block" type="submit" href="/new-proveedores">Acceder</a>
-        <p class="mt-5 mb-3 text-muted">© 2019-2020</p>
-    </form>
 
+        <label for="user" class="sr-only">Usuario</label>
+        <input class="form-control" type="text" id="user" name="usuario" placeholder="Correo Electrónico" required autofocus>
+        
+        <label for="inputPassword" class="sr-only">Contraseña</label>
+        <input class="form-control" type="password" id="inputPassword" name="password" placeholder="Contraseña" required>
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit" >Acceder</button>
+        <p class="mt-5 mb-3 text-muted">© 2020 Company Management - UPM</p>
+    </form>
 
 </body>
 
