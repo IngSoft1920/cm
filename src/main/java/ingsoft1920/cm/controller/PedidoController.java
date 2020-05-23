@@ -44,7 +44,11 @@ public class PedidoController {
             prop = new Properties();
             prop.put("producto_id", element.getAsJsonObject().get("producto_id").getAsInt());
             prop.put("cantidad", element.getAsJsonObject().get("cantidad").getAsInt());
-            prop.put("especificaciones", element.getAsJsonObject().get("especificaciones").getAsString());
+            if (element.getAsJsonObject().get("especificaciones") != null) {
+                prop.put("especificaciones", element.getAsJsonObject().get("especificaciones").getAsString());
+            }else{
+                prop.put("especificaciones", null);
+            }
             props.add(prop);
         }
 
@@ -54,5 +58,5 @@ public class PedidoController {
 
         return res.toString();
 	}
-	
+
 }
