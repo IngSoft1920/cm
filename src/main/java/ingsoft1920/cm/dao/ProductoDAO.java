@@ -112,7 +112,7 @@ public class ProductoDAO {
 					  +"FROM Proveedor_Producto "
 					  +"WHERE producto_id=? AND proveedor_id=? ";
 
-		try (Connection conn = conector.getConn()) 
+		try (Connection conn = conector.getConn())
 		{
 			res = runner.query(conn, query, scalarHandler,producto_id, proveedor_id);
 
