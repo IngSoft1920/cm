@@ -102,4 +102,17 @@ public class ProductoDAO {
 		return res;
 	}
 
+	public void editarProducto(Producto producto){
+	    String query =  "UPDATE Producto " +
+                        "SET nombre=?, unidad_medida=?, precio_maximo=? " +
+                        "WHERE id=?";
+
+        try( Connection conn = conector.getConn() )
+        {
+            runner.update(conn, query, producto.getNombre(),
+                            producto.getUnidad_medida(),
+                            producto.getPrecio_maximo(), producto.getId());
+        }catch (Exception e) { e.printStackTrace(); }
+    }
+    
 }
