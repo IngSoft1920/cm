@@ -79,7 +79,7 @@
               <h4 class="my-0 font-weight-normal">Balance económico</h4>
              </div>
              <div class="card-body">
-              <h1 class="card-title pricing-card-title">${balance}€<small class="text-muted"></small></h1>
+              <a href="/beneficio"> <h1 class="card-title pricing-card-title">${balance}€<small class="text-muted"></small></h1> </a>
              </div>
            </div>
            
