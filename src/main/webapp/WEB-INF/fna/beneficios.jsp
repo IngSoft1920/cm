@@ -145,12 +145,12 @@
 						<tr>
 						 <td> <b>Gastos/Room Night:</b> </td>
         				
-		       			    <td> ${entry.value.beneficiosPorRoomNight}€ <td>
+		       			    <td> ${entry.value.gastosPorRoomNight}€ <td>
 				 	      	
 						</tr>
 						
 						<tr>
-						 <td> <b>Gastos/Room Night:</b> </td>
+						 <td> <b>Balance/Room Night:</b> </td>
         				
 		       			    <td> ${entry.value.balancePorRoomNight}€ <td>
 				 	      	
