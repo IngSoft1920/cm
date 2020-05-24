@@ -53,13 +53,8 @@ public class ConexionEM {
 					
 					}
 					else {
-						//Si se mete aqui, deberia haber algun error de sincronizacion entre las distintas aplicaciones. No veo 
-						//factible que haya un hotel cuyo unico movimiento monetario sea pagar a los empleados.
-						//Aun asi, por si acaso, creamos una nueva entrada en el map
-						aux=new BeneficiosGastosModel("");
-						aux.getSueldoEmpleados().put(rol[i], sueldo[i]+incentivo[i]);
-						aux.setTotal(aux.getTotal()-(sueldo[i]+incentivo[i]));
-						map.put(id_hotel[i], aux);
+						//Si se mete aqui, deberia haber algun error de sincronizacion entre las distintas aplicaciones.
+						//EM tendria un hotel que no esta registrado en cm
 					}
 				}
 			}
