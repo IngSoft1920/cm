@@ -131,14 +131,10 @@
 
 		</main>
 
-		<footer class="text-muted">
-			<div class="container">
-				<p class="float-right">
-					<a href="">Volver arriba</a>
-				</p>
-				<p>Lista de productos.</p>
-			</div>
-		</footer>
+		<footer class="my-5 pt-5 text-muted text-center text-small">
+            <p class="mb-1">© 2020 Company Management - UPM</p>
+        </footer>
+
 		<script src="../js/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
 		<script>
 			window.jQuery

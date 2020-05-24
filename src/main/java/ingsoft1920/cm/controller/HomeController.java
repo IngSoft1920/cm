@@ -366,11 +366,10 @@ public class HomeController {
 								  Integer[] diasLibres,
 								  String superior)
 	{
-		System.out.println("SUPERIOR " + superior);
 
 		// Comprobamos si existe el superior y si no recargamos la página,
 		// invalidando el registro
-		if( superior != null && !superior.equals("") && empleadoDao.getByEmail(superior) == null )
+		if( superior != null && !superior.equals("") && !empleadoDao.existeSuperior(id,superior) )
 			return "redirect:/anadir-empleado/"+id;
 		
 		Empleado em = new Empleado();
@@ -430,7 +429,7 @@ public class HomeController {
 										   Integer[] diasLibres,
 										   String superior) {
 		
-		if( superior != null && !superior.equals("") && empleadoDao.getByEmail(superior) == null )
+		if( superior != null && !superior.equals("") && !empleadoDao.existeSuperior(id,superior) )
 			return "redirect:/editar-empleado/"+id;
 		
 		Empleado em = new Empleado();

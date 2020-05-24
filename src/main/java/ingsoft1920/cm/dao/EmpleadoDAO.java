@@ -199,15 +199,22 @@ public class EmpleadoDAO {
    		return res;
    	}
     
-
-    public static void main(String[] args) {
-//    	Empleado test = new Empleado(8, "Pepe", "Gonzalez", "pepe@gmail.com", "600600600", 1500, 1,new Integer[] {5,6});
-//    	Properties hotel = new Properties();
-//    	  hotel.put("hotel_id",1);
-//    	  hotel.put("fecha_contratacion",Date.valueOf("2020-02-01"));
-//    	
-//    	new EmpleadoDAO().anadir(test,hotel);
-//    	//new EmpleadoDAO().editar(test);
-    }
+   	public boolean existeSuperior(int hotel_id,String email) {
+   		Integer res = null;
+   		ScalarHandler<Integer> handler = new ScalarHandler<>();
+   		String query = "SELECT empleado_id "
+   					  +"FROM Hotel_Empleado he "
+   					  +"JOIN Empleado e ON he.empleado_id = e.id "
+   					  +"WHERE he.hotel_id = ? AND e.email = ?";
+   		
+   		try ( Connection conn = conector.getConn() )
+   		{
+   			res = runner.query(conn,query,handler,hotel_id,email);
+   			
+   		} catch( Exception e ) { e.printStackTrace(); }
+   		
+   		return res != null;
+   	}
+   	
 
 }
